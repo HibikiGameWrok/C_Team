@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
         // 移動方向によって画像の向きを変える
         if (key != 0)
         {
-            transform.localScale = new Vector3(-key, this.transform.localScale.y, this.transform.localScale.z);
+            transform.localScale = new Vector3(this.transform.localScale.x * (-key), this.transform.localScale.y, this.transform.localScale.z);
         }
         //------------------------------------------------------------------
     }
