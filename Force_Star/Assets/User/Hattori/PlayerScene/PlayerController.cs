@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float maxWalkSpeed = 2.0f;
 
-    int a = 0;
-
     //X方向に力がかかり過ぎないように抑制する値
     //private float suppressionVelx = 2.0f;
 
@@ -37,8 +35,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        a = 1;
-
         AttackPlayer(); // 攻撃する処理
 
         WalkPlayer();   // 歩く処理
