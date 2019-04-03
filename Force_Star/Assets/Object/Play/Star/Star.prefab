@@ -5144,9 +5144,10 @@ GameObject:
   - component: {fileID: 4410811510344274287}
   - component: {fileID: 6953277428084981066}
   - component: {fileID: 3634790400088747531}
+  - component: {fileID: 6504584272572195269}
   m_Layer: 8
   m_Name: Star
-  m_TagString: Untagged
+  m_TagString: Star
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5236,8 +5237,8 @@ MonoBehaviour:
   particle: {fileID: 1025031754790096641}
   grv: 0.02
   flashInterval: 5
-  flashTime: 1
-  startFlashJumpCount: 1
+  flashTime: 3
+  startFlashJumpCount: 5
 --- !u!114 &6953277428084981066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5276,6 +5277,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.6641636, y: 4.815278}
   m_EdgeRadius: 0
+--- !u!50 &6504584272572195269
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410811510344274275}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &4410811510381139300
 GameObject:
   m_ObjectHideFlags: 0

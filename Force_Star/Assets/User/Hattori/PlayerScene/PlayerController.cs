@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rigid2D;     // 力を加える要素
+    private Rigidbody2D rigid2D;     //力を加える要素
     public GameObject starDirec;     //星
-    private StarDirector starCreate; // 星の生成スクリプト
+    private StarDirector starCreate; //星の生成スクリプト
 
     [SerializeField]
-    private float walkForce = 30.0f;　　 // 歩く力
+    private float walkForce = 30.0f;　　 //歩く力
+
+    private Vector3 direction = new Vector3(0.0f,0.0f,0.0f);        //向き
 
     [SerializeField]
-    private float jumpForce = 300.0f;     // ジャンプする力
+    private float jumpForce = 300.0f;     //ジャンプする力
 
     private bool  groundFlag = true; // true = 着地している, false = 地に着いていない
     
@@ -20,12 +22,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float maxWalkSpeed = 2.0f;
 
-    //X方向に力がかかり過ぎないように抑制する値
+    // X方向に力がかかり過ぎないように抑制する値
     //private float suppressionVelx = 2.0f;
 
     // Start is called before the first frame update
     void Start()
     {
+        direction = this.transform.localScale;
         // 力を加える要素を取得
         this.rigid2D = GetComponent<Rigidbody2D>();
         // 星を生成するスクリプトを取得
@@ -86,8 +89,6 @@ public class PlayerController : MonoBehaviour
         // 絶対値を取得
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
 
-
-
         // 着地時のX方向への移動速度の制限
         if ((speedx < this.maxWalkSpeed) && (groundFlag == true))
         {
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
         // 移動方向によって画像の向きを変える
         if (key != 0)
         {
-            transform.localScale = new Vector3(this.transform.localScale.x * (-key), this.transform.localScale.y, this.transform.localScale.z);
+            transform.localScale = new Vector3(direction.x * -key, direction.y, direction.z);
         }
         //------------------------------------------------------------------
     }

@@ -28,5 +28,13 @@ public class ChildStar : MonoBehaviour {
         {
             starMove.hitName = transform.name;  // 親に自分の名前を渡す
         }
+
+        //  プレイヤーとの当たり判定
+        if (other.gameObject.tag == "Player")
+        {
+            starMove.PlayerCollision();
+        }
+
+
     }
 }
