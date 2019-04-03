@@ -307,6 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 379472995}
   - component: {fileID: 379472994}
+  - component: {fileID: 379472996}
   m_Layer: 0
   m_Name: FloorCol
   m_TagString: Floor
@@ -354,6 +355,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &379472996
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379472993}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &719926359
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +544,11 @@ PrefabInstance:
       propertyPath: starX
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7290135627868728550, guid: bc5d70b8cf5f4334a94baf06fe4d4592,
+        type: 3}
+      propertyPath: correctionX
+      value: 2.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5d70b8cf5f4334a94baf06fe4d4592, type: 3}
 --- !u!1 &969955772 stripped
@@ -545,12 +572,12 @@ PrefabInstance:
     - target: {fileID: 7959036594517405355, guid: 04a1b8174e472a6438027576c0592d49,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.12
+      value: 11.21
       objectReference: {fileID: 0}
     - target: {fileID: 7959036594517405355, guid: 04a1b8174e472a6438027576c0592d49,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.23
+      value: -2.15
       objectReference: {fileID: 0}
     - target: {fileID: 7959036594517405355, guid: 04a1b8174e472a6438027576c0592d49,
         type: 3}
@@ -617,6 +644,11 @@ PrefabInstance:
       propertyPath: starDirec
       value: 
       objectReference: {fileID: 969955772}
+    - target: {fileID: 7959036594517405351, guid: 04a1b8174e472a6438027576c0592d49,
+        type: 3}
+      propertyPath: maxWalkSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7959036594201582555, guid: 04a1b8174e472a6438027576c0592d49,
         type: 3}
       propertyPath: m_SortingOrder
