@@ -13,6 +13,7 @@ public class RocketMove : MonoBehaviour
 
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,6 @@ public class RocketMove : MonoBehaviour
   
         //ロケットの移動
         transform.position = new Vector3(s, Mathf.Sin(Time.frameCount * speed), transform.position.z);
-        //ロケットの角度の変更
-     
+
     }
 }
