@@ -147,6 +147,13 @@ public class PlayerController : MonoBehaviour
             groundFlag = true;
             starCreate.CreateStar();
         }
+
+        if(col.gameObject.tag == "StarPeace")
+        {
+            //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount();
+            Debug.Log("atatta");
+        }
+
     }
-    
+
 }

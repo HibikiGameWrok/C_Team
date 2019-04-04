@@ -9,8 +9,6 @@ public class StarCount : MonoBehaviour {
 
     int starCount;
 
-    public int maxStarCount;
-
 	// Use this for initialization
 	void Start () {
         starCount = 0;
@@ -18,14 +16,13 @@ public class StarCount : MonoBehaviour {
         this.starCounter = GameObject.Find("StarCounter");
 	}
 	
+    public void AddCount(int count){
+        starCount += count;
+        Debug.Log("atatta");
+    }
+
 	// Update is called once per frame
 	void Update () {
-        
-        if(starCount > maxStarCount)
-        {
-            starCount = maxStarCount;
-        }
-
         this.starCounter.GetComponent<Text>().text = "×" + starCount.ToString();
 	}
 }
