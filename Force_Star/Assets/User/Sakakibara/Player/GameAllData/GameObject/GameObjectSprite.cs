@@ -8,6 +8,10 @@ using UnityEngine;
 using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// GameObjectSpriteは眠らない
+//*|***|***|***|***|***|***|***|***|***|***|***|
+//[ExecuteInEditMode]
 public class GameObjectSprite : MonoBehaviour
 {
 
@@ -24,6 +28,10 @@ public class GameObjectSprite : MonoBehaviour
             spriteSize = Vector2.one;
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // スプライト表示エリア
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    protected GameObject m_spriteObject;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 描画データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -50,15 +58,20 @@ public class GameObjectSprite : MonoBehaviour
     protected void OriginAwake()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // スプライト表示エリア
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_spriteObject = new GameObject("Sprite");
+        m_spriteObject.transform.parent = gameObject.transform;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 描画システム
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (gameObject.GetComponent<SpriteRenderer>() == null)
+        if (m_spriteObject.GetComponent<SpriteRenderer>() == null)
         {
-            m_spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            m_spriteRenderer = m_spriteObject.AddComponent<SpriteRenderer>();
         }
         else
         {
-            m_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            m_spriteRenderer = m_spriteObject.GetComponent<SpriteRenderer>();
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 描画モード
@@ -126,6 +139,14 @@ public class GameObjectSprite : MonoBehaviour
     {
         gameObject.transform.localPosition = position;
     }
+    public void SetImagePosition(Vector3 position)
+    {
+        m_spriteObject.transform.position = position;
+    }
+    public void SetImagePositionLocal(Vector3 position)
+    {
+        m_spriteObject.transform.localPosition = position;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の回転を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -136,6 +157,14 @@ public class GameObjectSprite : MonoBehaviour
     public void SetRotationLocal(Quaternion rotation)
     {
         gameObject.transform.localRotation = rotation;
+    }
+    public void SetImageRotation(Quaternion rotation)
+    {
+        m_spriteObject.transform.rotation = rotation;
+    }
+    public void SetImageRotationLocal(Quaternion rotation)
+    {
+        m_spriteObject.transform.localRotation = rotation;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の大きさを決める！？
@@ -201,8 +230,6 @@ public class GameObjectSprite : MonoBehaviour
         // 描画モード
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 spriteSize = m_texImageData.size;
-        //spriteSize.x = MyCalculator.Division(m_texImageData.size.x, m_texImageHidden.spriteSize.x); 
-        //spriteSize.y = MyCalculator.Division(m_texImageData.size.y, m_texImageHidden.spriteSize.y); 
         m_spriteRenderer.size = spriteSize;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

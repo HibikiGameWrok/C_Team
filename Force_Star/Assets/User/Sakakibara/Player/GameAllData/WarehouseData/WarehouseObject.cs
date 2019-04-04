@@ -10,6 +10,10 @@ using UnityEngine;
 namespace WarehouseData
 {
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 倉庫データは眠らない
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [ExecuteInEditMode]
     public class WarehouseObject
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
