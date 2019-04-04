@@ -10,6 +10,8 @@ public class DebugObject : GameObjectSprite
     void Awake()
     {
         OriginAwake();
+
+        
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 開始時

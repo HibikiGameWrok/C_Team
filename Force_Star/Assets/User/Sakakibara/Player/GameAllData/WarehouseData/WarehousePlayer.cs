@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // 倉庫データ
 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -11,6 +10,10 @@ namespace WarehouseData
 {
     namespace PlayerData
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 倉庫データは眠らない
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        [ExecuteInEditMode]
         public class WarehousePlayer
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -61,8 +64,35 @@ namespace WarehouseData
             };
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // データナンバー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            public enum PlayerData_Number_List
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // プレイヤーのデータ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                PLAYERHEAD,
+                BODYTOP,
+                BODYBOTTOM,
+                LARMJOINT,
+                RARMJOINT,
+                LEFTHAND,
+                RIGHTHAND,
+                LLEGJOINT,
+                RLEGJOINT,
+                LEFTLEG,
+                RIGHTLEG,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 総数
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                NUM,
+            };
+
+
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // データの倉庫
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            public static string SimpleData = "SimpleImage/";
             public static string PlayerData = "PlayerData/";
 
 
@@ -83,6 +113,7 @@ namespace WarehouseData
 
             private void ReadData()
             {
+                string SimpleFile;
                 string MyFile;
 
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -92,13 +123,14 @@ namespace WarehouseData
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // PlayerDataのデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
+                    SimpleFile = SimpleData;
                     MyFile = PlayerData;
                     {
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 全てで使うデータ
                         //*|***|***|***|***|***|***|***|***|***|***|***|
-                        m_playerTex2D[(int)PlayerData_Number.FULL] = Resources.Load<Texture2D>(MyFile + "Full");
-                        m_playerTex2D[(int)PlayerData_Number.BLANK] = Resources.Load<Texture2D>(MyFile + "Blank");
+                        m_playerTex2D[(int)PlayerData_Number.FULL] = Resources.Load<Texture2D>(SimpleFile + "Full");
+                        m_playerTex2D[(int)PlayerData_Number.BLANK] = Resources.Load<Texture2D>(SimpleFile + "Blank");
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // プレイヤーのデータ
                         //*|***|***|***|***|***|***|***|***|***|***|***|

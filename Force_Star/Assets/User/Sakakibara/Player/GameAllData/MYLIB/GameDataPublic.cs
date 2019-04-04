@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤーナンバー言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
+using PlayerDataNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number;
+using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+
 public class GameDataPublic
 {
 
@@ -13,8 +20,11 @@ public class GameDataPublic
     [Serializable]
     public class TexImageData
     {
+        [SerializeField]
         public Texture2D image;
+        [SerializeField]
         public Vector2 size;
+        [SerializeField]
         public Rect rextParsent;
         public void Reset()
         {
@@ -26,13 +36,63 @@ public class GameDataPublic
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 伝説の描画用システム
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // シリアライズ可能
+    // エディター取得可能
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     [Serializable]
     public class RenderImageData
     {
+        [SerializeField]
         public int depth;
         public void Reset()
         {
             depth = 0;
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーのデータリスト
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [Serializable]
+    public class PartsData
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // イメージ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public Vector3 imagePos;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ワールド
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public Vector3 localPos;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // イメージ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public Vector3 imageAngle;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ワールド
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public Vector3 localAngle;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // イメージ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public Vector2 size;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 描画
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public PlayerDataNum dataNum;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 描画
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public int depth;
+
+        public PartsData()
+        {
+            imagePos = Vector3.zero;
+            localPos = Vector3.zero;
+            imageAngle = Vector3.zero;
+            localAngle = Vector3.zero;
+            size = Vector2.one;
+            depth = 0;
+            dataNum = PlayerDataNum.BLANK;
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
