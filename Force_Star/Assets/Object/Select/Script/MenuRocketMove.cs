@@ -12,6 +12,10 @@ public class MenuRocketMove : MonoBehaviour
     float posX = 0.0f;
     float posY = 0.0f;
 
+    //大きさ
+    [SerializeField]
+    float size = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +69,14 @@ public class MenuRocketMove : MonoBehaviour
         //transform.Rotate(new Vector3(0.0f, 0.0f, vel));
         this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 45.0f);
 
+        //大きさを徐々に小さく
+        size += -0.003f;
+        gameObject.transform.localScale = new Vector3(size, size, transform.localScale.z);
+    }
 
+
+    public bool GetMoveFlag()
+    {
+        return moveFlag;
     }
 }

@@ -31,6 +31,7 @@ public class NumbersChange : MonoBehaviour
     {
         MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         //MainSpriteRenderer.sprite = WaterStar;
+        starCounter = 0;
     }
 
     // Update is called once per frame
@@ -103,4 +104,9 @@ public class NumbersChange : MonoBehaviour
 
     }
 
+
+    public int GetStarCounter()
+    {
+        return starCounter;
+    }
 }

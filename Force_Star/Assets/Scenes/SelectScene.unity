@@ -185,8 +185,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488592778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.056, y: -1.166, z: 0}
-  m_LocalScale: {x: 1.9043672, y: 1.811561, z: 1}
+  m_LocalPosition: {x: -5.025, y: -3.59, z: 0}
+  m_LocalScale: {x: 2.2128747, y: 2.7593555, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 538557825}
   - component: {fileID: 538557824}
   - component: {fileID: 538557823}
+  - component: {fileID: 538557826}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -273,6 +274,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &538557826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538557822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce058752fe54114e88e97f60d722cab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rocketMove: {fileID: 874736803}
+  vel: -0.05
+  posX: 0
+  posY: 0
+  mFlag: 1
 --- !u!1 &874736800
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,8 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed4b2ed4ac18a54c963f8e2eb219c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vel: -0.02
+  vel: -0.05
   moveFlag: 0
+  size: 1
 --- !u!58 &874736804
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -502,8 +521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 874736802}
-  m_speed: 0.5
-  m_attenuation: 1
+  m_speed: 1
+  m_attenuation: 3
   moveFlag: 0
   endFlag: 0
   VerticalSpeed: 0.05
@@ -524,7 +543,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.91
+  m_Radius: 1.35
 --- !u!50 &1003752405
 Rigidbody2D:
   serializedVersion: 4
@@ -637,8 +656,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013311363}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.86, y: -5.59, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.83, y: -5.919, z: 0}
+  m_LocalScale: {x: 1.309, y: 1.7548151, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -727,7 +746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1646844012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -759,8 +778,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e68943f2ae7a7448bd5844f290eb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChangeNum: {fileID: 2004480756}
+  SelectCamera: {fileID: 538557826}
   isFadeOut: 0
   isFadeIn: 1
+  sceneNum: 0
 --- !u!114 &1646844014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,7 +837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1912534144
 RectTransform:
   m_ObjectHideFlags: 0
@@ -948,7 +970,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: aa7a882cba2b25b419bbe829e2781910, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
