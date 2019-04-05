@@ -61,7 +61,7 @@ public class ParticleMove : MonoBehaviour
             Debug.Log("最大"+Particle.main.maxParticles );
             Debug.Log("今の最大" + Particle.particleCount);
             Debug.Log("差分" + (Particle.main.maxParticles-Particle.particleCount));
-            GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(Particle.main.maxParticles - Particle.particleCount);
+            //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(Particle.main.maxParticles - Particle.particleCount);
             if (Particle.main.maxParticles - Particle.particleCount==0)
                 Particle.Stop();
         }
