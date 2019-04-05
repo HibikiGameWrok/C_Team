@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlashingImage : MonoBehaviour
 {
-    public GameObject clsarImage;
+    public GameObject clearImage;
 
     [SerializeField]
     float time = 0.0f;
@@ -28,12 +28,12 @@ public class FlashingImage : MonoBehaviour
         if (next == 0)
         {
 
-            clsarImage.SetActive(true);
+            clearImage.SetActive(true);
         }
         else
         {
 
-            clsarImage.SetActive(false);
+            clearImage.SetActive(false);
         }
     }
 }

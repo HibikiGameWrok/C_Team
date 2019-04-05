@@ -14,7 +14,7 @@ public class ChangeStarImage : MonoBehaviour
     //機械の星の画像
     public Sprite MachineStar;
 
-    //画像切り替え用のカウンター
+    //画像切り替え用ここにPlaySceneの情報をわたす
     [SerializeField]
     int starCounter = 0;
 

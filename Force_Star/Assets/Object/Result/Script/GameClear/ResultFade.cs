@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ResultFade : MonoBehaviour
 {
-    public ImageDisplaySwitching imageDisplay;
+    public ImageDisplaySwitching gameClear;
+    public OverFlashingImage gameOver;
 
     float fadeSpeed = 0.02f;        //透明度が変わるスピードを管理
     float red, green, blue, alfa;   //パネルの色、不透明度を管理
@@ -16,13 +17,14 @@ public class ResultFade : MonoBehaviour
 
     Image fadeImage;                //透明度を変更するパネルのイメージ
 
-    bool sceneFlag = false;
+    bool clearFlag = false;
+    bool overFlag = false;
 
 
 
     void Start()
     {
-        sceneFlag = imageDisplay.GetStageFlag();
+        clearFlag = gameClear.GetStageFlag();
 
         fadeImage = GetComponent<Image>();
         red = fadeImage.color.r;
@@ -33,7 +35,8 @@ public class ResultFade : MonoBehaviour
 
     void Update()
     {
-        sceneFlag = imageDisplay.GetStageFlag();
+        clearFlag = gameClear.GetStageFlag();
+        overFlag = gameOver.GetStageFlag();
 
         if (isFadeIn)
         {
@@ -45,7 +48,7 @@ public class ResultFade : MonoBehaviour
             StartFadeOut();
         }
 
-        if (sceneFlag == true)
+        if (clearFlag == true || overFlag == true)
         {
             isFadeOut = true;
         }

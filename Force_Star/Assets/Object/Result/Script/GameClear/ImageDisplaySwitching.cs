@@ -9,6 +9,8 @@ public class ImageDisplaySwitching : MonoBehaviour
     //画像表示用
     [SerializeField]
     bool displayFlag = false;
+
+    //シーン切り替え用
     bool stageFlag = false;
 
     public GameObject clsarImage;
