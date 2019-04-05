@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Floor")
         {
             groundFlag = true;
-            starCreate.CreateStar();
+            starCreate.CreateStar(10);
         }
 
         if(col.gameObject.tag == "StarPeace")
