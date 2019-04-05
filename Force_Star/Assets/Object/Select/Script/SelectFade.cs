@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class SelectFade : MonoBehaviour
 {
 
+    public NumbersChange ChangeNum;
+    public MoveCameraSelect SelectCamera;
 
     float fadeSpeed = 0.02f;        //透明度が変わるスピードを管理
     float red, green, blue, alfa;   //パネルの色、不透明度を管理
@@ -16,21 +18,28 @@ public class SelectFade : MonoBehaviour
 
     Image fadeImage;                //透明度を変更するパネルのイメージ
 
+    [SerializeField]
+    int sceneNum = 0;
+
+    bool sceneFlag = false;
 
 
     void Start()
     {
+        sceneNum = ChangeNum.GetStarCounter();
+        sceneFlag = SelectCamera.GetChangeFlag();
+
         fadeImage = GetComponent<Image>();
         red = fadeImage.color.r;
         green = fadeImage.color.g;
         blue = fadeImage.color.b;
         alfa = fadeImage.color.a;
-
-
     }
 
     void Update()
     {
+        sceneFlag = SelectCamera.GetChangeFlag();
+
         if (isFadeIn)
         {
             StartFadeIn();
@@ -41,7 +50,7 @@ public class SelectFade : MonoBehaviour
             StartFadeOut();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(sceneFlag == true)
         {
             isFadeOut = true;
         }
@@ -63,13 +72,33 @@ public class SelectFade : MonoBehaviour
 
     void StartFadeOut()
     {
+        sceneNum = ChangeNum.GetStarCounter();
+
         fadeImage.enabled = true;  // a)パネルの表示をオンにする
         alfa += fadeSpeed;         // b)不透明度を徐々にあげる
         SetAlpha();               // c)変更した透明度をパネルに反映する
         if (alfa >= 1)
         {             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
-            SceneManager.LoadScene("PlayScene");
+
+            //水の星
+            if (sceneNum == 0)
+            {
+                SceneManager.LoadScene("PlayScene");
+            }
+
+            //火の星
+            if (sceneNum == 1)
+            {
+                SceneManager.LoadScene("PlayScene");
+            }
+
+            //機械の星
+            if (sceneNum == 2)
+            {
+                SceneManager.LoadScene("PlayScene");
+            }
+
         }
     }
 

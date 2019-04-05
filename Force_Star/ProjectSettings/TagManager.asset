@@ -9,7 +9,13 @@ TagManager:
   - B
   - L
   - T
+<<<<<<< HEAD
   - StarPeace
+=======
+  - WaterStar
+  - FireStar
+  - MachineStar
+>>>>>>> SelectScene_Update
   layers:
   - Default
   - TransparentFX
