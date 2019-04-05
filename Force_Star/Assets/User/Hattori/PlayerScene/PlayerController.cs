@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Floor")
         {
             groundFlag = true;
-            starCreate.CreateStar(10);
+            starCreate.CreateStar(20);
         }
 
         if(col.gameObject.tag == "StarPeace")
@@ -154,6 +154,11 @@ public class PlayerController : MonoBehaviour
             Debug.Log("atatta");
         }
 
+    }
+
+    public bool GetJumpFlag()
+    {
+        return groundFlag;
     }
 
 }

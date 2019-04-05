@@ -113,14 +113,17 @@ public class StarMove : MonoBehaviour {
 
     public void PlayerCollision()
     {
-        // 衝突時星の本体を見えなくする
-        hitFlag = true;
-        Collider2D m_ObjectCollider = GetComponent<Collider2D>();
-        m_ObjectCollider.isTrigger = true;     //　当たらないように
-        this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
-        ParticleSet particleSet = this.GetComponent<ParticleSet>();
-        particleSet.SetMaxStar(maxStar);
-        particle.Play();                       // パーティクルの再生
+        if(!hitFlag)
+        {
+            // 衝突時星の本体を見えなくする
+            hitFlag = true;
+            Collider2D m_ObjectCollider = GetComponent<Collider2D>();
+            m_ObjectCollider.isTrigger = true;     //　当たらないように
+            this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
+            ParticleSet particleSet = this.GetComponent<ParticleSet>();
+            particleSet.SetMaxStar(maxStar);
+            particle.Play();                       // パーティクルの再生
+        }
     }
 
     public void SetVecX(float x)

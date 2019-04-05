@@ -18,7 +18,7 @@ public class StarCount : MonoBehaviour {
 	
     public void AddCount(int count){
         starCount += count;
-        Debug.Log("atatta");
+        //Debug.Log("atatta");
     }
 
 	// Update is called once per frame
