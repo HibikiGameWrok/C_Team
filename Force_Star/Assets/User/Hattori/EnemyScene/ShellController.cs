@@ -6,7 +6,7 @@ public class ShellController : MonoBehaviour
 {
     //追跡ターゲット(プレイヤー)
     [SerializeField]
-    private GameObject player;
+    private GameObject player = null;
 
     //追跡速度
     [SerializeField]
