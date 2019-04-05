@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class ParticleMove : MonoBehaviour
 {
-    // 速度
-    public Vector2 speed;
-    public GameObject player;
+    GameObject player;
     ParticleSystem Particle;
     ParticleSet paricleSet;
+    ParticleSystem ps;
+    // 速度
+    public float m_speed;
+    public float m_attenuation;
+
+    private Vector3 m_velocity;
+    private Vector3 m_velocity2;
     // ラジアン変数
     private float rad;
-    // 現在位置を代入する為の変数
-    private Vector2 Position;
-    int a = 0;
+
+    int count = 0;
+    int startMax;
+    public int waitTime;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,44 +34,84 @@ public class ParticleMove : MonoBehaviour
     {
         if (player != null)
         {
-            for (int i = 0; i >= Particle.main.maxParticles; i++)
-            {
-                Particle.trigger.SetCollider(i, player.GetComponent<Collider2D>());
-                Particle.collision.SetPlane(i, player.transform);
-            }
+            Particle.collision.SetPlane(0, player.transform);
+            Particle.trigger.SetCollider(0, player.GetComponent<Collider2D>());
+            ParticleSystem[] psArray = GetComponentsInChildren<ParticleSystem>();
             if (Particle.isPlaying)
             {
                 rad = Mathf.Atan2(player.transform.position.y - Particle.transform.position.y, player.transform.position.x - Particle.transform.position.x);
-                a++;
-                if (a == 10)
+                count++;
+                if (count == waitTime)
                     paricleSet.ResetSpeed();
-                if (a >= 10)
+
+                if (Particle.particleCount == 0 && startMax == 0)
                 {
-                    // 現在位置をPositionに代入
-                    Position = Particle.transform.position;
-                    // x += SPEED * cos(ラジアン)
-                    // y += SPEED * sin(ラジアン)
-                    // これで特定の方向へ向かって進んでいく。
-                    Position.x += speed.x * Mathf.Cos(rad);
-                    Position.y += speed.y * Mathf.Sin(rad);
-                    // 現在の位置に加算減算を行ったPositionを代入する
-                    Particle.transform.position = Position;
+                    SetMaxParticle();
+                }
+                else if (startMax != Particle.particleCount)
+                {
+                    //Debug.Log("最大" + startMax);
+                    //Debug.Log("今の最大" + Particle.particleCount);
+                    //Debug.Log("差分" + (startMax - Particle.particleCount));
+                    if (startMax != 0)
+                        GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(startMax - Particle.particleCount);
+                    if (count >= waitTime)
+                    {
+                        if (Particle.particleCount==0)
+                        {
+                            //Debug.Log("最大" + startMax);
+                            //Debug.Log("今の最大" + Particle.particleCount);
+                            //Debug.Log("最後" + (startMax - Particle.particleCount));
+                            //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(startMax - Particle.particleCount);
+                            Destroy(transform.root.gameObject);
+                        }
+                    }
+                    startMax = Particle.particleCount;
 
                 }
+
+                if (count >= waitTime)
+                {
+                    m_velocity.x += (player.transform.position.x - transform.position.x) * m_speed;
+                    m_velocity *= m_attenuation;
+                   // m_velocity.x = player.transform.position.x;
+                    //m_velocity2 += (player.transform.position - psArray[i].transform.position) * m_speed;
+                    //m_velocity2 *= m_attenuation;
+                    //m_velocity2.x = player.transform.position.x - (transform.position.x-psArray[i].transform.position.x);
+                    if (GameObject.Find("PlayerBoal").GetComponent<PlayerController>().GetJumpFlag())
+                    {
+                        m_velocity.y = player.transform.position.y;
+                    }
+                    //// m_velocity *= m_attenuation;
+                    //psArray[i].transform.position = m_velocity2;
+                    transform.position += m_velocity *= Time.deltaTime;
+                    //if (player.transform.position.x < transform.position.x)
+                    //{
+                    //    transform.position += new Vector3(m_velocity.x, 0.0f, 0.0f) * Time.deltaTime;
+                    //}
+                    //else if (player.transform.position.x > transform.position.x)
+                    //{
+                    //    transform.position -= new Vector3(m_velocity.x, 0.0f, 0.0f) * Time.deltaTime;
+                    //}
+                    //else if(player.transform.position.x == transform.position.x)
+                    //{
+                    //    transform.position = new Vector3(m_velocity.x, transform.position.y, transform.position.z) ;
+                    //}
+
+                }
+
+
+
             }
         }
     }
 
     private void OnParticleCollision(GameObject other)
     {
-        if (other.tag == "Player")
+        if(other.tag=="Player")
         {
-            Debug.Log("最大"+Particle.main.maxParticles );
-            Debug.Log("今の最大" + Particle.particleCount);
-            Debug.Log("差分" + (Particle.main.maxParticles-Particle.particleCount));
-            //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(Particle.main.maxParticles - Particle.particleCount);
-            if (Particle.main.maxParticles - Particle.particleCount==0)
-                Particle.Stop();
+            //transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+
         }
     }
     public void SetGameObject(GameObject gameobject)
@@ -71,37 +119,47 @@ public class ParticleMove : MonoBehaviour
         player = gameobject;
         Particle = this.GetComponent<ParticleSystem>();
         paricleSet = transform.root.gameObject.GetComponent<ParticleSet>();
+        startMax = 0;
+    }
 
+    public void SetGameObject(GameObject gameobject,GameObject b)
+    {
+        player = gameobject;
+        Particle = this.GetComponent<ParticleSystem>();
+        paricleSet = transform.root.gameObject.GetComponent<ParticleSet>();
+        startMax = 0;
+    }
+
+    public void SetMaxParticle()
+    {
+        startMax = Particle.main.maxParticles;
+    }
+
+
+    // これらのリストは、各フレームでトリガーの条件に
+    // 一致するパーティクルを格納します
+    List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+
+    void OnEnable()
+    {
+        ps = GetComponent<ParticleSystem>();
     }
 
     void OnParticleTrigger()
     {
-        ParticleSystem ps = GetComponent<ParticleSystem>();
-
-        //粒子
-        List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-        List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
-
-        // 取得する
+        // このフレームのトリガーの条件に一致するパーティクルを取得します
         int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        int numExit = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
-
-        //繰り返します
+        Debug.Log("入った");
+        // トリガーに侵入したパーティクルを走査し、赤にします
         for (int i = 0; i < numEnter; i++)
         {
             ParticleSystem.Particle p = enter[i];
-            Debug.Log("hit");
             enter[i] = p;
         }
-        for (int i = 0; i < numExit; i++)
-        {
-            ParticleSystem.Particle p = exit[i];
-            exit[i] = p;
-        }
 
-        //セット
+        // 変更したパーティクルをパーティクルシステムに再割り当てします
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        ps.SetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
+    
     }
 }
 

@@ -22,10 +22,12 @@ public class ParticleSet : MonoBehaviour
     public void SetMaxStar(int max)
     {
         ParticleSystem ParticleObj = transform.Find("StarParticle").GetComponent<ParticleSystem>();
+        ParticleMove ParticleMove = transform.Find("StarParticle").GetComponent<ParticleMove>();
         //↓最終目的である rate にアクセスするために必要な emission を取得し格納
         mEmObj = ParticleObj.main;
         maxStar = max;
         mEmObj.maxParticles = maxStar;
+      //  ParticleMove.SetMaxParticle();
     }
 
     public void ResetSpeed()
@@ -34,7 +36,17 @@ public class ParticleSet : MonoBehaviour
         for (int i = 0; i < psArray.Length; i++)
         {
             ParticleSystem.MainModule psm = psArray[i].main;
-            psm.simulationSpeed = 0.01f;
+            psm.simulationSpeed = 0.001f;
+        }
+    }
+
+    public void Kill()
+    {
+        ParticleSystem[] psArray = GetComponentsInChildren<ParticleSystem>();
+        for (int i = 0; i < psArray.Length; i++)
+        {
+            ParticleSystem.MainModule psm = psArray[i].main;
+
         }
     }
 
