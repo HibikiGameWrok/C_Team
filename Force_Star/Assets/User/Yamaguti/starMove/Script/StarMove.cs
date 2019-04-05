@@ -28,6 +28,8 @@ public class StarMove : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Rigidbody2D rig = this.GetComponent<Rigidbody2D>();
+        rig.isKinematic = true;
         timeElapsed = 0.0f;
         particle.Stop();
         startJF = jumpForce;
@@ -116,6 +118,8 @@ public class StarMove : MonoBehaviour {
         Collider2D m_ObjectCollider = GetComponent<Collider2D>();
         m_ObjectCollider.isTrigger = true;     //　当たらないように
         this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
+        ParticleSet particleSet = this.GetComponent<ParticleSet>();
+        particleSet.SetMaxStar(maxStar);
         particle.Play();                       // パーティクルの再生
     }
 

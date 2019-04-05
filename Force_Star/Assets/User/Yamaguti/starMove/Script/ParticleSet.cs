@@ -26,7 +26,17 @@ public class ParticleSet : MonoBehaviour
         mEmObj = ParticleObj.main;
         maxStar = max;
         mEmObj.maxParticles = maxStar;
-        mEmObj.startSpeed = 0;
+      //  mEmObj.startSpeed = 0;
+    }
+
+    public void ResetSpeed()
+    {
+        ParticleSystem[] psArray = GetComponentsInChildren<ParticleSystem>();
+        for (int i = 0; i < psArray.Length; i++)
+        {
+            ParticleSystem.MainModule psm = psArray[i].main;
+            psm.simulationSpeed = 0.01f;
+        }
     }
 
     private void OnParticleCollision(GameObject other)
