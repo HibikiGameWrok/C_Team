@@ -4,43 +4,24 @@ using UnityEngine;
 
 public class PunchController : MonoBehaviour
 {
-    private GameObject parent = null;
+    Rigidbody2D rigid2D;
 
-    private Rigidbody2D rigid2D;
-
-    float punchSpeed = 0.5f;
+    float punchSpeed = 1.5f;
 
     float maxPunchDistance = 5.0f;
 
-    int key = 1;
-
-    private Vector2 startPosition;
-
-    float punchTimer = 0.0f;
-
-    bool punchFlag = false;
-
-    Vector3 keepPos;
+    int key = 0;
 
     // Start is called before the first frame update
     void Awake()
     {
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        keepPos = this.transform.localPosition;
-        parent = transform.root.gameObject;
-
-        startPosition = transform.position;
         this.rigid2D = GetComponent<Rigidbody2D>();
-    }
-
-    void Move()
-    {
-        //GameObject.Find("PlayerBoal").GetComponent<PlayerController>();
-        //this.rigid2D.AddForce(transform.right * key * punchSpeed);
     }
 
     // Update is called once per frame
@@ -55,31 +36,25 @@ public class PunchController : MonoBehaviour
         //    key = -1;
         //}
 
+        float speedx = Mathf.Abs(this.rigid2D.velocity.x);
 
-        // ボタンを押します
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.K))
         {
-            punchFlag = true;
+            this.rigid2D.AddForce(transform.right * key * this.punchSpeed);
+            Debug.Log("ぱんち");
         }
 
-        // 押されたら一定距離までパンチします
-        if (punchFlag == true)
+        if (speedx > this.maxPunchDistance)
         {
-            punchTimer++;
-            this.transform.localPosition = new Vector3(this.transform.localPosition.x - (Mathf.Sin(punchTimer * punchSpeed) * 3.0f), this.transform.localPosition.y, this.transform.localPosition.z);
+            Debug.Log("Uターン");
+            this.rigid2D.AddForce(transform.right * -key * this.punchSpeed);
         }
 
-        //最大値まで行ったら止める
-        if (((Mathf.Sin(punchTimer * punchSpeed) * 3.0f) < -2.8f))
+        if (speedx < 0)
         {
-            punchFlag = false;
-        }
-
-        //止めたら戻す
-        if (punchFlag == false)
-        {
-            punchTimer = 0;
-            this.transform.localPosition = new Vector3(keepPos.x,this.transform.localPosition.y,this.transform.localPosition.z);
+            this.rigid2D.velocity = Vector2.zero;
+            rigid2D.isKinematic = true;
+            Debug.Log("止まるよ");
         }
     }
 }
