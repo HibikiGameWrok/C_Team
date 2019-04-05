@@ -49,8 +49,29 @@ public class StarDirector : MonoBehaviour {
         go2.transform.position = new Vector3(vecX2, vecY + go.GetComponent<Renderer>().bounds.size.y / 2, go.transform.position.z);
     }
 
+    public void CreateStar(int max)
+    {
+        GameObject go = Instantiate(star) as GameObject;
+        GameObject go2 = Instantiate(star) as GameObject;
 
-     // 外部から出現位置と星の取得数を入力し生成する関数　
+        starCreate = go.GetComponent<StarMove>();
+        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
+        starCreate.SetMaxStar(max);
+        particleSet.SetGameObject(gameobject);
+        starCreate.SetVecX(starX);
+
+        starCreate = go2.GetComponent<StarMove>();
+        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
+        starCreate.SetMaxStar(max);
+        particleSet.SetGameObject(gameobject);
+        starCreate.SetVecX(-starX);
+
+        go.transform.position = new Vector3(vecX1, vecY + go.GetComponent<Renderer>().bounds.size.y / 2, go.transform.position.z);
+        go2.transform.position = new Vector3(vecX2, vecY + go.GetComponent<Renderer>().bounds.size.y / 2, go.transform.position.z);
+    }
+
+
+    // 外部から出現位置と星の取得数を入力し生成する関数　
     // 引数(星1の位置,星2の位置,星の取得数)
     public void CreateStar(Vector3 objectPosR, Vector3 objectPosL,int maxStar)
     {
