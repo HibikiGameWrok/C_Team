@@ -16,8 +16,12 @@ public class ResultRocketMove : MonoBehaviour
     [SerializeField]
     float size = 1.0f;
 
+    //Y軸の最大値
     [SerializeField]
     float maxPosY = 0.0f;
+
+    [SerializeField]
+    bool moveEndFlag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +47,10 @@ public class ResultRocketMove : MonoBehaviour
             posY += vel;
             size += 0.003f;
         }
+        else
+        {
+            moveEndFlag = true;
+        }
 
         //位置の移動
         transform.position = new Vector3(posX, posY, transform.position.z);
@@ -54,5 +62,10 @@ public class ResultRocketMove : MonoBehaviour
 
         //大きさを徐々に大きく
         gameObject.transform.localScale = new Vector3(size, size, transform.localScale.z);
+    }
+
+    public bool GetMoveEndFlag()
+    {
+        return moveEndFlag;
     }
 }

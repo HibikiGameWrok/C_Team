@@ -12,6 +12,7 @@ public class ResultCameraMove : MonoBehaviour
     float posX = 0.0f;
     float posY = 0.0f;
 
+    //Y軸の最大値
     [SerializeField]
     float maxPosY = 0.0f;
 
@@ -39,4 +40,6 @@ public class ResultCameraMove : MonoBehaviour
         //位置の移動
         transform.position = new Vector3(posX, posY, transform.position.z);
     }
+
+
 }
