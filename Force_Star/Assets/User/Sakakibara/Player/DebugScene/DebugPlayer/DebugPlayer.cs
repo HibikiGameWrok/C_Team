@@ -295,7 +295,7 @@ public class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateReadFile();
         ReadTex();
-        m_updateFlag = !m_updateFlag;
+        UpdateUnity();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アップデート
@@ -574,6 +574,12 @@ public class DebugPlayer : MonoBehaviour
             // 場所を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_listAnime[partsNum].spriteData.m_localPos = m_listData.listData[partsNum].localPos;
+            m_listAnime[partsNum].spriteData.m_imagePos = m_listData.listData[partsNum].imagePos;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 角度を作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_listAnime[partsNum].spriteData.m_localAngle = m_listData.listData[partsNum].localAngle;
+            m_listAnime[partsNum].spriteData.m_imageAngle = m_listData.listData[partsNum].imageAngle;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 描画を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|

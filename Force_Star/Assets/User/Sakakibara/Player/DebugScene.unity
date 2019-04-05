@@ -139,60 +139,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 598219402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e23597702ff25468c1c9ea55c927b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 974bafc4f11874a4388625db72c9b0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_updateFlag: 0
   m_listData:
-    listData:
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-    - localPos: {x: 0, y: 0, z: 0}
-      size: {x: 1, y: 1}
-      dataNum: 0
-      depth: 0
-  m_fileName: SavePosBook.txt
+    listData: []
+  m_fileName: 
   m_mistary: {x: 0, y: 0, z: 0}
   m_mistary2:
+    imagePos: {x: 0, y: 0, z: 0}
     localPos: {x: 0, y: 0, z: 0}
+    imageAngle: {x: 0, y: 0, z: 0}
+    localAngle: {x: 0, y: 0, z: 0}
     size: {x: 1, y: 1}
     dataNum: 0
     depth: 0
