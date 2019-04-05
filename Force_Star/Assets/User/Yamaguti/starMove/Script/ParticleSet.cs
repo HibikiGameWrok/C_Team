@@ -26,7 +26,6 @@ public class ParticleSet : MonoBehaviour
         mEmObj = ParticleObj.main;
         maxStar = max;
         mEmObj.maxParticles = maxStar;
-      //  mEmObj.startSpeed = 0;
     }
 
     public void ResetSpeed()
