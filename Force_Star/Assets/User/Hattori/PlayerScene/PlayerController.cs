@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         // 移動方向によって画像の向きを変える
         if (key != 0)
         {
-            transform.localScale = new Vector3(direction.x * -key, direction.y, direction.z);
+            transform.localScale = new Vector3(direction.x * key, direction.y, direction.z);
         }
         //------------------------------------------------------------------
     }
@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
             //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount();
             Debug.Log("atatta");
         }
-
     }
 
     public bool GetJumpFlag()
