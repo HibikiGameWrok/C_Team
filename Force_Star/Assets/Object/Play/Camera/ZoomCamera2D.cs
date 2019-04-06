@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ZoomCamera2D : MonoBehaviour
 {
-    [SerializeField] // 対象物
-    Transform target1 = null, target2 = null;
+    /*[SerializeField]*/ // 対象物
+    //Transform target1 = null;
+
+    //Transform target2 = null;
 
     [SerializeField]
     Vector2 offset = new Vector2(1, 1);
@@ -28,39 +30,39 @@ public class ZoomCamera2D : MonoBehaviour
     void Update()
     {
         // カメラの座標を更新
-        UpdateCameraPosition();
+        //UpdateCameraPosition();
 
         // 
-        UpdateOrthographicSize();
+        //UpdateOrthographicSize();
 
     }
 
     void UpdateCameraPosition()
     {
         // 2点間の中心点からカメラの位置を更新
-        Vector3 center = Vector3.Lerp(target1.position, target2.position, 0.5f);
+       // Vector3 center = Vector3.Lerp(target1.position, target2.position, 0.5f);
 
-        transform.position = center + Vector3.forward * -10;
+       // transform.position = center + Vector3.forward * -10;
     }
 
     void UpdateOrthographicSize()
     {
         // ２点間のベクトルを取得
-        Vector3 targetsVector = AbsPositionDiff(target1, target2) + (Vector3)offset;
+       // Vector3 targetsVector = AbsPositionDiff(target1, target2) + (Vector3)offset;
 
         // アスペクト比が縦長ならyの半分、横長ならxとアスペクト比でカメラのサイズを更新
-        float targetsAspect = targetsVector.y / targetsVector.x;
+       // float targetsAspect = targetsVector.y / targetsVector.x;
 
         float targetOrthographicSize = 0;
 
-        if (screenAspect < targetsAspect)
-        {
-            targetOrthographicSize = targetsVector.y * 0.5f;
-        }
-        else
-        {
-            targetOrthographicSize = targetsVector.x * (1 / _camera.aspect) * 0.5f;
-        }
+        //if (screenAspect < targetsAspect)
+        //{
+        //    targetOrthographicSize = targetsVector.y * 0.5f;
+        //}
+        //else
+        //{
+        //    targetOrthographicSize = targetsVector.x * (1 / _camera.aspect) * 0.5f;
+        //}
 
         _camera.orthographicSize = targetOrthographicSize;
     }
