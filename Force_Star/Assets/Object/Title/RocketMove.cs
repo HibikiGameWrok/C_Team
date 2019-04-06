@@ -6,13 +6,11 @@ public class RocketMove : MonoBehaviour
 {
     //速さ
     [SerializeField]
-    float speed= 0.2f;
+    float speed = 0.2f;
 
+    // 間隔
     [SerializeField]
-    float s = 1.0f;
-
-
-
+    float interval = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +23,7 @@ public class RocketMove : MonoBehaviour
     {
   
         //ロケットの移動
-        transform.position = new Vector3(s, Mathf.Sin(Time.frameCount * speed), transform.position.z);
+        this.transform.position = new Vector3(this.transform.position.x, (Mathf.Sin(Time.frameCount * speed) * interval), this.transform.position.z);
 
     }
 }
