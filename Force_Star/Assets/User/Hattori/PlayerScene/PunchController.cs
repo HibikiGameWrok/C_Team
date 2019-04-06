@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class PunchController : MonoBehaviour
 {
-    private GameObject parent = null;
-
-    private Rigidbody2D rigid2D;
-
-    float punchSpeed = 0.5f;
-
-    float maxPunchDistance = 5.0f;
-
-    int key = 1;
-
-    private Vector2 startPosition;
+    private float punchSpeed = 0.5f;
 
     float punchTimer = 0.0f;
 
@@ -31,31 +21,16 @@ public class PunchController : MonoBehaviour
     void Start()
     {
         keepPos = this.transform.localPosition;
-        parent = transform.root.gameObject;
-
-        startPosition = transform.position;
-        this.rigid2D = GetComponent<Rigidbody2D>();
     }
 
     void Move()
     {
-        //GameObject.Find("PlayerBoal").GetComponent<PlayerController>();
-        //this.rigid2D.AddForce(transform.right * key * punchSpeed);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        //{
-        //    key = 1;
-        //}
-        //if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        //{
-        //    key = -1;
-        //}
-
-
         // ボタンを押します
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.K))
         {
