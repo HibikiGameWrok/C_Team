@@ -7,6 +7,13 @@ public class TargetFollow : MonoBehaviour
     [SerializeField]
     private GameObject target = null; // 追従する目標
 
+    [SerializeField]
+    private float MinimumLimit = 0.0f;  // 最低の範囲
+
+    [SerializeField]
+    private float HighLimit = 0.0f;  // 最高の範囲
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +25,14 @@ public class TargetFollow : MonoBehaviour
     {
         transform.position = new Vector3(target.transform.position.x, 0.0f, -10.0f);
 
-        if (transform.position.x < 0.0f)
+        if (transform.position.x < MinimumLimit)
         {
-            transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+            transform.position = new Vector3(MinimumLimit, 0.0f, -10.0f);
         }
 
-        if (transform.position.x >= 348.4f)
+        if (transform.position.x >= HighLimit)
         {
-            transform.position = new Vector3(348.4f, 0.0f, -10.0f);
+            transform.position = new Vector3(HighLimit, 0.0f, -10.0f);
         }
     }
 }
