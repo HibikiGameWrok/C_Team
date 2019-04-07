@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy2Move : MonoBehaviour
 {
+    public GameObject starDirec;
+
+    private StarDirector starCreate;
+
     //当たり判定
     Rigidbody2D rigid2D;
 
@@ -36,6 +40,9 @@ public class Enemy2Move : MonoBehaviour
     {
         //当たり判定の初期化
         this.rigid2D = GetComponent<Rigidbody2D>();
+
+        starCreate = starDirec.GetComponent<StarDirector>();
+
         if(highJumpMode == true)
         {
             jumpForce *= 2.0f;
@@ -52,6 +59,12 @@ public class Enemy2Move : MonoBehaviour
             //方向転換
             key *= -1;
         }
+
+        if(col.gameObject.tag == "AttackBoal")
+        {
+            starCreate.CreateStar(20);
+        }
+
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "ground")
         {

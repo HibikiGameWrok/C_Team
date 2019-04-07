@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy1Move : MonoBehaviour
 {
+    public GameObject starDirec;
+
+    private StarDirector starCreate;
+
     //動くスピード
     [SerializeField]
     float moveSpeed;
@@ -18,10 +22,18 @@ public class Enemy1Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        starCreate = starDirec.GetComponent<StarDirector>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "AttackBoal")
+        {
+            starCreate.CreateStar(20);
+        }
+    }
+        // Update is called once per frame
+        void Update()
     {
         //最大値まで行ったら反転
         if(distance > maxDistance)
