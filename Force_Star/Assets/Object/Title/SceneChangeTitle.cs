@@ -15,7 +15,7 @@ public class SceneChangeTitle : MonoBehaviour
     {
        if(Input.GetKeyDown(KeyCode.Space))
        { 
-            SceneManager.LoadScene("PlayScene");
+            SceneManager.LoadScene("SelectScene");
        }
     }
 }
