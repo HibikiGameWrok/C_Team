@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -320,6 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1161065312}
   - component: {fileID: 1161065311}
+  - component: {fileID: 1161065313}
   m_Layer: 0
   m_Name: BGM
   m_TagString: Untagged
@@ -337,9 +338,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2e69b95413105e7448c17206e3dc24cf, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4e4f505bb3af9474cac73ecc28f39b3d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -431,12 +432,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161065310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -31.07, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1161065313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161065310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662eb8a67034ed446b5b1c8ece95d8c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleFade: {fileID: 1549475792}
 --- !u!1 &1185446117
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +542,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b6996a15e474ca349b99d20a159d2e80, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a7fff63db90423e4d8d60db1a7128652, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -885,8 +899,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.012503}
-  m_SizeDelta: {x: 476, y: 267.97}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1549475792
 MonoBehaviour:
@@ -900,8 +914,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b26e29bb47684497fc5421b2807ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  red: 0
+  green: 0
+  blue: 0
+  alfa: 0
   isFadeOut: 0
-  isFadeIn: 0
+  isFadeIn: 1
 --- !u!114 &1549475793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,7 +933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

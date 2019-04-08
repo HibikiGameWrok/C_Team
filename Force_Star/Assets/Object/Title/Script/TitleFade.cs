@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class TitleFade : MonoBehaviour
 {
 
-
     float fadeSpeed = 0.02f;        //透明度が変わるスピードを管理
+    [SerializeField]
     float red, green, blue, alfa;   //パネルの色、不透明度を管理
 
     public bool isFadeOut = false;  //フェードアウト処理の開始、完了を管理するフラグ
@@ -75,6 +75,11 @@ public class TitleFade : MonoBehaviour
     void SetAlpha()
     {
         fadeImage.color = new Color(red, green, blue, alfa);
+    }
+
+    public float GetAlfa()
+    {
+        return alfa;
     }
 
 
