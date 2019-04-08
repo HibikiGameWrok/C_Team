@@ -40,8 +40,13 @@ public class PunchController : MonoBehaviour
         // 押されたら一定距離までパンチします
         if (punchFlag == true)
         {
+            GetComponent<SpriteRenderer>().enabled = true;
             punchTimer++;
             this.transform.localPosition = new Vector3(this.transform.localPosition.x - (Mathf.Sin(punchTimer * punchSpeed) * 3.0f), this.transform.localPosition.y, this.transform.localPosition.z);
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
         }
 
         //最大値まで行ったら止める
@@ -56,5 +61,10 @@ public class PunchController : MonoBehaviour
             punchTimer = 0;
             this.transform.localPosition = new Vector3(keepPos.x,this.transform.localPosition.y,this.transform.localPosition.z);
         }
+    }
+
+    public bool GetPunchFlag()
+    {
+        return punchFlag;
     }
 }
