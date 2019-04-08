@@ -652,7 +652,7 @@ MonoBehaviour:
   m_attenuation: 3
   moveFlag: 0
   endFlag: 0
-  VerticalSpeed: 0.05
+  VerticalSpeed: 0.01
   vel: 0.1
   size: 1
 --- !u!58 &1003752404
@@ -934,8 +934,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaterStar: {fileID: 21300000, guid: cfa16059429802b49a29987fe42a1c04, type: 3}
-  FireStar: {fileID: 21300000, guid: be94b3cc710852f4085482d03a187159, type: 3}
-  MachineStar: {fileID: 21300000, guid: be94b3cc710852f4085482d03a187159, type: 3}
+  FireStar: {fileID: 21300000, guid: 2bf8216c0e5ae67478706687da76f7cd, type: 3}
+  MachineStar: {fileID: 21300000, guid: 28bff02051f07944ba9e89b4d86359e0, type: 3}
   starCounter: 0
   starNumberFlag: 0
 --- !u!212 &1645446247
