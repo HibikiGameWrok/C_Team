@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float maxWalkSpeed = 2.0f;
 
-    // X方向に力がかかり過ぎないように抑制する値
-    //private float suppressionVelx = 2.0f;
+    // ジャンプSE
+    private AudioSource soundJump;
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour
         direction = this.transform.localScale;
         // 力を加える要素を取得
         this.rigid2D = GetComponent<Rigidbody2D>();
-        // 星を生成するスクリプトを取得
-        // starCreate = starDirec.GetComponent<StarDirector>();
-        //this.escape = GetComponent<StarCount>();
+
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        soundJump = audioSources[0];
     }
 
     // Update is called once per frame
@@ -115,11 +115,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && groundFlag)
         {
             this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
+            soundJump.PlayOneShot(soundJump.clip);
             groundFlag = false;
         }
         if (Input.GetKeyDown(KeyCode.J) && groundFlag)
         {
             this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
+            soundJump.PlayOneShot(soundJump.clip);
             groundFlag = false;
         }
         //--------------------------------------------------------
