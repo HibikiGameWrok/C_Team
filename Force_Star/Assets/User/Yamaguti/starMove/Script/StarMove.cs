@@ -113,7 +113,7 @@ public class StarMove : MonoBehaviour {
 
     public void PlayerCollision()
     {
-        if(!hitFlag)
+        if (!hitFlag)
         {
             // 衝突時星の本体を見えなくする
             hitFlag = true;
@@ -123,6 +123,7 @@ public class StarMove : MonoBehaviour {
             ParticleSet particleSet = this.GetComponent<ParticleSet>();
             particleSet.SetMaxStar(maxStar);
             particle.Play();                       // パーティクルの再生
+            transform.GetChild(5).gameObject.GetComponent<ParticleSystem>().Play();
         }
     }
 
