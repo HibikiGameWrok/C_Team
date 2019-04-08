@@ -142,5 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starDirec: {fileID: 0}
+  attackHand: {fileID: 0}
   jumpForce: 300
   highJumpMode: 0
