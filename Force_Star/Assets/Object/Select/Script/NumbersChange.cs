@@ -18,6 +18,8 @@ public class NumbersChange : MonoBehaviour
     [SerializeField]
     int starCounter = 0;
 
+
+
     //最大値
     const int MAX = 2;
     //最小値
@@ -108,5 +110,10 @@ public class NumbersChange : MonoBehaviour
     public int GetStarCounter()
     {
         return starCounter;
+    }
+
+    public bool GetStarNumberFlag()
+    {
+        return starNumberFlag;
     }
 }
