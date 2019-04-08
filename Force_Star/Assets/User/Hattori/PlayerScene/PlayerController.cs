@@ -148,24 +148,17 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
         {
             groundFlag = true;
-           // starCreate.CreateStar(20);
-        }
-
-        if(col.gameObject.tag == "StarPeace")
-        {
-            //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount();
-            
         }
     }
     void OnTriggerStay2D(Collider2D col)
     {
+        // ロケットに当たっている時
         if(col.gameObject.tag == "Roket")
         {
-            Debug.Log("hit");
+            // 脱出可能である時
             if(escape.escapeFlag == true)
             {
-                Debug.Log("脱出できるぞ");
-                Debug.Log("ロケットに接近");
+                // ↑orWを押すとシーン移行
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
                     SceneManager.LoadScene("ResultScene");
