@@ -66,7 +66,6 @@ public class PunchController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.gameObject.tag);
         // ロケットに当たっている時
         if (col.gameObject.tag == "Enemy")
         {
