@@ -5,8 +5,11 @@ using UnityEngine;
 public class Enemy1Move : MonoBehaviour
 {
     public GameObject starDirec;
+    public GameObject attackHand;
 
     private StarDirector starCreate;
+    private PunchController punchController;
+    private bool checkAttack;
 
     //動くスピード
     [SerializeField]
@@ -23,11 +26,13 @@ public class Enemy1Move : MonoBehaviour
     void Start()
     {
         starCreate = starDirec.GetComponent<StarDirector>();
+
+        punchController = attackHand.GetComponent<PunchController>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "AttackBoal")
+        if ((col.gameObject.tag == "AttackBoal")&& (checkAttack == true))
         {
             float posX1;
             float posX2;
@@ -62,5 +67,7 @@ public class Enemy1Move : MonoBehaviour
         //敵を移動させる
         transform.Translate(moveSpeed, 0, 0);
         distance += moveSpeed;
+
+        checkAttack = punchController.attackCheck;
     }
 }

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Enemy2Move : MonoBehaviour
 {
+
     public GameObject starDirec;
+    public GameObject attackHand;
 
     private StarDirector starCreate;
-
+    private PunchController punchController;
+    private bool checkAttack;
     //当たり判定
     Rigidbody2D rigid2D;
 
@@ -43,7 +46,9 @@ public class Enemy2Move : MonoBehaviour
 
         starCreate = starDirec.GetComponent<StarDirector>();
 
-        if(highJumpMode == true)
+        punchController = attackHand.GetComponent<PunchController>();
+
+        if (highJumpMode == true)
         {
             jumpForce *= 2.0f;
         }
@@ -69,7 +74,7 @@ public class Enemy2Move : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "AttackBoal")
+        if ((col.gameObject.tag == "AttackBoal")&&(checkAttack == true))
         {
             float posX1;
             float posX2;
@@ -129,5 +134,7 @@ public class Enemy2Move : MonoBehaviour
             jumpFlag = false;
             jumpTimer = 0;
         }
+
+        checkAttack = punchController.attackCheck;
     }
 }

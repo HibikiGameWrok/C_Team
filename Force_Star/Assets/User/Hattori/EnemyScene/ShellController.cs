@@ -5,8 +5,12 @@ using UnityEngine;
 public class ShellController : MonoBehaviour
 {
     public GameObject starDirec;
-    private StarDirector starCreate;
+    public GameObject attackHand;
 
+    private StarDirector starCreate;
+    private PunchController punchController;
+
+    private bool checkAttack;
 
     SpriteRenderer shellSprite;
     [SerializeField]
@@ -43,6 +47,8 @@ public class ShellController : MonoBehaviour
         shellRenderer = GetComponent<Renderer>();
         shellSprite = gameObject.GetComponent<SpriteRenderer>();
         starCreate = starDirec.GetComponent<StarDirector>();
+
+        punchController = attackHand.GetComponent<PunchController>();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -57,7 +63,7 @@ public class ShellController : MonoBehaviour
     {
         if (playerApproachFlag == true)
         {
-            if (col.gameObject.tag == "AttackBoal")
+            if ((col.gameObject.tag == "AttackBoal")&& (checkAttack == true))
             {
                 float posX1;
                 float posX2;
@@ -108,5 +114,8 @@ public class ShellController : MonoBehaviour
             dir = -1;
         }
         transform.localScale = new Vector3(xScale * dir, this.transform.localScale.y, this.transform.localScale.z);
+
+
+        checkAttack = punchController.attackCheck;
     }
 }
