@@ -27,43 +27,17 @@ public class ChangeStarImage : MonoBehaviour
     void Start()
     {
         MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        //MainSpriteRenderer.sprite = WaterStar;
+        
         starCounter = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-       ParenthesisMove();
        SwitchingImage();
     }
 
 
-    void ParenthesisMove()
-    {
-
-        //カッコの移動
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            starCounter += 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            starCounter += -1;
-        }
-
-        if (starCounter < MIN)
-        {
-            starCounter = MAX;
-        }
-
-        if (starCounter > MAX)
-        {
-            starCounter = MIN;
-        }
-
-    }
 
     void SwitchingImage()
     {
