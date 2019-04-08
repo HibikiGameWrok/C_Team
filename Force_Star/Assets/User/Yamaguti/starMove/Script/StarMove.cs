@@ -132,8 +132,8 @@ public class StarMove : MonoBehaviour {
     }
     public void SetJumpF(float jump)
     {
-        jumpForce=jump;
         startJF = jumpForce;
+        jumpForce =jump;
     }
     public float GetJumpF()
     {

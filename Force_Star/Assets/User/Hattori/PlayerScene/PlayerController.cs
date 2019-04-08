@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         // 力を加える要素を取得
         this.rigid2D = GetComponent<Rigidbody2D>();
         // 星を生成するスクリプトを取得
-        starCreate = starDirec.GetComponent<StarDirector>();
+       // starCreate = starDirec.GetComponent<StarDirector>();
     }
 
     // Update is called once per frame
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Floor")
         {
             groundFlag = true;
-            starCreate.CreateStar(20);
+           // starCreate.CreateStar(20);
         }
 
         if(col.gameObject.tag == "StarPeace")

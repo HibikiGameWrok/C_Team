@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ShellController : MonoBehaviour
 {
+    public GameObject starDirec;
+
+    private StarDirector starCreate;
+
     //追跡ターゲット(プレイヤー)
     [SerializeField]
     private GameObject player = null;
@@ -23,6 +27,8 @@ public class ShellController : MonoBehaviour
     void Start()
     {
         shellRenderer = GetComponent<Renderer>();
+
+        starCreate = starDirec.GetComponent<StarDirector>();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -31,6 +37,19 @@ public class ShellController : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             //Debug.Log("ガブガブガブ");
+        }
+
+        if (col.gameObject.tag == "AttackBoal")
+        {
+            float posX1;
+            float posX2;
+            float posY;
+            posX1 = this.transform.position.x + this.GetComponent<Renderer>().bounds.size.x / 2 + 3;
+            posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
+            posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
+
+            starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
+            //starCreate.CreateStar(20);
         }
     }
 
