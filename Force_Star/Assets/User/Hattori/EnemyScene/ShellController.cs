@@ -33,9 +33,13 @@ public class ShellController : MonoBehaviour
 
     bool playerApproachFlag = false;
 
+    // x軸の大きさ
+    private float xScale;
+
     // Start is called before the first frame update
     void Start()
     {
+        xScale = this.transform.localScale.x;
         shellRenderer = GetComponent<Renderer>();
         shellSprite = gameObject.GetComponent<SpriteRenderer>();
         starCreate = starDirec.GetComponent<StarDirector>();
@@ -73,27 +77,36 @@ public class ShellController : MonoBehaviour
     void Update()
     {
         //貝の向かう方向を決める
-        Vector2 direction = new Vector2(this.player.transform.position.x - transform.position.x, transform.position.y);
+        Vector2 direction = new Vector2(player.transform.position.x - transform.position.x, transform.position.y);
 
         //貝とプレイヤーの距離
-        float length = this.transform.position.x - this.player.transform.position.x;
+        float length = this.transform.position.x - player.transform.position.x;
 
         //プレイヤーが貝の射程範囲に入った時攻撃を開始する
-        if (-range < length && length < range)
+        if (-range <= length && length <= range)
         {
             //Debug.Log("嚙みついてやる");
             playerApproachFlag = true;
             GetComponent<Rigidbody2D>().velocity = (direction * speed);
-            //shellRenderer.material.color = Color.red;
             shellSprite.sprite = action_Image;
         }
         //プレイヤーが貝の射程範囲外なら攻撃しない
         else
         {
             playerApproachFlag = false;
-            //shellRenderer.material.color = Color.blue;
             shellSprite.sprite = wait_Image;
-            //Debug.Log("届かない");
         }
+
+        int dir = 1;
+        // 自身がプレイヤーの位置によって向きを変える
+        if(this.transform.position.x > player.transform.position.x)
+        {
+            dir = 1;
+        }
+        if (this.transform.position.x < player.transform.position.x)
+        {
+            dir = -1;
+        }
+        transform.localScale = new Vector3(xScale * dir, this.transform.localScale.y, this.transform.localScale.z);
     }
 }
