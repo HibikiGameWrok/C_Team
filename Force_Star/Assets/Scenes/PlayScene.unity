@@ -2163,7 +2163,12 @@ PrefabInstance:
     - target: {fileID: 7959036594517405351, guid: 04a1b8174e472a6438027576c0592d49,
         type: 3}
       propertyPath: maxWalkSpeed
-      value: 10
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7959036594517405351, guid: 04a1b8174e472a6438027576c0592d49,
+        type: 3}
+      propertyPath: walkForce
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7959036595946458517, guid: 04a1b8174e472a6438027576c0592d49,
         type: 3}
