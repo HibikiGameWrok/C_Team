@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class MenuRocketMove : MonoBehaviour
 {
+    //速さ
     [SerializeField]
     float vel = 1.0f;
+
+    //隕石と当たり判定のフラグ
     [SerializeField]
     bool moveFlag = false;
 
+    //位置
     float posX = 0.0f;
     float posY = 0.0f;
 
@@ -16,9 +20,22 @@ public class MenuRocketMove : MonoBehaviour
     [SerializeField]
     float size = 1.0f;
 
+    //SE
+    private AudioSource sound01;
+    private AudioSource sound02;
+
+    //音の大きさ
+    float m_MySliderValue = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
+        //AudioSourceコンポーネントを取得し、変数に格納
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        sound01 = audioSources[0];
+        sound02 = audioSources[1];
+
+
         posX = transform.position.x;
         posY = transform.position.y;
     }
@@ -26,7 +43,8 @@ public class MenuRocketMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(moveFlag == false)
+        
+        if (moveFlag == false)
         {
             //横移動のみ
             RocketMove();
@@ -41,9 +59,14 @@ public class MenuRocketMove : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         moveFlag = true;
+        //爆発音の再生
+        sound01.PlayOneShot(sound01.clip);
+
+        //墜落音の再生
+        sound02.PlayOneShot(sound02.clip);
     }
 
-        void RocketMove()
+    void RocketMove()
     {
         posX += vel;
 
@@ -58,6 +81,8 @@ public class MenuRocketMove : MonoBehaviour
 
     void RocketNextMove()
     {
+        m_MySliderValue += -0.005f;
+
         posX += vel;
         posY += vel;
 
@@ -78,5 +103,11 @@ public class MenuRocketMove : MonoBehaviour
     public bool GetMoveFlag()
     {
         return moveFlag;
+    }
+
+    void OnGUI()
+    {
+        //オーディオの音量をスライダの値と一致させます。
+        sound02.volume = m_MySliderValue;
     }
 }
