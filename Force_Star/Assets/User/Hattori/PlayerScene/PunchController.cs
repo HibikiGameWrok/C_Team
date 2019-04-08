@@ -12,6 +12,8 @@ public class PunchController : MonoBehaviour
 
     Vector3 keepPos;
 
+    public bool attackCheck = false;
+
     // ダメージSE
     private AudioSource soundDamage;
 
@@ -46,6 +48,7 @@ public class PunchController : MonoBehaviour
         // 押されたら一定距離までパンチします
         if (punchFlag == true)
         {
+            attackCheck = true;
             punchTimer++;
             this.transform.localPosition = new Vector3(this.transform.localPosition.x - (Mathf.Sin(punchTimer * punchSpeed) * 3.0f), this.transform.localPosition.y, this.transform.localPosition.z);
         }
@@ -61,13 +64,14 @@ public class PunchController : MonoBehaviour
         {
             punchTimer = 0;
             this.transform.localPosition = new Vector3(keepPos.x,this.transform.localPosition.y,this.transform.localPosition.z);
+            attackCheck = false;
         }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         // ロケットに当たっている時
-        if (col.gameObject.tag == "Enemy")
+        if ((col.gameObject.tag == "Enemy")&&(attackCheck == true))
         {
             soundDamage.PlayOneShot(soundDamage.clip);
         }
