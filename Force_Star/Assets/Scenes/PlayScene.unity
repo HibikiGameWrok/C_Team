@@ -3196,7 +3196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd991de727dd3ab4cb43628a9a33b49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 3600
+  hp: 7200
 --- !u!4 &1451323639
 Transform:
   m_ObjectHideFlags: 0
@@ -4871,6 +4871,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4534720533626408888, guid: 597e114caef202e4cbec0607055c1415,
+        type: 3}
+      propertyPath: m_Name
+      value: Rocket_1
+      objectReference: {fileID: 0}
     - target: {fileID: 4534720534826884744, guid: 597e114caef202e4cbec0607055c1415,
         type: 3}
       propertyPath: playOnAwake
@@ -4880,11 +4885,6 @@ PrefabInstance:
         type: 3}
       propertyPath: looping
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534720533626408888, guid: 597e114caef202e4cbec0607055c1415,
-        type: 3}
-      propertyPath: m_Name
-      value: Rocket_1
       objectReference: {fileID: 0}
     - target: {fileID: 4534720533626408894, guid: 597e114caef202e4cbec0607055c1415,
         type: 3}

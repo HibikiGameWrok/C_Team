@@ -14,11 +14,11 @@ public class ShellController : MonoBehaviour
 
     SpriteRenderer shellSprite;
     [SerializeField]
-    private Sprite wait_Image;
+    private Sprite wait_Image = null;
     [SerializeField]
-    private Sprite action_Image;
-    [SerializeField]
-    private Sprite damage_Image;
+    private Sprite action_Image = null;
+    //[SerializeField]
+    //private Sprite damage_Image = null;
 
     //追跡ターゲット(プレイヤー)
     [SerializeField]
