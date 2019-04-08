@@ -149,7 +149,7 @@ public class ParticleMove : MonoBehaviour
     {
         // このフレームのトリガーの条件に一致するパーティクルを取得します
         int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        Debug.Log("入った");
+        //Debug.Log("入った");
         // トリガーに侵入したパーティクルを走査し、赤にします
         for (int i = 0; i < numEnter; i++)
         {
