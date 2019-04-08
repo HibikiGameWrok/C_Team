@@ -31,7 +31,7 @@ public class Enemy2Move : MonoBehaviour
     int jumpTimer = 0;
 
     //敵の方向
-    int key = 1;
+    int key = -1;
 
     [SerializeField]
     bool highJumpMode = false;
@@ -60,7 +60,16 @@ public class Enemy2Move : MonoBehaviour
             key *= -1;
         }
 
-        if(col.gameObject.tag == "AttackBoal")
+        //地面に接していたらgroundFlagをtrueにする
+        if (col.gameObject.tag == "Floor")
+        {
+            groundFlag = true;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "AttackBoal")
         {
             float posX1;
             float posX2;
@@ -70,21 +79,17 @@ public class Enemy2Move : MonoBehaviour
             posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
             // 
-            starCreate.CreateStar(new Vector2(posX1, posY),new Vector2(posX2, posY),10);
-            //starCreate.CreateStar(20);
-        }
+            starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
 
-        //地面に接していたらgroundFlagをtrueにする
-        if (col.gameObject.tag == "ground")
-        {
-            groundFlag = true;
+            Destroy(this.gameObject);
+            //starCreate.CreateStar(20);
         }
     }
 
     void OnCollisionExit2D(Collision2D col)
     {
         //地面から離れたらgroundFlagをfalseにする
-        if (col.gameObject.tag == "ground")
+        if (col.gameObject.tag == "Floor")
         {
             groundFlag = false;
         }

@@ -25,7 +25,7 @@ public class Enemy1Move : MonoBehaviour
         starCreate = starDirec.GetComponent<StarDirector>();
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "AttackBoal")
         {
@@ -38,6 +38,8 @@ public class Enemy1Move : MonoBehaviour
 
             // 
             starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
+
+            Destroy(this.gameObject);
             //starCreate.CreateStar(20);
         }
     }
