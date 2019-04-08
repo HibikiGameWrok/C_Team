@@ -5,8 +5,16 @@ using UnityEngine;
 public class ShellController : MonoBehaviour
 {
     public GameObject starDirec;
-
     private StarDirector starCreate;
+
+
+    SpriteRenderer shellSprite;
+    [SerializeField]
+    private Sprite wait_Image;
+    [SerializeField]
+    private Sprite action_Image;
+    [SerializeField]
+    private Sprite damage_Image;
 
     //追跡ターゲット(プレイヤー)
     [SerializeField]
@@ -29,7 +37,7 @@ public class ShellController : MonoBehaviour
     void Start()
     {
         shellRenderer = GetComponent<Renderer>();
-
+        shellSprite = gameObject.GetComponent<SpriteRenderer>();
         starCreate = starDirec.GetComponent<StarDirector>();
     }
 
@@ -54,11 +62,9 @@ public class ShellController : MonoBehaviour
                 posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
                 posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
-                // 
+                // ☆を生成
                 starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
-
                 Destroy(this.gameObject);
-                //starCreate.CreateStar(20);
             }
         }
     }
@@ -78,13 +84,15 @@ public class ShellController : MonoBehaviour
             //Debug.Log("嚙みついてやる");
             playerApproachFlag = true;
             GetComponent<Rigidbody2D>().velocity = (direction * speed);
-            shellRenderer.material.color = Color.red;
+            //shellRenderer.material.color = Color.red;
+            shellSprite.sprite = action_Image;
         }
         //プレイヤーが貝の射程範囲外なら攻撃しない
         else
         {
             playerApproachFlag = false;
-            shellRenderer.material.color = Color.blue;
+            //shellRenderer.material.color = Color.blue;
+            shellSprite.sprite = wait_Image;
             //Debug.Log("届かない");
         }
     }
