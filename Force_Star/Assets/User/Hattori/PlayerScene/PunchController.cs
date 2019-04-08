@@ -12,6 +12,9 @@ public class PunchController : MonoBehaviour
 
     Vector3 keepPos;
 
+    // ダメージSE
+    private AudioSource soundDamage;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,6 +24,9 @@ public class PunchController : MonoBehaviour
     void Start()
     {
         keepPos = this.transform.localPosition;
+
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        soundDamage = audioSources[0];
     }
 
     void Move()
@@ -55,6 +61,16 @@ public class PunchController : MonoBehaviour
         {
             punchTimer = 0;
             this.transform.localPosition = new Vector3(keepPos.x,this.transform.localPosition.y,this.transform.localPosition.z);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log(col.gameObject.tag);
+        // ロケットに当たっている時
+        if (col.gameObject.tag == "Enemy")
+        {
+            soundDamage.PlayOneShot(soundDamage.clip);
         }
     }
 }
