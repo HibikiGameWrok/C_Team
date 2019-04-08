@@ -47,7 +47,7 @@ public class MenuRocketMove : MonoBehaviour
     {
         posX += vel;
 
-        if (posX < -12.0f)
+        if (posX < -10.0f)
         {
             posX = 9.0f;
         }
