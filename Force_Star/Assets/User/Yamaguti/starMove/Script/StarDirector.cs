@@ -159,8 +159,37 @@ public class StarDirector : MonoBehaviour {
 
     }
 
+    // 星を個別で作るようの関数
+    // 外部から出現位置と星の取得数を入力し生成する関数(壁衝突,ジャンプ力を外部で操作する用)
+    // 引数(星の位置,星の取得数,X軸の方向(flase:左　true:右),最初のジャンプ力)
+    public void CreateOneStar(Vector2 objectPos, int maxStar, bool flag, float jump)
+    {
+        // 星の生成
+        GameObject go = Instantiate(star) as GameObject;
+
+        //  flaseであれば左へ
+        if (!flag)
+            starX = -starX;
+
+        // 星1
+        starCreate = go.GetComponent<StarMove>();
+        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
+        particleSet.SetGameObject(playerObject); // パーティクル用のオブジェクト渡し
+        starCreate.SetVecX(starX);         // 横移動の向き
+        starCreate.SetMaxStar(maxStar);    // 星の所有数
+        starCreate.SetJumpF(jump);        // 星1のジャンプ力
+        // 配置
+        go.transform.position = new Vector3(objectPos.x, objectPos.y, go.transform.position.z);   //　右の星
+    }
+
+    // 星の画像サイズの半分の取得用関数
     public float GetStarSize()
     {
         return star.GetComponent<Renderer>().bounds.size.y / 2;
+    }
+    // 星のジャンプ力の取得用関数
+    public float GetStarJump()
+    {
+        return star.GetComponent<StarMove>().GetJumpF();
     }
 }
