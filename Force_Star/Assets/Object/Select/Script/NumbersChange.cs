@@ -51,7 +51,7 @@ public class NumbersChange : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && starCounter == 0)
         {
             starNumberFlag = true;
         }

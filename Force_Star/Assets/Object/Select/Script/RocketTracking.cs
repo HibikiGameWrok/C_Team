@@ -31,12 +31,27 @@ public class RocketTracking : MonoBehaviour
     [SerializeField]
     float size = 1.0f;
 
+    //
+    int starCounter = 0;
+
+    //最大値
+    const int MAX = 2;
+    //最小値
+    const int MIN = 0;
+
+    void Start()
+    {
+        posX = transform.position.x;
+        posY = transform.position.y;
+    }
+
+
     private void Update()
     {
 
-
-        if(endFlag == true)
+        if (endFlag == true)
         {
+            //上に移動
             EndMove();
         }
         else
@@ -54,11 +69,13 @@ public class RocketTracking : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&& starCounter == 0)
         {
             moveFlag = true;
         }
 
+
+        Test();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -69,7 +86,9 @@ public class RocketTracking : MonoBehaviour
 
     void FloatMove()
     {
-        transform.position = new Vector3(transform.position.x,3.0f + Mathf.Sin(Time.frameCount * VerticalSpeed), transform.position.z);
+        VerticalSpeed += 0.01f; 
+
+        transform.position = new Vector3(transform.position.x, posY + Mathf.Sin(VerticalSpeed), transform.position.z);
     }
 
     void TrackingMove()
@@ -87,6 +106,10 @@ public class RocketTracking : MonoBehaviour
 
     void EndMove()
     {
+        //位置を当たった場所にする
+        posX = transform.position.x;
+        posY = transform.position.y;
+
         posX += vel;
         posY += vel;
 
@@ -100,5 +123,27 @@ public class RocketTracking : MonoBehaviour
         }
     }
 
+    void Test()
+    {
+        //カッコの移動
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            starCounter += 1;
+        }
 
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            starCounter += -1;
+        }
+
+        if (starCounter < MIN)
+        {
+            starCounter = MAX;
+        }
+
+        if (starCounter > MAX)
+        {
+            starCounter = MIN;
+        }
+    }
 }
