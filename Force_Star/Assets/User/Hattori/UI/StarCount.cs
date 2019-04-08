@@ -7,11 +7,19 @@ public class StarCount : MonoBehaviour {
 
     GameObject starCounter;
 
+    public ParticleSystem particle;
+
+    public GameObject panele;
+
     int starCount;
 
     int clearStarCount;
 
     public bool escapeFlag = false;
+
+    bool efectFlag = false;
+
+    Color panelColor;
 
     // Use this for initialization
     void Start () {
@@ -20,7 +28,11 @@ public class StarCount : MonoBehaviour {
         this.starCounter = GameObject.Find("StarCounter");
 
         clearStarCount = 100;
-	}
+        particle.Stop();
+        panelColor = panele.GetComponent<SpriteRenderer>().color;
+        panele.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
+       
+    }
 	
     public void AddCount(int count){
         starCount += count;
@@ -35,5 +47,14 @@ public class StarCount : MonoBehaviour {
         {
             escapeFlag = true;
         }
+
+        if (!efectFlag&& escapeFlag)
+        {
+            Debug.Log("ok");
+            panele.GetComponent<SpriteRenderer>().color = panelColor;
+            particle.Play();
+            efectFlag = true;
+        }
+          
 	}
 }
