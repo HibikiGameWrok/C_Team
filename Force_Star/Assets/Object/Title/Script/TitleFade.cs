@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //パネルのイメージを操作するのに必要
+using UnityEngine.SceneManagement;
 
 public class TitleFade : MonoBehaviour
 {
 
-
     float fadeSpeed = 0.02f;        //透明度が変わるスピードを管理
+    [SerializeField]
     float red, green, blue, alfa;   //パネルの色、不透明度を管理
 
     public bool isFadeOut = false;  //フェードアウト処理の開始、完了を管理するフラグ
@@ -40,7 +41,10 @@ public class TitleFade : MonoBehaviour
             StartFadeOut();
         }
 
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isFadeOut = true;
+        }
     }
 
 
@@ -64,12 +68,18 @@ public class TitleFade : MonoBehaviour
         if (alfa >= 1)
         {             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
+            SceneManager.LoadScene("SelectScene");
         }
     }
 
     void SetAlpha()
     {
         fadeImage.color = new Color(red, green, blue, alfa);
+    }
+
+    public float GetAlfa()
+    {
+        return alfa;
     }
 
 
