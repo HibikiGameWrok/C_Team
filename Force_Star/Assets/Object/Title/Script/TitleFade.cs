@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //パネルのイメージを操作するのに必要
+using UnityEngine.SceneManagement;
 
 public class TitleFade : MonoBehaviour
 {
@@ -40,7 +41,10 @@ public class TitleFade : MonoBehaviour
             StartFadeOut();
         }
 
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isFadeOut = true;
+        }
     }
 
 
@@ -64,6 +68,7 @@ public class TitleFade : MonoBehaviour
         if (alfa >= 1)
         {             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
+            SceneManager.LoadScene("SelectScene");
         }
     }
 
