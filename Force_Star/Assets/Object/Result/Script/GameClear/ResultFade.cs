@@ -77,7 +77,8 @@ public class ResultFade : MonoBehaviour
         if (alfa >= 1)
         {             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
-            SceneManager.LoadScene("SelectScene");
+            //タイトルシーンに戻る
+            SceneManager.LoadScene("TitleScene");
         }
     }
 
@@ -86,5 +87,8 @@ public class ResultFade : MonoBehaviour
         fadeImage.color = new Color(red, green, blue, alfa);
     }
 
-
+    public float GetAlfa()
+    {
+        return alfa;
+    }
 }
