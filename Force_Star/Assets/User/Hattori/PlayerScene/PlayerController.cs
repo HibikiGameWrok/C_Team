@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rigid2D;     //力を加える要素
     public GameObject starDirec;     //星
     private StarDirector starCreate; //星の生成スクリプト
+    public StarCount escape;
 
     [SerializeField]
     private float walkForce = 30.0f;　　 //歩く力
@@ -32,7 +34,8 @@ public class PlayerController : MonoBehaviour
         // 力を加える要素を取得
         this.rigid2D = GetComponent<Rigidbody2D>();
         // 星を生成するスクリプトを取得
-       // starCreate = starDirec.GetComponent<StarDirector>();
+        // starCreate = starDirec.GetComponent<StarDirector>();
+        //this.escape = GetComponent<StarCount>();
     }
 
     // Update is called once per frame
@@ -48,14 +51,14 @@ public class PlayerController : MonoBehaviour
 
         //今後カメラを上に移動させる
         //上を向いて歩こう----------------------------------------------
-        if (Input.GetKey(KeyCode.UpArrow) && groundFlag)
-        {
-            Debug.Log("上から来るぞ気を付けろ!");
-        }
-        if (Input.GetKey(KeyCode.W) && groundFlag)
-        {
-            Debug.Log("上から来るぞ気を付けろ!");
-        }
+        //if (Input.GetKey(KeyCode.UpArrow) && groundFlag)
+        //{
+        //    Debug.Log("上から来るぞ気を付けろ!");
+        //}
+        //if (Input.GetKey(KeyCode.W) && groundFlag)
+        //{
+        //    Debug.Log("上から来るぞ気を付けろ!");
+        //}
         //--------------------------------------------------------------
     }
 
@@ -66,7 +69,7 @@ public class PlayerController : MonoBehaviour
         //パンチ--------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.K))
         {
-            Debug.Log("ぱんちした");
+            
         }
         //--------------------------------------------------------------
     }
@@ -142,7 +145,7 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         //地面に接していたらgroundFlagをtrueにする
-        if (col.gameObject.tag == "Floor")
+        if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
         {
             groundFlag = true;
            // starCreate.CreateStar(20);
@@ -151,7 +154,23 @@ public class PlayerController : MonoBehaviour
         if(col.gameObject.tag == "StarPeace")
         {
             //GameObject.Find("StarCount").GetComponent<StarCount>().AddCount();
-            Debug.Log("atatta");
+            
+        }
+    }
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "Roket")
+        {
+            Debug.Log("hit");
+            if(escape.escapeFlag == true)
+            {
+                Debug.Log("脱出できるぞ");
+                Debug.Log("ロケットに接近");
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                {
+                    SceneManager.LoadScene("ResultScene");
+                }
+            }
         }
     }
 

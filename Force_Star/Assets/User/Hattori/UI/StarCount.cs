@@ -9,11 +9,17 @@ public class StarCount : MonoBehaviour {
 
     int starCount;
 
-	// Use this for initialization
-	void Start () {
+    int clearStarCount;
+
+    public bool escapeFlag = false;
+
+    // Use this for initialization
+    void Start () {
         starCount = 0;
 
         this.starCounter = GameObject.Find("StarCounter");
+
+        clearStarCount = 100;
 	}
 	
     public void AddCount(int count){
@@ -24,5 +30,10 @@ public class StarCount : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         this.starCounter.GetComponent<Text>().text = "×" + starCount.ToString();
+
+        if(starCount >= clearStarCount)
+        {
+            escapeFlag = true;
+        }
 	}
 }
