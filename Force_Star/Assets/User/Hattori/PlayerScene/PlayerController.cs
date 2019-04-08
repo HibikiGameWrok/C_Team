@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 300.0f;     //ジャンプする力
 
     private bool  groundFlag = true; // true = 着地している, false = 地に着いていない
-    
+
     // 加算させ続けない為の最大値
     [SerializeField]
     private float maxWalkSpeed = 2.0f;
@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour
         //パンチ--------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.K))
         {
-            
         }
         //--------------------------------------------------------------
     }
@@ -93,10 +92,16 @@ public class PlayerController : MonoBehaviour
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
 
         // 着地時のX方向への移動速度の制限
-        if ((speedx < this.maxWalkSpeed) && (groundFlag == true))
+        if ((speedx < maxWalkSpeed))
         {
             // 力を加える
             this.rigid2D.AddForce(transform.right * key * this.walkForce);
+
+            if(key > 0 || key < 0)
+            {
+                // 力を加える
+                this.rigid2D.AddForce((transform.right * key * this.walkForce) * 0.5f);
+            }
         }
 
         // 移動方向によって画像の向きを変える
@@ -112,13 +117,13 @@ public class PlayerController : MonoBehaviour
     void JumpPlayer()
     {
         //ジャンプ------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z) && groundFlag)
+        if (Input.GetKeyDown(KeyCode.Z) && (groundFlag == true))
         {
             this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
             soundJump.PlayOneShot(soundJump.clip);
             groundFlag = false;
         }
-        if (Input.GetKeyDown(KeyCode.J) && groundFlag)
+        if (Input.GetKeyDown(KeyCode.J) && (groundFlag == true))
         {
             this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
             soundJump.PlayOneShot(soundJump.clip);
@@ -132,14 +137,14 @@ public class PlayerController : MonoBehaviour
     void StepOnPlayer()
     {
         //踏みつけ-----------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.DownArrow) && groundFlag != true)
-        {
-            this.rigid2D.AddForce(transform.up * -this.jumpForce);
-        }
-        if (Input.GetKeyDown(KeyCode.S) && groundFlag != true)
-        {
-            this.rigid2D.AddForce(transform.up * -this.jumpForce);
-        }
+        //if (Input.GetKeyDown(KeyCode.DownArrow) && groundFlag != true)
+        //{
+        //    this.rigid2D.AddForce(transform.up * -this.jumpForce);
+        //}
+        //if (Input.GetKeyDown(KeyCode.S) && groundFlag != true)
+        //{
+        //    this.rigid2D.AddForce(transform.up * -this.jumpForce);
+        //}
         //------------------------------------------------------------
     }
 
@@ -152,10 +157,12 @@ public class PlayerController : MonoBehaviour
             groundFlag = true;
         }
     }
+
+
     void OnTriggerStay2D(Collider2D col)
-    {
+    {        
         // ロケットに当たっている時
-        if(col.gameObject.tag == "Roket")
+        if (col.gameObject.tag == "Roket")
         {
             // 脱出可能である時
             if(escape.escapeFlag == true)
