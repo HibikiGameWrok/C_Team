@@ -45,7 +45,7 @@ public class ImagaChange : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && starCounter == 0)
         {
             starFlag = true;
         }

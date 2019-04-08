@@ -107,5 +107,9 @@ public class SelectFade : MonoBehaviour
         fadeImage.color = new Color(red, green, blue, alfa);
     }
 
+    public float GetAlfa()
+    {
+        return alfa;
+    }
 
 }
