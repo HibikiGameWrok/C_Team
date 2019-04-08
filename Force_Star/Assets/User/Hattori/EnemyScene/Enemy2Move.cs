@@ -62,7 +62,16 @@ public class Enemy2Move : MonoBehaviour
 
         if(col.gameObject.tag == "AttackBoal")
         {
-            starCreate.CreateStar(20);
+            float posX1;
+            float posX2;
+            float posY;
+            posX1 = this.transform.position.x + this.GetComponent<Renderer>().bounds.size.x / 2 + 3;
+            posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
+            posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
+
+            // 
+            starCreate.CreateStar(new Vector2(posX1, posY),new Vector2(posX2, posY),10);
+            //starCreate.CreateStar(20);
         }
 
         //地面に接していたらgroundFlagをtrueにする

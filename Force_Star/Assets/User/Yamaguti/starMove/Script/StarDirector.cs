@@ -73,20 +73,20 @@ public class StarDirector : MonoBehaviour {
 
     // 外部から出現位置と星の取得数を入力し生成する関数　
     // 引数(星1の位置,星2の位置,星の取得数)
-    public void CreateStar(Vector3 objectPosR, Vector3 objectPosL,int maxStar)
+    public void CreateStar(Vector2 objectPosR, Vector2 objectPosL,int maxStar)
     {
         // 星の生成
         GameObject go = Instantiate(star) as GameObject;
         GameObject go2 = Instantiate(star) as GameObject;
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.GetComponent<ParticleMove>();
+        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
         particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         // 星2
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go.GetComponent<ParticleMove>();
+        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
         particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(-starX);        // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
@@ -97,7 +97,7 @@ public class StarDirector : MonoBehaviour {
 
     // 外部から出現位置と星の取得数を入力し生成する関数(壁衝突用)
     // 引数(星1の位置,星2の位置,星の取得数,X軸の方向(flase:左　true:右))
-    public void CreateStar(Vector3 objectPosT, Vector3 objectPosB, int maxStar, bool flag )
+    public void CreateStar(Vector2 objectPosT, Vector2 objectPosB, int maxStar, bool flag )
     {
         // 星の生成
         GameObject go = Instantiate(star) as GameObject;
@@ -109,13 +109,13 @@ public class StarDirector : MonoBehaviour {
 
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.GetComponent<ParticleMove>();
+        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
         particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         // 星2
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go.GetComponent<ParticleMove>();
+        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
         particleSet.SetGameObject(playerObject);    // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
@@ -128,7 +128,7 @@ public class StarDirector : MonoBehaviour {
 
     // 外部から出現位置と星の取得数を入力し生成する関数(壁衝突,ジャンプ力を外部で操作する用)
     // 引数(星1の位置,星2の位置,星の取得数,X軸の方向(flase:左　true:右),星1のジャンプ力,星2のジャンプ力)
-    public void CreateStar(Vector3 objectPosT, Vector3 objectPosB, int maxStar, bool flag,float jump1,float jump2)
+    public void CreateStar(Vector2 objectPosT, Vector2 objectPosB, int maxStar, bool flag,float jump1,float jump2)
     {
         // 星の生成
         GameObject go = Instantiate(star) as GameObject;
@@ -140,14 +140,14 @@ public class StarDirector : MonoBehaviour {
 
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.GetComponent<ParticleMove>();
+        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
         particleSet.SetGameObject(playerObject); // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         starCreate.SetJumpF(jump1);        // 星1のジャンプ力
         // 星2
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go.GetComponent<ParticleMove>();
+        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
         particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
@@ -157,5 +157,10 @@ public class StarDirector : MonoBehaviour {
         go.transform.position = new Vector3(objectPosT.x, objectPosT.y, go.transform.position.z);   //　右の星
         go2.transform.position = new Vector3(objectPosB.x, objectPosB.y, go.transform.position.z);  //　左の星
 
+    }
+
+    public float GetStarSize()
+    {
+        return star.GetComponent<Renderer>().bounds.size.y / 2;
     }
 }
