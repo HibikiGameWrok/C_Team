@@ -41,7 +41,7 @@ public class TitleFade : MonoBehaviour
             StartFadeOut();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isFadeIn == false)
         {
             isFadeOut = true;
         }
