@@ -27,7 +27,7 @@ public class StarCount : MonoBehaviour {
 
         this.starCounter = GameObject.Find("StarCounter");
 
-        clearStarCount = 100;
+        clearStarCount = 130;
         particle.Stop();
         panelColor = panele.GetComponent<SpriteRenderer>().color;
         panele.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);

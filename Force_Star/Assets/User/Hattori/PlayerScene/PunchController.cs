@@ -48,9 +48,17 @@ public class PunchController : MonoBehaviour
         // 押されたら一定距離までパンチします
         if (punchFlag == true)
         {
+            GetComponent<SpriteRenderer>().enabled = true;
             attackCheck = true;
             punchTimer++;
             this.transform.localPosition = new Vector3(this.transform.localPosition.x - (Mathf.Sin(punchTimer * punchSpeed) * 3.0f), this.transform.localPosition.y, this.transform.localPosition.z);
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            punchTimer = 0;
+            this.transform.localPosition = new Vector3(keepPos.x, this.transform.localPosition.y, this.transform.localPosition.z);
+            attackCheck = false;
         }
 
         //最大値まで行ったら止める
@@ -59,13 +67,8 @@ public class PunchController : MonoBehaviour
             punchFlag = false;
         }
 
-        //止めたら戻す
-        if (punchFlag == false)
-        {
-            punchTimer = 0;
-            this.transform.localPosition = new Vector3(keepPos.x,this.transform.localPosition.y,this.transform.localPosition.z);
-            attackCheck = false;
-        }
+
+
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -75,5 +78,11 @@ public class PunchController : MonoBehaviour
         {
             soundDamage.PlayOneShot(soundDamage.clip);
         }
+    }
+
+
+    public bool GetPunchFlag()
+    {
+        return punchFlag;
     }
 }
