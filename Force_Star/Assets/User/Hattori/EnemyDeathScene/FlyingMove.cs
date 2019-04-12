@@ -6,7 +6,7 @@ public class FlyingMove : MonoBehaviour
 {
     //動くスピード
     [SerializeField]
-    float moveSpeed;
+    float moveSpeed = 0.0f;
 
     //往復移動の一定距離
     [SerializeField]
@@ -18,15 +18,35 @@ public class FlyingMove : MonoBehaviour
 
     Rigidbody2D rigid2D;
 
-    [SerializeField]
-    public enum Seagull_State
-    {
-        verticalMovement,
-        lateralMovement,
-        notMovement
-    }
+    //[SerializeField]
+    //public enum Seagull_State
+    //{
+    //    verticalMovement,
+    //    lateralMovement,
+    //    notMovement
+    //}
+    //
+    //public Seagull_State seagull_state;
 
-    public Seagull_State seagull_state;
+    //[SerializeField]
+    //private float gravy;
+
+    [SerializeField]
+    private float deathTimer;
+
+    private float deathCount = 0.0f;
+
+    Vector2 downVel;
+
+    float delTime;
+
+    float delFxSize;
+
+    float delFxSMass;
+
+    float delFxSMin;
+
+    float delFxSMax;
 
     // Start is called before the first frame update
     void Start()
@@ -37,8 +57,12 @@ public class FlyingMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(seagull_state == Seagull_State.lateralMovement)
-        {
+        //if(seagull_state == Seagull_State.lateralMovement)
+        //{
+            //敵を移動させる
+            distance += moveSpeed;
+            transform.Translate(moveSpeed, 0, 0);
+
             //最大値まで行ったら反転
             if (distance > maxDistance)
             {
@@ -51,16 +75,16 @@ public class FlyingMove : MonoBehaviour
                 moveSpeed = moveSpeed * -1;
                 distance = 0.0f;
             }
-
-            //敵を移動させる
-            transform.Translate(moveSpeed, 0, 0);
-            distance += moveSpeed;
-        }
-
-        if(seagull_state == Seagull_State.verticalMovement)
-        {
-            rigid2D.bodyType = RigidbodyType2D.Dynamic;
-        }
+        //if(seagull_state == Seagull_State.verticalMovement)
+        //{
+        //    //rigid2D.bodyType = RigidbodyType2D.Dynamic;
+        //    rigid2D.gravityScale = gravy;
+        //    deathCount++;
+        //    if(deathTimer < deathCount)
+        //    {
+        //        Destroy(this.gameObject);
+        //    }
+        //}
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -68,7 +92,7 @@ public class FlyingMove : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             Debug.Log("落ちます");
-            seagull_state = Seagull_State.verticalMovement;
+            //seagull_state = Seagull_State.verticalMovement;
         }
     }
 }
