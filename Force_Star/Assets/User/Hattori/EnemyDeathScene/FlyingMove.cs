@@ -98,7 +98,7 @@ public class FlyingMove : MonoBehaviour
             downVel.x *= -1;
             downVel.y *= -1;
             transform.Translate(downVel, 0);
-            Debug.Log("落ちます");
+            Debug.Log("星が出て消えるよ");
             //seagull_state = Seagull_State.verticalMovement;
         }
     }
