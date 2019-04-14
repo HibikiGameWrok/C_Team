@@ -18,6 +18,8 @@ public class FlyingMove : MonoBehaviour
 
     Rigidbody2D rigid2D;
 
+    private GameObject player;
+
     //[SerializeField]
     //public enum Seagull_State
     //{
@@ -52,6 +54,7 @@ public class FlyingMove : MonoBehaviour
     void Start()
     {
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -91,6 +94,10 @@ public class FlyingMove : MonoBehaviour
         //タグで当たり判定を管理する
         if (col.gameObject.tag == "Player")
         {
+            Vector2 downVel = player.transform.position - this.transform.position;
+            downVel.x *= -1;
+            downVel.y *= -1;
+            transform.Translate(downVel, 0);
             Debug.Log("落ちます");
             //seagull_state = Seagull_State.verticalMovement;
         }

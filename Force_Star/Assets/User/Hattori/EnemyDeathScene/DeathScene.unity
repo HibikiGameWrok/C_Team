@@ -201,7 +201,7 @@ PrefabInstance:
     - target: {fileID: 7637344146144851847, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_Name
-      value: wood (2)
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7637344146144851847, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -211,12 +211,12 @@ PrefabInstance:
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.8
+      value: 2.33
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.7
+      value: 4.45
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -266,12 +266,12 @@ PrefabInstance:
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.9246726
+      value: 0.6158952
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3955
+      value: 0.42318502
       objectReference: {fileID: 0}
     - target: {fileID: 4886048163970488509, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -377,7 +377,7 @@ PrefabInstance:
     - target: {fileID: 7315618516292019310, guid: 2e911e7174ff54b4e8e3a08b6fd9547c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.49
+      value: 2.91
       objectReference: {fileID: 0}
     - target: {fileID: 7315618516292019310, guid: 2e911e7174ff54b4e8e3a08b6fd9547c,
         type: 3}
@@ -460,7 +460,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 4}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -471,7 +471,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.1}
+  m_Size: {x: 6.1, y: 7.8}
   m_EdgeRadius: 0
 --- !u!50 &2054851960
 Rigidbody2D:
@@ -493,7 +493,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2054851961
 MonoBehaviour:
   m_ObjectHideFlags: 0
