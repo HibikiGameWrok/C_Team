@@ -68,17 +68,17 @@ public class FlyingMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(deathFlag != true)
-        //{
-        //敵を移動させる
-        distance += moveSpeed;
+        if (deathFlag != true)
+        {
+            //敵を移動させる
+            distance += moveSpeed;
             transform.Translate(moveSpeed, 0, 0);
 
             //最大値まで行ったら反転
             if (distance > maxDistance)
             {
-               moveSpeed = moveSpeed * -1;
-               distance = 0.0f;
+                moveSpeed = moveSpeed * -1;
+                distance = 0.0f;
             }
             //最低値まで行ったら反転
             if (distance < -maxDistance)
@@ -86,6 +86,8 @@ public class FlyingMove : MonoBehaviour
                 moveSpeed = moveSpeed * -1;
                 distance = 0.0f;
             }
+        }
+
         if (deathFlag == true)
         {
             deathCount++;

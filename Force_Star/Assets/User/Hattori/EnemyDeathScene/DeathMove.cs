@@ -23,15 +23,13 @@ public class DeathMove : MonoBehaviour
     {
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
         this.collider = gameObject.GetComponent<Collider2D>();
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(gravityFlag == true)
-        {
-            gravityForce--;
-        }
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -39,13 +37,12 @@ public class DeathMove : MonoBehaviour
         //タグで当たり判定を管理する
         if (col.gameObject.tag == "Player")
         {
-            //Vector2 downVel = player.transform.position - this.transform.position;
-            //downVel.x *= 1;
-            //downVel.y *= -1;
+            float downVel = player.transform.position.x - this.transform.position.x;
+            downVel *= 1;
             gravityFlag = true;
             collider.enabled = false;
             rigid2D.gravityScale = gravityForce;
-            this.rigid2D.AddForce(transform.up * this.jumpForce);
+            this.rigid2D.AddForce(transform.up * this.jumpForce + transform.right * downVel);
         }
     }
 }
