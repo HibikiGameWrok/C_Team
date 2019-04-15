@@ -20,7 +20,11 @@ using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerDa
 using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 using PartsData = GameDataPublic.PartsData;
-
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// オブジェクトのID
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using TheObjectID = System.Int32;
+using TheObjectIDUnsinged = System.UInt32;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // DebugPlayerは眠らない
@@ -59,11 +63,19 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アニメパーツのデータ
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    [Serializable]
     public class AnimePartsData
     {
         public GameObject objectData;
         public AnimePlayerSprite spriteData;
+        [SerializeField]
+        public TheObjectID objectId;
+        [SerializeField]
+        public TheObjectIDUnsinged objectUId;
+        [SerializeField]
+        public string objectGUID;
     }
+    [SerializeField]
     public List<AnimePartsData> m_listAnime;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アニメの制御
@@ -76,10 +88,6 @@ public class DebugPlayer : MonoBehaviour
     {
         public GameObject objectData;
         public GameObjectSprite spriteData;
-        public PlayerDataNum playerDataNum;
-        public TexImageData texImageData;
-        public RenderImageData renderImageData;
-        public Vector3 localPos;
     }
     public List<AllPartsData> m_listDataAll;
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -94,6 +102,11 @@ public class DebugPlayer : MonoBehaviour
 
     public Vector3 m_mistary;
     public PartsData m_mistary2;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ファイル名
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    DebugText m_text;
+    float m_time = 0;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
@@ -112,9 +125,6 @@ public class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー親子
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        //m_playerBoalObject.transform.parent = m_playerCenter.transform;
-        //m_bodyTopObject.transform.parent = m_playerCenter.transform;
-        //m_bodyBottomObject.transform.parent = m_playerCenter.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // アニメの制御
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -126,9 +136,6 @@ public class DebugPlayer : MonoBehaviour
         {
             m_myAnime = gameObject.AddComponent<Animator>();
         }
-
-
-
         m_listData = new ListPartsData();
         m_listAnime = new List<AnimePartsData>();
         m_listDataAll = new List<AllPartsData>();
@@ -155,12 +162,11 @@ public class DebugPlayer : MonoBehaviour
             // パーツの実データ
             //*|***|***|***|***|***|***|***|***|***|***|***|
             makeDataAllParts = new AllPartsData();
+
+
+
             makeDataAllParts.objectData = new GameObject(partsName);
             makeDataAllParts.spriteData = makeDataAllParts.objectData.AddComponent<GameObjectSprite>();
-            makeDataAllParts.playerDataNum = PlayerDataNum.BLANK;
-            makeDataAllParts.texImageData = new TexImageData();
-            makeDataAllParts.renderImageData = new RenderImageData();
-            makeDataAllParts.localPos = new Vector3();
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤー親子
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -173,12 +179,24 @@ public class DebugPlayer : MonoBehaviour
             // アニメパーツのデータ
             //*|***|***|***|***|***|***|***|***|***|***|***|
             makeDataAnimeParts = new AnimePartsData();
-            makeDataAnimeParts.objectData = new GameObject(partsName);
-            makeDataAnimeParts.spriteData = makeDataAnimeParts.objectData.AddComponent<AnimePlayerSprite>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 子どもが無い場合作成
+            // 子どもがある場合取得
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            makeDataAnimeParts.objectData = FindChildName(partsName);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // アニメパーツが無い場合作成
+            // アニメパーツがある場合取得
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            makeDataAnimeParts.spriteData = FindAnimePart(makeDataAnimeParts.objectData);
+            makeDataAnimeParts.objectId = makeDataAnimeParts.objectData.GetInstanceID();
+            uint plush = (uint)(makeDataAnimeParts.objectId);
+            plush += int.MaxValue;
+            makeDataAnimeParts.objectUId = (uint)makeDataAnimeParts.objectId;
+            makeDataAnimeParts.objectUId = (uint)makeDataAnimeParts.objectId;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ここのプレイヤー親子
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            makeDataAnimeParts.objectData.transform.parent = m_playerDirector.transform;
             makeDataAnimeParts.spriteData.SetSprite(makeDataAllParts.spriteData);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 登録
@@ -270,32 +288,123 @@ public class DebugPlayer : MonoBehaviour
         // ファイル関係
         //*|***|***|***|***|***|***|***|***|***|***|***|
         string fileName = "Book";
-        fileName = "SavePosBook3.txt";
-        string areaName = "Assets\\Resources\\";
-        areaName = areaName + "PlayerData\\";
+        fileName = "PlayerPartsPointData.csv";
+        string areaName = "";
+        areaName = areaName + "PlayerData/";
         m_fileConnection = new FileConnection();
         m_fileConnection.SetFileName(fileName);
         m_fileConnection.SetAreaName(areaName);
         m_fileName = fileName;
 
+
+
+        m_text = gameObject.GetComponent<DebugText>();
     }
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // nameと同じCHILDを返す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    GameObject FindChildName(string name)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 子どもを探して
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject getData = null;
+        GameObject returnData = null;
+        for (int number = 0; number < m_playerDirector.transform.childCount; number++)
+        {
+            getData = m_playerDirector.transform.GetChild(number).gameObject;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 同じ名前のものを検索する
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (getData.name == name)
+            {
+                returnData = getData;
+                return returnData;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ここのプレイヤー親子
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return MakeChildName(name);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // nameと同じCHILDを返す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    GameObject MakeChildName(string name)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ここのプレイヤー親子
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject returnData = new GameObject(name);
+        returnData.transform.parent = m_playerDirector.transform;
+        return returnData;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // アニメパーツはもうあるか？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    AnimePlayerSprite FindAnimePart(GameObject data)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 子どもを探して
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AnimePlayerSprite sprite = data.GetComponent<AnimePlayerSprite>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // スプライトは取得できているか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (sprite)
+        {
+            return sprite;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // スプライトは取得できていないから作る
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        sprite = data.AddComponent<AnimePlayerSprite>();
+        return sprite;
+    }
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 開始時
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Start()
     {
         ReadTexStart();
-        m_myAnime.Play("Player");
-        //m_playerBoalObject.AddComponent<BoxCollider2D>();
-        //m_bodyTopObject.AddComponent<BoxCollider2D>();
-        //m_bodyBottomObject.AddComponent<BoxCollider2D>();
-
+        int num = 0;
+        string data;
+        num = 20;
+        data = num.ToString();
+        m_text.textData = data;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // レイヤーの名前
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string animeName = m_myAnime.GetLayerName(0);
+        m_myAnime.Play("Wait");
+        m_myAnime.speed = 1;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 開始時実行！！
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        num = 100;
+        data = num.ToString();
+        m_text.textData = data;
+
         UpdateReadFile();
+
+        num = 7;
+        data = num.ToString();
+        m_text.textData = data;
+
         ReadTex();
-        m_updateFlag = !m_updateFlag;
+
+        num = 15;
+        data = num.ToString();
+        m_text.textData = data;
+
+        UpdateUnity();
+
+
+        num = 5;
+        data = num.ToString();
+        m_text.textData = data;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アップデート
@@ -329,7 +438,6 @@ public class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パーツデータリストデータ初期設定
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        WarehousePlayer warehousePlayer = WarehousePlayer.GetInstance();
         for (int partsNum = 0; partsNum < m_listDataAll.Count; partsNum++)
         {
 
@@ -346,6 +454,9 @@ public class DebugPlayer : MonoBehaviour
             // 場所を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_listData.listData[partsNum].localPos = Vector3.zero;
+            m_listData.listData[partsNum].imagePos = Vector3.zero;
+            m_listData.listData[partsNum].localAngle = Vector3.zero;
+            m_listData.listData[partsNum].imageAngle = Vector3.zero;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 描画を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -358,21 +469,22 @@ public class DebugPlayer : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージを作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].playerDataNum = m_listData.listData[partsNum].dataNum;
+            m_listAnime[partsNum].spriteData.m_dataNum = (int)m_listData.listData[partsNum].dataNum;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージを作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].texImageData.image = warehousePlayer.GetTexture2D(m_listDataAll[partsNum].playerDataNum);
-            m_listDataAll[partsNum].texImageData.rextParsent = MyCalculator.RectSize(0, 1, 1, 1, 1);
-            m_listDataAll[partsNum].texImageData.size = m_listData.listData[partsNum].size;
+            m_listAnime[partsNum].spriteData.m_size = m_listData.listData[partsNum].size;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 場所を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].localPos = m_listData.listData[partsNum].localPos;
+            m_listAnime[partsNum].spriteData.m_localPos = m_listData.listData[partsNum].localPos;
+            m_listAnime[partsNum].spriteData.m_imagePos = m_listData.listData[partsNum].imagePos;
+            m_listAnime[partsNum].spriteData.m_localAngle = m_listData.listData[partsNum].localAngle;
+            m_listAnime[partsNum].spriteData.m_imageAngle = m_listData.listData[partsNum].imageAngle;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 描画を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].renderImageData.depth = m_listData.listData[partsNum].depth;
+            m_listAnime[partsNum].spriteData.m_depth = m_listData.listData[partsNum].depth;
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -384,49 +496,30 @@ public class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パーツデータリストデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        WarehousePlayer warehousePlayer = WarehousePlayer.GetInstance();
         for (int partsNum = 0; partsNum < m_listDataAll.Count; partsNum++)
         {
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 反映
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // イメージを作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].playerDataNum = m_listData.listData[partsNum].dataNum;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // イメージを作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].texImageData.image = warehousePlayer.GetTexture2D(m_listDataAll[partsNum].playerDataNum);
-            m_listDataAll[partsNum].texImageData.rextParsent = MyCalculator.RectSize(0, 1, 1, 1, 1);
-            m_listDataAll[partsNum].texImageData.size = m_listData.listData[partsNum].size;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 場所を作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].localPos = m_listData.listData[partsNum].localPos;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 描画を作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_listDataAll[partsNum].renderImageData.depth = m_listData.listData[partsNum].depth;
-
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 実施
-            //*|***|***|***|***|***|***|***|***|***|***|***|
+            ////*|***|***|***|***|***|***|***|***|***|***|***|
+            //// 反映
+            ////*|***|***|***|***|***|***|***|***|***|***|***|
 
             ////*|***|***|***|***|***|***|***|***|***|***|***|
             //// イメージを作成
             ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].spriteData.SetImageUpdate(m_listDataAll[partsNum].texImageData);
+            //m_listDataAll[partsNum].playerDataNum = m_listData.listData[partsNum].dataNum;
+            ////*|***|***|***|***|***|***|***|***|***|***|***|
+            //// イメージを作成
+            ////*|***|***|***|***|***|***|***|***|***|***|***|
+            //m_listDataAll[partsNum].texImageData.image = warehousePlayer.GetTexture2D(m_listDataAll[partsNum].playerDataNum);
+            //m_listDataAll[partsNum].texImageData.rextParsent = MyCalculator.RectSize(0, 1, 1, 1, 1);
+            //m_listDataAll[partsNum].texImageData.size = m_listData.listData[partsNum].size;
             ////*|***|***|***|***|***|***|***|***|***|***|***|
             //// 場所を作成
             ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].spriteData.SetPositionLocal(m_listDataAll[partsNum].localPos);
+            //m_listDataAll[partsNum].localPos = m_listData.listData[partsNum].localPos;
             ////*|***|***|***|***|***|***|***|***|***|***|***|
             //// 描画を作成
             ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].spriteData.SetRenderUpdate(m_listDataAll[partsNum].renderImageData);
-
+            //m_listDataAll[partsNum].renderImageData.depth = m_listData.listData[partsNum].depth;
         }
 
 
@@ -574,6 +667,12 @@ public class DebugPlayer : MonoBehaviour
             // 場所を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_listAnime[partsNum].spriteData.m_localPos = m_listData.listData[partsNum].localPos;
+            m_listAnime[partsNum].spriteData.m_imagePos = m_listData.listData[partsNum].imagePos;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 角度を作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_listAnime[partsNum].spriteData.m_localAngle = m_listData.listData[partsNum].localAngle;
+            m_listAnime[partsNum].spriteData.m_imageAngle = m_listData.listData[partsNum].imageAngle;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 描画を作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -585,6 +684,7 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AnimeStudyFrild()
     {
+        m_myAnime.speed = 1;
         m_myAnime.SetInteger("MoveEnum", 0);
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -599,37 +699,87 @@ public class DebugPlayer : MonoBehaviour
             m_myAnime.SetInteger("MoveEnum", 2);
         }
 
+        int num = gameObject.transform.childCount;
+        string data = num.ToString();
+        //m_text.textData = data;
+
+
+
+        m_time += Time.deltaTime;
+        m_time = ChangeData.AntiOverflow(m_time, (float)m_listAnime.Count - 0.00001f);
+        int index = (int)m_time;
+        num = m_listAnime[index].spriteData.m_dataNum;
+        //num = 100;
+        data = num.ToString();
+        //m_text.textData = data;
+
 
         //m_myAnime.SetBool("Right", false);
         //m_myAnime.SetBool("Left", false);
     }
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// アップデート子優先
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //public void UpdateReadFile()
-        //{
-        //    //*|***|***|***|***|***|***|***|***|***|***|***|
-        //    // 名前を取得
-        //    //*|***|***|***|***|***|***|***|***|***|***|***|    
-        //    m_fileConnection.SetFileName(m_fileName);
-        //    m_fileConnection.ReaderFile();
-        //    CsvBook book = m_fileConnection.GetBook();
-        //    MakeListFile(book);
-        //}
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// アップデート親優先
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //public void UpdateMakeFile()
-        //{
-        //    //*|***|***|***|***|***|***|***|***|***|***|***|
-        //    // 名前を取得
-        //    //*|***|***|***|***|***|***|***|***|***|***|***|    
-        //    m_fileConnection.SetFileName(m_fileName);
-        //    List<string> data = MakeDataFile();
-        //    m_fileConnection.SetListData(data);
-        //    m_fileConnection.WriterFile();
-        //}
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // アニメの制御
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void AnimeStudyGUID(List<string> GUIDDataList)
+    {
+        int maxValue = (int)PlayerData_Number_List.NUM;
+        if (GUIDDataList.Count < maxValue)
+        {
+            maxValue = GUIDDataList.Count;
+        }
+        if (m_listAnime.Count < maxValue)
+        {
+            maxValue = m_listAnime.Count;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // IDを取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|   
+        for (int index = 0; index < maxValue; index++)
+        {
+            m_listAnime[index].objectGUID = GUIDDataList[index];
+        }
+        int infoCount = m_myAnime.GetCurrentAnimatorClipInfoCount(0);
+        AnimatorClipInfo[] l_info = m_myAnime.GetCurrentAnimatorClipInfo(0);
+        AnimationClip l_clip = null;
+        for (int index = 0; index < infoCount; index++)
+        {
+            l_clip = l_info[index].clip;
+
+
+            //l_clip.
+            //l_clip.
+        }
+
+
+
     }
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //// アップデート子優先
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //public void UpdateReadFile()
+    //{
+    //    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //    // 名前を取得
+    //    //*|***|***|***|***|***|***|***|***|***|***|***|    
+    //    m_fileConnection.SetFileName(m_fileName);
+    //    m_fileConnection.ReaderFile();
+    //    CsvBook book = m_fileConnection.GetBook();
+    //    MakeListFile(book);
+    //}
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //// アップデート親優先
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //public void UpdateMakeFile()
+    //{
+    //    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //    // 名前を取得
+    //    //*|***|***|***|***|***|***|***|***|***|***|***|    
+    //    m_fileConnection.SetFileName(m_fileName);
+    //    List<string> data = MakeDataFile();
+    //    m_fileConnection.SetListData(data);
+    //    m_fileConnection.WriterFile();
+    //}
+}
 ////*|***|***|***|***|***|***|***|***|***|***|***|
 //// 個別拡張
 ////*|***|***|***|***|***|***|***|***|***|***|***|
@@ -684,3 +834,47 @@ public class DebugPlayer : MonoBehaviour
 //    }
 //}
 //#endif
+
+//string animeName = m_myAnime.GetLayerName(0);
+//m_myAnime.ApplyBuiltinRootMotion();
+//AnimatorStateInfo state = m_myAnime.GetCurrentAnimatorStateInfo(0);
+//m_myAnime.Play(0);
+//m_myAnime.Play("Wait");
+//bool getBool = m_myAnime.is
+//m_myAnime.speed = 1;
+//m_myAnime.speed = 1;
+//m_myAnime.Play("Player");
+//m_myAnime.
+//if (characterController.isGrounded)
+//{
+//    velocity = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+//    if (velocity.magnitude > 0.1f)
+//    {
+//        animator.SetFloat("Speed", velocity.magnitude);
+//        transform.LookAt(transform.position + velocity);
+//    }
+//    else
+//    {
+//        animator.SetFloat("Speed", 0f);
+//    }
+//}
+//velocity.y += Physics.gravity.y * Time.deltaTime;
+//characterController.Move(velocity * walkSpeed * Time.deltaTime);
+//m_myAnime.Play();
+//m_playerBoalObject.AddComponent<BoxCollider2D>();
+//m_bodyTopObject.AddComponent<BoxCollider2D>();
+//m_bodyBottomObject.AddComponent<BoxCollider2D>();
+//int infoCount = m_myAnime.GetCurrentAnimatorClipInfoCount(0);
+//AnimatorClipInfo[] l_info = m_myAnime.GetCurrentAnimatorClipInfo(0);
+//AnimationClip l_clip = null;
+//for (int index = 0; index < infoCount; index++)
+//{
+//    l_clip = l_info[index].clip;
+//    //l_clip.
+//    //l_clip.
+//}
+//m_myAnime.Play("test1", 0, 0.0f);
+//AnimationClip[] l_clips =  AnimationUtility.GetAnimationClips(gameObject);
+//AnimationUtility.Get
+//AnimationClip 
+//Animation m_anime1 = m_myAnime.GetCurrentAnimatorClipInfoCount();

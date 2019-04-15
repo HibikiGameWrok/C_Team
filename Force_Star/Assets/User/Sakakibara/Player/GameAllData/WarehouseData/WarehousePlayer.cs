@@ -13,7 +13,7 @@ namespace WarehouseData
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 倉庫データは眠らない
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        [ExecuteInEditMode]
+        //[ExecuteInEditMode]
         public class WarehousePlayer
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -25,7 +25,9 @@ namespace WarehouseData
             {
                 if (m_warehouseObject == null)
                 {
+                    //m_warehouseObject = Instantiate(new WarehousePlayer());
                     m_warehouseObject = new WarehousePlayer();
+                    //m_warehouseObject = System. WarehousePlayer();
                 }
                 return m_warehouseObject;
             }
@@ -33,7 +35,6 @@ namespace WarehouseData
             private WarehousePlayer()
             {
                 m_playerTex2D = new Texture2D[(int)PlayerData_Number.NUM];
-
                 ReadData();
             }
 
@@ -101,11 +102,7 @@ namespace WarehouseData
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // UIの倉庫
             //*|***|***|***|***|***|***|***|***|***|***|***|
-
             Texture2D[] m_playerTex2D;
-
-
-
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // データの入れどころ
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -115,7 +112,6 @@ namespace WarehouseData
             {
                 string SimpleFile;
                 string MyFile;
-
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // UITexture2Dのデータ
                 //*|***|***|***|***|***|***|***|***|***|***|***|

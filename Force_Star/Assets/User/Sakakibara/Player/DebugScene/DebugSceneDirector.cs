@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using TexImageData = GameDataPublic.TexImageData;
+using RenderImageData = GameDataPublic.RenderImageData;
+using PartsData = GameDataPublic.PartsData;
+
+
 public class DebugSceneDirector : MonoBehaviour
 {
 
@@ -42,7 +47,8 @@ public class DebugSceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         GameObject newGameObject = null;
         GameObjectSprite newSptite = null;
-        GameDataPublic.TexImageData texImageData = new GameDataPublic.TexImageData();
+        RenderImageData newRender = null;
+        TexImageData texImageData = new TexImageData();
 
         Texture2D image = Resources.Load<Texture2D>(WarehouseData.WarehouseObject.SimpleImage + "Basis_Red");
         Vector3 point = Vector3.zero;
@@ -72,13 +78,12 @@ public class DebugSceneDirector : MonoBehaviour
             point.x = pointX - ((10 - 1) * 0.5f);
             point.y = pointY * -1;
             newSptite.SetPosition(point);
-            //newSptite.
-
-
-
-            //newSprite = newGameObject.AddComponent<MeshCollider>();
-
-
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 描画を作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newRender = new RenderImageData();
+            newRender.depth = -10;
+            newSptite.SetRenderUpdate(newRender);
         }
 
 

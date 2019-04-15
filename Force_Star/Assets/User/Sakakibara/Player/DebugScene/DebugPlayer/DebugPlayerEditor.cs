@@ -86,7 +86,7 @@ public class ListPartsDataEditer : PropertyDrawer
         float heightListData = m_indexHeight;
         //int moveXNum = 0;
         int moveYNum = 0;
-        int moveYListNum = 0;
+        //int moveYListNum = 0;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // インデントされた位置のRect
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -149,7 +149,7 @@ public class ListPartsDataEditer : PropertyDrawer
             // Prefab化前に位置を決める
             //*|***|***|***|***|***|***|***|***|***|***|***|
             moveYNum = 1 + index;
-            moveYListNum = index;
+            //moveYListNum = index;
             for (int count = 0; count < moveYNum; count++)
             {
                 fieldRect.yMin += height;
@@ -263,6 +263,17 @@ public class ListPartsDataEditer : PropertyDrawer
 public class DebugPlayerEditer : Editor
 {
 
+    List<string> m_GUIDDataList;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲームが動いているならTRUE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_moveGameFlag;
+    private void OnEnable()
+    {
+        m_GUIDDataList = new List<string>();
+    }
+
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -278,6 +289,192 @@ public class DebugPlayerEditer : Editor
         {
             mytarget.UpdateReadFile();
         }
+
+        if (GUILayout.Button("ファイル更新"))
+        {
+            MakePartsData();
+        }
+
+        bool gameMove = EditorApplication.isPlaying;
+        m_moveGameFlag = gameMove;
+
+        if (GUILayout.Button("XXX") && m_moveGameFlag)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // GUIDを伝達する
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            mytarget.AnimeStudyGUID(m_GUIDDataList);
+        }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツデータ作成
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void MakePartsData()
+    {
+        MakePartsFile();
+        MakePartsGUID();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ファイルデータ作成
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void MakePartsFile()
+    {
+        DebugPlayer mytarget = (DebugPlayer)target;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーだ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string groupName = "Player";
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのプレハブに群生する
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのプレハブを探す
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string data = AssetDatabase.AssetPathToGUID("Assets/DebugScene/DebugPlayer/DebugPlayer.prefab");
+        string path = AssetDatabase.GUIDToAssetPath(data);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのプレハブの近くに作成する。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string fileParentPath = System.IO.Path.GetDirectoryName(path);
+        string fileName = groupName + "PartsFile";
+        string filePathName = fileParentPath + "/" + fileName;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ファイルがもうあるか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (!AssetDatabase.IsValidFolder(filePathName))
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 無いから作る
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            AssetDatabase.CreateFolder(fileParentPath, fileName);
+        }
+        else
+        {
+            string[] files = System.IO.Directory.GetFiles(filePathName, "*", System.IO.SearchOption.AllDirectories);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ファイルを空にしよう。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < files.Length; index++)
+            {
+                AssetDatabase.DeleteAsset(files[index]);
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // お手本を作成する
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string nameX = "prefab" + groupName + "Parts";
+        string filePathX = filePathName + "/" + nameX + ".prefab";
+
+        GameObject prefabParts = new GameObject(nameX);
+        AnimePlayerSprite partsAnime = prefabParts.AddComponent<AnimePlayerSprite>();
+
+        bool sucsess = false;
+        Object prefab = PrefabUtility.SaveAsPrefabAsset(prefabParts, filePathX, out sucsess);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // PlayerDataNumberList一つに一つずつ作成する。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        PlayerDataNumberList listNum;
+        string listName;
+        string GUIDData;
+
+        GameObject partsObject = null;
+        m_GUIDDataList.Clear();
+        for (int index = 0; index < (int)PlayerDataNumberList.NUM; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // PlayerDataNumberListの名前
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            listNum = (PlayerDataNumberList)index;
+            listName = listNum.ToString();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // データ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            partsObject = Instantiate(prefab) as GameObject;
+            partsObject.name = listName;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ファイル作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            filePathX = filePathName + "/" + listName + ".prefab";
+            PrefabUtility.SaveAsPrefabAsset(prefabParts, filePathX, out sucsess);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 後始末
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            DestroyImmediate(partsObject);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // GUIDを取得する
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            GUIDData = AssetDatabase.AssetPathToGUID(filePathX);
+            m_GUIDDataList.Add(GUIDData);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 後始末
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        DestroyImmediate(prefabParts);
+
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // IDデータ作成
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void MakePartsGUID()
+    {
+        DebugPlayer mytarget = (DebugPlayer)target;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーだ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string groupName = "Player";
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのプレハブに群生する
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのプレハブを探す
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string data = AssetDatabase.AssetPathToGUID("Assets/DebugScene/DebugPlayer/DebugPlayer.prefab");
+        string path = AssetDatabase.GUIDToAssetPath(data);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのプレハブの近くに作成する。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        string fileParentPath = System.IO.Path.GetDirectoryName(path);
+        string fileName = groupName + "PartsFile";
+        string filePathName = fileParentPath + "/" + fileName;
+
+
+        //AssetDatabase.
+
+
+
+
+    }
+
 }
 #endif
+//PrefabUtility.ReplacePrefab(prefabParts, prefab, ReplacePrefabOptions.ConnectToPrefab);
+//PrefabUtility.CreateNew
+//prefabParts.name = nameX;
+//PrefabUtility.ApplyAddedGameObject(prefabParts, System.IO.Path.Combine(filePath, prefabParts.name), new InteractionMode());
+//PrefabUtility.CreatePrefab(System.IO.Path.Combine(filePath, prefabParts.name), prefabParts);
+//AssetDatabase.AddObjectToAsset(prefabParts, System.IO.Path.Combine(filePath, prefabParts.name));
+//AssetDatabase.CreateAsset(prefabParts, System.IO.Path.Combine(filePath, nameX));
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//// ゲームが動いているか知る
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//private static void OnChangedPlayMode(PlayModeStateChange state)
+//{
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // ゲームが動いているならTRUE
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    if (state == PlayModeStateChange.ExitingEditMode)
+//    {
+//        m_moveGameFlag = true;
+//    }
+//    else if (state == PlayModeStateChange.EnteredPlayMode)
+//    {
+//        m_moveGameFlag = true;
+//    }
+//    else if (state == PlayModeStateChange.ExitingPlayMode)
+//    {
+//        m_moveGameFlag = true;
+//    }
+//    else if (state == PlayModeStateChange.EnteredEditMode)
+//    {
+//        m_moveGameFlag = true;
+//    }
+
+//}

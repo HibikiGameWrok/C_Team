@@ -13,7 +13,7 @@ namespace WarehouseData
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 倉庫データは眠らない
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     public class WarehouseObject
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|

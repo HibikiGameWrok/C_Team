@@ -22,7 +22,23 @@ using PartsData = GameDataPublic.PartsData;
 public class AnimePlayerSprite : AnimeSprite
 {
 
-    PlayerDataNum m_playerDataNum;
+    public PlayerDataNum m_playerDataNum;
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // これが出来たときに
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void Awake()
+    {
+        AwakeOrigin();
+    }
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // アップデート
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void Update()
+    {
+        UpdateOrigin();
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アップデート抽象クラス
     //*|***|***|***|***|***|***|***|***|***|***|***|

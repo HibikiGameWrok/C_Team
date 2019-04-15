@@ -126,7 +126,9 @@ public class FileConnection
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ファイル名作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        string trueFileName = m_areaName + m_fileName;
+        //string streamingAssetPath = Application.dataPath + "/StreamingAssets" + "/";
+        string streamingAssetPath = Application.streamingAssetsPath + "/"; 
+        string trueFileName = streamingAssetPath + m_areaName + m_fileName;
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ファイルを読み込む
@@ -134,8 +136,8 @@ public class FileConnection
         using (FileStream fs = new FileStream(
             trueFileName, FileMode.Open))
         {
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-            StreamReader reader = new StreamReader(fs, sjisEnc);
+            Encoding utf8 = Encoding.GetEncoding("UTF-8");
+            StreamReader reader = new StreamReader(fs, utf8);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ファイルの読み込みを先頭まで戻す
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -148,14 +150,25 @@ public class FileConnection
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 一行読み込む
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                string str = reader.ReadLine();
+                string str = "";
+                string strLine = reader.ReadLine();
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // カンマで分ける
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                string[] strSprit = strLine.Split(',');
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // それはインプットのヘッダーですか？
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                IhaveListData.Add(str);
-                IhaveListCount += 1;
-
-                IhaveListGet = true;
+                for (int index = 0; index < strSprit.Length; index++)
+                {
+                    str = strSprit[index];
+                    if(str != "")
+                    {
+                        IhaveListData.Add(str);
+                        IhaveListCount += 1;
+                        IhaveListGet = true;
+                    }
+                }
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ファイル取得できたか？
@@ -183,26 +196,32 @@ public class FileConnection
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ファイル名作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        string trueFileName = m_areaName + m_fileName;
-
+        //string streamingAssetPath = Application.dataPath + "/StreamingAssets" + "/";
+        string streamingAssetPath = Application.streamingAssetsPath + "/";
+        string trueFileName = streamingAssetPath + m_areaName + m_fileName;
+        //string trueFileName = Application.dataPath + m_fileName;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ファイル書き込む
         //*|***|***|***|***|***|***|***|***|***|***|***|
         using (FileStream fs = new FileStream(trueFileName,
         FileMode.Create, FileAccess.Write))
         {
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-            StreamWriter writer = new StreamWriter(fs, sjisEnc);
+            Encoding utf8 = Encoding.GetEncoding("UTF-8");
+            StreamWriter writer = new StreamWriter(fs, utf8);
             string str = "";
-
+            int lastCount = m_haveListCount - 1;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // データ書き込む
             //*|***|***|***|***|***|***|***|***|***|***|***|
             for (int column = 0; column < m_haveListCount; column++)
             {
-                str = "";
                 str = m_haveListData[column];
-                writer.WriteLine(str);
+                //writer.WriteLine(str);
+                writer.Write(str);
+                if (column < lastCount)
+                {
+                    writer.Write(',');
+                }
             }
 
             //*|***|***|***|***|***|***|***|***|***|***|***|

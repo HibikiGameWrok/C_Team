@@ -24,7 +24,6 @@ abstract public class AnimeSprite : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    PartsData m_mypartsData;
     GameObjectSprite m_mySprite;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 継承用使用データ
@@ -48,11 +47,14 @@ abstract public class AnimeSprite : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
+        AwakeOrigin();
+    }
+    protected void AwakeOrigin()
+    {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_mySprite = null;
-        m_mypartsData = new PartsData();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 継承用使用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -85,13 +87,13 @@ abstract public class AnimeSprite : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Update()
     {
-        UpdateTex();
+        UpdateOrigin();
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アップデート
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void UpdateTex()
+    protected void UpdateOrigin()
     {
 
         Vector3 localPos = Vector3.zero;
