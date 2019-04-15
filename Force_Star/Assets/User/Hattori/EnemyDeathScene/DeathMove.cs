@@ -8,20 +8,38 @@ public class DeathMove : MonoBehaviour
 
     private Collider2D collider;
 
-    private bool gravityFlag = false;
-
+    //吹っ飛び率(X軸)
     [SerializeField]
-    private float gravityForce = 1.0f;
+    private float blowoutRate = 100.0f;
 
+    //吹っ飛び率(Y軸)
     [SerializeField]
-    float jumpForce = 300.0f;
+    private float upForce = 300.0f;
 
+    //ここはplayerでもattackboalでも可なので必要時に変えて下さい
     private GameObject player;
+
+    //殴られて爆発するまでの時間
+    float delTime;
+
+    //爆発エフェクトの広がる範囲
+    float delFxSize;
+
+    //爆発エフェクトの☆の出る数
+    float delFxSMass;
+
+    //爆発エフェクトの☆の大きさ最小値
+    float delFxSMin;
+
+    //爆発エフェクトの☆の大きさ最大値
+    float delFxSMax;
 
     // Start is called before the first frame update
     void Start()
     {
+        //rigid2Dを使う
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
+        //colliderをoffにするため
         this.collider = gameObject.GetComponent<Collider2D>();
         player = GameObject.Find("Player");
     }
@@ -37,13 +55,17 @@ public class DeathMove : MonoBehaviour
         //タグで当たり判定を管理する
         if (col.gameObject.tag == "Player")
         {
+            //プレイヤーの向きを取得する
             float downVel = player.transform.position.x - this.transform.position.x;
+            
+            //プレイヤーの向きに飛ばすから反転する
             downVel *= -1;
-            gravityFlag = true;
+
+            //当たり判定をoffにする
             collider.enabled = false;
-            rigid2D.gravityScale = gravityForce;
-            Debug.Log(downVel);
-            this.rigid2D.AddForce(transform.up * this.jumpForce + transform.right * downVel * 100.0f);
+
+            //移動
+            this.rigid2D.AddForce(transform.up * this.upForce + transform.right * downVel * blowoutRate);
         }
     }
 }

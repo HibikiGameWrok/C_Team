@@ -211,12 +211,12 @@ PrefabInstance:
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.97
+      value: -3.12
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.17
+      value: 0.93
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -514,8 +514,8 @@ MonoBehaviour:
   moveSpeed: 0.05
   distance: 0
   maxDistance: 5
-  blowoutRate: 600
   deathTimer: 25
+  gravityForce: 5
 --- !u!114 &2054851962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,8 +528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityForce: 3
-  jumpForce: 400
+  blowoutRate: 100
+  upForce: 300
 --- !u!1001 &3246664411331216307
 PrefabInstance:
   m_ObjectHideFlags: 0
