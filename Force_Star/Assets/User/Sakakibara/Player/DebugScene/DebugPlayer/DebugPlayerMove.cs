@@ -21,9 +21,13 @@ public class DebugPlayerMove : MonoBehaviour
     {
 
     }
-    
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 更新データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     void Update()
     {
-        
+        m_controller.Update();
+
+
     }
 }
