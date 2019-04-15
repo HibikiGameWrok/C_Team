@@ -211,12 +211,12 @@ PrefabInstance:
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.33
+      value: -4.19
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.45
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -509,7 +509,8 @@ MonoBehaviour:
   moveSpeed: 0.05
   distance: 0
   maxDistance: 5
-  deathTimer: 40
+  blowoutRate: 600
+  deathTimer: 20
 --- !u!1001 &3246664411331216307
 PrefabInstance:
   m_ObjectHideFlags: 0

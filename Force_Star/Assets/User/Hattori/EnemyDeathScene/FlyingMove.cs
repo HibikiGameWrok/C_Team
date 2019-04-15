@@ -16,9 +16,14 @@ public class FlyingMove : MonoBehaviour
     [SerializeField]
     private float maxDistance = 2.0f;
 
+    [SerializeField]
+    private float blowoutRate;
+
     Rigidbody2D rigid2D;
 
     private GameObject player;
+
+    private Collider2D collider;
 
     //[SerializeField]
     //public enum Seagull_State
@@ -38,6 +43,8 @@ public class FlyingMove : MonoBehaviour
 
     private float deathCount = 0.0f;
 
+    private bool deathFlag = false;
+
     Vector2 downVel;
 
     float delTime;
@@ -54,6 +61,7 @@ public class FlyingMove : MonoBehaviour
     void Start()
     {
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
+        this.collider = gameObject.GetComponent<Collider2D>();
         player = GameObject.Find("Player");
     }
 
@@ -78,6 +86,14 @@ public class FlyingMove : MonoBehaviour
                 moveSpeed = moveSpeed * -1;
                 distance = 0.0f;
             }
+        if (deathFlag == true)
+        {
+            deathCount++;
+            if (deathTimer < deathCount)
+            {
+                Destroy(this.gameObject);
+            }
+        }
         //if(seagull_state == Seagull_State.verticalMovement)
         //{
         //    //rigid2D.bodyType = RigidbodyType2D.Dynamic;
@@ -95,9 +111,12 @@ public class FlyingMove : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             Vector2 downVel = player.transform.position - this.transform.position;
-            downVel.x *= -1;
+            downVel.x *= 1;
             downVel.y *= -1;
-            transform.Translate(downVel, 0);
+            this.rigid2D.AddForce(transform.up * downVel.y * blowoutRate + transform.right * downVel.x * -blowoutRate);
+            //transform.Translate(downVel, 0);
+            collider.enabled = false;
+            deathFlag = true;
             Debug.Log("星が出て消えるよ");
             //seagull_state = Seagull_State.verticalMovement;
         }
