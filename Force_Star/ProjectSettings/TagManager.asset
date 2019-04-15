@@ -4,17 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - ground
+  - wall
+  - Shell
   - Enemy
-  - AttackBoal
+  - Floor
+  - Star
   - R
   - B
   - L
-  - Star
   - T
   - StarPeace
+  - AttackBoal
   - Roket
-  - Floor
-  - ground
+  - Bottle
   layers:
   - Default
   - TransparentFX
