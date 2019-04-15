@@ -49,12 +49,4 @@ public class ParticleSet : MonoBehaviour
 
         }
     }
-
-    private void OnParticleCollision(GameObject other)
-    {
-      if(other.tag=="player")
-        {
-
-        }
-    }
 }
