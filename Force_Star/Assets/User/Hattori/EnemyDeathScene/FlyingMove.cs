@@ -117,7 +117,6 @@ public class FlyingMove : MonoBehaviour
             //transform.Translate(downVel, 0);
             collider.enabled = false;
             deathFlag = true;
-            Debug.Log("星が出て消えるよ");
             //seagull_state = Seagull_State.verticalMovement;
         }
     }
