@@ -211,12 +211,12 @@ PrefabInstance:
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.19
+      value: 3.22
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.07
+      value: 4.34
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -277,6 +277,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BodyType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886048163970488509, guid: 60e042540ed92dc48a7a8c580d59e054,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60e042540ed92dc48a7a8c580d59e054, type: 3}
@@ -510,7 +515,7 @@ MonoBehaviour:
   distance: 0
   maxDistance: 5
   blowoutRate: 600
-  deathTimer: 20
+  deathTimer: 5
 --- !u!1001 &3246664411331216307
 PrefabInstance:
   m_ObjectHideFlags: 0
