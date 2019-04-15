@@ -68,10 +68,10 @@ public class FlyingMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(seagull_state == Seagull_State.lateralMovement)
+        //if(deathFlag != true)
         //{
-            //敵を移動させる
-            distance += moveSpeed;
+        //敵を移動させる
+        distance += moveSpeed;
             transform.Translate(moveSpeed, 0, 0);
 
             //最大値まで行ったら反転
@@ -110,12 +110,12 @@ public class FlyingMove : MonoBehaviour
         //タグで当たり判定を管理する
         if (col.gameObject.tag == "Player")
         {
-            Vector2 downVel = player.transform.position - this.transform.position;
-            downVel.x *= 1;
-            downVel.y *= -1;
-            this.rigid2D.AddForce(transform.up * downVel.y * blowoutRate + transform.right * downVel.x * -blowoutRate);
-            //transform.Translate(downVel, 0);
-            collider.enabled = false;
+            //Vector2 downVel = player.transform.position - this.transform.position;
+            //downVel.x *= 1;
+            //downVel.y *= -1;
+            //this.rigid2D.AddForce(transform.up * downVel.y * blowoutRate + transform.right * downVel.x * -blowoutRate);
+            ////transform.Translate(downVel, 0);
+            //collider.enabled = false;
             deathFlag = true;
             //seagull_state = Seagull_State.verticalMovement;
         }

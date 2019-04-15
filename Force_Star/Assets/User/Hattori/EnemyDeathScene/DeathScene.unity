@@ -211,12 +211,12 @@ PrefabInstance:
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.9
+      value: 4.85
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.18
+      value: 3.97
       objectReference: {fileID: 0}
     - target: {fileID: 6942285698682815281, guid: 60e042540ed92dc48a7a8c580d59e054,
         type: 3}
@@ -382,12 +382,12 @@ PrefabInstance:
     - target: {fileID: 7315618516292019310, guid: 2e911e7174ff54b4e8e3a08b6fd9547c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.91
+      value: 3.34
       objectReference: {fileID: 0}
     - target: {fileID: 7315618516292019310, guid: 2e911e7174ff54b4e8e3a08b6fd9547c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.74
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 7315618516292019310, guid: 2e911e7174ff54b4e8e3a08b6fd9547c,
         type: 3}
@@ -515,7 +515,7 @@ MonoBehaviour:
   distance: 0
   maxDistance: 5
   blowoutRate: 600
-  deathTimer: 5
+  deathTimer: 60
 --- !u!114 &2054851962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,6 +528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityForce: 3
+  jumpForce: 400
 --- !u!1001 &3246664411331216307
 PrefabInstance:
   m_ObjectHideFlags: 0
