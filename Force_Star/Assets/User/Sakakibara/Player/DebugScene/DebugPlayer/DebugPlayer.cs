@@ -49,6 +49,8 @@ public class DebugPlayer : MonoBehaviour
     GameObject m_playerCenter;
     [SerializeField]
     public bool m_updateFlag;
+    [SerializeField]
+    public bool m_updateAnime;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パーツのデータ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -122,13 +124,14 @@ public class DebugPlayer : MonoBehaviour
         m_playerCenter = new GameObject("Player");
         m_playerDirector = gameObject;
         m_updateFlag = false;
+        m_updateAnime = true;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー親子
         //*|***|***|***|***|***|***|***|***|***|***|***|
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // アニメの制御
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if(gameObject.GetComponent<Animator>())
+        if (gameObject.GetComponent<Animator>())
         {
             m_myAnime = gameObject.GetComponent<Animator>();
         }
@@ -685,20 +688,23 @@ public class DebugPlayer : MonoBehaviour
     void AnimeStudyFrild()
     {
         m_myAnime.speed = 1;
-        m_myAnime.SetInteger("MoveEnum", 0);
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            m_myAnime.SetInteger("MoveEnum", 1);
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            m_myAnime.SetInteger("MoveEnum", 3);
-        }
-        if (Input.GetKey(KeyCode.C))
-        {
-            m_myAnime.SetInteger("MoveEnum", 2);
-        }
 
+        if (m_updateAnime)
+        {
+            m_myAnime.SetInteger("MoveEnum", 0);
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                m_myAnime.SetInteger("MoveEnum", 1);
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                m_myAnime.SetInteger("MoveEnum", 3);
+            }
+            if (Input.GetKey(KeyCode.C))
+            {
+                m_myAnime.SetInteger("MoveEnum", 2);
+            }
+        }
         int num = gameObject.transform.childCount;
         string data = num.ToString();
         //m_text.textData = data;
