@@ -7,14 +7,13 @@ public class FeatherCreate : MonoBehaviour
     public GameObject feather;
     private GameObject featherObj;
     public int featherNum;
-    public float posY;
     public GameObject sterDi;
     bool starCreateFlag;
     // Start is called before the first frame update
     void Start()
     {
-        if (featherNum >= 6)
-            featherNum = 5;
+        if (featherNum >= 5)
+            featherNum = 4;
         else if (featherNum <= 0)
             featherNum = 1;
         CreateFeather();
@@ -34,9 +33,7 @@ public class FeatherCreate : MonoBehaviour
             {
                 featherObj = Instantiate(feather, transform.position, Quaternion.identity) as GameObject;
                 featherObj.transform.parent = transform;
-                // featherObj.transform.position = new Vector3(featherObj.transform.position.x, featherObj.transform.position.y + posY, featherObj.transform.position.z);
                 featherObj.transform.localScale = new Vector3(2.85285f, 3.395778f, 0);//希望する値
-               // featherObj.transform.localScale = new Vector3(2.0f,1.0f, 0);//希望する値
                 switch (i)
                 {
                     case 1:
@@ -57,8 +54,6 @@ public class FeatherCreate : MonoBehaviour
             {
                 featherObj = Instantiate(feather, transform.position, Quaternion.identity) as GameObject;
                 featherObj.transform.parent = transform;
-                // featherObj.transform.position = new Vector3(featherObj.transform.position.x, featherObj.transform.position.y + posY, featherObj.transform.position.z);
-              //  featherObj.transform.localScale = new Vector3(2.85285f, 3.395778f, 0);//希望する値
                 featherObj.transform.localScale = new Vector3(2.85285f, 3.395778f, 0);//希望する値
                 switch (i)
                 {
@@ -71,9 +66,9 @@ public class FeatherCreate : MonoBehaviour
                     case 3:
                         featherObj.transform.Rotate(new Vector3(0.0f, 0.0f, 45));
                         break;
-                    case 4:
-                        featherObj.transform.Rotate(new Vector3(0.0f, 0.0f, -45));
-                        break;
+                    //case 4:
+                    //    featherObj.transform.Rotate(new Vector3(0.0f, 0.0f, -45));
+                    //    break;
                 }
             }
         }
