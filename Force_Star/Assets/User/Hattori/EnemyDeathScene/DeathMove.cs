@@ -38,11 +38,12 @@ public class DeathMove : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             float downVel = player.transform.position.x - this.transform.position.x;
-            downVel *= 1;
+            downVel *= -1;
             gravityFlag = true;
             collider.enabled = false;
             rigid2D.gravityScale = gravityForce;
-            this.rigid2D.AddForce(transform.up * this.jumpForce + transform.right * downVel);
+            Debug.Log(downVel);
+            this.rigid2D.AddForce(transform.up * this.jumpForce + transform.right * downVel * 100.0f);
         }
     }
 }
