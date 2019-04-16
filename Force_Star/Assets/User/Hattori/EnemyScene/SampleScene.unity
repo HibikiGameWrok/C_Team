@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionFlag: 0
+  playerCollisionFlag: 1
   blowoutRate: 100
   upForce: 800
 --- !u!61 &717447815
@@ -451,6 +451,12 @@ MonoBehaviour:
   range: 9.3
   deathTimer: 25
   gravityForce: 7
+--- !u!1 &1267048494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4655803024358912363, guid: 18b99eb8014382040b5ca92b42c9b0a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1631125746}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1442774275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -543,7 +549,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerObject
       value: 
-      objectReference: {fileID: 1497962696242231093}
+      objectReference: {fileID: 1267048494}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5d70b8cf5f4334a94baf06fe4d4592, type: 3}
 --- !u!1001 &1551447561
@@ -566,12 +572,12 @@ PrefabInstance:
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.64
+      value: -4.09
       objectReference: {fileID: 0}
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.86
+      value: 4.95
       objectReference: {fileID: 0}
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
@@ -621,7 +627,7 @@ PrefabInstance:
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.755396
+      value: 0.66080004
       objectReference: {fileID: 0}
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
@@ -895,7 +901,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerObject
       value: 
-      objectReference: {fileID: 810085709005528167}
+      objectReference: {fileID: 1267048494}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5d70b8cf5f4334a94baf06fe4d4592, type: 3}
 --- !u!1001 &2023048375
@@ -990,7 +996,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerObject
       value: 
-      objectReference: {fileID: 717447812}
+      objectReference: {fileID: 1267048494}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5d70b8cf5f4334a94baf06fe4d4592, type: 3}
 --- !u!1 &810085709005528167 stripped
@@ -1074,7 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionFlag: 0
+  playerCollisionFlag: 1
   blowoutRate: 100
   upForce: 800
 --- !u!1 &1497962696242231093 stripped

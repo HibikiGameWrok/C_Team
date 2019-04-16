@@ -12,7 +12,6 @@ public class ShellController : MonoBehaviour
 
     private bool checkAttack;
 
-
     SpriteRenderer shellSprite;
     [SerializeField]
     private Sprite wait_Image = null;
