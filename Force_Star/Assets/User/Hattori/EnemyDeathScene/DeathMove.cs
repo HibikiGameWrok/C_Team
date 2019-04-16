@@ -76,14 +76,13 @@ public class DeathMove : MonoBehaviour
                 this.rigid2D.AddForce(transform.up * this.upForce + transform.right * downVel * blowoutRate);
             }
         }
-
     }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "AttackBoal")
         {
             //プレイヤーの向きを取得する
-            float downVel = player.transform.position.x - this.transform.position.x;
+            float downVel = attackHand.transform.position.x - this.transform.position.x;
 
             //プレイヤーの向きに飛ばすから反転する
             downVel *= -1;

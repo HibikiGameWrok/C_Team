@@ -127,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 4655803024358912363, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
       propertyPath: m_TagString
-      value: AttackBoal
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
@@ -388,7 +388,6 @@ MonoBehaviour:
   playerCollisionFlag: 0
   blowoutRate: 100
   upForce: 800
-  attackHand: {fileID: 0}
 --- !u!61 &717447815
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -567,12 +566,12 @@ PrefabInstance:
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.92
+      value: 27.64
       objectReference: {fileID: 0}
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.4
+      value: 11.86
       objectReference: {fileID: 0}
     - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
         type: 3}
@@ -623,6 +622,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.755396
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275408583860078045, guid: 18b99eb8014382040b5ca92b42c9b0a4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.39795
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687445334509510225, guid: 18b99eb8014382040b5ca92b42c9b0a4,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18b99eb8014382040b5ca92b42c9b0a4, type: 3}
@@ -1051,6 +1060,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.09
   maxDistance: 5
+  deathTimer: 25
+  gravityForce: 7
 --- !u!114 &810085709005528171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,8 +1076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCollisionFlag: 0
   blowoutRate: 100
-  upForce: 300
-  attackHand: {fileID: 0}
+  upForce: 800
 --- !u!1 &1497962696242231093 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1497962696242231093, guid: 20783499772f9544285c8ad8aacfd6ee,
@@ -1134,8 +1144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 300
   highJumpMode: 0
-  deathTimer: 0
-  gravityForce: 1
+  deathTimer: 25
+  gravityForce: 7
 --- !u!114 &1497962696242231097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1148,10 +1158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionFlag: 0
+  playerCollisionFlag: 1
   blowoutRate: 100
-  upForce: 300
-  attackHand: {fileID: 0}
+  upForce: 800
 --- !u!1001 &4447818819222043360
 PrefabInstance:
   m_ObjectHideFlags: 0

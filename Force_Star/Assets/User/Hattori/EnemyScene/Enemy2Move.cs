@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy2Move : MonoBehaviour
 {
+    public GameObject starDirec;
+    public GameObject attackHand;
 
-    //public GameObject starDirec;
-    //public GameObject attackHand;
-
-    //private StarDirector starCreate;
-    //private PunchController punchController;
+    private StarDirector starCreate;
+    private PunchController punchController;
     private bool checkAttack;
+
     //当たり判定
     Rigidbody2D rigid2D;
 
@@ -58,9 +58,9 @@ public class Enemy2Move : MonoBehaviour
         //当たり判定の初期化
         this.rigid2D = GetComponent<Rigidbody2D>();
 
-        //starCreate = starDirec.GetComponent<StarDirector>();
+        starCreate = starDirec.GetComponent<StarDirector>();
 
-        //punchController = attackHand.GetComponent<PunchController>();
+        punchController = attackHand.GetComponent<PunchController>();
 
         if (highJumpMode == true)
         {
@@ -72,7 +72,7 @@ public class Enemy2Move : MonoBehaviour
     {
         //タグで当たり判定を管理する
         if(col.gameObject.tag == "wall" || 
-            col.gameObject.tag == "Enemy" || 
+            col.gameObject.tag == "Enemy" ||
             col.gameObject.tag == "Player")
         {
             //方向転換
@@ -90,18 +90,23 @@ public class Enemy2Move : MonoBehaviour
     {
         if ((col.gameObject.tag == "AttackBoal")&&(checkAttack == true))
         {
-            //float posX1;
-            //float posX2;
-            //float posY;
-            //posX1 = this.transform.position.x + this.GetComponent<Renderer>().bounds.size.x / 2 + 3;
-            //posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
-            //posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
+            float posX1;
+            float posX2;
+            float posY;
+            posX1 = this.transform.position.x + this.GetComponent<Renderer>().bounds.size.x / 2 + 3;
+            posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
+            posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
-            //// 
-            //starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
+            // 
+            starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
 
-            Destroy(this.gameObject);
-            //starCreate.CreateStar(20);
+            //好きな大きさの重力を指定する
+            rigid2D.gravityScale = gravityForce;
+
+            //「死にました」とフラグで伝える
+            deathFlag = true;
+
+            starCreate.CreateStar(20);
         }
     }
 
@@ -117,38 +122,54 @@ public class Enemy2Move : MonoBehaviour
         // Update is called once per frame
         void Update()
     {
-        //時間経過の管理をするif文
-        if (jumpTimer < 10)
+        if (deathFlag != true)
         {
-            jumpTimer++;
+            //時間経過の管理をするif文
+            if (jumpTimer < 10)
+            {
+                jumpTimer++;
+            }
+            //jumpFlagがfalseでありタイマーが最大ならjumpFlagをtrueにする
+            if (jumpFlag != true && jumpTimer == 10)
+            {
+                jumpFlag = true;
+            }
+
+            //X方向のspeedを設定する
+            float speedx = Mathf.Abs(this.rigid2D.velocity.x);
+
+            //jumpFlagがtrueでありspeedが最大値を超えていないなら
+            if (jumpFlag && speedx < this.maxWalkSpeed)
+            {
+                //X方向に力を加える
+                this.rigid2D.AddForce(transform.right * key * this.walkForce);
+            }
+
+            //jumpFlagがtrueでありgroundFlagがtrueでありY方向の加えられる力が0.0fなら
+            if (jumpFlag && groundFlag)
+            {
+                //ジャンプする
+                this.rigid2D.AddForce(transform.up * this.jumpForce);
+
+                //jumpFlagをfalseにしてjumpTimerを0に戻す
+                jumpFlag = false;
+                jumpTimer = 0;
+            }
+
+            checkAttack = punchController.attackCheck;
         }
-        //jumpFlagがfalseでありタイマーが最大ならjumpFlagをtrueにする
-        if(jumpFlag != true && jumpTimer == 10)
+
+        //死んでしまったら
+        if (deathFlag == true)
         {
-            jumpFlag = true;
+            //死んで消えてしまうまでの猶予はここで決まっているのだ
+            deathCount++;
+            //だからそれまで余生を過ごし時が来たら
+            if (deathTimer < deathCount)
+            {
+                //跡形もなく消えてゆけ
+                Destroy(this.gameObject);
+            }
         }
-
-        //X方向のspeedを設定する
-        float speedx = Mathf.Abs(this.rigid2D.velocity.x);
-
-        //jumpFlagがtrueでありspeedが最大値を超えていないなら
-        if (jumpFlag && speedx < this.maxWalkSpeed)
-        {
-            //X方向に力を加える
-            this.rigid2D.AddForce(transform.right * key * this.walkForce);
-        }
-
-        //jumpFlagがtrueでありgroundFlagがtrueでありY方向の加えられる力が0.0fなら
-        if (jumpFlag && groundFlag)
-        {
-            //ジャンプする
-            this.rigid2D.AddForce(transform.up * this.jumpForce);
-
-            //jumpFlagをfalseにしてjumpTimerを0に戻す
-            jumpFlag = false;
-            jumpTimer = 0;
-        }
-
-        //checkAttack = punchController.attackCheck;
     }
 }
