@@ -8,6 +8,10 @@ public class DeathMove : MonoBehaviour
 
     private Collider2D collider;
 
+    //プレイヤーそのものの当たり判定を有効にするフラグ
+    [SerializeField]
+    private bool playerCollisionFlag = false;
+
     //吹っ飛び率(X軸)
     [SerializeField]
     private float blowoutRate = 100.0f;
@@ -16,7 +20,8 @@ public class DeathMove : MonoBehaviour
     [SerializeField]
     private float upForce = 300.0f;
 
-    //ここはplayerでもattackboalでも可なので必要時に変えて下さい
+    public GameObject attackHand;
+
     private GameObject player;
 
     //殴られて爆発するまでの時間
@@ -53,11 +58,32 @@ public class DeathMove : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         //タグで当たり判定を管理する
-        if (col.gameObject.tag == "Player")
+        if(playerCollisionFlag == true)
+        {
+            if (col.gameObject.tag == "Player")
+            {
+                //プレイヤーの向きを取得する
+                float downVel = player.transform.position.x - this.transform.position.x;
+
+                //プレイヤーの向きに飛ばすから反転する
+                downVel *= -1;
+
+                //当たり判定をoffにする
+                collider.enabled = false;
+
+                //移動
+                this.rigid2D.AddForce(transform.up * this.upForce + transform.right * downVel * blowoutRate);
+            }
+        }
+
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "AttackBoal")
         {
             //プレイヤーの向きを取得する
             float downVel = player.transform.position.x - this.transform.position.x;
-            
+
             //プレイヤーの向きに飛ばすから反転する
             downVel *= -1;
 
