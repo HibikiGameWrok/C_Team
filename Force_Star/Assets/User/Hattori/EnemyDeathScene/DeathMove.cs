@@ -20,7 +20,7 @@ public class DeathMove : MonoBehaviour
     [SerializeField]
     private float upForce = 300.0f;
 
-    public GameObject attackHand;
+    private GameObject attackHand;
 
     private GameObject player;
 
@@ -47,6 +47,7 @@ public class DeathMove : MonoBehaviour
         //colliderをoffにするため
         this.collider = gameObject.GetComponent<Collider2D>();
         player = GameObject.Find("Player");
+        attackHand = GameObject.Find("AttackBoal");
     }
 
     // Update is called once per frame
