@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionFlag: 1
+  playerCollisionFlag: 0
   blowoutRate: 100
   upForce: 800
 --- !u!61 &717447815
@@ -447,6 +447,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfca9e57c15c05f4e8f8da97cb4f7539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starDirec: {fileID: 0}
+  attackHand: {fileID: 0}
+  wait_Image: {fileID: 0}
+  action_Image: {fileID: 0}
+  damage_Image: {fileID: 0}
+  player: {fileID: 0}
   speed: 0.25
   range: 9.3
   deathTimer: 25
@@ -1064,6 +1070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9069ffb99b01eb4ca3a242fa3ab325f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starDirec: {fileID: 0}
+  attackHand: {fileID: 0}
   moveSpeed: 0.09
   maxDistance: 5
   deathTimer: 25
@@ -1080,7 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionFlag: 1
+  playerCollisionFlag: 0
   blowoutRate: 100
   upForce: 800
 --- !u!1 &1497962696242231093 stripped
@@ -1148,6 +1156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14016755300e14640bc2cd9af824f2bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starDirec: {fileID: 0}
+  attackHand: {fileID: 0}
   jumpForce: 300
   highJumpMode: 0
   deathTimer: 25
@@ -1164,7 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590a96fc9817994e9d9aeb7603e046e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionFlag: 1
+  playerCollisionFlag: 0
   blowoutRate: 100
   upForce: 800
 --- !u!1001 &4447818819222043360
