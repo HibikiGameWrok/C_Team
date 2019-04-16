@@ -145,3 +145,5 @@ MonoBehaviour:
   attackHand: {fileID: 0}
   moveSpeed: 0.09
   maxDistance: 5
+  deathTimer: 25
+  gravityForce: 7
