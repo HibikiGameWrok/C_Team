@@ -50,7 +50,11 @@ public class ResultFade : MonoBehaviour
 
         if (clearFlag == true || overFlag == true)
         {
-            isFadeOut = true;
+            if(isFadeIn == false)
+            {
+                isFadeOut = true;
+            }
+            
         }
 
     }
