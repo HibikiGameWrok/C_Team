@@ -17,7 +17,7 @@ public class PresentForPlayer : MonoBehaviour
     private bool savedFlag = true;
 
     [SerializeField]
-    private float destroyColor = 255.0f;
+    private float destroyColor = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -51,8 +51,8 @@ public class PresentForPlayer : MonoBehaviour
 
         if(savedFlag == true)
         {
-            destroyColor -= 1.0f;
-            turtleSprite.color = new Color(255.0f, 255.0f, 255.0f, destroyColor);
+            destroyColor -= 0.01f;
+            turtleSprite.color = new Color(1.0f, 1.0f, 1.0f, destroyColor);
         }
 
         if (destroyColor < 0.0f)

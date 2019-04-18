@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakeSpeed: 0.08
   maxDistance: 0.2
+  destroyColor: 1
 --- !u!1001 &465684152
 PrefabInstance:
   m_ObjectHideFlags: 0
