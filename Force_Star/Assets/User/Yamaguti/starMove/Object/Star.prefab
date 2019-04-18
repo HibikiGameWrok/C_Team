@@ -4769,8 +4769,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b25f38304f9cf41a661ef3de578da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: 100, y: 0.5}
-  player: {fileID: 0}
+  m_speed: 0
+  m_attenuation: 0
+  waitTime: 0
 --- !u!1 &4410811508333635223
 GameObject:
   m_ObjectHideFlags: 0
@@ -4785,7 +4786,7 @@ GameObject:
   - component: {fileID: 4410811508333635219}
   m_Layer: 0
   m_Name: StarR
-  m_TagString: R
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4905,7 +4906,7 @@ GameObject:
   - component: {fileID: 4837993592145256955}
   m_Layer: 0
   m_Name: StarB
-  m_TagString: B
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5025,7 +5026,7 @@ GameObject:
   - component: {fileID: 1317107416837777107}
   m_Layer: 0
   m_Name: StarL
-  m_TagString: L
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5313,7 +5314,7 @@ GameObject:
   - component: {fileID: 312656882706865306}
   m_Layer: 0
   m_Name: StarT
-  m_TagString: T
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -9546,7 +9546,7 @@ GameObject:
   - component: {fileID: 4410811508333635219}
   m_Layer: 8
   m_Name: StarR
-  m_TagString: R
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9666,7 +9666,7 @@ GameObject:
   - component: {fileID: 4837993592145256955}
   m_Layer: 8
   m_Name: StarB
-  m_TagString: B
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9786,7 +9786,7 @@ GameObject:
   - component: {fileID: 1317107416837777107}
   m_Layer: 8
   m_Name: StarL
-  m_TagString: L
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9908,7 +9908,7 @@ GameObject:
   - component: {fileID: 6504584272572195269}
   m_Layer: 8
   m_Name: Star
-  m_TagString: Star
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10074,7 +10074,7 @@ GameObject:
   - component: {fileID: 312656882706865306}
   m_Layer: 8
   m_Name: StarT
-  m_TagString: T
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
