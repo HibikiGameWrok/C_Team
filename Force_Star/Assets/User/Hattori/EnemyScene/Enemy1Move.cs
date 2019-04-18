@@ -81,11 +81,13 @@ public class Enemy1Move : MonoBehaviour
 
             //「死にました」とフラグで伝える
             deathFlag = true;
-            starCreate.CreateStar(20);
+            //跡形もなく消えてゆけ
+            Destroy(this.gameObject);
         }
     }
-        // Update is called once per frame
-        void Update()
+    
+    // Update is called once per frame
+    void Update()
     {
         if (deathFlag != true)
         {
@@ -112,14 +114,14 @@ public class Enemy1Move : MonoBehaviour
         //死んでしまったら
         if (deathFlag == true)
         {
-            //死んで消えてしまうまでの猶予はここで決まっているのだ
-            deathCount++;
-            //だからそれまで余生を過ごし時が来たら
-            if (deathTimer < deathCount)
-            {
-                //跡形もなく消えてゆけ
-                Destroy(this.gameObject);
-            }
+            ////死んで消えてしまうまでの猶予はここで決まっているのだ
+            //deathCount++;
+            ////だからそれまで余生を過ごし時が来たら
+            //if (deathTimer < deathCount)
+            //{
+            //    //跡形もなく消えてゆけ
+            //    Destroy(this.gameObject);
+            //}
         }
     }
 }
