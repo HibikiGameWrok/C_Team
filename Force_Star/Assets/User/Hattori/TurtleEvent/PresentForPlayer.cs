@@ -14,7 +14,7 @@ public class PresentForPlayer : MonoBehaviour
     [SerializeField]
     private float maxDistance = 0.2f;
 
-    private bool savedFlag = true;
+    private bool savedFlag = false;
 
     [SerializeField]
     private float destroyColor = 1.0f;
