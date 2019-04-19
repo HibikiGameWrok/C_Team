@@ -25,7 +25,7 @@ public class LeftEnemyController : MonoBehaviour
     {
         battleTimer++;
 
-        if(battleTimer > 100)
+        if(battleTimer > 50)
         {
             moveFlag = true;
         }
@@ -40,8 +40,6 @@ public class LeftEnemyController : MonoBehaviour
             moveTimer = 0;
             this.transform.localPosition = new Vector3(keepPos.x, this.transform.localPosition.y, this.transform.localPosition.z);
         }
-
-        Debug.Log(Mathf.Sin(this.transform.localPosition.x));
 
         if (((Mathf.Sin(moveTimer * moveSpeed)) > 0.4f))
         {
