@@ -130,11 +130,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d63ed11b681bd54a9155b5ae54cf6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rEnemy: {fileID: 1596024628}
-  lEnemy: {fileID: 2025342524}
   shakeSpeed: 0.08
   maxDistance: 0.2
+  savedFlag: 0
   destroyColor: 1
+--- !u!1 &292905790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292905792}
+  - component: {fileID: 292905791}
+  m_Layer: 0
+  m_Name: Event_Director
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &292905791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292905790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f45f1cf6607bc4ea11c1685b3cae59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turtle: {fileID: 60612416}
+  rEnemy: {fileID: 1596024623}
+  lEnemy: {fileID: 2025342519}
+--- !u!4 &292905792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292905790}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.33945936, y: -0.6438116, z: -9.857883}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &346924242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,7 +566,7 @@ PrefabInstance:
     - target: {fileID: 2492831801780375861, guid: b517f778c3ebbf3478a0b569d61c5474,
         type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: lEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 1966508496921601383, guid: b517f778c3ebbf3478a0b569d61c5474,
         type: 3}
@@ -685,6 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3693f68306baea94c849f3fafb1d710c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyFlag: 0
 --- !u!1001 &1605260806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -695,7 +741,7 @@ PrefabInstance:
     - target: {fileID: 6243450186683085319, guid: 52eef5275af9a6a4d86332b7de960db8,
         type: 3}
       propertyPath: m_Name
-      value: octalian
+      value: rEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 4184631038492712025, guid: 52eef5275af9a6a4d86332b7de960db8,
         type: 3}
@@ -777,6 +823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8b56bf373468148840612f41cf7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyFlag: 0
 --- !u!1001 &2966089380309746347
 PrefabInstance:
   m_ObjectHideFlags: 0
