@@ -55,6 +55,9 @@ public class RightEnemyController : MonoBehaviour
     {
         if(col.gameObject.tag == "AttackBoal")
         {
+            float posX = this.transform.position.x;
+            float posY = this.transform.position.y;
+
 
         }
     }
