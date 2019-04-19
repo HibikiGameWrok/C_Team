@@ -50,4 +50,12 @@ public class RightEnemyController : MonoBehaviour
             battleTimer = 0.0f;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "AttackBoal")
+        {
+
+        }
+    }
 }
