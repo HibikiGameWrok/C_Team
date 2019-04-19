@@ -14,6 +14,8 @@ public class LeftEnemyController : MonoBehaviour
 
     float battleTimer = 0.0f;
 
+    public bool destroyFlag = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,15 @@ public class LeftEnemyController : MonoBehaviour
         {
             moveFlag = false;
             battleTimer = 0.0f;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "AttackBoal")
+        {
+            destroyFlag = true;
+            Destroy(this.gameObject);
         }
     }
 }

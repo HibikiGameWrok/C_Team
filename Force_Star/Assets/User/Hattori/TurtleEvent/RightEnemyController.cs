@@ -14,6 +14,8 @@ public class RightEnemyController : MonoBehaviour
 
     float battleTimer = 0.0f;
 
+    public bool destroyFlag = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,10 +57,8 @@ public class RightEnemyController : MonoBehaviour
     {
         if(col.gameObject.tag == "AttackBoal")
         {
-            float posX = this.transform.position.x;
-            float posY = this.transform.position.y;
-
-
+            destroyFlag = true;
+            Destroy(this.gameObject);
         }
     }
 }
