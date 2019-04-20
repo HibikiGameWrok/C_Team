@@ -58,17 +58,21 @@ public class PresentForPlayer : MonoBehaviour
 
         if(savedFlag == true)
         {
-            destroyColor -= 0.01f;
-            turtleSprite.color = new Color(1.0f, 1.0f, 1.0f, destroyColor);
+            if (changeFlag == false)
+            {
+                destroyColor -= 0.01f;
+                turtleSprite.color = new Color(1.0f, 1.0f, 1.0f, destroyColor);
+            }
         }
 
-        if (destroyColor <= 0.0f)
+        if (destroyColor < 0.0f)
         {
             float posX = this.transform.position.x;
             float posY = this.transform.position.y;
 
             starCreate.CreateOneStar(new Vector2(posX, posY), 5, false, 0.5f);
             destroyColor = 0.0f;
+            changeFlag = true;
         }
 
     }
