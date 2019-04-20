@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PresentForPlayer : MonoBehaviour
 {
+    public GameObject starDirec;
+
+    private StarDirector starCreate;
+
     SpriteRenderer turtleSprite;
 
     [SerializeField]
@@ -24,6 +28,7 @@ public class PresentForPlayer : MonoBehaviour
     {
         turtleSprite = gameObject.GetComponent<SpriteRenderer>();
 
+        starCreate = starDirec.GetComponent<StarDirector>();
     }
 
     // Update is called once per frame
