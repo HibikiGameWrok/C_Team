@@ -23,6 +23,8 @@ public class PresentForPlayer : MonoBehaviour
     [SerializeField]
     private float destroyColor = 1.0f;
 
+    private bool changeFlag = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +62,7 @@ public class PresentForPlayer : MonoBehaviour
             turtleSprite.color = new Color(1.0f, 1.0f, 1.0f, destroyColor);
         }
 
-        if (destroyColor < 0.0f)
+        if (destroyColor <= 0.0f)
         {
             float posX = this.transform.position.x;
             float posY = this.transform.position.y;
