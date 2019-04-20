@@ -62,6 +62,10 @@ public class PresentForPlayer : MonoBehaviour
 
         if (destroyColor < 0.0f)
         {
+            float posX = this.transform.position.x;
+            float posY = this.transform.position.y;
+
+            starCreate.CreateOneStar(new Vector2(posX, posY), 5, false, 0.5f);
             destroyColor = 0.0f;
         }
 
