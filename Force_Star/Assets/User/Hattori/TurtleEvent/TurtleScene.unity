@@ -884,6 +884,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: wood
       objectReference: {fileID: 0}
+    - target: {fileID: 7536416586395121433, guid: 30cc563ba7ee0114389eb0b8363afb2a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 7006478360204116911, guid: 30cc563ba7ee0114389eb0b8363afb2a,
         type: 3}
       propertyPath: m_LocalPosition.x
