@@ -15,6 +15,7 @@ TagManager:
   - Roket
   - Floor
   - ground
+  - Shell
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - PlayerDigid
   - 
   - 
   - 

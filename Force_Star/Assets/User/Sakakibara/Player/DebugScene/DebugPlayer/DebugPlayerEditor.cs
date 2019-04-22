@@ -32,7 +32,7 @@ public class ListPartsDataEditer : PropertyDrawer
     int m_index = 0;
 
     float m_baseHeight = EditorGUIUtility.singleLineHeight;
-    float m_indexHeight = EditorGUIUtility.singleLineHeight * 10.0f;
+    float m_indexHeight = EditorGUIUtility.singleLineHeight * 15.0f;
 
     private void OnEnable()
     {

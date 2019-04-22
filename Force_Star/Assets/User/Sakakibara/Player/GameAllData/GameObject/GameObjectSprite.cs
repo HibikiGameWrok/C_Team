@@ -173,6 +173,10 @@ public class GameObjectSprite : MonoBehaviour
     {
         gameObject.transform.localScale = scale;
     }
+    public void SetImageScaleLocal(Vector3 scale)
+    {
+        m_spriteObject.transform.localScale = scale;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
     //*|***|***|***|***|***|***|***|***|***|***|***|

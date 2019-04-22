@@ -47,6 +47,7 @@ public class DebugPlayer : MonoBehaviour
     // プレイヤー
     //*|***|***|***|***|***|***|***|***|***|***|***|
     GameObject m_playerCenter;
+    DebugPlayerMove m_playerMove;
     [SerializeField]
     public bool m_updateFlag;
     [SerializeField]
@@ -101,9 +102,6 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     string m_fileName;
-
-    public Vector3 m_mistary;
-    public PartsData m_mistary2;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ファイル名
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -116,15 +114,13 @@ public class DebugPlayer : MonoBehaviour
     // コントローラー情報を転換せよ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     DebugPlayerController m_controller;
-
+    [SerializeField]
+    public int m_animeNum = 0;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
-
-        m_mistary = new Vector3();
-        m_mistary2 = new PartsData();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -321,7 +317,16 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakePlayer()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーコントローラーを作成せよ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         m_controller = new DebugPlayerController();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーを飾り付けよ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerMove = m_playerCenter.AddComponent<DebugPlayerMove>();
+        m_playerMove.LinkController(m_controller);
+
     }
 
 
@@ -483,7 +488,7 @@ public class DebugPlayer : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            m_updateFlag = !m_updateFlag;
+            m_updateAnime = !m_updateAnime;
         }
 
 
@@ -662,6 +667,7 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AnimeStudyFrild()
     {
+        bool groundFlag = m_playerMove.GetGroundFlag();
         m_myAnime.speed = 1;
 
         if (m_updateAnime)
@@ -679,6 +685,11 @@ public class DebugPlayer : MonoBehaviour
             {
                 m_myAnime.SetInteger("MoveEnum", 3);
             }
+            if (m_controller.ChackStart())
+            {
+                m_myAnime.SetInteger("MoveEnum", 4);
+            }
+            m_myAnime.SetBool("ClipLand", groundFlag);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
