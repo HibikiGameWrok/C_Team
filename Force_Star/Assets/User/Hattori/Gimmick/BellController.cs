@@ -9,7 +9,11 @@ public class BellController : MonoBehaviour
     //private StarDirector starCreate;
 
     [SerializeField]
-    private float shakeSize;
+    private float shakeSize = 0.0f;
+
+    private float shakeRote = 0.0f;
+
+    private bool shakeFlag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +24,21 @@ public class BellController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(shakeFlag)
+        {
+            if(0.0f < shakeRote && shakeRote < shakeSize)
+            {
+                shakeRote++;
+            }
+         transform.Rotate(0.0f, 0.0f, shakeRote);   
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "AttackBoal")
         {
-            transform.Rotate(0.0f, 0.0f, shakeSize);
+            shakeFlag = true;
         }
     }
 }
