@@ -58,7 +58,7 @@ public class RightEnemyController : MonoBehaviour
         if(col.gameObject.tag == "AttackBoal")
         {
             destroyFlag = true;
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
