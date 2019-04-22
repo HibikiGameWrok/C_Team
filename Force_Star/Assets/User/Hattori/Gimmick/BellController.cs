@@ -9,9 +9,9 @@ public class BellController : MonoBehaviour
     //private StarDirector starCreate;
 
     [SerializeField]
-    private float shakeSize = 0.0f;
+    private float shakeSize;
 
-    private float shakeRote = 0.0f;
+    private float shakeRote = 1.0f;
 
     private bool shakeFlag = false;
 
@@ -26,11 +26,16 @@ public class BellController : MonoBehaviour
     {
         if(shakeFlag)
         {
-            if(0.0f < shakeRote && shakeRote < shakeSize)
+            Debug.Log(shakeRote);
+            if(0.0f < shakeSize && this.transform.localRotation.z < -shakeSize)
             {
-                shakeRote++;
+                shakeRote += 0.1f;
             }
-         transform.Rotate(0.0f, 0.0f, shakeRote);   
+            if (this.transform.localRotation.z > shakeSize)
+            {
+                shakeRote -= 0.1f;
+            }
+         transform.Rotate(new Vector3(0.0f, 0.0f, shakeRote));   
         }
     }
 
