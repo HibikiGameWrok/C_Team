@@ -164,9 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10f45f1cf6607bc4ea11c1685b3cae59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turtle: {fileID: 60612416}
-  rEnemy: {fileID: 1596024623}
-  lEnemy: {fileID: 2025342519}
 --- !u!4 &292905792
 Transform:
   m_ObjectHideFlags: 0
@@ -538,7 +535,7 @@ GameObject:
   - component: {fileID: 1019077374}
   - component: {fileID: 1019077375}
   m_Layer: 0
-  m_Name: PresentStar
+  m_Name: StarDirector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -654,7 +651,7 @@ PrefabInstance:
     - target: {fileID: 1966508496921601383, guid: b517f778c3ebbf3478a0b569d61c5474,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1966508496921601383, guid: b517f778c3ebbf3478a0b569d61c5474,
         type: 3}
@@ -829,7 +826,7 @@ PrefabInstance:
     - target: {fileID: 4184631038492712025, guid: 52eef5275af9a6a4d86332b7de960db8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4184631038492712025, guid: 52eef5275af9a6a4d86332b7de960db8,
         type: 3}
