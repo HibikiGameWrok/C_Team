@@ -610,7 +610,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -647,6 +647,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &600473499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600473496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db23179364caebc4cb905160ae2f201e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeSize: 45
 --- !u!1 &788307093 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1540769933349335717, guid: 093414118edfb0a4b9a45cded326b7aa,
@@ -1208,7 +1221,7 @@ PrefabInstance:
     - target: {fileID: 2544717196396465425, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
       propertyPath: m_Name
-      value: wood (2)
+      value: AttackBoal
       objectReference: {fileID: 0}
     - target: {fileID: 2544717196396465425, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
@@ -1218,12 +1231,12 @@ PrefabInstance:
     - target: {fileID: 3096821539121068455, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.17
+      value: 15.1
       objectReference: {fileID: 0}
     - target: {fileID: 3096821539121068455, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.94
+      value: 6.78
       objectReference: {fileID: 0}
     - target: {fileID: 3096821539121068455, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
@@ -1335,6 +1348,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1909921901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1909921902}
+  m_Layer: 0
+  m_Name: StarDirector_Bell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1909921902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909921901}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.532257, y: 1.1340159, z: -9.950614}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2014823496
 PrefabInstance:
   m_ObjectHideFlags: 0
