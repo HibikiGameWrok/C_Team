@@ -56,22 +56,28 @@ public class PresentForPlayer : MonoBehaviour
             distance += shakeSpeed;
         }
 
+        // 透明化させる
         if(savedFlag == true)
         {
             if (changeFlag == false)
             {
+                // 透明度を下げる
                 destroyColor -= 0.01f;
+                // オブジェクトに反映させる
                 turtleSprite.color = new Color(1.0f, 1.0f, 1.0f, destroyColor);
             }
         }
 
+        // 透明度が0よりも小さい時
         if (destroyColor < 0.0f)
         {
+            // 透明度を0に
+            destroyColor = 0.0f;
+            // 星に出現場所を与えて生成
             float posX = this.transform.position.x;
             float posY = this.transform.position.y;
-
-            starCreate.CreateOneStar(new Vector2(posX, posY), 5, false, 0.5f);
-            destroyColor = 0.0f;
+            starCreate.CreateOneStar(new Vector2(posX, posY), 10, false, 0.5f);
+            // 連続で星を出すのを止める
             changeFlag = true;
         }
 
