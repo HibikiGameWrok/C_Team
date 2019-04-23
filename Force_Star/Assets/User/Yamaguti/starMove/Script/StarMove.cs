@@ -24,7 +24,9 @@ public class StarMove : MonoBehaviour {
     public int flashTime;          // 点滅時間
     public int startFlashJumpCount;// 点滅を開始する回数
     int time = 0;                  // 点滅消滅の時間計測用変数
-    //-------------------------
+                                   //-------------------------
+
+    GameObject starManeger = null;
 
     // Use this for initialization
     void Start () {
@@ -33,6 +35,8 @@ public class StarMove : MonoBehaviour {
         timeElapsed = 0.0f;
         particle.Stop();
         startJF = jumpForce;
+
+        starManeger = GameObject.Find("StarManeger");
     }
 	
 	// Update is called once per frame
@@ -75,6 +79,7 @@ public class StarMove : MonoBehaviour {
         }
 
 
+
     }
 
     // 点滅関数
@@ -100,30 +105,20 @@ public class StarMove : MonoBehaviour {
     // 当たり判定
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            // 衝突時星の本体を見えなくする
-            hitFlag = true;
-            Collider2D m_ObjectCollider = GetComponent<Collider2D>();
-            m_ObjectCollider.isTrigger = true;     //　当たらないように
-            this.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0.0f);
-            particle.Play();                       // パーティクルの再生
-        }
-    }
-
-    public void PlayerCollision()
-    {
         if (!hitFlag)
         {
-            // 衝突時星の本体を見えなくする
-            hitFlag = true;
-            Collider2D m_ObjectCollider = GetComponent<Collider2D>();
-            m_ObjectCollider.isTrigger = true;     //　当たらないように
-            this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
-            ParticleSet particleSet = this.GetComponent<ParticleSet>();
-            particleSet.SetMaxStar(maxStar);
-            particle.Play();                       // パーティクルの再生
-            transform.GetChild(5).gameObject.GetComponent<ParticleSystem>().Play();
+            if (other.gameObject.tag == "Player")
+            {
+                // 衝突時星の本体を見えなくする
+                hitFlag = true;
+                Collider2D m_ObjectCollider = GetComponent<Collider2D>();
+                m_ObjectCollider.isTrigger = true;     //　当たらないように
+                this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
+                starManeger.GetComponent<StarManeger>().CreateStarPisce(this.transform.position, maxStar);
+                // パーティクルの再生
+                particle.Play();
+            }
+         
         }
     }
 

@@ -6,7 +6,6 @@ public class StarDirector : MonoBehaviour {
 
     public GameObject star; //星
     StarMove starCreate;
-    ParticleMove particleSet;
     public GameObject playerObject;
     public float starX;
 
@@ -36,13 +35,9 @@ public class StarDirector : MonoBehaviour {
         GameObject go2 = Instantiate(star) as GameObject;
 
         starCreate = go.GetComponent<StarMove>();
-        particleSet= go.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);
         starCreate.SetVecX(starX);
 
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);
         starCreate.SetVecX(-starX);
 
         go.transform.position = new Vector3(vecX1, vecY + go.GetComponent<Renderer>().bounds.size.y / 2, go.transform.position.z);
@@ -55,15 +50,11 @@ public class StarDirector : MonoBehaviour {
         GameObject go2 = Instantiate(star) as GameObject;
 
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
         starCreate.SetMaxStar(max);
-        particleSet.SetGameObject(playerObject);
         starCreate.SetVecX(starX);
 
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
         starCreate.SetMaxStar(max);
-        particleSet.SetGameObject(playerObject);
         starCreate.SetVecX(-starX);
 
         go.transform.position = new Vector3(vecX1, vecY + go.GetComponent<Renderer>().bounds.size.y / 2, go.transform.position.z);
@@ -80,14 +71,10 @@ public class StarDirector : MonoBehaviour {
         GameObject go2 = Instantiate(star) as GameObject;
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         // 星2
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(-starX);        // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         // 配置
@@ -109,14 +96,10 @@ public class StarDirector : MonoBehaviour {
 
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         // 星2
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);    // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
 
@@ -140,15 +123,11 @@ public class StarDirector : MonoBehaviour {
 
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject); // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         starCreate.SetJumpF(jump1);        // 星1のジャンプ力
         // 星2
         starCreate = go2.GetComponent<StarMove>();
-        particleSet = go2.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject);   // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         starCreate.SetJumpF(jump2);        // 星1のジャンプ力
@@ -173,8 +152,6 @@ public class StarDirector : MonoBehaviour {
 
         // 星1
         starCreate = go.GetComponent<StarMove>();
-        particleSet = go.transform.Find("StarParticle").GetComponent<ParticleMove>();
-        particleSet.SetGameObject(playerObject); // パーティクル用のオブジェクト渡し
         starCreate.SetVecX(starX);         // 横移動の向き
         starCreate.SetMaxStar(maxStar);    // 星の所有数
         starCreate.SetJumpF(jump);        // 星1のジャンプ力

@@ -38,9 +38,14 @@ public class StarCount : MonoBehaviour {
         starCount += count;
         //Debug.Log("atatta");
     }
+    public void AddCount()
+    {
+        starCount += 1;
+        //Debug.Log("atatta");
+    }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         this.starCounter.GetComponent<Text>().text = "×" + starCount.ToString();
 
         if(starCount >= clearStarCount)

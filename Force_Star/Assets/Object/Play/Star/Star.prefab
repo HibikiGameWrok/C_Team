@@ -9996,7 +9996,7 @@ MonoBehaviour:
   jumpForce: 0.5
   hitName: a
   hitFlag: 0
-  particle: {fileID: 1025031754790096641}
+  particle: {fileID: 6918279727058226612}
   grv: 0.02
   flashInterval: 5
   flashTime: 3
