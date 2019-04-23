@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db23179364caebc4cb905160ae2f201e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeSize: 30
+  shakeSize: 10
+  maxShakeRote: 0.3
 --- !u!4 &159735965
 Transform:
   m_ObjectHideFlags: 0
