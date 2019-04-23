@@ -47,6 +47,7 @@ public class DebugPlayer : MonoBehaviour
     // プレイヤー
     //*|***|***|***|***|***|***|***|***|***|***|***|
     GameObject m_playerCenter;
+    DebugPlayerMove m_playerMove;
     [SerializeField]
     public bool m_updateFlag;
     [SerializeField]
@@ -101,9 +102,6 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     string m_fileName;
-
-    public Vector3 m_mistary;
-    public PartsData m_mistary2;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ファイル名
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -111,13 +109,18 @@ public class DebugPlayer : MonoBehaviour
     float m_time = 0;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コントローラー情報を転換せよ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    DebugPlayerController m_controller;
+    [SerializeField]
+    public int m_animeNum = 0;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
-
-        m_mistary = new Vector3();
-        m_mistary2 = new PartsData();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -302,7 +305,30 @@ public class DebugPlayer : MonoBehaviour
 
 
         m_text = gameObject.GetComponent<DebugText>();
+
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー情報
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakePlayer();
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakePlayer()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーコントローラーを作成せよ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_controller = new DebugPlayerController();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーを飾り付けよ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerMove = m_playerCenter.AddComponent<DebugPlayerMove>();
+        m_playerMove.LinkController(m_controller);
+
+    }
+
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // nameと同じCHILDを返す
@@ -386,52 +412,8 @@ public class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 開始時実行！！
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        num = 100;
-        data = num.ToString();
-        m_text.textData = data;
-
         UpdateReadFile();
-
-        num = 7;
-        data = num.ToString();
-        m_text.textData = data;
-
-        ReadTex();
-
-        num = 15;
-        data = num.ToString();
-        m_text.textData = data;
-
         UpdateUnity();
-
-
-        num = 5;
-        data = num.ToString();
-        m_text.textData = data;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // アップデート
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    void Update()
-    {
-        //if(Input.GetKeyDown(KeyCode.J))
-        //{
-        //    UpdateReadFile();
-        //}
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    UpdateMakeFile();
-        //}
-        ReadTex();
-        AnimeStudyFrild();
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            m_updateFlag = !m_updateFlag;
-        }
-        if(m_updateFlag)
-        {
-            UpdateUnity();
-        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 開始時
@@ -493,45 +475,43 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アップデート
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void ReadTex()
+    void Update()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー情報
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdatePlayer();
 
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // パーツデータリストデータ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        for (int partsNum = 0; partsNum < m_listDataAll.Count; partsNum++)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //// 反映
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //// イメージを作成
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].playerDataNum = m_listData.listData[partsNum].dataNum;
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //// イメージを作成
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].texImageData.image = warehousePlayer.GetTexture2D(m_listDataAll[partsNum].playerDataNum);
-            //m_listDataAll[partsNum].texImageData.rextParsent = MyCalculator.RectSize(0, 1, 1, 1, 1);
-            //m_listDataAll[partsNum].texImageData.size = m_listData.listData[partsNum].size;
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //// 場所を作成
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].localPos = m_listData.listData[partsNum].localPos;
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //// 描画を作成
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //m_listDataAll[partsNum].renderImageData.depth = m_listData.listData[partsNum].depth;
+            m_updateFlag = !m_updateFlag;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            m_updateAnime = !m_updateAnime;
         }
 
 
+        if(m_updateFlag)
+        {
+            UpdateUnity();
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // アップデート
+    // プレイヤー情報
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void ReadTexDX()
+    void UpdatePlayer()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 操作更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_controller.Update();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // アニメ更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AnimeStudyFrild();
+
+
 
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -687,41 +667,30 @@ public class DebugPlayer : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AnimeStudyFrild()
     {
+        bool groundFlag = m_playerMove.GetGroundFlag();
         m_myAnime.speed = 1;
 
         if (m_updateAnime)
         {
             m_myAnime.SetInteger("MoveEnum", 0);
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (m_controller.ChackStickMove())
             {
                 m_myAnime.SetInteger("MoveEnum", 1);
             }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                m_myAnime.SetInteger("MoveEnum", 3);
-            }
-            if (Input.GetKey(KeyCode.C))
+            if (m_controller.ChackAttack())
             {
                 m_myAnime.SetInteger("MoveEnum", 2);
             }
+            if (m_controller.ChackJump())
+            {
+                m_myAnime.SetInteger("MoveEnum", 3);
+            }
+            if (m_controller.ChackStart())
+            {
+                m_myAnime.SetInteger("MoveEnum", 4);
+            }
+            m_myAnime.SetBool("ClipLand", groundFlag);
         }
-        int num = gameObject.transform.childCount;
-        string data = num.ToString();
-        //m_text.textData = data;
-
-
-
-        m_time += Time.deltaTime;
-        m_time = ChangeData.AntiOverflow(m_time, (float)m_listAnime.Count - 0.00001f);
-        int index = (int)m_time;
-        num = m_listAnime[index].spriteData.m_dataNum;
-        //num = 100;
-        data = num.ToString();
-        //m_text.textData = data;
-
-
-        //m_myAnime.SetBool("Right", false);
-        //m_myAnime.SetBool("Left", false);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アニメの制御

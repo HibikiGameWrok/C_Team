@@ -44,6 +44,8 @@ public class AnimePlayerSprite : AnimeSprite
     //*|***|***|***|***|***|***|***|***|***|***|***|
     protected override void UpdateImageTex()
     {
+        int rectX = ChangeData.AmongLess(m_rectX, 1, 16);
+        int rectY = ChangeData.AmongLess(m_rectY, 1, 16);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // イメージを作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -52,7 +54,7 @@ public class AnimePlayerSprite : AnimeSprite
         // イメージを作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_texImageData.image = WarehousePlayer.GetInstance().GetTexture2D(m_playerDataNum);
-        m_texImageData.rextParsent = MyCalculator.RectSize(0, 1, 1, 1, 1);
+        m_texImageData.rextParsent = MyCalculator.RectSize(m_rectNum, rectX, rectY, 1, 1);
         m_texImageData.size = m_size;
     }
 

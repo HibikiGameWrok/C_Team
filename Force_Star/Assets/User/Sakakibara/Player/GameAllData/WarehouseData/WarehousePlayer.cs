@@ -59,6 +59,14 @@ namespace WarehouseData
                 LEFTLEG,
                 RIGHTLEG,
                 //*|***|***|***|***|***|***|***|***|***|***|***|
+                // プレイヤーのデータ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                PLAYERBOAL_DAMAGE,
+                BODYTOP_DAMAGE,
+                ATTACKBOAL_DAMAGE,
+                LEFTLEG_DAMAGE,
+                RIGHTLEG_DAMAGE,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 総数
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 NUM,
@@ -137,6 +145,14 @@ namespace WarehouseData
                         m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL] = Resources.Load<Texture2D>(MyFile + "AttackBoal");
                         m_playerTex2D[(int)PlayerData_Number.LEFTLEG] = Resources.Load<Texture2D>(MyFile + "LeftLeg");
                         m_playerTex2D[(int)PlayerData_Number.RIGHTLEG] = Resources.Load<Texture2D>(MyFile + "RightLeg");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // プレイヤーのデータ
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "PlayerBoal");
+                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyTop");
+                        m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "AttackBoal");
+                        m_playerTex2D[(int)PlayerData_Number.LEFTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
+                        m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "JointBoal");
                     }
                 }
             }

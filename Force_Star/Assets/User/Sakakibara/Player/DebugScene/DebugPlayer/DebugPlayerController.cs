@@ -25,18 +25,22 @@ public class DebugPlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃コード
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_flagAttackKeyTrigger;
     bool m_flagAttackKey;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ジャンプコード
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_flagJumpKeyTrigger;
     bool m_flagJumpKey;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 踏みつけコード
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_flagTrampleKeyTrigger;
     bool m_flagTrampleKey;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スタートコード
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_flagStartKeyTrigger;
     bool m_flagStartKey;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -57,30 +61,38 @@ public class DebugPlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃コード
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_flagAttackKeyTrigger = false;
         m_flagAttackKey = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ジャンプコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_flagJumpKeyTrigger = false;
         m_flagJumpKey = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 踏みつけコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_flagTrampleKeyTrigger = false;
         m_flagTrampleKey = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // スタートコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_flagStartKeyTrigger = false;
         m_flagStartKey = false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コード生成
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void Update()
+    public void Update()
     {
         ResetCommond();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃コード
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.K))
+        {
+            m_flagAttackKeyTrigger = true;
+        }
+        if (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.K))
         {
             m_flagAttackKey = true;
         }
@@ -89,6 +101,10 @@ public class DebugPlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
         {
+            m_flagJumpKeyTrigger = true;
+        }
+        if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.J))
+        {
             m_flagJumpKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -96,12 +112,20 @@ public class DebugPlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            m_flagTrampleKeyTrigger = true;
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
             m_flagTrampleKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // スタートコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKeyDown(KeyCode.Space))
+        {
+            m_flagStartKeyTrigger = true;
+        }
+        if (Input.GetKey(KeyCode.Space))
         {
             m_flagStartKey = true;
         }
@@ -137,6 +161,10 @@ public class DebugPlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃コード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool ChackAttackTrigger()
+    {
+        return m_flagAttackKeyTrigger;
+    }
     public bool ChackAttack()
     {
         return m_flagAttackKey;
@@ -144,6 +172,10 @@ public class DebugPlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ジャンプコード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool ChackJumpTrigger()
+    {
+        return m_flagJumpKeyTrigger;
+    }
     public bool ChackJump()
     {
         return m_flagJumpKey;
@@ -151,6 +183,10 @@ public class DebugPlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 踏みつけコード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool ChackTrampleTrigger()
+    {
+        return m_flagTrampleKeyTrigger;
+    }
     public bool ChackTrample()
     {
         return m_flagTrampleKey;
@@ -158,6 +194,10 @@ public class DebugPlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スタートコード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool ChackStartTrigger()
+    {
+        return m_flagStartKeyTrigger;
+    }
     public bool ChackStart()
     {
         return m_flagStartKey;
