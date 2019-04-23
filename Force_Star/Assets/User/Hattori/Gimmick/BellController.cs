@@ -31,7 +31,7 @@ public class BellController : MonoBehaviour
             {
                 shakeRote += 0.1f;
             }
-            if (this.transform.localRotation.z > shakeSize)
+            if (this.transform.localRotation.z > shakeSize && 0.0f > shakeSize)
             {
                 shakeRote -= 0.1f;
             }
