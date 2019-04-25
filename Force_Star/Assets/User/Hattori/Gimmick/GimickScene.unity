@@ -263,6 +263,11 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3835187970570020269, guid: b24d1784953d55d4ba61eafe9fef049b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b24d1784953d55d4ba61eafe9fef049b, type: 3}
 --- !u!1 &285849728
@@ -433,15 +438,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: wood (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2544717196396465425, guid: b24d1784953d55d4ba61eafe9fef049b,
+        type: 3}
+      propertyPath: m_TagString
+      value: AttackBoal
+      objectReference: {fileID: 0}
     - target: {fileID: 3096821539121068455, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.303
+      value: 3.55
       objectReference: {fileID: 0}
     - target: {fileID: 3096821539121068455, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.4949636
+      value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 3096821539121068455, guid: b24d1784953d55d4ba61eafe9fef049b,
         type: 3}
