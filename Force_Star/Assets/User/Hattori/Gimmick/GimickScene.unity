@@ -519,6 +519,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6629144974069171091, guid: 7872ff73d5b4df64cb524515cfade429,
         type: 3}
+    - target: {fileID: 4509304176040873231, guid: 2e8a33135f7cc2a489cd31b1c70e6b7a,
+        type: 3}
+      propertyPath: bottle.Array.data[1]
+      value: 
+      objectReference: {fileID: 7388101506301704014, guid: 4c5d25ecde9a49149a29daf57d0a68d5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e8a33135f7cc2a489cd31b1c70e6b7a, type: 3}
 --- !u!1001 &924774360
@@ -914,7 +920,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bottle.Array.data[0]
       value: 
-      objectReference: {fileID: 2164506783049371946, guid: 4aeed6a239b36094097434ad97e0b84d,
+      objectReference: {fileID: 6629144974069171091, guid: 7872ff73d5b4df64cb524515cfade429,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e8a33135f7cc2a489cd31b1c70e6b7a, type: 3}
@@ -1059,5 +1065,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4509304176040873231, guid: 2e8a33135f7cc2a489cd31b1c70e6b7a,
+        type: 3}
+      propertyPath: bottle.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509304176040873231, guid: 2e8a33135f7cc2a489cd31b1c70e6b7a,
+        type: 3}
+      propertyPath: bottle.Array.data[1]
+      value: 
+      objectReference: {fileID: 6629144974069171091, guid: 7872ff73d5b4df64cb524515cfade429,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e8a33135f7cc2a489cd31b1c70e6b7a, type: 3}

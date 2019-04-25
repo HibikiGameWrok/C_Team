@@ -24,6 +24,7 @@ public class bottleBreak : MonoBehaviour
     {
         if (col.gameObject.tag == "AttackBoal")
         {
+
             Instantiate(bottle[number], transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
