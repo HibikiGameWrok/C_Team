@@ -1,9 +1,11 @@
 fileFormatVersion: 2
-guid: 0510639263dcecb49a949a2b9c12d706
+guid: f2c069ff0408cf54ba79622028b8a3b8
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Title_0
-    21300002: Title_1
+    21300000: smoke_0
+    21300002: smoke_1
+    21300004: smoke_2
+    21300006: smoke_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -108,41 +110,81 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Title_0
+      name: smoke_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 285
-        height: 100
+        width: 500
+        height: 500
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18d957d5a2f1ecb48a493c879d2c3b49
+      spriteID: a69d2a0570dce0f449a5fe636e3d5f42
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Title_1
+      name: smoke_1
       rect:
         serializedVersion: 2
-        x: 286
+        x: 500
         y: 0
-        width: 74
-        height: 99
-      alignment: 9
-      pivot: {x: 0.48428592, y: 0.44127336}
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 166a47eb8a8a8114cbd479f4f71220cd
+      spriteID: 7e6c07ea738dcac4f8027f45ab51c066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke_2
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d45f40d0234f6cf478e66d9f4fbe11b7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke_3
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 0
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26fdf161750b73f469eee8e3c85a80fd
       vertices: []
       indices: 
       edges: []
@@ -150,7 +192,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a8017437c03c2ee40b1be798c70dfcea
+    spriteID: 85b1d0b2cb206eb41a5645043ccdec40
     vertices: []
     indices: 
     edges: []

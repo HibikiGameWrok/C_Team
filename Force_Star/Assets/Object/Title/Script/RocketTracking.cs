@@ -88,7 +88,7 @@ public class RocketTracking : MonoBehaviour
     {
         VerticalSpeed += 0.01f; 
 
-        transform.position = new Vector3(transform.position.x, posY + Mathf.Sin(VerticalSpeed), transform.position.z);
+        transform.position = new Vector3(transform.position.x, posY + Mathf.Sin(VerticalSpeed) / 2.5f, transform.position.z);
     }
 
     void TrackingMove()
@@ -98,7 +98,7 @@ public class RocketTracking : MonoBehaviour
         m_velocity *= m_attenuation;
         transform.position += m_velocity *= Time.deltaTime;
 
-        size += -0.003f;
+        //size += -0.001f;
 
         //大きさを徐々に小さく
         gameObject.transform.localScale = new Vector3(size, size, transform.localScale.z);
