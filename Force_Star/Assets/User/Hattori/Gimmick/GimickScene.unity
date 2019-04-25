@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeSize: 10
+  shakeSpeed: 4
   maxShakeRote: 0.3
 --- !u!4 &159735965
 Transform:
