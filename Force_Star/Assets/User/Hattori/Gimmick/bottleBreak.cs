@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bottleBreak : MonoBehaviour
+public class RandomBottleController : MonoBehaviour
 {
     public GameObject[] bottle;
 
