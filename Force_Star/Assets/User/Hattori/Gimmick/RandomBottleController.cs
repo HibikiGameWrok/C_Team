@@ -19,5 +19,8 @@ public class RandomBottleController : MonoBehaviour
         
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
 
+    }
 }
