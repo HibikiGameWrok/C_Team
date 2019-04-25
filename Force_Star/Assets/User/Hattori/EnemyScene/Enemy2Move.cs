@@ -106,7 +106,7 @@ public class Enemy2Move : MonoBehaviour
             //「死にました」とフラグで伝える
             deathFlag = true;
 
-            starCreate.CreateStar(1);
+            starCreate.CreateStar(20);
         }
     }
 
