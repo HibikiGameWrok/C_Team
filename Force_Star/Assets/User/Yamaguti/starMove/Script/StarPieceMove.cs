@@ -55,7 +55,7 @@ public class StarPieceMove : MonoBehaviour
             if (other.gameObject.tag == "Player")
             {
                 flag = true;
-                GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(); // 足してるのはここ
+                GameObject.Find("StarCount").GetComponent<StarCount>().AddCount(1); // 足してるのはここ
                 Destroy(this.gameObject);
             }
         }

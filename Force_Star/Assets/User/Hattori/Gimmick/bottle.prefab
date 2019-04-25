@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2571096010892843602}
   - component: {fileID: 4509304176040873231}
   m_Layer: 0
-  m_Name: bottle 1
+  m_Name: bottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c356c8d709e4886488457319a6b1e71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  star: {fileID: 7150364637558794756, guid: 3a2d5c0f7c47815409ee450f1a93b2e4, type: 3}
   bottle:
   - {fileID: 7388101506301704014, guid: 4c5d25ecde9a49149a29daf57d0a68d5, type: 3}
   - {fileID: 2164506783049371946, guid: 4aeed6a239b36094097434ad97e0b84d, type: 3}

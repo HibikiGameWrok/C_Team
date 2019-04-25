@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class bottleBreak : MonoBehaviour
 {
+    public GameObject star;
+    private StarManeger starManager;
+
     public GameObject[] bottle;
 
     private int number;
@@ -12,6 +15,7 @@ public class bottleBreak : MonoBehaviour
     void Start()
     {
         number = Random.Range(0, bottle.Length);
+        starManager = star.GetComponent<StarManeger>();
     }
 
     // Update is called once per frame
@@ -24,7 +28,7 @@ public class bottleBreak : MonoBehaviour
     {
         if (col.gameObject.tag == "AttackBoal")
         {
-
+            starManager.CreateStarPisce(this.transform.position, 5);
             Instantiate(bottle[number], transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
