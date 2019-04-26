@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rigid2D;     //力を加える要素
-    public GameObject starDirec;     //星
-    private StarDirector starCreate; //星の生成スクリプト
-    public StarCount escape;
+    //public GameObject starDirec;     //星
+    //private StarDirector starCreate; //星の生成スクリプト
+    //public StarCount escape;
 
     [SerializeField]
     private float walkForce = 30.0f;　　 //歩く力
@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour
     // ジャンプSE
     private AudioSource soundJump;
 
+    bool grounded = false;
+
+    LayerMask groundlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
         soundJump = audioSources[0];
+
+        groundlayer = LayerMask.GetMask(LayerMask.LayerToName(9));
     }
 
     // Update is called once per frame
@@ -116,15 +122,21 @@ public class PlayerController : MonoBehaviour
     // プレイヤーがジャンプする関数
     void JumpPlayer()
     {
+        grounded = Physics2D.Linecast(transform.position - transform.up * 1.7f,
+        transform.position - transform.up * 3.0f,
+        groundlayer);
+
         //ジャンプ------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z) && (groundFlag == true))
+        if (Input.GetKeyDown(KeyCode.Z) && (grounded == true))
         {
-            this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
+            rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
+            this.rigid2D.AddForce(transform.up * this.jumpForce);
             soundJump.PlayOneShot(soundJump.clip);
             groundFlag = false;
         }
-        if (Input.GetKeyDown(KeyCode.J) && (groundFlag == true))
+        if (Input.GetKeyDown(KeyCode.J) && (grounded == true))
         {
+            rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
             this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
             soundJump.PlayOneShot(soundJump.clip);
             groundFlag = false;
@@ -149,10 +161,10 @@ public class PlayerController : MonoBehaviour
     }
 
     // 床の当たり判定タグをgroundからfloorに変更
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collision2D col2D)
     {
         //地面に接していたらgroundFlagをtrueにする
-        if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
+        if (col2D.gameObject.tag == "Floor" || col2D.gameObject.tag == "Enemy" || col2D.gameObject.tag == "Shell")
         {
             groundFlag = true;
         }
@@ -165,14 +177,14 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Roket")
         {
             // 脱出可能である時
-            if(escape.escapeFlag == true)
-            {
-                // ↑orWを押すとシーン移行
-                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-                {
-                    SceneManager.LoadScene("ResultScene");
-                }
-            }
+            //if(escape.escapeFlag == true)
+            //{
+            //    // ↑orWを押すとシーン移行
+            //    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            //    {
+            //        SceneManager.LoadScene("ResultScene");
+            //    }
+            //}
         }
     }
 

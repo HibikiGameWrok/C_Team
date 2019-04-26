@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &703840440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab28162b9680cc14aa03c4878e32162e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStarCount: 100
+  particle: {fileID: 0}
+  panele: {fileID: 0}
+  escapeFlag: 0
 --- !u!4 &703840441
 Transform:
   m_ObjectHideFlags: 0
@@ -524,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd991de727dd3ab4cb43628a9a33b49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10800
+  hp: 3600
 --- !u!224 &1778107304 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1508119256235595552, guid: efa48a8ec6df3e743b275a530a821778,

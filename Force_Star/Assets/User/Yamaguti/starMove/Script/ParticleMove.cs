@@ -74,7 +74,8 @@ public class ParticleMove : MonoBehaviour
                 {
                     m_velocity.x += (player.transform.position.x - transform.position.x) * m_speed;
                     m_velocity *= m_attenuation;
-                   // m_velocity.x = player.transform.position.x;
+                    transform.position += m_velocity *= Time.deltaTime;
+                    // m_velocity.x = player.transform.position.x;
                     //m_velocity2 += (player.transform.position - psArray[i].transform.position) * m_speed;
                     //m_velocity2 *= m_attenuation;
                     //m_velocity2.x = player.transform.position.x - (transform.position.x-psArray[i].transform.position.x);
