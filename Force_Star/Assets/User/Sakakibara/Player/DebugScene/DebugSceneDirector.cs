@@ -49,6 +49,8 @@ public class DebugSceneDirector : MonoBehaviour
         GameObjectSprite newSptite = null;
         RenderImageData newRender = null;
         TexImageData texImageData = new TexImageData();
+        texImageData.Reset();
+
 
         Texture2D image = Resources.Load<Texture2D>(WarehouseData.WarehouseObject.SimpleImage + "Basis_Red");
         Vector3 point = Vector3.zero;

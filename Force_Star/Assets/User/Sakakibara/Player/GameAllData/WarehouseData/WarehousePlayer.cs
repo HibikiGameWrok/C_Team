@@ -25,21 +25,13 @@ namespace WarehouseData
             {
                 if (m_warehouseObject == null)
                 {
-                    //m_warehouseObject = Instantiate(new WarehousePlayer());
                     m_warehouseObject = new WarehousePlayer();
-                    //m_warehouseObject = System. WarehousePlayer();
                 }
                 return m_warehouseObject;
             }
 
-            private WarehousePlayer()
-            {
-                m_playerTex2D = new Texture2D[(int)PlayerData_Number.NUM];
-                ReadData();
-            }
-
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // データナンバー
+            // プレイヤー本体データナンバー
             //*|***|***|***|***|***|***|***|***|***|***|***|
             public enum PlayerData_Number
             {
@@ -73,7 +65,7 @@ namespace WarehouseData
             };
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // データナンバー
+            // プレイヤー本体データナンバー
             //*|***|***|***|***|***|***|***|***|***|***|***|
             public enum PlayerData_Number_List
             {
@@ -97,25 +89,59 @@ namespace WarehouseData
                 NUM,
             };
 
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーその他データナンバー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            public enum PlayerData_Another_Number_List
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // UIのデータ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                AIR_GAUGE_MAIN,
+                AIR_GAUGE_FRAME,
+                AIR_GAUGE_SHADOW,
+
+                STAR_GAUGE_MAIN,
+                STAR_GAUGE_FRAME,
+                STAR_GAUGE_SHADOW,
+
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 総数
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                NUM,
+            };
+
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // データの倉庫
             //*|***|***|***|***|***|***|***|***|***|***|***|
             public static string SimpleData = "SimpleImage/";
             public static string PlayerData = "PlayerData/";
+            public static string PlayerData_Another = "PlayerData_Another/";
 
 
 
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // UIの倉庫
+            // UIの倉庫 プレイヤー本体
             //*|***|***|***|***|***|***|***|***|***|***|***|
             Texture2D[] m_playerTex2D;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // UIの倉庫 プレイヤーその他
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            Texture2D[] m_playerAnotherTex2D;
+
+
+
+            private WarehousePlayer()
+            {
+                m_playerTex2D = new Texture2D[(int)PlayerData_Number.NUM];
+                m_playerAnotherTex2D = new Texture2D[(int)PlayerData_Another_Number_List.NUM];
+                ReadData();
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // データの入れどころ
             //*|***|***|***|***|***|***|***|***|***|***|***|
-
-
             private void ReadData()
             {
                 string SimpleFile;
@@ -125,7 +151,7 @@ namespace WarehouseData
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 {
                     //*|***|***|***|***|***|***|***|***|***|***|***|
-                    // PlayerDataのデータ
+                    // プレイヤー本体
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     SimpleFile = SimpleData;
                     MyFile = PlayerData;
@@ -154,24 +180,48 @@ namespace WarehouseData
                         m_playerTex2D[(int)PlayerData_Number.LEFTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
                         m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "JointBoal");
                     }
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // プレイヤーその他
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    MyFile = PlayerData_Another;
+                    {
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // UIのデータ
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.AIR_GAUGE_MAIN] = Resources.Load<Texture2D>(MyFile + "air_gauge3");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.AIR_GAUGE_FRAME] = Resources.Load<Texture2D>(MyFile + "air_gauge1");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.AIR_GAUGE_SHADOW] = Resources.Load<Texture2D>(MyFile + "air_gauge2");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_MAIN] = Resources.Load<Texture2D>(MyFile + "star_gauge3");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_FRAME] = Resources.Load<Texture2D>(MyFile + "star_gauge1");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_SHADOW] = Resources.Load<Texture2D>(MyFile + "star_gauge2");
+                    }
                 }
             }
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // UIデータ
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            public Texture2D GetTexture2D(PlayerData_Number textureNum)
+            public Texture2D GetPlayerTexture2D(PlayerData_Number textureNum)
             {
                 int type = ChangeData.AmongLess((int)textureNum, 0, (int)PlayerData_Number.NUM);
                 return m_playerTex2D[type];
             }
-            public Texture2D GetUITexture(int type)
+            public Texture2D GetPlayerTexture2D(int type)
             {
                 type = ChangeData.AmongLess(type, 0, (int)PlayerData_Number.NUM);
                 return m_playerTex2D[type];
             }
 
-
+            public Texture2D GetAnotherTexture2D(PlayerData_Another_Number_List textureNum)
+            {
+                int type = ChangeData.AmongLess((int)textureNum, 0, (int)PlayerData_Another_Number_List.NUM);
+                return m_playerAnotherTex2D[type];
+            }
+            public Texture2D GetAnotherTexture2D(int type)
+            {
+                type = ChangeData.AmongLess(type, 0, (int)PlayerData_Another_Number_List.NUM);
+                return m_playerAnotherTex2D[type];
+            }
 
 
         }

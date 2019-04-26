@@ -53,7 +53,7 @@ public class AnimePlayerSprite : AnimeSprite
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // イメージを作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_texImageData.image = WarehousePlayer.GetInstance().GetTexture2D(m_playerDataNum);
+        m_texImageData.image = WarehousePlayer.GetInstance().GetPlayerTexture2D(m_playerDataNum);
         m_texImageData.rextParsent = MyCalculator.RectSize(m_rectNum, rectX, rectY, 1, 1);
         m_texImageData.size = m_size;
     }

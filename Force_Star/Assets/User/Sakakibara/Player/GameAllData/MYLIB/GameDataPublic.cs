@@ -26,11 +26,27 @@ public class GameDataPublic
         public Vector2 size;
         [SerializeField]
         public Rect rextParsent;
+        [SerializeField]
+        public Vector2 pibot;
         public void Reset()
         {
             image = null;
             size = Vector2.one;
             rextParsent = Rect.zero;
+            pibot = new Vector2(0.5f, 0.5f);
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 隠された描画システム
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public class TexImageHidden
+    {
+        public Vector2 textureSize;
+        public Vector2 spriteSize;
+        public void Reset()
+        {
+            textureSize = Vector2.one;
+            spriteSize = Vector2.one;
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -47,6 +63,25 @@ public class GameDataPublic
         public void Reset()
         {
             depth = 0;
+        }
+    } 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 伝説の描画用システム FOR UI
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // シリアライズ可能
+    // エディター取得可能
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [Serializable]
+    public class RenderUIData
+    {
+        [SerializeField]
+        public int depth;
+        [SerializeField]
+        public Vector2 pibot;
+        public void Reset()
+        {
+            depth = 0;
+            pibot = new Vector2(0.5f, 0.5f);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

@@ -1,33 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // 言い換え
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using TexImageData = GameDataPublic.TexImageData;
-using RenderImageData = GameDataPublic.RenderImageData;
+using RenderUIData = GameDataPublic.RenderUIData;
 using TexImageHidden = GameDataPublic.TexImageHidden;
 
-//*|***|***|***|***|***|***|***|***|***|***|***|
-// GameObjectSpriteは眠らない
-//*|***|***|***|***|***|***|***|***|***|***|***|
-//[ExecuteInEditMode]
-public class GameObjectSprite : MonoBehaviour
+
+
+public class GameObjectUI : MonoBehaviour
 {
-
-
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スプライト表示エリア
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    protected GameObject m_spriteObject;
+    protected GameObject m_imageObject;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 描画データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     protected TexImageData m_texImageData;
     [SerializeField]
-    protected RenderImageData m_renderImageData;
+    protected RenderUIData m_renderUIData;
     [SerializeField]
     private TexImageHidden m_texImageHidden;
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -35,7 +33,9 @@ public class GameObjectSprite : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     protected Sprite m_sprite;
-    protected SpriteRenderer m_spriteRenderer;
+    protected Image m_image;
+    protected Canvas m_canvas;
+    protected RectTransform m_rectTransform;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
@@ -49,49 +49,63 @@ public class GameObjectSprite : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // スプライト表示エリア
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_spriteObject = new GameObject("Sprite");
-        m_spriteObject.transform.parent = gameObject.transform;
+        m_imageObject = gameObject;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 描画システム
+        // 描画システム キャンバス
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_spriteObject.GetComponent<SpriteRenderer>() == null)
+        if (m_imageObject.GetComponent<Canvas>() == null)
         {
-            m_spriteRenderer = m_spriteObject.AddComponent<SpriteRenderer>();
+            m_canvas = m_imageObject.AddComponent<Canvas>();
         }
         else
         {
-            m_spriteRenderer = m_spriteObject.GetComponent<SpriteRenderer>();
+            m_canvas = m_imageObject.GetComponent<Canvas>();
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 描画システム
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_imageObject.GetComponent<Image>() == null)
+        {
+            m_image = m_imageObject.AddComponent<Image>();
+        }
+        else
+        {
+            m_image = m_imageObject.GetComponent<Image>();
+        }
+        m_rectTransform = m_imageObject.transform as RectTransform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 描画モード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_spriteRenderer.tileMode = SpriteTileMode.Continuous;
-        m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
-        m_spriteRenderer.size = new Vector2(1, 1);
+        m_rectTransform.anchoredPosition3D = Vector3.zero;
+        
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 描画システム
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_texImageData = new TexImageData();
-        m_renderImageData = new RenderImageData();
+        m_renderUIData = new RenderUIData();
         m_texImageHidden = new TexImageHidden();
         m_texImageData.Reset();
+        m_renderUIData.Reset();
         m_texImageHidden.Reset();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 開始時
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void Start ()
+    void Start()
     {
-		
-	}
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 自動設定に対抗呪文
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_canvas.overrideSorting = true;
+    }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アップデート
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void Update ()
+    void Update()
     {
-		
-	}
+
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -105,65 +119,56 @@ public class GameObjectSprite : MonoBehaviour
         MakeImage();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 自身の描画を決める
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetRender(RenderImageData renderImageData)
-    {
-        m_renderImageData = renderImageData;
-    }
-    public void SetRenderUpdate(RenderImageData renderImageData)
-    {
-        m_renderImageData = renderImageData;
-        MakeRender();
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の位置を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetPosition(Vector3 position)
+    public void SetPosition(Vector2 pos)
     {
-        gameObject.transform.position = position;
+        m_rectTransform.anchoredPosition = pos;
     }
-    public void SetPositionLocal(Vector3 position)
+    public void SetPosition(Vector2 screen, Vector2 ratePos)
     {
-        gameObject.transform.localPosition = position;
-    }
-    public void SetImagePosition(Vector3 position)
-    {
-        m_spriteObject.transform.position = position;
-    }
-    public void SetImagePositionLocal(Vector3 position)
-    {
-        m_spriteObject.transform.localPosition = position;
+        m_rectTransform.anchoredPosition = MyCalculator.EachTimes(screen, ratePos);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 自身の回転を決める
+    // 自身の大きさを決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetRotation(Quaternion rotation)
+    public void SetScale(Vector2 scale)
     {
-        gameObject.transform.rotation = rotation;
+        m_rectTransform.sizeDelta = scale;
     }
-    public void SetRotationLocal(Quaternion rotation)
+    public void SetScaleScreen(Vector2 screen, Vector2 rateScale)
     {
-        gameObject.transform.localRotation = rotation;
+        m_rectTransform.sizeDelta = MyCalculator.EachTimes(screen, rateScale);
     }
-    public void SetImageRotation(Quaternion rotation)
+    public void SetScaleOrigin(Vector2 rateScale)
     {
-        m_spriteObject.transform.rotation = rotation;
+        m_rectTransform.sizeDelta = MyCalculator.EachTimes(m_texImageHidden.spriteSize, rateScale);
     }
-    public void SetImageRotationLocal(Quaternion rotation)
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の深度を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetDepth(int depth)
     {
-        m_spriteObject.transform.localRotation = rotation;
+        m_renderUIData.depth = depth;
+        m_canvas.overrideSorting = true;
+        m_canvas.sortingOrder = m_renderUIData.depth;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 自身の大きさを決める！？
+    // 自身の中心点を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetScaleLocal(Vector3 scale)
+    public void SetPibot(Vector2 pibot)
     {
-        gameObject.transform.localScale = scale;
+        m_renderUIData.pibot = pibot;
+        m_rectTransform.pivot = m_renderUIData.pibot;
     }
-    public void SetImageScaleLocal(Vector3 scale)
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の中心点を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetRect(Rect rect)
     {
-        m_spriteObject.transform.localScale = scale;
+        m_texImageData.rextParsent = rect;
+        MakeImage();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
@@ -192,19 +197,23 @@ public class GameObjectSprite : MonoBehaviour
         Vector2 imageSize = Vector2.one;
         imageSize.x = rectImage.width;
         imageSize.y = rectImage.height;
-        float pixelsPerUnit = imageSize.x;
+        float pixelsPerUnit = 1;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他を作成する
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 pibot = new Vector2(0.5f, 0.5f);
+        Vector2 pibot = m_texImageData.pibot;
         uint extrude = 0;
         SpriteMeshType meshType = SpriteMeshType.FullRect;
         Vector4 border = new Vector4(0, 0, 0, 0);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // スプライトを作成する
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_sprite = Sprite.Create(newTexture, rectImage, pibot, pixelsPerUnit, extrude, meshType, border);
-
+        Sprite makingData = m_sprite;
+        if (rectImage.width != 0 && rectImage.height != 0 && newTexture != null) 
+        {
+            makingData = Sprite.Create(newTexture, rectImage, pibot, pixelsPerUnit, extrude, meshType, border);
+        }
+        m_sprite = makingData;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 描画データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -216,22 +225,17 @@ public class GameObjectSprite : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 表示データをいじる
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_spriteRenderer.sprite = m_sprite;
+        m_image.sprite = m_sprite;
 
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 描画モード
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 spriteSize = m_texImageData.size;
-        m_spriteRenderer.size = spriteSize;
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //// 描画モード
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //Vector2 spriteSize = m_texImageData.size;
+        //spriteSize.x = newWidth;
+        //spriteSize.y = newHeight;
+        //m_spriteRenderer.size = spriteSize;
+        //m_spriteRenderer.size = new Vector2(1, 1);
     }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 自身の描画を変化させる
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    protected void MakeRender()
-    {
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 描画モード深度
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_spriteRenderer.sortingOrder = m_renderImageData.depth;
-    }
+
+
 }

@@ -74,6 +74,7 @@ abstract public class AnimeSprite : MonoBehaviour
         // 継承用使用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_texImageData = new TexImageData();
+        m_texImageData.Reset();
         m_renderImageData = new RenderImageData();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 継承用取得データ
