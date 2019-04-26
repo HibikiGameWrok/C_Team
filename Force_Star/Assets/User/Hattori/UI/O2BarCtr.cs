@@ -7,15 +7,21 @@ using UnityEngine.SceneManagement;
 public class O2BarCtr : MonoBehaviour {
 
     Slider O2Slider;
-    //酸素最大値
-    public float hp;
 
-   public  static bool aliveFlag = true;
+    //酸素最大値
+    [SerializeField]
+    private float hp;
+
+    public  static bool aliveFlag = true;
+
+    private float maxhp;
 
     // Use this for initialization
     void Start () {
         O2Slider = GameObject.Find("O2Bar").GetComponent<Slider>();
         aliveFlag = true;
+        O2Slider.maxValue = hp;
+        maxhp = O2Slider.maxValue;
     }
 	
 	// Update is called once per frame
@@ -25,8 +31,6 @@ public class O2BarCtr : MonoBehaviour {
         //最低値
         if(hp < 0)
         {
-            //SceneManager.LoadScene("GameOverPlot");
-
             //　プレイヤーが死んだ
             aliveFlag = false;
            // DontDestroyOnLoad(this);
@@ -34,13 +38,13 @@ public class O2BarCtr : MonoBehaviour {
             //  リザルトシーンに移行
             SceneManager.LoadScene("ResultScene");
             hp = 0;
-            //Debug.Log("GameOverPlot");
         }
-        //バグ防止の為
-        if(hp > 3600)
+        if(hp > maxhp)
         {
-            hp = 3600.0f;
+            hp = maxhp;
         }
+
+
         //ここでバーを移動させる
         O2Slider.value = hp;
 	}
