@@ -272,6 +272,42 @@ public static class MyCalculator
         return ans;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 個数の逆転
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static int InversionOfIndex(int number, int count)
+    {
+        int maxIndex = ChangeData.AmongLess(count, 0, count);
+        int ans = maxIndex - number;
+        ans = ChangeData.AmongLess(ans, 0, count);
+        return ans;
+    }
+    public static uint InversionOfIndex(uint number, uint count)
+    {
+        int intAns = InversionOfIndex((int)number, (int)count);
+        uint ans = (uint)intAns;
+        return ans;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 中心化での地点割合
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static float IndexCenterPos(int number, int count)
+    {
+        int max = count;
+        if (max <= 0)
+        {
+            max = 1;
+        }
+        float wideWidth = Division((float)max - 1, 2.0f);
+        float ans = (number * 1.0f) - wideWidth;
+        return ans;
+    }
+    public static float IndexCenterPos(uint number, uint count)
+    {
+        float intAns = InversionOfIndex((int)number, (int)count);
+        float ans = intAns;
+        return ans;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 平方根　時間がかかるので注意！
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public static int SquareRoot(int number)

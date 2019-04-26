@@ -30,7 +30,7 @@ using TheObjectIDUnsinged = System.UInt32;
 // DebugPlayerは眠らない
 //*|***|***|***|***|***|***|***|***|***|***|***|
 //[ExecuteInEditMode]
-public class DebugPlayer : MonoBehaviour
+public partial class DebugPlayer : MonoBehaviour
 {
 
     //[SerializeField]
@@ -116,6 +116,7 @@ public class DebugPlayer : MonoBehaviour
     DebugPlayerController m_controller;
     [SerializeField]
     public int m_animeNum = 0;
+    private bool m_nextMirror = false;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -311,6 +312,10 @@ public class DebugPlayer : MonoBehaviour
         // プレイヤー情報
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakePlayer();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーUI情報
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakePlayerUI();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -327,6 +332,8 @@ public class DebugPlayer : MonoBehaviour
         m_playerMove = m_playerCenter.AddComponent<DebugPlayerMove>();
         m_playerMove.LinkController(m_controller);
 
+
+        m_nextMirror = false;
     }
 
 
@@ -481,6 +488,10 @@ public class DebugPlayer : MonoBehaviour
         // プレイヤー情報
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdatePlayer();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーUI情報
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdatePlayerUI();
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -668,6 +679,11 @@ public class DebugPlayer : MonoBehaviour
     void AnimeStudyFrild()
     {
         bool groundFlag = m_playerMove.GetGroundFlag();
+
+        bool addPowerFlag = m_playerMove.GetAddPowerFlag();
+        bool moveingPowerFlag = m_playerMove.GetMoveingPowerFlag();
+        bool reverseArrowFlag = m_playerMove.GetReverseArrowFlag();
+        bool rightArrow = m_playerMove.GetRightArrowFlag();
         m_myAnime.speed = 1;
 
         if (m_updateAnime)
@@ -690,7 +706,23 @@ public class DebugPlayer : MonoBehaviour
                 m_myAnime.SetInteger("MoveEnum", 4);
             }
             m_myAnime.SetBool("ClipLand", groundFlag);
+            m_myAnime.SetBool("addPowerFlag", addPowerFlag);
+            m_myAnime.SetBool("moveingPowerFlag", moveingPowerFlag);
+            m_myAnime.SetBool("reverseArrowFlag", reverseArrowFlag);
         }
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体の向きを反映
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_nextMirror)
+        {
+            m_playerCenter.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            m_playerCenter.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        m_nextMirror = rightArrow;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アニメの制御
@@ -728,6 +760,8 @@ public class DebugPlayer : MonoBehaviour
 
 
     }
+
+    
     ////*|***|***|***|***|***|***|***|***|***|***|***|
     //// アップデート子優先
     ////*|***|***|***|***|***|***|***|***|***|***|***|
