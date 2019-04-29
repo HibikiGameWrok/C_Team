@@ -12,6 +12,9 @@ public class CrystalController : MonoBehaviour
 
     private int crystalCount = 0;
 
+    [SerializeField]
+    private int maxCrystalCount = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +33,7 @@ public class CrystalController : MonoBehaviour
     {
         if (col.gameObject.tag == "AttackBoal")
         {
-            if (crystalCount < 6)
+            if (crystalCount < maxCrystalCount)
             {
                 float posX1;
                 float posY;
