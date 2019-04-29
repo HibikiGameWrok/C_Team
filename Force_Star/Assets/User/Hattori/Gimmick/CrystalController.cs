@@ -8,12 +8,29 @@ public class CrystalController : MonoBehaviour
 
     private StarDirector starCreate;
 
+    SpriteRenderer render;
+
     Rigidbody2D rigid2D;
 
+    //星を出す回数
     private int crystalCount = 0;
 
+    //星を出す最大数
     [SerializeField]
     private int maxCrystalCount = 5;
+
+    //光らせるフラグ
+    private bool flashFlag = false;
+
+    //透明度
+    private float flashCrystale = 1.0f;
+
+    //点滅時間
+    private float flashCount = 0.0f;
+
+    //最大点滅時間
+    [SerializeField]
+    private float flashTimer = 600.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,18 +38,37 @@ public class CrystalController : MonoBehaviour
         this.rigid2D = GetComponent<Rigidbody2D>();
 
         starCreate = starDirec.GetComponent<StarDirector>();
+
+        render = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(flashFlag == true)
+        {
+            //点滅
+            flashCrystale = Mathf.Sin(1.0f);
+
+            //点滅させる
+            flashCount += 1.0f;
+        }
+        if(flashCount > flashTimer)
+        {
+            flashFlag = false;
+
+            flashCrystale = 1.0f;
+        }
+        render.color = new Color(1.0f, 1.0f, 1.0f, flashCrystale);
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "AttackBoal")
         {
+            flashCount = 0.0f;
+
+            flashFlag = true;
             if (crystalCount < maxCrystalCount)
             {
                 float posX1;
