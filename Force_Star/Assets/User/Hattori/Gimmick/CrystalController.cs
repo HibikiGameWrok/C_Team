@@ -48,15 +48,10 @@ public class CrystalController : MonoBehaviour
         if(flashFlag == true)
         {
             //点滅
-            flashCrystale = Mathf.Sin(1.0f);
-
-            //点滅させる
-            flashCount += 1.0f;
+            flashCrystale = Mathf.Sin(Time.time * 100.0f);
         }
-        if(flashCount > flashTimer)
+        else
         {
-            flashFlag = false;
-
             flashCrystale = 1.0f;
         }
         render.color = new Color(1.0f, 1.0f, 1.0f, flashCrystale);
@@ -78,6 +73,10 @@ public class CrystalController : MonoBehaviour
 
                 starCreate.CreateOneStar(new Vector2(posX1, posY), 5, false, 0.5f);
                 crystalCount += 1;
+            }
+            else
+            {
+                flashFlag = false;
             }
          }
     }
