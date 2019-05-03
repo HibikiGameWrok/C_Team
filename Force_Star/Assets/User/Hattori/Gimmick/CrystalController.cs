@@ -32,6 +32,12 @@ public class CrystalController : MonoBehaviour
     [SerializeField]
     private float flashTimer = 600.0f;
 
+    private float colorR = 1.0f;
+
+    private float colorG = 1.0f;
+
+    private float colorB = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +60,7 @@ public class CrystalController : MonoBehaviour
         {
             flashCrystale = 1.0f;
         }
-        render.color = new Color(1.0f, 1.0f, 1.0f, flashCrystale);
+        render.color = new Color(colorR, colorG, colorB, flashCrystale);
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -77,6 +83,12 @@ public class CrystalController : MonoBehaviour
             else
             {
                 flashFlag = false;
+
+                colorR = 0.5f;
+
+                colorG = 0.5f;
+
+                colorB = 0.5f;
             }
          }
     }
