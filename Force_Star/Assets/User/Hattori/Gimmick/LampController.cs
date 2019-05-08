@@ -43,7 +43,7 @@ public class LampController : MonoBehaviour
                 posY = this.transform.position.y;
 
                 // 
-                starCreate.CreateOneStar(new Vector2(posX1, posY), 5, false,0.5f);
+                starCreate.CreateOneStar(new Vector2(posX1, posY + 8.0f), 5, false,0.5f);
                 lightFlag = true;
             }
         }
