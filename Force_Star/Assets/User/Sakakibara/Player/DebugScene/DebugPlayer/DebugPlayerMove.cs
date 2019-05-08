@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤーナンバー言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
+using PlayerDataNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number;
+using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+
 public class DebugPlayerMove : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -16,6 +23,28 @@ public class DebugPlayerMove : MonoBehaviour
     private DebugPlayerParts m_partsLeg2D;
     private GameObject m_rigidOnlyLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 攻撃ボールデータ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private GameObject m_attackBoalObject;
+    private Vector2 m_partsAttackPos;
+    private Vector2 m_partsAttackSize;
+    private DebugPlayerParts m_partsAttack2D;
+    private GameObject m_rigitOnlyAttack;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たりの判定脚
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private GameObject m_hitFlagLegObject_L;
+    private GameObject m_hitFlagLegObject_R;
+    private DebugPlayerParts m_hitFlagLegParts_L;
+    private DebugPlayerParts m_hitFlagLegParts_R;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たりフラグ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool m_hitFlagLeg;
+
+
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // ボディデータ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     //private Rigidbody2D m_rigid2D;
@@ -28,6 +57,7 @@ public class DebugPlayerMove : MonoBehaviour
     // 着地フラグ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     //private bool m_groundFlag;
+    [SerializeField]
     private bool m_groundFlagFlame;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 動き、向きフラグ
@@ -60,12 +90,28 @@ public class DebugPlayerMove : MonoBehaviour
         this.m_box2D = gameObject.AddComponent<BoxCollider2D>();
 
         this.m_rigid2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
-
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 足データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         m_rigidOnlyLeg = new GameObject("rigidLeg");
         m_rigidOnlyLeg.transform.parent = gameObject.transform;
         this.m_partsLeg2D = m_rigidOnlyLeg.AddComponent<DebugPlayerParts>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃ボールデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        PlayerData_Number_List partsListNum;
+        partsListNum = PlayerData_Number_List.LEFTHAND;
+        string partsName = partsListNum.ToString();
+        GameObject parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
 
+        m_rigitOnlyAttack = new GameObject("attackBoal");
+        m_rigitOnlyAttack.transform.parent = parent.transform;
+        //m_rigitOnlyAttack.transform.parent = gameObject.transform;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃ボールのタグ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rigitOnlyAttack.tag = WarehousePlayer.GetTag_AttackBoal();
+        this.m_partsAttack2D = m_rigitOnlyAttack.AddComponent<DebugPlayerParts>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 向きフラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -75,11 +121,35 @@ public class DebugPlayerMove : MonoBehaviour
         m_movePowerX = 0.0f;
     }
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たりの判定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakeHitFlag()
+    {
+
+    }
+
+
+
+
     void Start()
     {
         Vector2 sizeLeg = new Vector2(1.0f, 0.2f);
         Vector2 pointLeg = new Vector2(0.0f, -0.5f);
         m_partsLeg2D.SetPointSize(pointLeg, sizeLeg);
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃ボールデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        //gameObject.transform.childCount;
+        //gameObject.transform.chi;
+
+        //for (int index = 0; ; index++)
+        //m_attackBoalObject = 
+        
+        m_partsAttackPos = new Vector2(0.0f, 0.0f);
+        m_partsAttackSize = new Vector2(0.5f, 0.5f);
+        m_partsAttack2D.SetPointSize(m_partsAttackPos, m_partsAttackSize);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 更新データ
@@ -181,6 +251,14 @@ public class DebugPlayerMove : MonoBehaviour
         Vector2 power = new Vector2(m_movePowerX, powerY);
         this.m_rigid2D.velocity = power;
 
+
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃ボールデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsAttackPos = new Vector2(0.0f, 0.0f);
+        m_partsAttackSize = new Vector2(0.5f, 0.5f);
+        m_partsAttack2D.SetPointSize(m_partsAttackPos, m_partsAttackSize);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 定期更新データ
@@ -235,15 +313,15 @@ public class DebugPlayerMove : MonoBehaviour
         return m_groundFlagFlame;
     }
 
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 当たり判定取得
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private void OnCollisionStay2D(Collision2D col)
-    {
-        //地面に接していたらgroundFlagをtrueにする
-        if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
-        {
-            //m_groundFlag = true;
-        }
-    }
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //// 当たり判定取得
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //private void OnTriggerStay2D(Collision2D col)
+    //{
+    //    //地面に接していたらgroundFlagをtrueにする
+    //    if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
+    //    {
+    //        //m_groundFlag = true;
+    //    }
+    //}
 }

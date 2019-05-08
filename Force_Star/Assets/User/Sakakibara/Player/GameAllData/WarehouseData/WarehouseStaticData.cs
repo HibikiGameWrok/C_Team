@@ -32,6 +32,9 @@ namespace WarehouseData
             NUMBERS_YELLOW,
             NUMBERS_BLACK,
             NUMBERS_WHITE,
+
+            NUMBERS_DATA16_N1,
+            NUMBERS_DATA16_N2,
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーのカラーパネルデータ
             //*|***|***|***|***|***|***|***|***|***|***|***|

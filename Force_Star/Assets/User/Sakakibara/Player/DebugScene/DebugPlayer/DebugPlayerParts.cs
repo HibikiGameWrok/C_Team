@@ -26,13 +26,22 @@ public class DebugPlayerParts : MonoBehaviour
         this.m_box2D = gameObject.AddComponent<BoxCollider2D>();
         this.m_rigid2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
         this.m_rigid2D.isKinematic = true;
+        this.m_box2D.isTrigger = true;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // これが出来たときに
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void Start()
+    {
+        this.m_rigid2D.isKinematic = true;
+        this.m_box2D.isTrigger = true;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 更新データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Update()
     {
-
+        
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 定期更新データ
@@ -70,7 +79,7 @@ public class DebugPlayerParts : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
@@ -79,7 +88,7 @@ public class DebugPlayerParts : MonoBehaviour
             m_hitFlag = true;
         }
     }
-    private void OnCollisionStay2D(Collision2D col)
+    private void OnTriggerStay2D(Collider2D col)
     {
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
@@ -88,7 +97,7 @@ public class DebugPlayerParts : MonoBehaviour
             m_hitFlag = true;
         }
     }
-    private void OnCollisionExit2D(Collision2D col)
+    private void OnTriggerExit2D(Collider2D col)
     {
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")

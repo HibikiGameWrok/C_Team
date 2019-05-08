@@ -40,7 +40,17 @@ public abstract class DebugCanvas : MonoBehaviour
             imagePos = Vector2.zero;
         }
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // UIをするための基本セット
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    protected class OriginUIGroup
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コマンドの背景
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public GameObjectUI gameObjectUI;
+        public ImageUIData imageUIData;
+    }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 起動
@@ -105,6 +115,10 @@ public abstract class DebugCanvas : MonoBehaviour
         {
             menber.SetScaleOrigin(uiData.imageScale);
         }
+    }
+    protected void AssetSet(ref OriginUIGroup menber, Vector2 screen, bool screenScale = false)
+    {
+        AssetSet(ref menber.gameObjectUI, screen, menber.imageUIData, screenScale);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 画面サイズ

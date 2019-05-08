@@ -44,4 +44,11 @@ public class TargetFollow : MonoBehaviour
             }
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 狙われたい人を受け付けています
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;
+    }
 }

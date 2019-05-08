@@ -42,6 +42,11 @@ public class DebugPlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     bool m_flagStartKeyTrigger;
     bool m_flagStartKey;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 回復コード
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_flagRecoveryKeyTrigger;
+    bool m_flagRecoveryKey;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コンストラクタ
@@ -78,6 +83,11 @@ public class DebugPlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_flagStartKeyTrigger = false;
         m_flagStartKey = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回復コード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_flagRecoveryKeyTrigger = false;
+        m_flagRecoveryKey = false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コード生成
@@ -128,6 +138,17 @@ public class DebugPlayerController
         if (Input.GetKey(KeyCode.Space))
         {
             m_flagStartKey = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回復コード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            m_flagRecoveryKeyTrigger = true;
+        }
+        if (Input.GetKey(KeyCode.C))
+        {
+            m_flagRecoveryKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動スティック
@@ -201,6 +222,17 @@ public class DebugPlayerController
     public bool ChackStart()
     {
         return m_flagStartKey;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 回復コード確認
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool ChackRecoveryTrigger()
+    {
+        return m_flagRecoveryKeyTrigger;
+    }
+    public bool ChackRecovery()
+    {
+        return m_flagRecoveryKey;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スティック情報確認
