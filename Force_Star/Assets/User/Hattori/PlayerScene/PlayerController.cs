@@ -127,14 +127,14 @@ public class PlayerController : MonoBehaviour
         groundlayer);
 
         //ジャンプ------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z) && (grounded == true))
+        if (Input.GetKeyDown(KeyCode.Z)/* && (grounded == true)*/)
         {
             rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
             this.rigid2D.AddForce(transform.up * this.jumpForce);
             soundJump.PlayOneShot(soundJump.clip);
             groundFlag = false;
         }
-        if (Input.GetKeyDown(KeyCode.J) && (grounded == true))
+        if (Input.GetKeyDown(KeyCode.J)/* && (grounded == true)*/)
         {
             rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
             this.rigid2D.AddForce(transform.up * this.jumpForce * 2);
