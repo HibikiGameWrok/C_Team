@@ -586,7 +586,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0510639263dcecb49a949a2b9c12d706, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9846988, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed4b2ed4ac18a54c963f8e2eb219c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vel: -0.05
+  vel: -0.03
   moveFlag: 0
   size: 1
 --- !u!58 &874736804
@@ -1207,9 +1207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c6d48453d162404da4a54d0790a74e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterStar: {fileID: 21300000, guid: cb798ec34fdfbe84a8ff374027a3679d, type: 3}
-  FireStar: {fileID: 21300000, guid: 586252baa2e3c5f4ca4132ca0d5dfed5, type: 3}
-  MachineStar: {fileID: 21300000, guid: 2597c7501c6b6564dae7b5fd4516dd75, type: 3}
   starCounter: 0
   starFlag: 0
 --- !u!212 &1013311365
@@ -1589,7 +1586,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4e3b464bddedb40902ecbdb4eb63c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: {fileID: 2004480756}
   BGMNormalManager: {fileID: 743392025}
   BGMHappeningManeger: {fileID: 2104793264}
 --- !u!4 &1513912119
@@ -2041,11 +2037,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e68943f2ae7a7448bd5844f290eb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChangeNum: {fileID: 2004480756}
   SelectCamera: {fileID: 538557826}
   isFadeOut: 0
   isFadeIn: 1
-  sceneNum: 0
 --- !u!114 &1646844014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,7 +2404,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104793264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 495e674639178fa4a8f0a1c0cc5b0acb, type: 3}
   m_Name: 
