@@ -75,9 +75,18 @@ public class RocketTracking : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // 跳ね返る挙動をするフラグをtrue
-        endFlag = true;
+        if (collision.gameObject.tag == "Player")
+        {
+            // 跳ね返る挙動をするフラグをtrue
+            endFlag = true;
+
+            // ファイアプレハブをGameObject型で取得
+            GameObject Fire = (GameObject)Resources.Load("Fire");
+            // ファイアプレハブを元に、インスタンスを生成、
+            Instantiate(Fire, this.transform.position, Quaternion.identity);
+        }
     }
+
 
 
     private void StayFloatMove()
