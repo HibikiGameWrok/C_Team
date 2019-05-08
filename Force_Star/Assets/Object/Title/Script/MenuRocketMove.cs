@@ -13,8 +13,7 @@ public class MenuRocketMove : MonoBehaviour
     bool moveFlag = false;
 
     //位置
-    float posX = 0.0f;
-    float posY = 0.0f;
+    Vector2 pos = new Vector2(0.0f,0.0f);
 
     //大きさ
     [SerializeField]
@@ -36,14 +35,12 @@ public class MenuRocketMove : MonoBehaviour
         sound02 = audioSources[1];
 
 
-        posX = transform.position.x;
-        posY = transform.position.y;
+        pos = new Vector2(this.transform.position.x,this.transform.position.y);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         if (moveFlag == false)
         {
             //横移動のみ
@@ -68,30 +65,28 @@ public class MenuRocketMove : MonoBehaviour
 
     void RocketMove()
     {
-        posX += vel;
+        pos.x += vel;
 
-        if (posX < -10.0f)
+        if (pos.x < -10.0f)
         {
-            posX = 9.0f;
+           pos.x = 9.0f;
         }
 
         //位置の移動
-        transform.position = new Vector3(posX, posY, transform.position.z);
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
     }
 
     void RocketNextMove()
     {
         m_MySliderValue += -0.005f;
 
-        posX += vel;
-        posY += vel;
+        pos += new Vector2(vel,vel);
 
         //位置の移動
-        transform.position = new Vector3(posX, posY, transform.position.z);
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
 
         //角度の変更
         //回転する
-        //transform.Rotate(new Vector3(0.0f, 0.0f, vel));
         this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 45.0f);
 
         //大きさを徐々に小さく
