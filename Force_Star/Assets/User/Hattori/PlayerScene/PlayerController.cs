@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     // ジャンプSE
     private AudioSource soundJump;
-
+    [SerializeField]
     bool grounded = false;
 
     LayerMask groundlayer;
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 床の当たり判定タグをgroundからfloorに変更
-    void OnTriggerEnter2D(Collision2D col2D)
+    private void OnCollisionEnter2D(Collision2D col2D)
     {
         //地面に接していたらgroundFlagをtrueにする
         if (col2D.gameObject.tag == "Floor" || col2D.gameObject.tag == "Enemy" || col2D.gameObject.tag == "Shell")
@@ -169,6 +169,14 @@ public class PlayerController : MonoBehaviour
             groundFlag = true;
         }
     }
+    //void OnTriggerEnter2D(Collision2D col2D)
+    //{
+    //    //地面に接していたらgroundFlagをtrueにする
+    //    if (col2D.gameObject.tag == "Floor" || col2D.gameObject.tag == "Enemy" || col2D.gameObject.tag == "Shell")
+    //    {
+    //        groundFlag = true;
+    //    }
+    //}
 
 
     void OnTriggerStay2D(Collider2D col)

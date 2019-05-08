@@ -20,6 +20,7 @@ using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Numbe
 
 public class DebugPlayerUI : DebugCanvas
 {
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ
     // HIGH 画像の下
@@ -122,7 +123,10 @@ public class DebugPlayerUI : DebugCanvas
     private int m_needStarNumber;
 
 
-    enum DepthAttach
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 使用する深度
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private enum DepthAttach
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ
@@ -146,7 +150,26 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
         NEEDSTAR_NUMBER,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 数量
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        NUM,
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 使用する最大深度
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static int DepthMax = (int)DepthAttach.NUM;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 獲得する深度
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private static int GetDepth(DepthAttach data)
+    {
+        int dataNum = (int)data;
+        dataNum += DebugPlayerRecoveryUI.DepthMax;
+        return dataNum;
+    }
+
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -241,7 +264,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_airGaugeFrame.SetDepth((int)DepthAttach.AIRGAUGE_FRAME);
+            m_airGaugeFrame.SetDepth(GetDepth(DepthAttach.AIRGAUGE_FRAME));
 
             m_airGaugeFrame.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -262,7 +285,7 @@ public class DebugPlayerUI : DebugCanvas
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_airGaugeMain.SetPibot(new Vector2(0.5f, 0.0f));
-            m_airGaugeMain.SetDepth((int)DepthAttach.AIRGAUGE_MAIN);
+            m_airGaugeMain.SetDepth(GetDepth(DepthAttach.AIRGAUGE_MAIN));
 
             m_airGaugeMain.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -283,7 +306,7 @@ public class DebugPlayerUI : DebugCanvas
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_airGaugeShadow.SetPibot(new Vector2(0.5f, 0.0f));
-            m_airGaugeShadow.SetDepth((int)DepthAttach.AIRGAUGE_SHADOW);
+            m_airGaugeShadow.SetDepth(GetDepth(DepthAttach.AIRGAUGE_SHADOW));
 
             m_airGaugeShadow.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -316,7 +339,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_GREEN);
+            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_DATA16_N1);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
             tex.size = new Vector2(1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -328,7 +351,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            digitData.SetDepth((int)DepthAttach.STARGAUGE_NUMBER);
+            digitData.SetDepth(GetDepth(DepthAttach.STARGAUGE_NUMBER));
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -350,7 +373,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starGaugeFrame.SetDepth((int)DepthAttach.STARGAUGE_FRAME);
+            m_starGaugeFrame.SetDepth(GetDepth(DepthAttach.STARGAUGE_FRAME));
 
             m_starGaugeFrame.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -371,7 +394,7 @@ public class DebugPlayerUI : DebugCanvas
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_starGaugeMain.SetPibot(new Vector2(0.5f, 0.0f));
-            m_starGaugeMain.SetDepth((int)DepthAttach.STARGAUGE_MAIN);
+            m_starGaugeMain.SetDepth(GetDepth(DepthAttach.STARGAUGE_MAIN));
 
             m_starGaugeMain.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -392,7 +415,7 @@ public class DebugPlayerUI : DebugCanvas
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_starGaugeShadow.SetPibot(new Vector2(0.5f, 0.0f));
-            m_starGaugeShadow.SetDepth((int)DepthAttach.STARGAUGE_SHADOW);
+            m_starGaugeShadow.SetDepth(GetDepth(DepthAttach.STARGAUGE_SHADOW));
 
             m_starGaugeShadow.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -425,7 +448,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_GREEN);
+            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_DATA16_N1);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
             tex.size = new Vector2(1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -437,7 +460,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            digitData.SetDepth((int)DepthAttach.HAVESTAR_NUMBER);
+            digitData.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -469,7 +492,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_RED);
+            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_DATA16_N2);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
             tex.size = new Vector2(1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -481,7 +504,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            digitData.SetDepth((int)DepthAttach.NEEDSTAR_NUMBER);
+            digitData.SetDepth(GetDepth(DepthAttach.NEEDSTAR_NUMBER));
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|

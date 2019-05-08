@@ -89,6 +89,10 @@ namespace WarehouseData
                     m_texture2D[(int)CommonImageNum.NUMBERS_YELLOW] = Resources.Load<Texture2D>(MyFile + "Numbers_Yellow");
                     m_texture2D[(int)CommonImageNum.NUMBERS_BLACK] = Resources.Load<Texture2D>(MyFile + "Numbers_Black");
                     m_texture2D[(int)CommonImageNum.NUMBERS_WHITE] = Resources.Load<Texture2D>(MyFile + "Numbers_White");
+                    m_texture2D[(int)CommonImageNum.NUMBERS_DATA16_N1] = Resources.Load<Texture2D>(MyFile + "Number16_N1");
+                    m_texture2D[(int)CommonImageNum.NUMBERS_DATA16_N2] = Resources.Load<Texture2D>(MyFile + "Number16_N2");
+
+                    
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // プレイヤーのカラーパネルデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|

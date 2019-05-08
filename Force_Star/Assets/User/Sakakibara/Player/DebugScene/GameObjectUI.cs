@@ -97,6 +97,8 @@ public class GameObjectUI : MonoBehaviour
         // 自動設定に対抗呪文
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_canvas.overrideSorting = true;
+
+        m_image.color = new Color(1, 1, 1, 1);
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -161,6 +163,16 @@ public class GameObjectUI : MonoBehaviour
     {
         m_renderUIData.pibot = pibot;
         m_rectTransform.pivot = m_renderUIData.pibot;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の透明度を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetAlpha(float alpha)
+    {
+        m_renderUIData.alpha = alpha;
+        Color imageLast = m_image.color;
+        imageLast.a = m_renderUIData.alpha;
+        m_image.color = imageLast;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の中心点を決める

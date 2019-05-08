@@ -78,10 +78,13 @@ public class GameDataPublic
         public int depth;
         [SerializeField]
         public Vector2 pibot;
+        [SerializeField]
+        public float alpha;
         public void Reset()
         {
             depth = 0;
             pibot = new Vector2(0.5f, 0.5f);
+            alpha = 1.0f;
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -260,5 +263,99 @@ public class GameDataPublic
             }
         }
         return returnJudgment;
+    }
+
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // nameと同じCHILDを返す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    static public GameObject SearchChild(GameObject parent, string searchName)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 子どもを探して
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject getData = null;
+        GameObject returnData = null;
+        for (int number = 0; number < parent.transform.childCount; number++)
+        {
+            getData = parent.transform.GetChild(number).gameObject;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 同じ名前のものを検索する
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (getData.name == searchName)
+            {
+                returnData = getData;
+                return returnData;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 見つかりませんでした。なら作る。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return MakeChild(parent, searchName);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // nameと同じCHILDを返す階層すべて探す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    static public GameObject SearchChildAllHierarchy(GameObject parent, string searchName)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回帰処理に任せた。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject returnData = SearchChildNowHierarchy(parent, searchName);
+        if (returnData != null)
+        {
+            return returnData;
+        }
+        else
+        {
+            return MakeChild(parent, searchName);
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // nameと同じCHILDを返す階層すべて探す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    static private GameObject SearchChildNowHierarchy(GameObject parent, string searchName)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 子どもを探して
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject getData = null;
+        GameObject returnData = null;
+        for (int number = 0; number < parent.transform.childCount; number++)
+        {
+            getData = parent.transform.GetChild(number).gameObject;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 獲得データの階層を探す
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnData = SearchChildNowHierarchy(getData, searchName);
+            if (returnData != null)
+            {
+                return returnData;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 同じ名前のものを検索する
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (getData.name == searchName)
+            {
+                returnData = getData;
+                return returnData;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 見つかりませんでした。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return returnData;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // nameと同じCHILDを返す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    static private GameObject MakeChild(GameObject parent, string name)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ここのプレイヤー親子
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject returnData = new GameObject(name);
+        returnData.transform.parent = parent.transform;
+        return returnData;
     }
 }

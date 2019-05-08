@@ -5,11 +5,8 @@ using UnityEngine;
 public class Enemy2Move : MonoBehaviour
 {
     public GameObject starDirec;
-    public GameObject attackHand;
 
     private StarDirector starCreate;
-    private PunchController punchController;
-    private bool checkAttack;
 
     //当たり判定
     Rigidbody2D rigid2D;
@@ -60,8 +57,6 @@ public class Enemy2Move : MonoBehaviour
 
         starCreate = starDirec.GetComponent<StarDirector>();
 
-        punchController = attackHand.GetComponent<PunchController>();
-
         if (highJumpMode == true)
         {
             jumpForce *= 2.0f;
@@ -88,7 +83,7 @@ public class Enemy2Move : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if ((col.gameObject.tag == "AttackBoal")&&(checkAttack == true))
+        if ((col.gameObject.tag == "AttackBoal"))
         {
             float posX1;
             float posX2;
@@ -155,8 +150,6 @@ public class Enemy2Move : MonoBehaviour
                 jumpFlag = false;
                 jumpTimer = 0;
             }
-
-            checkAttack = punchController.attackCheck;
         }
 
         //死んでしまったら
