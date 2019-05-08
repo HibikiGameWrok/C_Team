@@ -6,7 +6,7 @@ public class PlaySound : MonoBehaviour
 {
     private AudioSource sound01;
 
-    bool seFlag = false;
+   　public bool seFlag = false;
 
     void Start()
     {
