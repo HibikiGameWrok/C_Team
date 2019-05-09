@@ -31,17 +31,17 @@ public class TargetFollow : MonoBehaviour
     {
         transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z);
 
-        if (transform.position.y < MinimumLimit)
-        {
-            transform.position = new Vector3(target.transform.position.x, MinimumLimit, this.transform.position.z);
-        }
+        //if (transform.position.y < MinimumLimit)
+        //{
+        //    transform.position = new Vector3(target.transform.position.x, MinimumLimit, this.transform.position.z);
+        //}
 
-        if (transform.position.x >= point.transform.position.x)
-        {
-            if(this.transform.position.z - count>=-30)
-            {
-                transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z - count);
-            }
-        }
+        //if (transform.position.x >= point.transform.position.x)
+        //{
+        //    if(this.transform.position.z - count>=-30)
+        //    {
+        //        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z - count);
+        //    }
+        //}
     }
 }

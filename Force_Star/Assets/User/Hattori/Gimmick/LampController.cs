@@ -13,6 +13,7 @@ public class LampController : MonoBehaviour
     [SerializeField]
     private GameObject fire;
 
+    [SerializeField]
     private bool lightFlag = false;
 
     // Start is called before the first frame update
@@ -26,7 +27,10 @@ public class LampController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (lightFlag)
+        {
+            fire.gameObject.SetActive(true);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -35,8 +39,6 @@ public class LampController : MonoBehaviour
         {
             if (lightFlag == false)
             {
-                fire.gameObject.SetActive(true);
-
                 float posX1;
                 float posY;
                 posX1 = this.transform.position.x;
