@@ -49,6 +49,17 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_invincibility;
     [SerializeField]
     private float m_invincibilityTime;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private struct PlayerGetStarReservation
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星の数
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public int starNum;
+    }
+    private List<PlayerGetStarReservation> m_getStar;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -84,6 +95,10 @@ public partial class PlayerDirector : MonoBehaviour
         m_headDamage = new List<PlayerDamageReservation>();
         m_legDamage = new List<PlayerDamageReservation>();
         m_invincibility = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_getStar = new List<PlayerGetStarReservation>();
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -194,6 +209,10 @@ public partial class PlayerDirector : MonoBehaviour
         // ダメージ更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateHitFlag();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateGetStar();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ダメージ更新
@@ -223,6 +242,9 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (!m_invincibility)
                 {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // カウントする
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
                     m_dataBace.DamageArmDurable(data.damage);
                 }
@@ -248,6 +270,9 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (!m_invincibility)
                 {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // カウントする
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
                     m_dataBace.DamageBodyDurable(data.damage);
                 }
@@ -273,6 +298,9 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (!m_invincibility)
                 {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // カウントする
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
                     m_dataBace.DamageHeadDurable(data.damage);
                 }
@@ -298,6 +326,9 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (!m_invincibility)
                 {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // カウントする
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
                     m_dataBace.DamageLegDurable(data.damage);
                 }
@@ -334,6 +365,28 @@ public partial class PlayerDirector : MonoBehaviour
         m_legDamage.Clear();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateGetStar()
+    {
+        PlayerGetStarReservation data;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 獲得報告
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_getStar.Count; index++)
+        {
+            data = m_getStar[index];
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // カウントする
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_dataBace.CatchStars(data.starNum);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_getStar.Clear();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // ダメージ報告
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void DamageArm(float damage, bool IgnoreInvincibility)
@@ -363,5 +416,14 @@ public partial class PlayerDirector : MonoBehaviour
         data.damage = damage;
         data.IgnoreInvincibility = IgnoreInvincibility;
         m_legDamage.Add(data);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星報告
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void GetStar(int starNum)
+    {
+        PlayerGetStarReservation data = new PlayerGetStarReservation();
+        data.starNum = starNum;
+        m_getStar.Add(data);
     }
 }

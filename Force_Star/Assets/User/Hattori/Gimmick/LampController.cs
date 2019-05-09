@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LampController : MonoBehaviour
 {
-    public GameObject starDirec;
-
-    private StarDirector starCreate;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
 
     Rigidbody2D rigid2D;
 
@@ -18,9 +19,12 @@ public class LampController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.rigid2D = GetComponent<Rigidbody2D>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
 
-        starCreate = starDirec.GetComponent<StarDirector>();
+        this.rigid2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -42,8 +46,15 @@ public class LampController : MonoBehaviour
                 posX1 = this.transform.position.x;
                 posY = this.transform.position.y;
 
-                // 
-                starCreate.CreateOneStar(new Vector2(posX1, posY + 8.0f), 5, false,0.5f);
+                //
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 星が出る *5
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.ApplyStar(new Vector2(posX1, posY + 8.0f), 5);
+
+                //StarDirector starCreate;
+                // starCreate.CreateOneStar(new Vector2(posX1, posY + 8.0f), 5, false,0.5f);
+
                 lightFlag = true;
             }
         }

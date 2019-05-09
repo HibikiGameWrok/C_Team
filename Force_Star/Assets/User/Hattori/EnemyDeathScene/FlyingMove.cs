@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 
 public class FlyingMove : MonoBehaviour
 {

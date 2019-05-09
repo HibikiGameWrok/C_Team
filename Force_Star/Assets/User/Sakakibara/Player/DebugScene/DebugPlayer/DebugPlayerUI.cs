@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-using WarehouseData;
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // 言い換え
 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -12,8 +11,12 @@ using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 using TexImageHidden = GameDataPublic.TexImageHidden;
 
-
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 番号データ共通
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseObject = WarehouseData.WarehouseObject;
 using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
+using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
@@ -339,7 +342,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_DATA16_N1);
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.NUMBERS_DATA16_N1);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
             tex.size = new Vector2(1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -448,7 +451,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_DATA16_N1);
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.NUMBERS_DATA16_N1);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
             tex.size = new Vector2(1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -492,7 +495,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehouseObject.GetTexture2D(CommonImageNum.NUMBERS_DATA16_N2);
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.NUMBERS_DATA16_N2);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
             tex.size = new Vector2(1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -678,7 +681,7 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|

@@ -94,7 +94,20 @@ public class PlayerDirectorIndex
     {
         m_playerDirector.DamageLeg(damage, IgnoreInvincibility);
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星の数を足す
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void GetStar(int starNum)
+    {
+        m_playerDirector.GetStar(starNum);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーの場所を取る
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector3 GetPlayerPosition()
+    {
+        return m_playerDirector.GetPlayerPositon();
+    }
 
 
 }

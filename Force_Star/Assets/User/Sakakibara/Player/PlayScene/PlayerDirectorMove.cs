@@ -110,4 +110,11 @@ public partial class PlayerDirector : MonoBehaviour
             m_playerMove.SetAttackFlag(attackFlag);
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector3 GetPlayerPositon()
+    {
+        return m_playerMove.GetPosition();
+    }
 }

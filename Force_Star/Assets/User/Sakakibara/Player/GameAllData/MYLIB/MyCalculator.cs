@@ -792,6 +792,27 @@ public static class MyCalculator
         return ansV3;
     }
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 間のポイントを計算する
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static float LeapReverseCalculation(float start, float goal, float point)
+    {
+        float ans;
+        float longPoint = point - start;
+        float difStartAndGoal = goal - start;
+        ans = MyCalculator.Division(longPoint, difStartAndGoal);
+        return ans;
+    }
+    public static double LeapReverseCalculation(double start, double goal, double point)
+    {
+        double ans;
+        double longPoint = point - start;
+        double difStartAndGoal = goal - start;
+        ans = MyCalculator.Division(longPoint, difStartAndGoal);
+        return ans;
+    }
+
+
     public static Quaternion Sleap(Quaternion start, Quaternion goal, float point)
     {
         Quaternion ansQuaternion;

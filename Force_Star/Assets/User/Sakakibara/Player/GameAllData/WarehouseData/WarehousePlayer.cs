@@ -339,6 +339,42 @@ namespace WarehouseData
             {
                 return Layer_EnemyAttackParts;
             }
+
+
+
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーの一部か？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            public static bool BoolTagIsPlayer(string tag)
+            {
+                if (tag == GetTag_PlayerHitArmParts())
+                {
+                    return true;
+                }
+                if (tag == GetTag_PlayerHitBodyParts())
+                {
+                    return true;
+                }
+                if (tag == GetTag_PlayerHitHeadParts())
+                {
+                    return true;
+                }
+                if (tag == GetTag_PlayerHitLegParts())
+                {
+                    return true;
+                }
+                if (tag == GetTag_PlayerHitParts())
+                {
+                    return true;
+                }
+                if (tag == GetTag_AttackBoal())
+                {
+                    return true;
+                }
+                return false;
+            }
+
+
             ////*|***|***|***|***|***|***|***|***|***|***|***|
             //// プレイヤーがダメージを受けるレイヤー
             ////*|***|***|***|***|***|***|***|***|***|***|***|

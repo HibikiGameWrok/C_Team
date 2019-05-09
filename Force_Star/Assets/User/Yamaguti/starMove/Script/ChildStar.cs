@@ -2,13 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChildStar : MonoBehaviour {
+public class ChildStar : MonoBehaviour
+{
 
     public GameObject star; // 親
     StarMove starMove;      // /親の動きのスクリプト用
 
-	// Use this for initialization
-	void Start () {
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // これが出来たときに
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void Awake()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星のレイヤーに変更
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        gameObject.layer = 12;
+    }
+
+
+    // Use this for initialization
+    void Start () {
         //star = GameObject.Find("Star");
         starMove = star.GetComponent<StarMove>();
       

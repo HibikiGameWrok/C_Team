@@ -1,12 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 
 public class Enemy2Move : MonoBehaviour
 {
-    public GameObject starDirec;
-
-    private StarDirector starCreate;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlayerDirectorIndex m_playerIndex;
 
     //当たり判定
     Rigidbody2D rigid2D;
@@ -52,10 +61,17 @@ public class Enemy2Move : MonoBehaviour
 
     void Start()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
+
         //当たり判定の初期化
         this.rigid2D = GetComponent<Rigidbody2D>();
-
-        starCreate = starDirec.GetComponent<StarDirector>();
 
         if (highJumpMode == true)
         {
@@ -92,16 +108,16 @@ public class Enemy2Move : MonoBehaviour
             posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
             posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
-            // 
-            starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星が出る *5
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.ApplyStar(new Vector2(posX1, posY), 20);
 
             //好きな大きさの重力を指定する
             rigid2D.gravityScale = gravityForce;
 
             //「死にました」とフラグで伝える
             deathFlag = true;
-
-            starCreate.CreateStar(20);
         }
     }
 
