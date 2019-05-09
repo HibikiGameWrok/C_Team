@@ -476,6 +476,11 @@ PrefabInstance:
       propertyPath: countTime
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 785741931703292832, guid: 83025f04be727df438d386aae5313cf6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83025f04be727df438d386aae5313cf6, type: 3}
 --- !u!4 &166980391 stripped
@@ -1068,6 +1073,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116353155634649649, guid: 83025f04be727df438d386aae5313cf6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 785741931703292832, guid: 83025f04be727df438d386aae5313cf6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83025f04be727df438d386aae5313cf6, type: 3}
