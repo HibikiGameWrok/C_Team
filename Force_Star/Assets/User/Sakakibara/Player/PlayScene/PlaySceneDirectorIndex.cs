@@ -40,6 +40,10 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     TargetFollow m_targetCamera;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星の運営者
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlayStarManeger m_starManeger;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ初期化
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlaySceneDirectorIndex()
@@ -52,6 +56,10 @@ public class PlaySceneDirectorIndex
         // メインカメラにターゲットされている
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_targetCamera = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星の運営者
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starManeger = null;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ終了
@@ -66,6 +74,10 @@ public class PlaySceneDirectorIndex
         // メインカメラにターゲットされている
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_targetCamera = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星の運営者
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starManeger = null;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター受付
@@ -80,6 +92,13 @@ public class PlaySceneDirectorIndex
     public void SetPointerTargetCamera(TargetFollow follow)
     {
         m_targetCamera = follow;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ポインター受付
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPointerStarManeger(PlayStarManeger maneger)
+    {
+        m_starManeger = maneger;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター受付
@@ -106,6 +125,12 @@ public class PlaySceneDirectorIndex
         Vector3 ansPos = m_mainCamera.WorldToScreenPoint(position);
         return ansPos;
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星の管理者に報告
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void ApplyStar(Vector3 position, int max)
+    {
+        m_starManeger.CreateStarPisce(position, max);
+    }
 
 }

@@ -73,8 +73,8 @@ public partial class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤーはどこにいますの？
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector3 playerPos = m_playerCenter.gameObject.transform.position;
-        Vector3 screenPos = m_directorIndex.GetScreenPos(playerPos);
+        //Vector3 playerPos = m_playerCenter.gameObject.transform.position;
+        //Vector3 screenPos = m_directorIndex.GetScreenPos(playerPos);
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベースから取得

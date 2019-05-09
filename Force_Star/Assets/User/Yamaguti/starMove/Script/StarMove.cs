@@ -1,9 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 
-public class StarMove : MonoBehaviour {
 
+public class StarMove : MonoBehaviour
+{
+
+
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
 
     // 星の各種情報----------
     public float jumpForce;            // ジャンプ力   
@@ -26,17 +38,42 @@ public class StarMove : MonoBehaviour {
     int time = 0;                  // 点滅消滅の時間計測用変数
                                    //-------------------------
 
-    GameObject starManeger = null;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり判定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    Rigidbody2D m_rigidBody2D;
+    BoxCollider2D m_box2D;
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // これが出来たときに
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void Awake()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星のレイヤーに変更
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        gameObject.layer = 12;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たり判定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rigidBody2D = this.GetComponent<Rigidbody2D>();
+        m_rigidBody2D.isKinematic = true;
+
+        m_box2D = this.GetComponent<BoxCollider2D>();
+    }
+
+
 
     // Use this for initialization
-    void Start () {
-        Rigidbody2D rig = this.GetComponent<Rigidbody2D>();
-        rig.isKinematic = true;
+    void Start ()
+    {
         timeElapsed = 0.0f;
         particle.Stop();
         startJF = jumpForce;
-
-        starManeger = GameObject.Find("StarManeger");
     }
 	
 	// Update is called once per frame
@@ -102,24 +139,45 @@ public class StarMove : MonoBehaviour {
 
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定
-    void OnCollisionEnter2D(Collision2D other)
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!hitFlag)
         {
-            if (other.gameObject.tag == "Player")
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーの一部に当たったか？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
-                // 衝突時星の本体を見えなくする
+                SetStopHit();
                 hitFlag = true;
-                Collider2D m_ObjectCollider = GetComponent<Collider2D>();
-                m_ObjectCollider.isTrigger = true;     //　当たらないように
+                // 衝突時星の本体を見えなくする
                 this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
-                starManeger.GetComponent<StarManeger>().CreateStarPisce(this.transform.position, maxStar);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 星登場！
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.ApplyStar(this.transform.position, maxStar);
                 // パーティクルの再生
                 particle.Play();
             }
          
         }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり判定停止
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetStopHit()
+    {
+        m_box2D.enabled = false;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり判定再生
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPlayHit()
+    {
+        m_box2D.enabled = true;
     }
 
     public void SetVecX(float x)

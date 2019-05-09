@@ -413,7 +413,7 @@ public partial class DebugPlayer : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // レイヤーの名前
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        string animeName = m_myAnime.GetLayerName(0);
+        //string animeName = m_myAnime.GetLayerName(0);
         m_myAnime.Play("Wait");
         m_myAnime.speed = 1;
         //*|***|***|***|***|***|***|***|***|***|***|***|

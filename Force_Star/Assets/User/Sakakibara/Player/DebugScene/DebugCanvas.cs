@@ -8,9 +8,12 @@ using UnityEngine;
 using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 using TexImageHidden = GameDataPublic.TexImageHidden;
-
-using WarehouseData;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 番号データ共通
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseObject = WarehouseData.WarehouseObject;
 using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
+using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
 
 
 public abstract class DebugCanvas : MonoBehaviour

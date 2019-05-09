@@ -11,9 +11,12 @@ using WarehouseData;
 using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 using TexImageHidden = GameDataPublic.TexImageHidden;
-
-
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 番号データ共通
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseObject = WarehouseData.WarehouseObject;
 using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
+using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
@@ -849,7 +852,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -970,7 +973,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1049,7 +1052,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1128,7 +1131,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1207,7 +1210,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1286,7 +1289,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
