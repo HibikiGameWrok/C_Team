@@ -333,6 +333,10 @@ public class PlayerDataBace
     {
         m_armDurable -= damage;
     }
+    public void RecoveryArmDurable(float damage)
+    {
+        m_armDurable += damage;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 体パーツ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -343,6 +347,10 @@ public class PlayerDataBace
     public void DamageBodyDurable(float damage)
     {
         m_bodyDurable -= damage;
+    }
+    public void RecoveryBodyDurable(float damage)
+    {
+        m_bodyDurable += damage;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 頭パーツ
@@ -355,6 +363,10 @@ public class PlayerDataBace
     {
         m_headDurable -= damage;
     }
+    public void RecoveryHeadDurable(float damage)
+    {
+        m_headDurable += damage;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 脚パーツ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -366,7 +378,23 @@ public class PlayerDataBace
     {
         m_legDurable -= damage;
     }
+    public void RecoveryLegDurable(float damage)
+    {
+        m_legDurable += damage;
+    }
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // データを確認
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void ChackUpdate()
+    {
+        m_armDurable = ChangeData.Among(m_armDurable, 0, m_armDurableMax);
+        m_bodyDurable = ChangeData.Among(m_bodyDurable, 0, m_bodyDurableMax);
+        m_headDurable = ChangeData.Among(m_headDurable, 0, m_headDurableMax);
+        m_legDurable = ChangeData.Among(m_legDurable, 0, m_legDurableMax);
+
+        m_airTimer = ChangeData.Among(m_airTimer, 0, m_airTimerMax);
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 外への介入
     //*|***|***|***|***|***|***|***|***|***|***|***|

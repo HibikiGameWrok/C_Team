@@ -475,18 +475,21 @@ public class PlayerMove : MonoBehaviour
     void UpdateMoveCommond()
     {
         Vector2 force = m_controllerData.ChackStickPower();
+        float forceDead = 1.0f;
         m_addForce = (force * 20.0f);
         m_addForce.y = 0;
         m_addPower = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 十字キーの力をつぎ込む
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (force != Vector2.zero)
+        if (forceDead < MyCalculator.LongVector2(force))
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 力を加える
             //*|***|***|***|***|***|***|***|***|***|***|***|
             this.m_rigid2D.AddForce(m_addForce);
+
+
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 力を加えられた
             //*|***|***|***|***|***|***|***|***|***|***|***|

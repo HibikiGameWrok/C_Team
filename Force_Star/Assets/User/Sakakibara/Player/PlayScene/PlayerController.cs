@@ -8,45 +8,9 @@ using UnityEngine;
 public class PlayerController
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // スティック情報
-    // 動いたか？
+    // コード情報
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_stickMove;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // スティック情報
-    // 動きの量
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    Vector2 m_stickPower;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // スティック情報
-    // 動きの方向
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    float m_stickAngle;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 攻撃コード
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_flagAttackKeyTrigger;
-    bool m_flagAttackKey;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // ジャンプコード
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_flagJumpKeyTrigger;
-    bool m_flagJumpKey;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 踏みつけコード
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_flagTrampleKeyTrigger;
-    bool m_flagTrampleKey;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // スタートコード
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_flagStartKeyTrigger;
-    bool m_flagStartKey;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 回復コード
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_flagRecoveryKeyTrigger;
-    bool m_flagRecoveryKey;
+    PlayerControllerStatic.PlayerControllerStruct m_controllerData;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コンストラクタ
@@ -60,95 +24,69 @@ public class PlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void ResetCommond()
     {
-        m_stickPower = Vector2.zero;
-        m_stickAngle = 0.0f;
-        m_stickMove = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃コード
+        // コード情報リセット
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_flagAttackKeyTrigger = false;
-        m_flagAttackKey = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ジャンプコード
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_flagJumpKeyTrigger = false;
-        m_flagJumpKey = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 踏みつけコード
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_flagTrampleKeyTrigger = false;
-        m_flagTrampleKey = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // スタートコード
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_flagStartKeyTrigger = false;
-        m_flagStartKey = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 回復コード
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_flagRecoveryKeyTrigger = false;
-        m_flagRecoveryKey = false;
+        m_controllerData.ResetCommond();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コード生成
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void Update()
     {
-        ResetCommond();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コード情報リセット
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_controllerData.UpdateCommondReStart();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃コード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.K))
-        {
-            m_flagAttackKeyTrigger = true;
-        }
+        UpdateKeyPad();
+        UpdateJoyPad();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コード情報登録
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_controllerData.UpdateCommondTrigger();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コード生成
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private void UpdateKeyPad()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃コード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.K))
         {
-            m_flagAttackKey = true;
+            m_controllerData.m_flagAttackKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ジャンプコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
-        {
-            m_flagJumpKeyTrigger = true;
-        }
         if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.J))
         {
-            m_flagJumpKey = true;
+            m_controllerData.m_flagJumpKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 踏みつけコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-        {
-            m_flagTrampleKeyTrigger = true;
-        }
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            m_flagTrampleKey = true;
+            m_controllerData.m_flagTrampleKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // スタートコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_flagStartKeyTrigger = true;
-        }
         if (Input.GetKey(KeyCode.Space))
         {
-            m_flagStartKey = true;
+            m_controllerData.m_flagStartKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 回復コード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            m_flagRecoveryKeyTrigger = true;
-        }
         if (Input.GetKey(KeyCode.C))
         {
-            m_flagRecoveryKey = true;
+            m_controllerData.m_flagRecoveryKey = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動スティック
@@ -157,97 +95,197 @@ public class PlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            m_stickPower.y += 1;
+            m_controllerData.m_stickPower.y += 1;
         }
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            m_stickPower.y += -1;
+            m_controllerData.m_stickPower.y += -1;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 上下
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            m_stickPower.x += 1;
+            m_controllerData.m_stickPower.x += 1;
         }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            m_stickPower.x += -1;
+            m_controllerData.m_stickPower.x += -1;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // スティック情報登録
+        // コンパススティック
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        MakeStick();
-    }
-
-
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // スティック情報登録
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private void MakeStick()
-    {
-        m_stickPower.x = ChangeData.Among(m_stickPower.x, -1.0f, 1.0f);
-        m_stickPower.y = ChangeData.Among(m_stickPower.y, -1.0f, 1.0f);
-        if (MyCalculator.LongVector2(m_stickPower) != 0.0f)
+        // 上下
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (Input.GetKey(KeyCode.W))
         {
-            m_stickMove = true;
-            m_stickAngle = ChangeData.Vector2ToAngleDeg(m_stickPower);
+            m_controllerData.m_compassPower.y += 1;
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            m_controllerData.m_compassPower.y += -1;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 上下
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (Input.GetKey(KeyCode.D))
+        {
+            m_controllerData.m_compassPower.x += 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            m_controllerData.m_compassPower.x += -1;
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コード生成
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private void UpdateJoyPad()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // axis移動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float axisX = Input.GetAxis("MoveX");
+        float axisY = Input.GetAxis("MoveY");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // axis移動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float axisSelectX = Input.GetAxis("SelectX");
+        float axisSelectY = Input.GetAxis("SelectY");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ボタンコード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float joyKeyAttack = Input.GetAxis("JoyKeyAttack");
+        float joyKeyJump = Input.GetAxis("JoyKeyJump");
+        float joyKeyRecovery = Input.GetAxis("JoyKeyRecovery");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃コード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (joyKeyAttack != 0.0f)
+        {
+            m_controllerData.m_flagAttackKey = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ジャンプコード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (joyKeyJump != 0.0f)
+        {
+            m_controllerData.m_flagJumpKey = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 踏みつけコード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+
+        //if (joyKeyAttack != 0.0f)
+        //{
+        //    m_controllerData.m_flagTrampleKey = true;
+        //}
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // スタートコード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+
+        //if (joyKeyRecovery != 0.0f)
+        //{
+        //    m_controllerData.m_flagStartKey = true;
+        //}
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回復コード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (joyKeyRecovery != 0.0f)
+        {
+            m_controllerData.m_flagRecoveryKey = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動スティック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_controllerData.m_stickPower.x = axisX;
+        m_controllerData.m_stickPower.y = axisY;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コンパススティック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_controllerData.m_compassPower.x = axisSelectX;
+        m_controllerData.m_compassPower.y = axisSelectY;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃コード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool ChackAttackTrigger()
     {
-        return m_flagAttackKeyTrigger;
+        return m_controllerData.m_flagAttackKeyTrigger;
     }
     public bool ChackAttack()
     {
-        return m_flagAttackKey;
+        return m_controllerData.m_flagAttackKey;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ジャンプコード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool ChackJumpTrigger()
     {
-        return m_flagJumpKeyTrigger;
+        return m_controllerData.m_flagJumpKeyTrigger;
     }
     public bool ChackJump()
     {
-        return m_flagJumpKey;
+        return m_controllerData.m_flagJumpKey;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 踏みつけコード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool ChackTrampleTrigger()
     {
-        return m_flagTrampleKeyTrigger;
+        return m_controllerData.m_flagTrampleKeyTrigger;
     }
     public bool ChackTrample()
     {
-        return m_flagTrampleKey;
+        return m_controllerData.m_flagTrampleKey;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スタートコード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool ChackStartTrigger()
     {
-        return m_flagStartKeyTrigger;
+        return m_controllerData.m_flagStartKeyTrigger;
     }
     public bool ChackStart()
     {
-        return m_flagStartKey;
+        return m_controllerData.m_flagStartKey;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 回復コード確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool ChackRecoveryTrigger()
     {
-        return m_flagRecoveryKeyTrigger;
+        return m_controllerData.m_flagRecoveryKeyTrigger;
     }
     public bool ChackRecovery()
     {
-        return m_flagRecoveryKey;
+        return m_controllerData.m_flagRecoveryKey;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コンパス情報
+    // 動いたか？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool ChackCompassMove()
+    {
+        return m_controllerData.m_compassMove;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コンパス情報
+    // 動きの量
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector2 ChackCompassPower()
+    {
+        return m_controllerData.m_compassPower;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コンパス情報
+    // 動きの方向
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float ChackCompassAngle()
+    {
+        return m_controllerData.m_compassAngle;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スティック情報確認
@@ -255,7 +293,7 @@ public class PlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool ChackStickMove()
     {
-        return m_stickMove;
+        return m_controllerData.m_stickMove;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スティック情報確認
@@ -263,7 +301,7 @@ public class PlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public Vector2 ChackStickPower()
     {
-        return m_stickPower;
+        return m_controllerData.m_stickPower;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // スティック情報確認
@@ -271,6 +309,6 @@ public class PlayerController
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public float ChackStickAngle()
     {
-        return m_stickAngle;
+        return m_controllerData.m_stickAngle;
     }
 }

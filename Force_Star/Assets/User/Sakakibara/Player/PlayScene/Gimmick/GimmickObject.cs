@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// 敵用セット
+// ギミック用セット
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using WarehouseUnity = WarehouseData.WarehouseUnity;
 using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// 番号データ敵用
+// 番号データギミック用
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using UnityTitleNum = WarehouseData.WarehouseStaticData.Object2D_UnityNumbers_Title;
 using UnityPlayNum = WarehouseData.WarehouseStaticData.Object2D_UnityNumbers_Play;
@@ -22,18 +22,18 @@ using PartsData = GameDataPublic.PartsData;
 
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// シンプルな敵
+// シンプルなギミック
 //*|***|***|***|***|***|***|***|***|***|***|***|
-public class EnemyObject : EnemyIObject
+public class GimmickObject : GimmickIObject
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    EnemyBodyColliderBox m_collider;
+    GimmickBodyColliderBox m_collider;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 画像
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    GameObjectSprite m_imageEnemy;
+    GameObjectSprite m_imageGimmick;
     int m_animateNumber = 0;
     int m_animateCutX = 0;
     int m_animateCutY = 0;
@@ -57,7 +57,7 @@ public class EnemyObject : EnemyIObject
     //*|***|***|***|***|***|***|***|***|***|***|***|
     float m_maxWalkSpeed = 2.0f;
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 敵の方向
+    // ギミックの方向
     //*|***|***|***|***|***|***|***|***|***|***|***|
     bool m_key = false;
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -88,16 +88,16 @@ public class EnemyObject : EnemyIObject
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    protected override void AwakeEnemy()
+    protected override void AwakeGimmick()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_collider = new EnemyBodyColliderBox(this.gameObject);
+        m_collider = new GimmickBodyColliderBox(this.gameObject);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像のデータを作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_imageEnemy = MakeGameObjectSprite();
+        m_imageGimmick = MakeGameObjectSprite();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データを作りましょう
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -107,7 +107,7 @@ public class EnemyObject : EnemyIObject
         // 画像データの材料を倉庫から取り出します。
         // UnityPlayNumの番号を変えると画像が変わります
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        MakeTexImageDataImage(ref texData, UnityPlayNum.ENEMY_SHARK);
+        MakeTexImageDataImage(ref texData, UnityPlayNum.ENEMY_STARFISH);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データの材料を細かく刻みます。
         // 3番目の引数 X
@@ -130,15 +130,15 @@ public class EnemyObject : EnemyIObject
         // 仕上げにGameObjectSpriteにTexImageDataを
         // 入れ込んで出来上がりです。
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        MakeSprite(ref m_imageEnemy, texData);
+        MakeSprite(ref m_imageGimmick, texData);
 
-        //MakeSpriteImage(ref m_imageEnemy, 0, 1, 1);
+        //MakeSpriteImage(ref m_imageGimmick, 0, 1, 1);
 
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 初めてのフレーム
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    protected override void StartEnemy()
+    protected override void StartGimmick()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定大きさ！
@@ -151,7 +151,7 @@ public class EnemyObject : EnemyIObject
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    protected override void UpdateEnemy()
+    protected override void UpdateGimmick()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 動き
@@ -207,7 +207,7 @@ public class EnemyObject : EnemyIObject
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 描画用
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    protected override void RenderEnemy()
+    protected override void RenderGimmick()
     {
         m_animateTime += 0.1f;
         if (m_animateTime >= 5.0f)
@@ -217,7 +217,7 @@ public class EnemyObject : EnemyIObject
             int maxAnimeNum = m_animateCutX * m_animateCutY;
             m_animateNumber = ChangeData.AntiOverflow(m_animateNumber, maxAnimeNum);
         }
-        AnimateSprite(ref m_imageEnemy, m_animateNumber, m_animateCutX, m_animateCutY);
+        AnimateSprite(ref m_imageGimmick, m_animateNumber, m_animateCutX, m_animateCutY);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ダメージをもらう
@@ -227,7 +227,7 @@ public class EnemyObject : EnemyIObject
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 絵の大きさ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 imageSize = this.m_imageEnemy.GetIamgeSize();
+        Vector2 imageSize = this.m_imageGimmick.GetIamgeSize();
         float posX1;
         float posX2;
         float posY;
