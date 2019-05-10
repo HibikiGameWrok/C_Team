@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - AttackBoal
   - R
   - B
   - L
@@ -15,13 +16,7 @@ TagManager:
   - Floor
   - ground
   - Shell
-  - AttackBoal
-  - PlayerHitParts
-  - PlayerHitArmParts
-  - PlayerHitBodyParts
-  - PlayerHitHeadParts
-  - PlayerHitLegParts
-  - EnemyAttackParts
+  - StartRoketPoint
   layers:
   - Default
   - TransparentFX
@@ -32,11 +27,11 @@ TagManager:
   - 
   - 
   - PlayerDigid
-  - Floor
-  - PlayerHitParts
-  - EnemyAttackParts
-  - Star
-  - EnemyDigid
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

@@ -17,8 +17,6 @@ public class BGMVolumeChangeSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //外部からの読み込み
-        m_MySliderValue = fade.GetAlfa();
         //GameObjectからAudioSourceを取得
         m_MyAudioSource = GetComponent<AudioSource>();
         //起動時にAudioSourceに接続されているAudioClipを再生する
@@ -37,6 +35,7 @@ public class BGMVolumeChangeSelect : MonoBehaviour
     void OnGUI()
     {
         //オーディオの音量をスライダの値と一致させます。
+
         m_MyAudioSource.volume = m_MySliderValue;
     }
 }
