@@ -7,8 +7,8 @@ public class TargetFollow : MonoBehaviour
     [SerializeField]
     private GameObject target = null; // 追従する目標
 
-    [SerializeField]
-    private GameObject point = null; // 超える目標
+    //[SerializeField]
+    //private GameObject point = null; // 超える目標
 
     [SerializeField]
     private float MinimumLimit = 0.0f;  // 最低の範囲
@@ -36,12 +36,12 @@ public class TargetFollow : MonoBehaviour
             transform.position = new Vector3(target.transform.position.x, MinimumLimit, this.transform.position.z);
         }
 
-        if (transform.position.x >= point.transform.position.x)
-        {
-            if(this.transform.position.z - count>=-30)
-            {
-                transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z - count);
-            }
-        }
+        //if (transform.position.x >= point.transform.position.x)
+        //{
+        //    if(this.transform.position.z - count>=-30)
+        //    {
+        //        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z - count);
+        //    }
+        //}
     }
 }

@@ -36,7 +36,9 @@ public class StartRoket : MonoBehaviour
     private float journeyLength;
 
     // メインカメラを取得するオブジェクト変数
-    private GameObject MainCamera;
+    private GameObject ParentMainCamera;
+    // 子のオブジェクトを取得する変数
+    private Transform MainCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +56,9 @@ public class StartRoket : MonoBehaviour
         journeyLength = Vector3.Distance(this.transform.position, targetPos);
 
         // オブジェクトの取得
-        MainCamera = GameObject.Find("Main Camera");
+        ParentMainCamera = GameObject.Find("ParentMainCamera");
+        // 子の取得
+        MainCamera = ParentMainCamera.transform.Find("Main Camera");
     }
 
     // Update is called once per frame
@@ -75,18 +79,27 @@ public class StartRoket : MonoBehaviour
         // 
         if (col2D.gameObject.tag == "StartRoketPoint")
         {
-            //// ファイアプレハブをGameObject型で取得
-            GameObject Fire = (GameObject)Resources.Load("ExplosionStar");
-            // ファイアプレハブを元に、インスタンスを生成、
-            Instantiate(Fire, this.transform.position, Quaternion.identity);
+            if (moveStopFlag != true)
+            {
+                //// ファイアプレハブをGameObject型で取得
+                GameObject Fire = (GameObject)Resources.Load("ExplosionStar");
+                // ファイアプレハブを元に、インスタンスを生成、
+                Instantiate(Fire, this.transform.position, Quaternion.identity);
 
-            // ファイアプレハブをGameObject型で取得
-            GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
-            // ファイアプレハブを元に、インスタンスを生成、
-            Instantiate(Rocket, targetPos, Quaternion.identity);
+                // ファイアプレハブをGameObject型で取得
+                GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
+                // ファイアプレハブを元に、インスタンスを生成、
+                Instantiate(Rocket, targetPos, Quaternion.identity);
 
-            // サブカメラが消える前にメインカメラを起動する
-            MainCamera.SetActive(true);
+                // サブカメラが消える前にメインカメラを起動する
+                if (MainCamera != null)
+                {
+                    MainCamera.gameObject.SetActive(true);
+                }
+
+                // 動きを止める
+                moveStopFlag = true;
+            }
 
             // 自身のオブジェクトを消す
             Destroy(this.gameObject);
