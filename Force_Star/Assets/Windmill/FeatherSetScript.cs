@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FeatherSetScript : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject phantomStar;
+
     // 今の一秒当たりの回転角度
     public float nowSpeed;
     float startSpeed;   // 保存用
@@ -19,6 +22,9 @@ public class FeatherSetScript : MonoBehaviour
     // 加速してからの減速用カウント
     public int countTime;
     int startCountTime; //  保存用
+
+    bool gone = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,16 +37,27 @@ public class FeatherSetScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (this.GetComponent<WindMillCollisionScript>().CheckHitFlag())
         {
             if (nowSpeed <= maxSpeed)
             {
                 nowSpeed += addSpeed;
+                if ((nowSpeed > maxSpeed - 20)&&(gone == false))
+                {
+                    phantomStar.gameObject.SetActive(true);
+                }
             }
             countTime--;
+
             if (countTime <= 0 && !this.GetComponent<WindMillCollisionScript>().CheckWindMillFlag())
             {
-                this.GetComponent<FeatherCreate>().StarCreate();
+                phantomStar.gameObject.SetActive(false);
+                if (gone == false)
+                {
+                    gone = true;
+                    this.GetComponent<FeatherCreate>().StarCreate();
+                }
                 this.GetComponent<WindMillCollisionScript>().SetCheckHitFlag(false);
                 this.GetComponent<WindMillCollisionScript>().SetCheckWindMillFlag(true);
             }
@@ -50,7 +67,7 @@ public class FeatherSetScript : MonoBehaviour
             if (nowSpeed > startSpeed)
                 nowSpeed += -subSpeed;
             else
-            {
+            { 
                 nowSpeed = startSpeed;
                 countTime = startCountTime;
                 this.GetComponent<WindMillCollisionScript>().SetCheckWindMillFlag(false);
