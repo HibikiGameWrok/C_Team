@@ -1150,7 +1150,7 @@ GameObject:
   - component: {fileID: 337876699}
   - component: {fileID: 337876698}
   - component: {fileID: 337876697}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mountain_Tilemap
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -7400,7 +7400,7 @@ GameObject:
   - component: {fileID: 369309328}
   - component: {fileID: 369309330}
   - component: {fileID: 369309329}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lighthouse_Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11300,6 +11300,9 @@ MonoBehaviour:
     m_legDurableMax: 0
   m_invincibility: 0
   m_invincibilityTime: 0
+  m_nowDamage: 0
+  m_damageTime: 0
+  m_damageInvincibilityTime: 0
   m_animeNum: 0
 --- !u!4 &433070621
 Transform:
@@ -11337,7 +11340,7 @@ GameObject:
   - component: {fileID: 447604242}
   - component: {fileID: 447604244}
   - component: {fileID: 447604243}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CaveBack_Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13235,7 +13238,7 @@ GameObject:
   - component: {fileID: 502407095}
   - component: {fileID: 502407097}
   - component: {fileID: 502407096}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CaveMask_Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15106,7 +15109,7 @@ GameObject:
   - component: {fileID: 613936120}
   - component: {fileID: 613936119}
   - component: {fileID: 613936118}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SeaLeft_Tilemap
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -18726,6 +18729,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 681199726}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &704873340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 704873342}
+  - component: {fileID: 704873341}
+  m_Layer: 0
+  m_Name: EnemyX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &704873341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704873340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3775d9a09f028944e8d4580d7d3ec3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_jumpForce: 300
+  m_deathTimer: 0
+--- !u!4 &704873342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704873340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &707464063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19697,7 +19745,7 @@ GameObject:
   - component: {fileID: 857743799}
   - component: {fileID: 857743798}
   - component: {fileID: 857743797}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Town_Tilemap
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -23273,7 +23321,7 @@ GameObject:
   - component: {fileID: 915751996}
   - component: {fileID: 915751995}
   - component: {fileID: 915751994}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cave_Tilemap
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -24596,7 +24644,7 @@ GameObject:
   - component: {fileID: 939859967}
   - component: {fileID: 939859966}
   - component: {fileID: 939859965}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Waterfall
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -37926,7 +37974,7 @@ GameObject:
   - component: {fileID: 992375932}
   - component: {fileID: 992375934}
   - component: {fileID: 992375933}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BackGroundSoil_Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43569,7 +43617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1293225377}
   - component: {fileID: 1293225376}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grid
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -45009,7 +45057,7 @@ GameObject:
   - component: {fileID: 1582049293}
   - component: {fileID: 1582049295}
   - component: {fileID: 1582049294}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BackGroundMountain_Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63624,7 +63672,7 @@ GameObject:
   - component: {fileID: 1935415151}
   - component: {fileID: 1935415150}
   - component: {fileID: 1935415149}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SeaRight_Tilemap
   m_TagString: Floor
   m_Icon: {fileID: 0}

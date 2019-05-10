@@ -80,7 +80,7 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コントローラー情報を転換せよ
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    DebugPlayerController m_controller;
+    PlayerControllerData m_controllerData;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 着地フラグ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -95,6 +95,8 @@ public class PlayerMove : MonoBehaviour
     private bool m_moveingPower;
     [SerializeField]
     private bool m_rightArrow;
+    [SerializeField]
+    private bool m_rightPower;
     [SerializeField]
     private bool m_reverseArrow;
     [SerializeField]
@@ -155,7 +157,9 @@ public class PlayerMove : MonoBehaviour
         // 向きフラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_addPower = false;
+        m_moveingPower = false;
         m_rightArrow = false;
+        m_rightPower = false;
         m_reverseArrow = false;
         m_movePowerX = 0.0f;
     }
@@ -404,7 +408,6 @@ public class PlayerMove : MonoBehaviour
         // 移動ベクトル取得
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float addPowerX = m_addForce.x;
-        bool rightPower = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 方向指定
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -438,14 +441,14 @@ public class PlayerMove : MonoBehaviour
         {
             if (addPowerX < 0)
             {
-                rightPower = false;
+                m_rightPower = false;
             }
             if (addPowerX > 0)
             {
-                rightPower = true;
+                m_rightPower = true;
             }
 
-            if (rightPower ^ m_rightArrow)
+            if (m_rightPower ^ m_rightArrow)
             {
                 m_reverseArrow = true;
             }
@@ -471,7 +474,7 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void UpdateMoveCommond()
     {
-        Vector2 force = m_controller.ChackStickPower();
+        Vector2 force = m_controllerData.ChackStickPower();
         m_addForce = (force * 20.0f);
         m_addForce.y = 0;
         m_addPower = false;
@@ -565,7 +568,7 @@ public class PlayerMove : MonoBehaviour
     void UpdateJumpCommond()
     {
         Vector2 velocityData = m_rigid2D.velocity;
-        if (m_controller.ChackJumpTrigger() && m_groundFlagFlame)
+        if (m_controllerData.ChackJumpTrigger() && m_groundFlagFlame)
         {
             m_rigid2D.velocity = new Vector2(velocityData.x, 0);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -675,9 +678,9 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コントローラー取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void LinkController(DebugPlayerController getController)
+    public void LinkController(PlayerControllerData getController)
     {
-        m_controller = getController;
+        m_controllerData = getController;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 向き判定取得
@@ -693,6 +696,10 @@ public class PlayerMove : MonoBehaviour
     public bool GetRightArrowFlag()
     {
         return m_rightArrow;
+    }
+    public bool GetRightPowerFlag()
+    {
+        return m_rightPower;
     }
     public bool GetReverseArrowFlag()
     {

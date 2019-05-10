@@ -175,12 +175,19 @@ public class GameObjectUI : MonoBehaviour
         m_image.color = imageLast;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 自身の中心点を決める
+    // 自身の切り取り点を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetRect(Rect rect)
     {
         m_texImageData.rextParsent = rect;
         MakeImage();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の絵の大きさ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector2 GetIamgeSize()
+    {
+        return m_rectTransform.sizeDelta;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
