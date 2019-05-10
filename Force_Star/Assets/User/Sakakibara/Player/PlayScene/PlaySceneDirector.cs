@@ -69,5 +69,8 @@ public class PlaySceneDirector : MonoBehaviour
     {
         PlaySceneDirectorIndex.Remove();
         PlayerDirectorIndex.Remove();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 倉庫の終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
     }
 }

@@ -339,7 +339,14 @@ namespace WarehouseData
             {
                 return Layer_EnemyAttackParts;
             }
-
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 敵がダメージを受けるレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            public static int Layer_EnemyBodyParts = 13;
+            public static int GetLayer_EnemyBodyParts()
+            {
+                return Layer_EnemyBodyParts;
+            }
 
 
             //*|***|***|***|***|***|***|***|***|***|***|***|

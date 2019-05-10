@@ -79,7 +79,7 @@ public class ParticleMove : MonoBehaviour
                     //m_velocity2 += (player.transform.position - psArray[i].transform.position) * m_speed;
                     //m_velocity2 *= m_attenuation;
                     //m_velocity2.x = player.transform.position.x - (transform.position.x-psArray[i].transform.position.x);
-                    if (player.GetComponent<PlayerController>().GetJumpFlag())
+                    if (player.GetComponent<PlayerControllerHattri>().GetJumpFlag())
                     {
                         m_velocity.y = player.transform.position.y;
                     }

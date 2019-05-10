@@ -26,6 +26,7 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_dataRecoveryUIAwake;
     private bool m_pushRecoveryKey;
 
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ダメージ更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -49,6 +50,18 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_invincibility;
     [SerializeField]
     private float m_invincibilityTime;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ダメージ受けたか
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private bool m_nowDamage;
+    [SerializeField]
+    private float m_damageTime;
+    [SerializeField]
+    private float m_damageInvincibilityTime;
+
+    private bool m_exceptionDamage;
+    private bool m_damageTrigger;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -99,6 +112,13 @@ public partial class PlayerDirector : MonoBehaviour
         // 星更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_getStar = new List<PlayerGetStarReservation>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ダメージ受けたか
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_nowDamage = false;
+        m_damageTime = 0.5f;
+        m_damageInvincibilityTime = 2.0f;
+        m_damageTrigger = false;
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -144,6 +164,46 @@ public partial class PlayerDirector : MonoBehaviour
         m_dataUI.SetStarGaugeNumber(starParsent);
         m_dataUI.SetHaveStarNumber(haveStar);
         m_dataUI.SetNeedStarNumber(needStar);
+
+
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ダメージ受けたか
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_invincibilityTime > m_damageInvincibilityTime - m_damageTime)
+        {
+            m_nowDamage = true;
+        }
+        else
+        {
+            m_nowDamage = false;
+        }
+
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateGetStar();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ダメージ回復
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateRecovery();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void FixedUpdatePlayerUI()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ダメージ更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateHitFlag();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ダメージ回復
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateRecovery()
+    {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 操作コードから取得
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -202,17 +262,22 @@ public partial class PlayerDirector : MonoBehaviour
                 }
             }
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 進行度を記録
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         m_dataRecoveryUI.SetProgressParsentNumber(m_progressParsent);
 
 
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ダメージ更新
+        // 回復判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        UpdateHitFlag();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 星更新
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        UpdateGetStar();
+        if (m_pushRecoveryKey)
+        {
+            //if(m_)
+        }
+
+
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ダメージ更新
@@ -351,8 +416,13 @@ public partial class PlayerDirector : MonoBehaviour
         }
         else if (damageFlag)
         {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージ受けた！
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_invincibility = true;
-            m_invincibilityTime = 1;
+            m_invincibilityTime = m_damageInvincibilityTime;
+
+            m_damageTrigger = true;
         }
 
 

@@ -166,6 +166,29 @@ public class GameObjectSprite : MonoBehaviour
         m_spriteObject.transform.localScale = scale;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の中心点を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPibot(Vector2 pibot)
+    {
+        m_texImageData.pibot = pibot;
+        MakeImage();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の切り取り点を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetRect(Rect rect)
+    {
+        m_texImageData.rextParsent = rect;
+        MakeImage();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の絵の大きさ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector2 GetIamgeSize()
+    {
+        return m_spriteRenderer.size;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
     //*|***|***|***|***|***|***|***|***|***|***|***|
     protected void MakeImage()

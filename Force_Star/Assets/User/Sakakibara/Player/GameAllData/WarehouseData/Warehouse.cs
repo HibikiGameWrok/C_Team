@@ -14,6 +14,12 @@ namespace WarehouseData
     //[ExecuteInEditMode]
     public class Warehouse
     {
-
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void LoadManagerScene()
+        {
+            WarehouseUnity.GetInstance();
+            WarehouseObject.GetInstance();
+            WarehouseData.PlayerData.WarehousePlayer.GetInstance();
+        }
     }
 }

@@ -13,14 +13,14 @@ public class PlayerAnimationBeta : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        beforeGroundFlag = this.transform.parent.GetComponent<PlayerController>().GetJumpFlag();
+        beforeGroundFlag = this.transform.parent.GetComponent<PlayerControllerHattri>().GetJumpFlag();
     }
 
     // Update is called once per frame
     void Update()
     {
         Rigidbody2D rig2d = this.transform.parent.GetComponent<Rigidbody2D>();                          // これのRigid2D
-        bool groundFlag = this.transform.parent.GetComponent<PlayerController>().GetJumpFlag();         // 接地判断
+        bool groundFlag = this.transform.parent.GetComponent<PlayerControllerHattri>().GetJumpFlag();         // 接地判断
         bool punchFlag = GameObject.Find("AttackBoal").GetComponent<PunchController>().GetPunchFlag();  // パンチ判断
 
         anim.SetInteger("Speed", (int)rig2d.velocity.x);    // 移動速度のデータを送る
