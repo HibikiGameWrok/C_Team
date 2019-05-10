@@ -482,7 +482,7 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 十字キーの力をつぎ込む
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (forceDead < MyCalculator.LongVector2(force))
+        if (forceDead < MyCalculator.LongVector2(m_addForce))
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 力を加える
