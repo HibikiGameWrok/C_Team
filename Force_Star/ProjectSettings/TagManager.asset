@@ -16,6 +16,7 @@ TagManager:
   - Floor
   - ground
   - Shell
+  - StartRoketPoint
   layers:
   - Default
   - TransparentFX
