@@ -44,15 +44,15 @@ public class WindMillMove : MonoBehaviour
     {
         //if (punchObject.GetComponent<PunchController>().GetPunchFlag())
         //{
-        //    if (!parent.GetComponent<WindMillCollisionScript>().CheckWindMillFlag())
-        //    {
-                if (other.gameObject.tag == "AttackBoal")
+        if (!parent.GetComponent<WindMillCollisionScript>().CheckWindMillFlag())
+        {
+            if (other.gameObject.tag == "AttackBoal")
                 {
                     parent.GetComponent<WindMillCollisionScript>().SetCheckHitFlag(true);
                 }
-        //    }
-        //}
-    }
+        }
+    //}
+}
 
     //void SetNowSpeed()
     //{
