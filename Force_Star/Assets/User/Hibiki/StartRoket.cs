@@ -40,6 +40,8 @@ public class StartRoket : MonoBehaviour
     // 子のオブジェクトを取得する変数
     private Transform MainCamera;
 
+    int count = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,12 +67,18 @@ public class StartRoket : MonoBehaviour
     void Update()
     {
         // 距離感の速度
-        float distCovered = (Time.time - startTime) * speed;
+        float distCovered = (Time.time - startTime) * 0.001f;
 
         // 移動を止める処理
         if (moveStopFlag != true)
         {
+            // 補間移動
             transform.position = Vector3.Lerp(this.transform.position, targetPos, distCovered);
+            if (count != 3)
+            {
+                // コルーチンを実行  
+                StartCoroutine("PartsInstance");
+            }
         }
     }
 
@@ -106,5 +114,41 @@ public class StartRoket : MonoBehaviour
         }
     }
 
+    // コルーチン  
+    private IEnumerator PartsInstance()
+    {
+        // コルーチンの処理  
+        // 1秒待つ  
+        yield return new WaitForSeconds(1.0f);
+        if (count == 0)
+        {
+            //// ファイアプレハブをGameObject型で取得
+            GameObject RoketParts0 = (GameObject)Resources.Load("RocketParts_0");
+            // ファイアプレハブを元に、インスタンスを生成、
+            Instantiate(RoketParts0, this.transform.position, Quaternion.identity);
+            count = 1;
+        }
+        // 1秒待つ  
+        yield return new WaitForSeconds(1.0f);
+        if (count == 1)
+        {
+            //// ファイアプレハブをGameObject型で取得
+            GameObject RoketParts1 = (GameObject)Resources.Load("RocketParts_1");
+            // ファイアプレハブを元に、インスタンスを生成、
+            Instantiate(RoketParts1, this.transform.position, Quaternion.identity);
+            count = 2;
+        }
+        // 1秒待つ  
+        yield return new WaitForSeconds(1.0f);
+        if (count == 2)
+        {
+            //// ファイアプレハブをGameObject型で取得
+            GameObject RoketParts2 = (GameObject)Resources.Load("RocketParts_2");
+            // ファイアプレハブを元に、インスタンスを生成、
+            Instantiate(RoketParts2, this.transform.position, Quaternion.identity);
+            count = 3;
 
+            yield return null;
+        }
+    }
 }
