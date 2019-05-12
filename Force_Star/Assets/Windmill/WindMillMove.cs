@@ -42,16 +42,16 @@ public class WindMillMove : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (punchObject.GetComponent<PunchController>().GetPunchFlag())
-        {
-            if (!parent.GetComponent<WindMillCollisionScript>().CheckWindMillFlag())
-            {
+        //if (punchObject.GetComponent<PunchController>().GetPunchFlag())
+        //{
+        //    if (!parent.GetComponent<WindMillCollisionScript>().CheckWindMillFlag())
+        //    {
                 if (other.gameObject.tag == "AttackBoal")
                 {
                     parent.GetComponent<WindMillCollisionScript>().SetCheckHitFlag(true);
                 }
-            }
-        }
+        //    }
+        //}
     }
 
     //void SetNowSpeed()
