@@ -274,74 +274,47 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (m_pushRecoveryKey)
         {
-            //bool move = m_controller.ChackCompassMove();
-            //float angle = m_controller.ChackCompassAngle();
-            //float dif = 15.0f;
-
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //// コンパス上
-            ////*|***|***|***|***|***|***|***|***|***|***|***|
-            //float upA = 90.0f;
-            //float upStart = upA - dif;
-            //float upEnd = upA + dif;
-            //bool Up = false;
-            //if(UpR)
-            //if (ChangeData.Between(angle, upA - dif, upA + dif))
-            //{
-            //    Up = true;
-            //}
-
-            //float downA = 180.0f;
-            //float rightA = 0.0f;
-            //float leftA = 270.0f;
-
-            //float downStart = downA - dif;
-            //float rightStart = rightA - dif;
-            //float leftStart = leftA - dif;
-            //float downEnd = downA + dif;
-            //float rightEnd = rightA + dif;
-            //float leftEnd = leftA + dif;
-
-            //bool DownR = false;
-            //bool RightR = false;
-            //bool LeftR = false;
-
-
-            //bool Down = false;
-            //bool Right = false;
-            //bool Left = false;
-            ////bool Up = m_controller.ChackStartTrigger();
-            ////bool Down = m_controller.ChackTrampleTrigger();
-            ////bool Right = m_controller.ChackJumpTrigger();
-            ////bool Left = m_controller.ChackAttackTrigger();
-
-            //if (ChangeData.Between(angle, upA - dif, upA + dif))
-            //{
-            //    Up = true;
-            //}
-            //if (ChangeData.Between(angle, downA - dif, downA + dif))
-            //{
-            //    Down = true;
-            //}
-            //if (ChangeData.SetDeg360 angle, rightA - dif, rightA + dif))
-            //{
-            //    Right = true;
-            //}
-            //if (ChangeData.Between(angle, leftA - dif, leftA + dif))
-            //{
-            //    Left = true;
-            //}
-
-            bool Up = m_controller.ChackStartTrigger();
-            bool Down = m_controller.ChackTrampleTrigger();
-            bool Right = m_controller.ChackJumpTrigger();
-            bool Left = m_controller.ChackAttackTrigger();
-
+            bool move = m_controller.ChackCompassMove();
+            float angle = m_controller.ChackCompassAngle();
+            float dif = 15.0f;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // コンパス上
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float upA = 90.0f;
+            float downA = 180.0f;
+            float rightA = 0.0f;
+            float leftA = 270.0f;
+            bool Up = false;
+            bool Down = false;
+            bool Right = false;
+            bool Left = false;
+            if (move)
+            {
+                if (MyCalculator.AngleWheelDeg(angle, upA, dif))
+                {
+                    Up = true;
+                }
+                if (MyCalculator.AngleWheelDeg(angle, downA, dif))
+                {
+                    Down = true;
+                }
+                if (MyCalculator.AngleWheelDeg(angle, rightA, dif))
+                {
+                    Right = true;
+                }
+                if (MyCalculator.AngleWheelDeg(angle, leftA, dif))
+                {
+                    Left = true;
+                }
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 回復。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             if (Up)
             {
                 m_dataBace.RecoveryHeadDurable(2000.0f);
             }
-            if (Down) 
+            if (Down)
             {
                 m_dataBace.RecoveryLegDurable(2000.0f);
             }
@@ -353,6 +326,9 @@ public partial class PlayerDirector : MonoBehaviour
             {
                 m_dataBace.RecoveryBodyDurable(2000.0f);
             }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ステートチェック
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_dataBace.ChackUpdate();
         }
 
@@ -503,7 +479,10 @@ public partial class PlayerDirector : MonoBehaviour
 
             m_damageTrigger = true;
         }
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ステートチェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataBace.ChackUpdate();
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ更新
@@ -574,5 +553,31 @@ public partial class PlayerDirector : MonoBehaviour
         PlayerGetStarReservation data = new PlayerGetStarReservation();
         data.starNum = starNum;
         m_getStar.Add(data);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ステートチェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataBace.ChackUpdate();
     }
 }
+
+//bool Up = m_controller.ChackStartTrigger();
+//bool Down = m_controller.ChackTrampleTrigger();
+//bool Right = m_controller.ChackJumpTrigger();
+//bool Left = m_controller.ChackAttackTrigger();
+//            if (Up)
+//            {
+//                m_dataBace.RecoveryHeadDurable(2000.0f);
+//            }
+//            if (Down) 
+//            {
+//                m_dataBace.RecoveryLegDurable(2000.0f);
+//            }
+//            if (Right)
+//            {
+//                m_dataBace.RecoveryArmDurable(2000.0f);
+//            }
+//            if (Left)
+//            {
+//                m_dataBace.RecoveryBodyDurable(2000.0f);
+//            }
+//            m_dataBace.ChackUpdate();
