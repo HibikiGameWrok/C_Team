@@ -457,6 +457,462 @@ public static class MyCalculator
         ans.w = number1.w * number2.w;
         return ans;
     }
+#pragma region BetweenRing
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 周回の隙間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 周回の中、startとgoalの間にいるか？
+    // start>goalとなると判定が周回開始点を含んだ方の弧になる
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // startやgoalと同値はTRUE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static bool BetweenRing(int getPoint, int start, int goal, int loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        int startLoop = ChangeData.AntiOverflow(start, loopLong);
+        int goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    public static bool BetweenRing(float getPoint, float start, float goal, float loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        float startLoop = ChangeData.AntiOverflow(start, loopLong);
+        float goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    public static bool BetweenRing(uint getPoint, uint start, uint goal, uint loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        uint getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        uint startLoop = ChangeData.AntiOverflow(start, loopLong);
+        uint goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    public static bool BetweenRing(double getPoint, double start, double goal, double loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        double getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        double startLoop = ChangeData.AntiOverflow(start, loopLong);
+        double goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // startやgoalと同値はFALSE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static bool BetweenRingNoTouch(int getPoint, int start, int goal, int loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        int startLoop = ChangeData.AntiOverflow(start, loopLong);
+        int goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    public static bool BetweenRingNoTouch(float getPoint, float start, float goal, float loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        float startLoop = ChangeData.AntiOverflow(start, loopLong);
+        float goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    public static bool BetweenRingNoTouch(uint getPoint, uint start, uint goal, uint loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        uint getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        uint startLoop = ChangeData.AntiOverflow(start, loopLong);
+        uint goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    public static bool BetweenRingNoTouch(double getPoint, double start, double goal, double loopLong)
+    {
+        bool returnFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 輪になってないよ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopLong <= 0)
+        {
+            return returnFlag;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 周回の輪のどこか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        double getPointLoop = ChangeData.AntiOverflow(getPoint, loopLong);
+        double startLoop = ChangeData.AntiOverflow(start, loopLong);
+        double goalLoop = ChangeData.AntiOverflow(goal, loopLong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 判定が周回開始点を含んだ方の弧か？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool overflowRoop = false;
+        if (startLoop > goalLoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // startLoopがgoalLoopより大きければ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            overflowRoop = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プログラム分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (overflowRoop)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含まないの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.Between(getPointLoop, startLoop, goalLoop);
+            returnFlag = !returnFlag;
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 周回開始点を含むの弧に含まれる？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            returnFlag = ChangeData.BetweenNoTouch(getPointLoop, startLoop, goalLoop);
+        }
+        return returnFlag;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 目標角度を向いているか？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static bool AngleWheelDeg(float angle, float targetAngle, float difAngle)
+    {
+        float loopLong = 360.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ弾き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (difAngle < 0)
+        {
+            return false;
+        }
+        if (difAngle >= loopLong)
+        {
+            return false;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 差の角度
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float difAngleLong = Division(difAngle, 2.0f);
+        float start = targetAngle - difAngleLong;
+        float goal = targetAngle + difAngleLong;
+        return BetweenRing(angle, start, goal, loopLong);
+    }
+    public static bool AngleWheelRad(float angle, float targetAngle, float difAngle)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ディグリー化
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float angleDeg = ChangeData.RadToDeg(angle);
+        float targetAngleDeg = ChangeData.RadToDeg(targetAngle);
+        float difAngleDeg = ChangeData.RadToDeg(difAngle);
+        return AngleWheelDeg(angleDeg, targetAngleDeg, difAngleDeg);
+    }
+    public static bool AngleWheelDeg(double angle, double targetAngle, double difAngle)
+    {
+        double loopLong = 360.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ弾き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (difAngle < 0)
+        {
+            return false;
+        }
+        if (difAngle >= loopLong)
+        {
+            return false;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 差の角度
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        double difAngleLong = Division(difAngle, 2.0);
+        double start = targetAngle - difAngleLong;
+        double goal = targetAngle + difAngleLong;
+        return BetweenRing(angle, start, goal, loopLong);
+    }
+    public static bool AngleWheelRad(double angle, double targetAngle, double difAngle)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ディグリー化
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        double angleDeg = ChangeData.RadToDeg(angle);
+        double targetAngleDeg = ChangeData.RadToDeg(targetAngle);
+        double difAngleDeg = ChangeData.RadToDeg(difAngle);
+        return AngleWheelDeg(angleDeg, targetAngleDeg, difAngleDeg);
+    }
+#pragma endregion
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポイント１からポイント２までの
     // 直線距離を返す

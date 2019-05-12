@@ -205,7 +205,7 @@ public class PlayerMove : MonoBehaviour
         GameObject parent = null;
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり判定脚のタグ
+        // 当たり判定腕のタグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 左
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -223,16 +223,16 @@ public class PlayerMove : MonoBehaviour
         m_hitFlagArmObject_R = new GameObject("hitFlagArm_R");
         m_hitFlagArmObject_R.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり判定脚
+        // 当たり判定腕
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 左
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_hitFlagArmObject_L.tag = WarehousePlayer.GetTag_PlayerHitLegParts();
+        m_hitFlagArmObject_L.tag = WarehousePlayer.GetTag_PlayerHitArmParts();
         this.m_hitFlagArmParts_L = m_hitFlagArmObject_L.AddComponent<PlayerPartsPain>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 右
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_hitFlagArmObject_R.tag = WarehousePlayer.GetTag_PlayerHitLegParts();
+        m_hitFlagArmObject_R.tag = WarehousePlayer.GetTag_PlayerHitArmParts();
         this.m_hitFlagArmParts_R = m_hitFlagArmObject_R.AddComponent<PlayerPartsPain>();
 
         

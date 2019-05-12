@@ -157,6 +157,14 @@ public static class ChangeData
     {
         return (angle * 180.0f / PI);
     }
+    public static double DegToRad(double angle)
+    {
+        return (angle / 180.0f * PI);
+    }
+    public static double RadToDeg(double angle)
+    {
+        return (angle * 180.0f / PI);
+    }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ディグリーとラジアン
@@ -570,6 +578,158 @@ public static class ChangeData
         return false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // の間か？
+    // 触れるはFALSE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static bool BetweenNoTouch(int number, int min, int max)
+    {
+        if (min > max)
+        {
+            Change2Data(ref min, ref max);
+        }
+        if (min >= number)
+        {
+            return false;
+        }
+        if (max <= number)
+        {
+            return false;
+        }
+        return true;
+    }
+    public static bool BetweenNoTouch(float number, float min, float max)
+    {
+        if (min > max)
+        {
+            Change2Data(ref min, ref max);
+        }
+        if (min >= number)
+        {
+            return false;
+        }
+        if (max <= number)
+        {
+            return false;
+        }
+        return true;
+    }
+    public static bool BetweenNoTouch(double number, double min, double max)
+    {
+        if (min > max)
+        {
+            Change2Data(ref min, ref max);
+        }
+        if (min >= number)
+        {
+            return false;
+        }
+        if (max <= number)
+        {
+            return false;
+        }
+        return true;
+    }
+    public static bool BetweenNoTouch(uint number, uint min, uint max)
+    {
+        if (min > max)
+        {
+            Change2Data(ref min, ref max);
+        }
+        if (min >= number)
+        {
+            return false;
+        }
+        if (max <= number)
+        {
+            return false;
+        }
+        return true;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // の間との間
+    // 触れるはFALSE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static bool BetweenNoTouch(int numberMin, int numberMax, int thresholdMin, int thresholdMax)
+    {
+        if (numberMin > numberMax)
+        {
+            Change2Data(ref numberMin, ref numberMax);
+        }
+        if (thresholdMin > thresholdMax)
+        {
+            Change2Data(ref thresholdMin, ref thresholdMax);
+        }
+        if (numberMin > thresholdMin && numberMin < thresholdMax)
+        {
+            return true;
+        }
+        if (numberMax > thresholdMin && numberMax < thresholdMax)
+        {
+            return true;
+        }
+        return false;
+    }
+    public static bool BetweenNoTouch(float numberMin, float numberMax, float thresholdMin, float thresholdMax)
+    {
+        if (numberMin > numberMax)
+        {
+            Change2Data(ref numberMin, ref numberMax);
+        }
+        if (thresholdMin > thresholdMax)
+        {
+            Change2Data(ref thresholdMin, ref thresholdMax);
+        }
+        if (numberMin > thresholdMin && numberMin < thresholdMax)
+        {
+            return true;
+        }
+        if (numberMax > thresholdMin && numberMax < thresholdMax)
+        {
+            return true;
+        }
+        return false;
+    }
+    public static bool BetweenNoTouch(double numberMin, double numberMax, double thresholdMin, double thresholdMax)
+    {
+        if (numberMin > numberMax)
+        {
+            Change2Data(ref numberMin, ref numberMax);
+        }
+        if (thresholdMin > thresholdMax)
+        {
+            Change2Data(ref thresholdMin, ref thresholdMax);
+        }
+        if (numberMin > thresholdMin && numberMin < thresholdMax)
+        {
+            return true;
+        }
+        if (numberMax > thresholdMin && numberMax < thresholdMax)
+        {
+            return true;
+        }
+        return false;
+    }
+    public static bool BetweenNoTouch(uint numberMin, uint numberMax, uint thresholdMin, uint thresholdMax)
+    {
+        if (numberMin > numberMax)
+        {
+            Change2Data(ref numberMin, ref numberMax);
+        }
+        if (thresholdMin > thresholdMax)
+        {
+            Change2Data(ref thresholdMin, ref thresholdMax);
+        }
+        if (numberMin > thresholdMin && numberMin < thresholdMax)
+        {
+            return true;
+        }
+        if (numberMax > thresholdMin && numberMax < thresholdMax)
+        {
+            return true;
+        }
+        return false;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // ０～１でminからmaxまでの割合を求める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public static float AmongProportion(float number, float min, float max)
@@ -669,13 +829,81 @@ public static class ChangeData
         return type;
 
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // オーバーフロー防止
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     public static float AntiOverflow(float number, float loopNum)
     {
         float numberR = number;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーバーフローも何もない
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopNum <= 0)
+        {
+            return 0;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データを正の数にする
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         while (numberR < 0)
         {
             numberR += loopNum;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // numberR % loopNum
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        while (numberR >= loopNum)
+        {
+            numberR -= loopNum;
+        }
+        return numberR;
+    }
+    public static double AntiOverflow(double number, double loopNum)
+    {
+        double numberR = number;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーバーフローも何もない
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopNum <= 0)
+        {
+            return 0;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データを正の数にする
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        while (numberR < 0)
+        {
+            numberR += loopNum;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // numberR % loopNum
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        while (numberR >= loopNum)
+        {
+            numberR -= loopNum;
+        }
+        return numberR;
+    }
+    public static uint AntiOverflow(uint number, uint loopNum)
+    {
+        uint numberR = number;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーバーフローも何もない
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopNum <= 0)
+        {
+            return 0;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データを正の数にする
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        while (numberR < 0)
+        {
+            numberR += loopNum;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // numberR % loopNum
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         while (numberR >= loopNum)
         {
             numberR -= loopNum;
@@ -685,10 +913,23 @@ public static class ChangeData
     public static int AntiOverflow(int number, int loopNum)
     {
         int numberR = number;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーバーフローも何もない
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (loopNum <= 0)
+        {
+            return 0;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データを正の数にする
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         while (numberR < 0)
         {
             numberR += loopNum;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // numberR % loopNum
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         while (numberR >= loopNum)
         {
             numberR -= loopNum;

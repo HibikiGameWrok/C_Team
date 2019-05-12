@@ -109,7 +109,7 @@ abstract public class EnemyAttackParts : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerStay2D(Collider2D col)
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ報告腕
