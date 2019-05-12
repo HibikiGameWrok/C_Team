@@ -245,6 +245,30 @@ namespace WarehouseData
             type = ChangeData.AmongLess(type, 0, (int)UnityResultNum.NUM);
             return m_texture2DResultScene[type];
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ground
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public static string Tag_ground = "ground";
+        public static string GetTag_Ground()
+        {
+            return Tag_ground;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // Shell
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public static string Tag_Shell = "Shell";
+        public static string GetTag_Shell()
+        {
+            return Tag_Shell;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // StartRoketPoint
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public static string Tag_StartRoketPoint = "StartRoketPoint";
+        public static string GetTag_StartRoketPoint()
+        {
+            return Tag_StartRoketPoint;
+        }
 
 
     }
