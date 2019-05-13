@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class WaterWallMove : MonoBehaviour
 {
+    bool grounded = false;
+
+    LayerMask playerlayer;
+
     public ParticleSystem HitEffect;
     GameObject starManeger = null;
     // Start is called before the first frame update
     void Start()
     {
         starManeger = GameObject.Find("StarManeger");
+        playerlayer = LayerMask.GetMask(LayerMask.LayerToName(9));
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y+-0.1f, transform.position.z);
+    }
+
+    void HitCheck()
+    {
+        grounded = Physics2D.Linecast(transform.position - transform.up * 1.7f, transform.position - transform.up * 3.0f, playerlayer);
+
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
