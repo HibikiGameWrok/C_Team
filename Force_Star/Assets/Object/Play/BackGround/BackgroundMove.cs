@@ -40,12 +40,6 @@ public class BackgroundMove : MonoBehaviour
         Vector3 playerPos = m_playerIndex.GetPlayerPosition();
 
         Vector2 direction = new Vector2(playerPos.x - transform.position.x, playerPos.y - transform.position.y);
-
-        if (direction.x > 3.0f)
-        {
-            power = 3.0f;
-        }
-
      
         GetComponent<Rigidbody2D>().velocity = (direction * power);
     }
