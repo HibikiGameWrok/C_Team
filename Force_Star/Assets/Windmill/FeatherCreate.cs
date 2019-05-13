@@ -81,7 +81,7 @@ public class FeatherCreate : MonoBehaviour
     {
         if(!starCreateFlag)
         {
-            sterDi.GetComponent<StarDirector>().CreateOneStar(this.transform.position, 5, false, sterDi.GetComponent<StarDirector>().GetStarJump());
+            sterDi.GetComponent<StarDirector>().CreateOneStar(this.transform.position, 10, false, sterDi.GetComponent<StarDirector>().GetStarJump());
             SetStarCreateFlag(true);
         }
        
