@@ -23,14 +23,15 @@ public class WaterWall : MonoBehaviour
         StartPosition = transform.position;
         if (WaterWallObject!=null)
         {
-            for(int i=0;i<MaxWater;i++)
+            //StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater + 1);
+            for (int i=0;i<MaxWater;i++)
             {
                 WaterWallClone = Instantiate(WaterWallObject, StartPosition, Quaternion.identity) as GameObject;
                 WaterWallClone.transform.localScale = transform.localScale;
-                WaterWallClone.transform.position=new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y-WaterWallClone.GetComponent<Renderer>().bounds.size.y, WaterWallClone.transform.position.z); 
-                StartPosition = WaterWallClone.transform.position;
+                WaterWallClone.transform.position=new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y-WaterWallClone.GetComponent<Renderer>().bounds.size.y*(MaxWater-i), WaterWallClone.transform.position.z); 
+               // StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater - i);
                 WaterWallClone.transform.parent = transform;
-                myList.Add(WaterWallClone.gameObject);
+                myList.Add(WaterWallClone);
             }
         }
         count = 0.0f;
@@ -46,27 +47,26 @@ public class WaterWall : MonoBehaviour
             WaterWallClone.transform.localScale = transform.localScale;
             WaterWallClone.transform.position = new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y - WaterWallClone.GetComponent<Renderer>().bounds.size.y, WaterWallClone.transform.position.z);
             WaterWallClone.transform.parent = transform;
-            myList.Add(WaterWallClone.gameObject);
+            myList.Add(WaterWallClone);
             count = 0.0f;
         }
     }
 
     public void WaterList(GameObject Wobject)
     {
-        Debug.Log(myList.BinarySearch(Wobject));
-        Destroy(Wobject);
-        myList.Remove(Wobject);
-       // Debug.Log(myList[2]);
+        int i = myList.IndexOf(Wobject);
+        Destroy(myList[i]);
+        myList.RemoveAt(i);
     }
     public void WaterListAt(GameObject Wobject)
     {
-        int i = myList.IndexOf(Wobject);
-        //for (int i = myList.IndexOf(Wobject); i>0;i--)
-        //{
-        //    Debug.Log(i);
-           // Destroy(myList[i]);
-        //}
-        Debug.Log(i);
+
+        for (int i = 0; i < myList.IndexOf(Wobject)+1; i++)
+        {
+            Debug.Log(i);
+            Destroy(myList[i]);
+        }
+
         myList.RemoveAll(myList => myList == Wobject);
     }
 }
