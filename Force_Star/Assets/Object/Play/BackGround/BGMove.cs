@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BGMove : MonoBehaviour
 {
-    public float power = 0.2f;
+    public float m_backSpeed = 0.2f;
+    public float m_scale = 1.0f;
 
 
     // Start is called before the first frame update
@@ -16,6 +17,11 @@ public class BGMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(Time.frameCount * power) / 10.0f, transform.position.z);  
+        //周波数（振動数）の公式
+        float f = 1.0f / m_backSpeed;
+
+        float sin = Mathf.Sin(2 * Mathf.PI * f * Time.time);
+
+        transform.localPosition = new Vector3(0.0f, sin * m_scale, 0.0f);  
     }
 }
