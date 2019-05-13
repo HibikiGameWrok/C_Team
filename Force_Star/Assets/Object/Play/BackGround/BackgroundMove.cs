@@ -5,28 +5,50 @@ using UnityEngine;
 public class BackgroundMove : MonoBehaviour
 {
 
-    [SerializeField]
-    float speed = -0.1f;
-    [SerializeField]
-    Vector2 deletePos = new Vector2(-20.0f, 0.0f);
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlayerDirectorIndex m_playerIndex;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    public float power = 0.0f;
+
+
+    void Awake()
     {
-        
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(speed, 0, 0);
 
-        if(transform.position.x < deletePos.x)
+
+    void LateUpdate()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの地点入手
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector3 playerPos = m_playerIndex.GetPlayerPosition();
+
+        Vector2 direction = new Vector2(playerPos.x - transform.position.x, playerPos.y - transform.position.y);
+
+        if (direction.x > 3.0f)
         {
-            //Destroy(gameObject);
-            gameObject.transform.position = new Vector2(18.0f, 0.0f);
-         }
+            power = 3.0f;
+        }
 
-
+     
+        GetComponent<Rigidbody2D>().velocity = (direction * power);
     }
+
 }
+
