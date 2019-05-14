@@ -122,8 +122,12 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public Vector3 GetScreenPos(Vector3 position)
     {
-        Vector3 ansPos = m_mainCamera.WorldToScreenPoint(position);
-        return ansPos;
+        if (m_mainCamera != null)
+        {
+            Vector3 ansPos = m_mainCamera.WorldToScreenPoint(position);
+            return ansPos;
+        }
+        return Vector3.zero;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星の管理者に報告
