@@ -60,6 +60,37 @@ public class PlayerDataBace
     private float m_legDurable = 0;
     [SerializeField]
     private float m_legDurableMax = 0;
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツの強化時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 腕パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private float m_armStrong = 0;
+    [SerializeField]
+    private float m_armStrongMax = 0;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 体パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private float m_bodyStrong = 0;
+    [SerializeField]
+    private float m_bodyStrongMax = 0;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 頭パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private float m_headStrong = 0;
+    [SerializeField]
+    private float m_headStrongMax = 0;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 脚パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private float m_legStrong = 0;
+    [SerializeField]
+    private float m_legStrongMax = 0;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コンストラクタ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -102,6 +133,29 @@ public class PlayerDataBace
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_legDurable = 0;
         m_legDurableMax = 0;
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの強化時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrong = 0;
+        m_armStrongMax = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_bodyStrong = 0;
+        m_bodyStrongMax = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_headStrong = 0;
+        m_headStrongMax = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_legStrong = 0;
+        m_legStrongMax = 0;
     }
 
     public PlayerDataBace(PlayerDataBace baseData)
@@ -142,6 +196,30 @@ public class PlayerDataBace
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_legDurable = baseData.m_legDurable;
         m_legDurableMax = baseData.m_legDurableMax;
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの強化時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrong = baseData.m_armStrong;
+        m_armStrongMax = baseData.m_armStrongMax;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_bodyStrong = baseData.m_bodyStrong;
+        m_bodyStrongMax = baseData.m_bodyStrongMax;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_headStrong = baseData.m_headStrong;
+        m_headStrongMax = baseData.m_headStrongMax;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_legStrong = baseData.m_legStrong;
+        m_legStrongMax = baseData.m_legStrongMax;
+
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // リセットの権限
@@ -274,6 +352,56 @@ public class PlayerDataBace
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツの強化時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void ResetPartsStrong()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrong = 0;
+        m_armStrongMax = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_bodyStrong = 0;
+        m_bodyStrongMax = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_headStrong = 0;
+        m_headStrongMax = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_legStrong = 0;
+        m_legStrongMax = 0;
+    }
+    public void ResetPartsStrong(float num)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrong = 0;
+        m_armStrongMax = num;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_bodyStrong = 0;
+        m_bodyStrongMax = num;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_headStrong = 0;
+        m_headStrongMax = num;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_legStrong = 0;
+        m_legStrongMax = num;
+    }
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 外からの介入
     //*|***|***|***|***|***|***|***|***|***|***|***|
 
@@ -384,6 +512,76 @@ public class PlayerDataBace
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツの強化時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 全パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void TimePartsStrong(float time)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TimeArmStrong(time);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TimeBodyStrong(time);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TimeHeadStrong(time);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TimeLegStrong(time);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 腕パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void TimeArmStrong(float time)
+    {
+        m_armStrong -= time;
+    }
+    public void StartArmStrong()
+    {
+        m_armStrong = m_armStrongMax;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 体パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void TimeBodyStrong(float time)
+    {
+        m_bodyStrong -= time;
+    }
+    public void StartBodyStrong()
+    {
+        m_bodyStrong = m_bodyStrongMax;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 頭パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void TimeHeadStrong(float time)
+    {
+        m_headStrong -= time;
+    }
+    public void StartHeadStrong()
+    {
+        m_headStrong = m_headStrongMax;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 脚パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void TimeLegStrong(float time)
+    {
+        m_legStrong -= time;
+    }
+    public void StartLegStrong()
+    {
+        m_legStrong = m_legStrongMax;
+    }
+
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // データを確認
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void ChackUpdate()
@@ -392,6 +590,11 @@ public class PlayerDataBace
         m_bodyDurable = ChangeData.Among(m_bodyDurable, 0, m_bodyDurableMax);
         m_headDurable = ChangeData.Among(m_headDurable, 0, m_headDurableMax);
         m_legDurable = ChangeData.Among(m_legDurable, 0, m_legDurableMax);
+
+        m_armStrong = ChangeData.Among(m_armStrong, 0, m_armStrongMax);
+        m_bodyStrong = ChangeData.Among(m_bodyStrong, 0, m_bodyStrongMax);
+        m_headStrong = ChangeData.Among(m_headStrong, 0, m_headStrongMax);
+        m_legStrong = ChangeData.Among(m_legStrong, 0, m_legStrongMax);
 
         m_airTimer = ChangeData.Among(m_airTimer, 0, m_airTimerMax);
     }
@@ -485,7 +688,72 @@ public class PlayerDataBace
         float parsent = MyCalculator.Division(m_legDurable, m_legDurableMax);
         return parsent;
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツの強化時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 腕パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetArmStrong()
+    {
+        if (m_armStrong > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public float GetArmStrongParsent()
+    {
+        float parsent = MyCalculator.Division(m_armStrong, m_armStrongMax);
+        return parsent;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 体パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetBodyStrong()
+    {
+        if (m_bodyStrong > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public float GetBodyStrongParsent()
+    {
+        float parsent = MyCalculator.Division(m_bodyStrong, m_bodyStrongMax);
+        return parsent;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 頭パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetHeadStrong()
+    {
+        if (m_headStrong > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public float GetHeadStrongParsent()
+    {
+        float parsent = MyCalculator.Division(m_headStrong, m_headStrongMax);
+        return parsent;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 脚パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetLegStrong()
+    {
+        if(m_legStrong > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public float GetLegStrongParsent()
+    {
+        float parsent = MyCalculator.Division(m_legStrong, m_legStrongMax);
+        return parsent;
+    }
 
 
 

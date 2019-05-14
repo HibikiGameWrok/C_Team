@@ -23,6 +23,8 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private DebugPlayerRecoveryUI m_dataRecoveryUI;
     private float m_progressParsent;
+    private float m_progressParsentAnimate;
+    private float m_progressParsentAnimateTime;
     private bool m_dataRecoveryUIAwake;
     private bool m_pushRecoveryKey;
 
@@ -59,9 +61,19 @@ public partial class PlayerDirector : MonoBehaviour
     private float m_damageTime;
     [SerializeField]
     private float m_damageInvincibilityTime;
-
     private bool m_exceptionDamage;
     private bool m_damageTrigger;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ中
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private bool m_armStrong;
+    [SerializeField]
+    private bool m_bodyStrong;
+    [SerializeField]
+    private bool m_headStrong;
+    [SerializeField]
+    private bool m_legStrong;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -85,7 +97,15 @@ public partial class PlayerDirector : MonoBehaviour
         m_dataBace = new PlayerDataBace();
         m_dataBace.ResetAll(7200);
         m_dataBace.ResetPartsDurable(2000.0f);
+        m_dataBace.ResetPartsStrong(100.0f);
         m_dataBace.ResetStars(0, 2000);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ中
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrong = false;
+        m_bodyStrong = false;
+        m_headStrong = false;
+        m_legStrong = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベースUI
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -138,6 +158,18 @@ public partial class PlayerDirector : MonoBehaviour
         {
             m_dataBace.CatchStars(10);
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ中
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataBace.TimePartsStrong(1.0f);
+        m_armStrong = m_dataBace.GetArmStrong();
+        m_bodyStrong = m_dataBace.GetBodyStrong();
+        m_headStrong = m_dataBace.GetHeadStrong();
+        m_legStrong = m_dataBace.GetLegStrong();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ステートチェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataBace.ChackUpdate();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤーはどこにいますの？
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -263,9 +295,28 @@ public partial class PlayerDirector : MonoBehaviour
             }
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // アニメーション進行度を記録
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_dataRecoveryUIAwake)
+        {
+            m_progressParsentAnimateTime += 0.25f;
+            m_progressParsentAnimate = Mathf.Cos(m_progressParsentAnimateTime);
+            m_progressParsentAnimate = (m_progressParsentAnimate + 1.0f) / 2.0f;
+        }
+        else
+        {
+            m_progressParsentAnimateTime = 0;
+            m_progressParsentAnimate = 0;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 進行度を記録
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_dataRecoveryUI.SetProgressParsentNumber(m_progressParsent);
+        m_dataRecoveryUI.SetProgressParsent(m_progressParsent);
+        m_dataRecoveryUI.SetProgressParsentAnimate(m_progressParsentAnimate);
+        m_dataRecoveryUI.SetArmDurableParsent(m_dataBace.GetArmDurableParsent());
+        m_dataRecoveryUI.SetBodyDurableParsent(m_dataBace.GetBodyDurableParsent());
+        m_dataRecoveryUI.SetHeadDurableParsent(m_dataBace.GetHeadDurableParsent());
+        m_dataRecoveryUI.SetLegDurableParsent(m_dataBace.GetLegDurableParsent());
 
 
 
@@ -277,13 +328,15 @@ public partial class PlayerDirector : MonoBehaviour
             bool move = m_controller.ChackCompassMove();
             float angle = m_controller.ChackCompassAngle();
             float dif = 15.0f;
+            float partsParsent = 0.0f;
+            int starsFee = 0;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // コンパス上
             //*|***|***|***|***|***|***|***|***|***|***|***|
             float upA = 90.0f;
-            float downA = 180.0f;
+            float downA = 270.0f;
             float rightA = 0.0f;
-            float leftA = 270.0f;
+            float leftA = 180.0f;
             bool Up = false;
             bool Down = false;
             bool Right = false;
@@ -312,26 +365,68 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (Up)
             {
-                m_dataBace.RecoveryHeadDurable(2000.0f);
+                partsParsent = m_dataBace.GetHeadDurableParsent();
+                if (partsParsent == 1)
+                {
+                    starsFee = 10;
+                    m_dataBace.StartHeadStrong();
+                }
+                else
+                {
+                    m_dataBace.RecoveryHeadDurable(2000.0f);
+                }
             }
             if (Down)
             {
-                m_dataBace.RecoveryLegDurable(2000.0f);
+                partsParsent = m_dataBace.GetLegDurableParsent();
+                if (partsParsent == 1)
+                {
+                    starsFee = 10;
+                    m_dataBace.StartLegStrong();
+                }
+                else
+                {
+                    m_dataBace.RecoveryLegDurable(2000.0f);
+                }
             }
             if (Right)
             {
-                m_dataBace.RecoveryArmDurable(2000.0f);
+                partsParsent = m_dataBace.GetArmDurableParsent();
+                if (partsParsent == 1)
+                {
+                    starsFee = 10;
+                    m_dataBace.StartArmStrong();
+                }
+                else
+                {
+                    m_dataBace.RecoveryArmDurable(2000.0f);
+                }
             }
             if (Left)
             {
-                m_dataBace.RecoveryBodyDurable(2000.0f);
+                partsParsent = m_dataBace.GetBodyDurableParsent();
+                if(partsParsent == 1)
+                {
+                    starsFee = 10;
+                    m_dataBace.StartBodyStrong();
+                }
+                else
+                {
+                    m_dataBace.RecoveryBodyDurable(2000.0f);
+                }
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ステートチェック
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_dataBace.ChackUpdate();
         }
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 進行度を記録
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataRecoveryUI.SetArmStrong(m_dataBace.GetArmStrong());
+        m_dataRecoveryUI.SetBodyStrong(m_dataBace.GetBodyStrong());
+        m_dataRecoveryUI.SetHeadStrong(m_dataBace.GetHeadStrong());
+        m_dataRecoveryUI.SetLegStrong(m_dataBace.GetLegStrong());
 
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

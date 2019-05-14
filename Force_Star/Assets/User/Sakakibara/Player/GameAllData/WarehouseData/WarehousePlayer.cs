@@ -59,6 +59,14 @@ namespace WarehouseData
                 LEFTLEG_DAMAGE,
                 RIGHTLEG_DAMAGE,
                 //*|***|***|***|***|***|***|***|***|***|***|***|
+                // プレイヤーのデータ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                PLAYERBOAL_STRONG,
+                BODYTOP_STRONG,
+                ATTACKBOAL_STRONG,
+                LEFTLEG_STRONG,
+                RIGHTLEG_STRONG,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 総数
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 NUM,
@@ -107,20 +115,41 @@ namespace WarehouseData
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 回復のUIのデータ
                 //*|***|***|***|***|***|***|***|***|***|***|***|
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 全体図
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 RECOVERYUI_ALLBODY,
-                RECOVERYUI_BACKBLACK,
-                RECOVERYUI_BODYLINE,
-                RECOVERYUI_HEALARM,
-                RECOVERYUI_HEALBACK,
-                RECOVERYUI_HEALBODY,
-                RECOVERYUI_HEALHEAD,
-                RECOVERYUI_HEALLEG,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // ダメージ受けた赤
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 RECOVERYUI_REDARM,
                 RECOVERYUI_REDBODY,
                 RECOVERYUI_REDHEAD,
                 RECOVERYUI_REDLEG,
-                RECOVERYUI_RETURN,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 強化受けた黄
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                RECOVERYUI_STRONGARM,
+                RECOVERYUI_STRONGBODY,
+                RECOVERYUI_STRONGHEAD,
+                RECOVERYUI_STRONGLEG,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 回復のための背景のもの
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                RECOVERYUI_HEALBACK_GREEN,
+                RECOVERYUI_HEALBACK_RED,
+                RECOVERYUI_HEALBACK_GOLD,
 
+                RECOVERYUI_BACKBLACK,
+                RECOVERYUI_BODYLINE,
+                RECOVERYUI_HEALARM,
+                RECOVERYUI_HEALBODY,
+                RECOVERYUI_HEALHEAD,
+                RECOVERYUI_HEALLEG,
+                RECOVERYUI_RETURN,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 強化受けた黄
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 総数
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -200,6 +229,14 @@ namespace WarehouseData
                         m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "AttackBoal");
                         m_playerTex2D[(int)PlayerData_Number.LEFTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
                         m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "JointBoal");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // プレイヤーのデータ
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "PlayerBoal");
+                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_STRONG] = Resources.Load<Texture2D>(MyFile + "BodyTop");
+                        m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "AttackBoal");
+                        m_playerTex2D[(int)PlayerData_Number.LEFTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
+                        m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "JointBoal");
                     }
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // プレイヤーその他
@@ -218,22 +255,41 @@ namespace WarehouseData
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_SHADOW] = Resources.Load<Texture2D>(MyFile + SubFile + "star_gauge2");
                     }
                     //*|***|***|***|***|***|***|***|***|***|***|***|
-                    // ゲージのUIのデータ
+                    // 回復のUIのデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     SubFile = Recovery_UI;
                     {
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 全体図
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_ALLBODY] = Resources.Load<Texture2D>(MyFile + SubFile + "UIAllBody");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_BACKBLACK] = Resources.Load<Texture2D>(MyFile + SubFile + "UIBackBlack");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_BODYLINE] = Resources.Load<Texture2D>(MyFile + SubFile + "UIBodyLine");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALARM] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealArm");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALBACK] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealBack");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALBODY] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealBody");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALHEAD] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealHead");
-                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALLEG] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealLeg");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // ダメージ受けた赤
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_REDARM] = Resources.Load<Texture2D>(MyFile + SubFile + "UIRedArm");
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_REDBODY] = Resources.Load<Texture2D>(MyFile + SubFile + "UIRedBody");
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_REDHEAD] = Resources.Load<Texture2D>(MyFile + SubFile + "UIRedHead");
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_REDLEG] = Resources.Load<Texture2D>(MyFile + SubFile + "UIRedLeg");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 強化受けた黄
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_STRONGARM] = Resources.Load<Texture2D>(MyFile + SubFile + "UIStrongArm");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_STRONGBODY] = Resources.Load<Texture2D>(MyFile + SubFile + "UIStrongBody");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_STRONGHEAD] = Resources.Load<Texture2D>(MyFile + SubFile + "UIStrongHead");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_STRONGLEG] = Resources.Load<Texture2D>(MyFile + SubFile + "UIStrongLeg");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 回復のための背景のもの
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALBACK_GREEN] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealBack");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALBACK_RED] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealBackRed");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALBACK_GOLD] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealBackGold");
+
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_BACKBLACK] = Resources.Load<Texture2D>(MyFile + SubFile + "UIBackBlack");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_BODYLINE] = Resources.Load<Texture2D>(MyFile + SubFile + "UIBodyLine");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALARM] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealArm");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALBODY] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealBody");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALHEAD] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealHead");
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_HEALLEG] = Resources.Load<Texture2D>(MyFile + SubFile + "UIHealLeg");
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.RECOVERYUI_RETURN] = Resources.Load<Texture2D>(MyFile + SubFile + "UIReturn");
                     }
                 }

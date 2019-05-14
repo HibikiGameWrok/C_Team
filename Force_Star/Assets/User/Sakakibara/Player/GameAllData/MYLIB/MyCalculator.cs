@@ -939,9 +939,12 @@ public static class MyCalculator
     {
         Vector2 dif;
         float difR, difAns;
+        float difX;
+        float floatEpsilon = 1.192092896e-07F;
         dif = point;
         difR = Mathf.Atan2(dif.y, dif.x);
-        if (Mathf.Abs(Mathf.Cos(difR)) > float.Epsilon)
+        difX = Mathf.Abs(Mathf.Cos(difR));
+        if (Mathf.Abs(Mathf.Cos(difR)) > floatEpsilon)
         {
             difAns = dif.x / Mathf.Cos(difR);
         }

@@ -17,6 +17,7 @@ using TexImageHidden = GameDataPublic.TexImageHidden;
 using WarehouseObject = WarehouseData.WarehouseObject;
 using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
 using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
+using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
@@ -72,8 +73,9 @@ public class DebugPlayerUI : DebugCanvas
     // 星ゲージ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private int m_starRateDigit;
-    private List<GameObjectUI> m_starRate;
-    private List<ImageUIData> m_starRateUI;
+    private List<OriginUIGroup> m_starRate;
+
+    private OriginUIGroup m_starRateParsent;
 
 
     private GameObjectUI m_starGaugeMain;
@@ -94,15 +96,22 @@ public class DebugPlayerUI : DebugCanvas
     // 所持数星量
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private int m_haveStarDigit;
-    private List<GameObjectUI> m_haveStar;
-    private List<ImageUIData> m_haveStarUI;
+    private List<OriginUIGroup> m_haveStar;
+
+    private OriginUIGroup m_haveStarKO;
+    private OriginUIGroup m_haveStarStar;
+    private OriginUIGroup m_haveStarCross;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 目標数星量
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private int m_needStarDigit;
-    private List<GameObjectUI> m_needStar;
-    private List<ImageUIData> m_needStarUI;
-
+    private List<OriginUIGroup> m_needStar;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 目標数星量その他
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_needStarKO;
+    private OriginUIGroup m_needStarStar;
+    private OriginUIGroup m_needStarCross;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ
@@ -331,7 +340,8 @@ public class DebugPlayerUI : DebugCanvas
         // 星ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starRateDigit = 3;
-        m_starRate = new List<GameObjectUI>();
+        m_starRate = new List<OriginUIGroup>();
+        m_starRateParsent = new OriginUIGroup();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージパーセント
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -348,17 +358,40 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            GameObjectUI digitData = null;
-            digitData = CreateMenber(tex, "StarRate" + index.ToString());
-            digitData.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            OriginUIGroup digitData = new OriginUIGroup();
+            digitData.gameObjectUI = CreateMenber(tex, "StarRate" + index.ToString());
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            digitData.SetDepth(GetDepth(DepthAttach.STARGAUGE_NUMBER));
+            digitData.gameObjectUI.SetDepth(GetDepth(DepthAttach.STARGAUGE_NUMBER));
+            digitData.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_starRate.Add(digitData);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星ゲージパーセント
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.PERCENT, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            OriginUIGroup digitData = new OriginUIGroup();
+            m_starRateParsent.gameObjectUI = CreateMenber(tex, "StarRateParsent");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_starRateParsent.gameObjectUI.SetDepth(GetDepth(DepthAttach.STARGAUGE_NUMBER));
+            m_starRateParsent.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージフレーム
@@ -439,8 +472,8 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 所持数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_haveStarDigit = 8;
-        m_haveStar = new List<GameObjectUI>();
+        m_haveStarDigit = 5;
+        m_haveStar = new List<OriginUIGroup>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 所持数星量数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -457,19 +490,82 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            GameObjectUI digitData = null;
-            digitData = CreateMenber(tex, "HaveStar" + index.ToString());
-            digitData.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            OriginUIGroup digitData = new OriginUIGroup();
+            digitData.gameObjectUI = CreateMenber(tex, "HaveStar" + index.ToString());
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            digitData.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            digitData.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            digitData.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_haveStar.Add(digitData);
         }
         m_haveStarNumber = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_haveStarKO = new OriginUIGroup();
+        m_haveStarStar = new OriginUIGroup();
+        m_haveStarCross = new OriginUIGroup();
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.KO, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarKO.gameObjectUI = CreateMenber(tex, "HaveStarKO");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarKO.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            m_haveStarKO.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.STAR_IMAGE, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarStar.gameObjectUI = CreateMenber(tex, "HaveStarStar");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarStar.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            m_haveStarStar.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.MULTIPLICATION, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarCross.gameObjectUI = CreateMenber(tex, "HaveStarCross");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarCross.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            m_haveStarCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 目標数星量起動
@@ -483,8 +579,8 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 目標数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_needStarDigit = 8;
-        m_needStar = new List<GameObjectUI>();
+        m_needStarDigit = 5;
+        m_needStar = new List<OriginUIGroup>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 目標数星量数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -501,19 +597,82 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            GameObjectUI digitData = null;
-            digitData = CreateMenber(tex, "NeedStar" + index.ToString());
-            digitData.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            OriginUIGroup digitData = new OriginUIGroup();
+            digitData.gameObjectUI = CreateMenber(tex, "NeedStar" + index.ToString());
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            digitData.SetDepth(GetDepth(DepthAttach.NEEDSTAR_NUMBER));
+            digitData.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            digitData.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_needStar.Add(digitData);
         }
         m_needStarNumber = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_needStarKO = new OriginUIGroup();
+        m_needStarStar = new OriginUIGroup();
+        m_needStarCross = new OriginUIGroup();
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.KO, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarKO.gameObjectUI = CreateMenber(tex, "NeedStarKO");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarKO.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            m_needStarKO.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.STAR_IMAGE, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarStar.gameObjectUI = CreateMenber(tex, "NeedStarStar");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarStar.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            m_needStarStar.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.MULTIPLICATION, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarCross.gameObjectUI = CreateMenber(tex, "NeedStarCross");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarCross.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            m_needStarCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -564,24 +723,22 @@ public class DebugPlayerUI : DebugCanvas
     void AwakeStarDataUI()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 星ゲージ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_starRateUI = new List<ImageUIData>();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージパーセント
         //*|***|***|***|***|***|***|***|***|***|***|***|
         for (int index = 0; index < m_starRateDigit; index++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 桁作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            ImageUIData digitDataUI = null;
-            digitDataUI = new ImageUIData();
-            digitDataUI.Init();
-            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starRateUI.Add(digitDataUI);
+            m_starRate[index].imageUIData = new ImageUIData();
+            m_starRate[index].imageUIData.Init();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星ゲージパーセント
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            m_starRateParsent.imageUIData = new ImageUIData();
+            m_starRateParsent.imageUIData.Init();
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ
@@ -603,25 +760,25 @@ public class DebugPlayerUI : DebugCanvas
     void AwakeHaveStarDataUI()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 所持数星量
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_haveStarUI = new List<ImageUIData>();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 所持数星量数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
         for (int index = 0; index < m_haveStarDigit; index++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 桁作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            ImageUIData digitDataUI = null;
-            digitDataUI = new ImageUIData();
-            digitDataUI.Init();
-            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_haveStarUI.Add(digitDataUI);
+            m_haveStar[index].imageUIData = new ImageUIData();
+            m_haveStar[index].imageUIData.Init();
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_haveStarKO.imageUIData = new ImageUIData();
+        m_haveStarKO.imageUIData.Init();
+        m_haveStarStar.imageUIData = new ImageUIData();
+        m_haveStarStar.imageUIData.Init();
+        m_haveStarCross.imageUIData = new ImageUIData();
+        m_haveStarCross.imageUIData.Init();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 目標数星量
@@ -629,25 +786,25 @@ public class DebugPlayerUI : DebugCanvas
     void AwakeNeedStarDataUI()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 目標数星量
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_needStarUI = new List<ImageUIData>();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 目標数星量数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
         for (int index = 0; index < m_needStarDigit; index++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 桁作成
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            ImageUIData digitDataUI = null;
-            digitDataUI = new ImageUIData();
-            digitDataUI.Init();
-            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_needStarUI.Add(digitDataUI);
+            m_needStar[index].imageUIData = new ImageUIData();
+            m_needStar[index].imageUIData.Init();
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_needStarKO.imageUIData = new ImageUIData();
+        m_needStarKO.imageUIData.Init();
+        m_needStarStar.imageUIData = new ImageUIData();
+        m_needStarStar.imageUIData.Init();
+        m_needStarCross.imageUIData = new ImageUIData();
+        m_needStarCross.imageUIData.Init();
     }
 
 
@@ -828,11 +985,12 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         int jugNumber100 = (int)parsentStar100;
         int digitNum = 0;
+
         for (int digit = 0; digit < m_starRateDigit; digit++)
         {
             digitNum = MyCalculator.Get10Digit(jugNumber100, digit);
             imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
-            m_starRate[digit].SetRect(imageRect);
+            m_starRate[digit].gameObjectUI.SetRect(imageRect);
         }
         
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -876,6 +1034,11 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posSave = new Vector2(0.0f, 0.0f);
+        Vector2 scaleSave = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 pos = new Vector2(0.0f, 0.0f);
         Vector2 scale = new Vector2(0.0f, 0.0f);
         Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
@@ -885,6 +1048,10 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 本当の
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int trueStarRateDigit = m_starRateDigit + 1;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージフレーム
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -954,34 +1121,63 @@ public class DebugPlayerUI : DebugCanvas
         m_starGaugePos.x = centerX;
         m_starGaugePos.y = centerY;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 星ゲージパーセント
+        // 所持数星量その他
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        for (int index = 0; index < m_starRateUI.Count; index++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
             pos = m_starGaugeFrameUI.imagePos;
             scale = m_starGaugeFrameUI.imageScale;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             persent_AssistP = pos;
             persent_AssistS = scale;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 調整
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, m_starRateDigit);
+            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, trueStarRateDigit);
+            scale.x = persent_AssistS.x;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 以下も同じ場所に現れる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        posSave = pos;
+        scaleSave = scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星ゲージパーセント
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_starRate.Count; index++)
+        {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            int indexReverse = MyCalculator.InversionOfIndex(index, m_starRateDigit);
-            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, m_starRateDigit);
-            pos.x = persent_AssistP.x + (persent_AssistS.x * indexPoint);
-            pos.y = persent_AssistP.y;
-            scale = persent_AssistS;
+            int indexReverse = MyCalculator.InversionOfIndex(index + 1, trueStarRateDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueStarRateDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starRateUI[index].imagePos = new Vector2(pos.x, pos.y);
-            m_starRateUI[index].imageScale = new Vector2(scale.x, scale.y);
+            m_starRate[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_starRate[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(0, trueStarRateDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueStarRateDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_starRateParsent.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_starRateParsent.imageUIData.imageScale = new Vector2(scale.x, scale.y);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ
@@ -1006,7 +1202,7 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_haveStarNumber = ChangeData.Among(m_haveStarNumber, 0, 99999999);
+        m_haveStarNumber = ChangeData.Among(m_haveStarNumber, 0, 99999);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 現れる数値
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1015,9 +1211,13 @@ public class DebugPlayerUI : DebugCanvas
         {
             digitNum = MyCalculator.Get10Digit(m_haveStarNumber, digit);
             imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
-            m_haveStar[digit].SetRect(imageRect);
+            m_haveStar[digit].gameObjectUI.SetRect(imageRect);
         }
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posSave = new Vector2(0.0f, 0.0f);
+        Vector2 scaleSave = new Vector2(0.0f, 0.0f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1031,9 +1231,12 @@ public class DebugPlayerUI : DebugCanvas
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 所持数星量数字
+        // 本当の
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        for (int index = 0; index < m_haveStar.Count; index++)
+        int trueHaveStarDigit = m_haveStarDigit + 3;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
@@ -1054,20 +1257,80 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 調整
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, m_haveStarDigit);
+            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, trueHaveStarDigit);
+            scale.x = persent_AssistS.x;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 以下も同じ場所に現れる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        posSave = pos;
+        scaleSave = scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            int indexReverse = MyCalculator.InversionOfIndex(index, m_haveStarDigit);
-            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, m_haveStarDigit);
-            pos.x = persent_AssistP.x + (persent_AssistS.x * indexPoint);
-            pos.y = persent_AssistP.y;
-            scale = persent_AssistS;
+            int indexReverse = MyCalculator.InversionOfIndex(0, trueHaveStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueHaveStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_haveStarUI[index].imagePos = new Vector2(pos.x, pos.y);
-            m_haveStarUI[index].imageScale = new Vector2(scale.x, scale.y);
+            m_haveStarKO.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_haveStarKO.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(7, trueHaveStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueHaveStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_haveStarStar.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(6, trueHaveStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueHaveStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStarCross.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_haveStarCross.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_haveStar.Count; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(index + 1, trueHaveStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueHaveStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_haveStar[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_haveStar[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1082,7 +1345,7 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_needStarNumber = ChangeData.Among(m_needStarNumber, 0, 99999999);
+        m_needStarNumber = ChangeData.Among(m_needStarNumber, 0, 99999);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 現れる数値
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1091,8 +1354,13 @@ public class DebugPlayerUI : DebugCanvas
         {
             digitNum = MyCalculator.Get10Digit(m_needStarNumber, digit);
             imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
-            m_needStar[digit].SetRect(imageRect);
+            m_needStar[digit].gameObjectUI.SetRect(imageRect);
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posSave = new Vector2(0.0f, 0.0f);
+        Vector2 scaleSave = new Vector2(0.0f, 0.0f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1106,9 +1374,12 @@ public class DebugPlayerUI : DebugCanvas
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 目標数星量数字
+        // 本当の
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        for (int index = 0; index < m_needStarDigit; index++)
+        int trueNeedStarDigit = m_needStarDigit + 3;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
@@ -1129,20 +1400,80 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 調整
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, m_needStarDigit);
+            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, trueNeedStarDigit);
+            scale.x = persent_AssistS.x;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 以下も同じ場所に現れる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        posSave = pos;
+        scaleSave = scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            int indexReverse = MyCalculator.InversionOfIndex(index, m_needStarDigit);
-            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, m_needStarDigit);
+            int indexReverse = MyCalculator.InversionOfIndex(0, trueNeedStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueNeedStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarKO.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_needStarKO.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(7, trueNeedStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueNeedStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_needStarStar.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(6, trueNeedStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueNeedStarDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_needStarCross.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_needStarCross.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_needStarDigit; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(index + 1, trueNeedStarDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueNeedStarDigit);
             pos.x = persent_AssistP.x + (persent_AssistS.x * indexPoint);
             pos.y = persent_AssistP.y;
             scale = persent_AssistS;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_needStarUI[index].imagePos = new Vector2(pos.x, pos.y);
-            m_needStarUI[index].imageScale = new Vector2(scale.x, scale.y);
+            m_needStar[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_needStar[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1213,14 +1544,17 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージパーセント
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        for (int index = 0; index < m_starRateUI.Count; index++)
+        for (int index = 0; index < m_starRate.Count; index++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            GameObjectUI migawari = m_starRate[index];
-            AssetSet(ref migawari, m_screenSize, m_starRateUI[index], true);
+            OriginUIGroup migawari = m_starRate[index];
+            AssetSet(ref migawari, m_screenSize, true);
             m_starRate[index] = migawari;
+        }
+        {
+            AssetSet(ref m_starRateParsent, m_screenSize, true);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージフレーム
@@ -1273,10 +1607,16 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            GameObjectUI migawari = m_haveStar[index];
-            AssetSet(ref migawari, m_screenSize, m_haveStarUI[index], true);
+            OriginUIGroup migawari = m_haveStar[index];
+            AssetSet(ref migawari, m_screenSize, true);
             m_haveStar[index] = migawari;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AssetSet(ref m_haveStarKO, m_screenSize, true);
+        AssetSet(ref m_haveStarStar, m_screenSize, true);
+        AssetSet(ref m_haveStarCross, m_screenSize, true);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 目標数星量更新
@@ -1300,10 +1640,18 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            GameObjectUI migawari = m_needStar[index];
-            AssetSet(ref migawari, m_screenSize, m_needStarUI[index], true);
+            OriginUIGroup migawari = m_needStar[index];
+            AssetSet(ref migawari, m_screenSize, true);
             m_needStar[index] = migawari;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AssetSet(ref m_needStarKO, m_screenSize, true);
+        AssetSet(ref m_needStarStar, m_screenSize, true);
+        AssetSet(ref m_needStarCross, m_screenSize, true);
+
+
     }
 
 }
