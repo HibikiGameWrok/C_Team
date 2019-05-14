@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3087144534123115754}
   - component: {fileID: 4040391783299129390}
   - component: {fileID: 2900841383751064387}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WaterFall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
