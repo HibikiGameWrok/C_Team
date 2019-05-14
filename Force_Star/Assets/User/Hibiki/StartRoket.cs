@@ -23,6 +23,11 @@ public class StartRoket : MonoBehaviour
     [SerializeField]
     private GameObject[] StartRoketPoint = null;
 
+    // フェードインするオブジェクト
+    private GameObject Panel = null;
+    // フェードインアウトするscript
+    private StartFade StartFade = null;
+
     // 乱数を保管する変数
     private int randPoint;
 
@@ -61,6 +66,10 @@ public class StartRoket : MonoBehaviour
         ParentMainCamera = GameObject.Find("ParentMainCamera");
         // 子の取得
         MainCamera = ParentMainCamera.transform.Find("Main Camera");
+
+        // オブジェクトの取得
+        Panel = GameObject.Find("Panel");
+        StartFade = Panel.GetComponent<StartFade>();
     }
 
     // Update is called once per frame
@@ -89,14 +98,9 @@ public class StartRoket : MonoBehaviour
         {
             if (moveStopFlag != true)
             {
-                //// ファイアプレハブをGameObject型で取得
-                GameObject Fire = (GameObject)Resources.Load("ExplosionStar");
-                // ファイアプレハブを元に、インスタンスを生成、
-                Instantiate(Fire, this.transform.position, Quaternion.identity);
-
-                // ファイアプレハブをGameObject型で取得
+                // 壊れたロケットプレハブをGameObject型で取得
                 GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
-                // ファイアプレハブを元に、インスタンスを生成、
+                // 壊れたロケットプレハブを元に、インスタンスを生成、
                 Instantiate(Rocket, targetPos, Quaternion.identity);
 
                 // サブカメラが消える前にメインカメラを起動する
@@ -147,8 +151,8 @@ public class StartRoket : MonoBehaviour
             // ファイアプレハブを元に、インスタンスを生成、
             Instantiate(RoketParts2, this.transform.position, Quaternion.identity);
             count = 3;
-
-            yield return null;
         }
+        yield return new WaitForSeconds(1.0f);
+        StartFade.SetFadeOutFlag(true);
     }
 }
