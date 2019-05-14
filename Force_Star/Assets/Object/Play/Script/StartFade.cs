@@ -27,12 +27,12 @@ public class StartFade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isFadeIn)
+        if (isFadeIn || isFadeOut != true)
         {
             StartFadeIn();
         }
 
-        if (isFadeOut)
+        if (isFadeOut || isFadeIn != true)
         {
             StartFadeOut();
         }
@@ -69,13 +69,29 @@ public class StartFade : MonoBehaviour
         fadeImage.color = new Color(MAX_RBG, MAX_RBG, MAX_RBG, alfa);
     }
 
+    public bool GetFadeInFlag()
+    {
+        return isFadeIn;
+    }
+
+    public bool GetFadeOutFlag()
+    {
+        return isFadeOut;
+    }
+
     public void SetFadeInFlag(bool isfadein)
     {
-        isFadeIn = isfadein;
+        if (isFadeOut != true)
+        {
+            isFadeIn = isfadein;
+        }
     }
 
     public void SetFadeOutFlag(bool isfadeout)
     {
-        isFadeOut = isfadeout;
+        if (isFadeIn != true)
+        {
+            isFadeOut = isfadeout;
+        }
     }
 }
