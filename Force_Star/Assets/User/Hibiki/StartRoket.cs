@@ -45,6 +45,11 @@ public class StartRoket : MonoBehaviour
     // 子のオブジェクトを取得する変数
     private Transform MainCamera;
 
+    // メインカメラを取得するオブジェクト変数
+    private GameObject ParentPlayDirector;
+    // 子のオブジェクトを取得する変数
+    private Transform PlayDirector;
+
     int count = 0;
 
     // Start is called before the first frame update
@@ -66,6 +71,11 @@ public class StartRoket : MonoBehaviour
         ParentMainCamera = GameObject.Find("ParentMainCamera");
         // 子の取得
         MainCamera = ParentMainCamera.transform.Find("Main Camera");
+
+        // オブジェクトの取得
+        ParentPlayDirector = GameObject.Find("ParentPlayDirector");
+        // 子の取得
+        PlayDirector = ParentPlayDirector.transform.Find("PlayDirector");
 
         // オブジェクトの取得
         Panel = GameObject.Find("Panel");
@@ -107,10 +117,18 @@ public class StartRoket : MonoBehaviour
                 if (MainCamera != null)
                 {
                     MainCamera.gameObject.SetActive(true);
-                }
+                    
+                    //// プレイヤープレハブをGameObject型で取得
+                    GameObject Player = (GameObject)Resources.Load("PlayerDirector");
+                    // プレイヤープレハブを元に生成、
+                    Instantiate(Player, this.transform.position, Quaternion.identity);
 
+                    PlayDirector.gameObject.SetActive(true);
+                }
                 // 動きを止める
                 moveStopFlag = true;
+
+                StartFade.SetFadeInFlag(true);
             }
 
             // 自身のオブジェクトを消す
@@ -146,13 +164,13 @@ public class StartRoket : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         if (count == 2)
         {
-            //// ファイアプレハブをGameObject型で取得
+            //// ロケットプレハブをGameObject型で取得
             GameObject RoketParts2 = (GameObject)Resources.Load("RocketParts_2");
-            // ファイアプレハブを元に、インスタンスを生成、
+            // ロケットプレハブを元に生成
             Instantiate(RoketParts2, this.transform.position, Quaternion.identity);
             count = 3;
         }
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         StartFade.SetFadeOutFlag(true);
     }
 }
