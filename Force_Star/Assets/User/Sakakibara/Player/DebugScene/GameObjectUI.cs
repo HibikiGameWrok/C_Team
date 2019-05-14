@@ -121,6 +121,14 @@ public class GameObjectUI : MonoBehaviour
         MakeImage();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の絵を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetTexture(Texture2D imageData)
+    {
+        m_texImageData.image = imageData;
+        MakeImage();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の位置を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetPosition(Vector2 pos)

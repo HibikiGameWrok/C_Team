@@ -105,6 +105,14 @@ public class GameObjectSprite : MonoBehaviour
         MakeImage();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の絵を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetTexture(Texture2D imageData)
+    {
+        m_texImageData.image = imageData;
+        MakeImage();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の描画を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetRender(RenderImageData renderImageData)

@@ -160,6 +160,11 @@ namespace WarehouseData
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.NUMBERS_DATA16_N1] = Resources.Load<Texture2D>(MyFile + "Number16_N1");
                     m_texture2DApp[(int)AppImageNum.NUMBERS_DATA16_N2] = Resources.Load<Texture2D>(MyFile + "Number16_N2");
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 記号のデータ
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_texture2DApp[(int)AppImageNum.SYMBOL_N1] = Resources.Load<Texture2D>(MyFile + "Symbol_N1");
+                    m_texture2DApp[(int)AppImageNum.SYMBOL_N2] = Resources.Load<Texture2D>(MyFile + "Symbol_N2");
                 }
             }
 

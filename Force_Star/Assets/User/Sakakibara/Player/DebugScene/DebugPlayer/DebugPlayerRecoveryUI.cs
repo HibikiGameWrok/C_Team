@@ -63,6 +63,11 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     private static string HealLegName = "HealLeg";
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 全体パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_partsAll;
+    private static string PartsAllName = "PartsAll";
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 腕パーツ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private OriginUIGroup m_partsArm;
@@ -82,7 +87,26 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private OriginUIGroup m_partsLeg;
     private static string PartsLegName = "PartsLeg";
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 腕輝パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_partsArmShine;
+    private static string PartsArmShineName = "PartsArmShine";
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 体輝パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_partsBodyShine;
+    private static string PartsBodyShineName = "PartsBodyShine";
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 頭輝パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_partsHeadShine;
+    private static string PartsHeadShineName = "PartsHeadShine";
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 脚輝パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_partsLegShine;
+    private static string PartsLegShineName = "PartsLegShine";
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 背景の影
@@ -116,20 +140,32 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     private float m_progressAlphaAnoter;
     private float m_progressAlphaRetrun;
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 星ゲージ
+    // ダメージ表示
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    private float m_starParsent;
+    private float m_armDurableParsent;
+    [SerializeField]
+    private float m_bodyDurableParsent;
+    [SerializeField]
+    private float m_headDurableParsent;
+    [SerializeField]
+    private float m_legDurableParsent;
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 所持数星量
+    // 強化表示
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    private int m_haveStarNumber;
+    private bool m_armStrong;
+    [SerializeField]
+    private bool m_bodyStrong;
+    [SerializeField]
+    private bool m_headStrong;
+    [SerializeField]
+    private bool m_legStrong;
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 目標数星量
+    // 全体進行
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    private int m_needStarNumber;
+    private float m_progressParsentAnimate;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 使用する深度
@@ -147,7 +183,15 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー全面
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        TOTALLY_PLAYER,
+        TOTALLY_PLAYER_ALL,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー各パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TOTALLY_PLAYER_PARTS,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー各輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TOTALLY_PLAYER_PARTS_SHINE,
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // コマンドの背景
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -176,30 +220,54 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 進行ゲージ
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetProgressParsentNumber(float number)
+    public void SetProgressParsent(float number)
     {
         m_progressParsent = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 星ゲージ
+    // ダメージ表示
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetStarGaugeNumber(float number)
+    public void SetArmDurableParsent(float number)
     {
-        m_starParsent = number;
+        m_armDurableParsent = number;
+    }
+    public void SetBodyDurableParsent(float number)
+    {
+        m_bodyDurableParsent = number;
+    }
+    public void SetHeadDurableParsent(float number)
+    {
+        m_headDurableParsent = number;
+    }
+    public void SetLegDurableParsent(float number)
+    {
+        m_legDurableParsent = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 所持数星量
+    // 強化表示
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetHaveStarNumber(int number)
+    public void SetArmStrong(bool number)
     {
-        m_haveStarNumber = number;
+        m_armStrong = number;
+    }
+    public void SetBodyStrong(bool number)
+    {
+        m_bodyStrong = number;
+    }
+    public void SetHeadStrong(bool number)
+    {
+        m_headStrong = number;
+    }
+    public void SetLegStrong(bool number)
+    {
+        m_legStrong = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 目標数星量
+    // 全体進行
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetNeedStarNumber(int number)
+    public void SetProgressParsentAnimate(float number)
     {
-        m_needStarNumber = number;
+        m_progressParsentAnimate = number;
     }
 
 
@@ -265,14 +333,39 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 実体獲得
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsAll = new OriginUIGroup();
         m_partsArm = new OriginUIGroup();
         m_partsBody = new OriginUIGroup();
         m_partsHead = new OriginUIGroup();
         m_partsLeg = new OriginUIGroup();
+        m_partsArmShine = new OriginUIGroup();
+        m_partsBodyShine = new OriginUIGroup();
+        m_partsHeadShine = new OriginUIGroup();
+        m_partsLegShine = new OriginUIGroup();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // TexImageData
         //*|***|***|***|***|***|***|***|***|***|***|***|
         TexImageData tex = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 全体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージのイラスト
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_ALLBODY);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            tex.size = new Vector2(1, 1);
+            m_partsAll.gameObjectUI = CreateMenber(tex, PartsAllName);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsAll.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_ALL));
+
+            m_partsAll.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 腕パーツ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -289,7 +382,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsArm.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER));
+            m_partsArm.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS));
 
             m_partsArm.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -309,7 +402,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsBody.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER));
+            m_partsBody.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS));
 
             m_partsBody.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
@@ -329,7 +422,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsHead.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER));
+            m_partsHead.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS));
 
 
             m_partsHead.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
@@ -350,11 +443,92 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsLeg.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER));
+            m_partsLeg.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS));
 
             m_partsLeg.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
-    }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージのイラスト
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_STRONGARM);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            tex.size = new Vector2(1, 1);
+            m_partsArmShine.gameObjectUI = CreateMenber(tex, PartsArmShineName);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsArmShine.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS_SHINE));
+
+            m_partsArmShine.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージのイラスト
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_STRONGBODY);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            tex.size = new Vector2(1, 1);
+            m_partsBodyShine.gameObjectUI = CreateMenber(tex, PartsBodyShineName);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsBodyShine.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS_SHINE));
+
+            m_partsBodyShine.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージのイラスト
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_STRONGHEAD);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            tex.size = new Vector2(1, 1);
+            m_partsHeadShine.gameObjectUI = CreateMenber(tex, PartsHeadShineName);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsHeadShine.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS_SHINE));
+
+
+            m_partsHeadShine.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージのイラスト
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_STRONGLEG);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            tex.size = new Vector2(1, 1);
+            m_partsLegShine.gameObjectUI = CreateMenber(tex, PartsLegShineName);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsLegShine.gameObjectUI.SetDepth(GetDepth(DepthAttach.TOTALLY_PLAYER_PARTS_SHINE));
+
+            m_partsLegShine.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+}
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 腕回復起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -379,7 +553,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK);
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
             m_healArm.background.gameObjectUI = CreateMenber(tex, HealArmName + "BACKGROUND");
@@ -435,7 +609,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK);
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
             m_healBody.background.gameObjectUI = CreateMenber(tex, HealBodyName + "BACKGROUND");
@@ -491,7 +665,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK);
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
             m_healHead.background.gameObjectUI = CreateMenber(tex, HealHeadName + "BACKGROUND");
@@ -547,7 +721,7 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             tex = new TexImageData();
             tex.Reset();
-            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK);
+            tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
             m_healLeg.background.gameObjectUI = CreateMenber(tex, HealLegName + "BACKGROUND");
@@ -672,6 +846,11 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 腕パーツ
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsAll.imageUIData = new ImageUIData();
+        m_partsAll.imageUIData.Init();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         m_partsArm.imageUIData = new ImageUIData();
         m_partsArm.imageUIData.Init();
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -689,6 +868,26 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_partsLeg.imageUIData = new ImageUIData();
         m_partsLeg.imageUIData.Init();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsArmShine.imageUIData = new ImageUIData();
+        m_partsArmShine.imageUIData.Init();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsBodyShine.imageUIData = new ImageUIData();
+        m_partsBodyShine.imageUIData.Init();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsHeadShine.imageUIData = new ImageUIData();
+        m_partsHeadShine.imageUIData.Init();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsLegShine.imageUIData = new ImageUIData();
+        m_partsLegShine.imageUIData.Init();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 腕回復起動
@@ -832,23 +1031,44 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         m_progressAlphaAnoter = parsentImage;
         int ROUND = (int)parsentImage;
         m_progressAlphaRetrun = (float)ROUND;
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// データ集計
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //m_airParsent = ChangeData.Among(m_airParsent, 0.0f, 1.0f);
-        //float parsentAir = m_airParsent;
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// データ集計
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //m_airParsent = ChangeData.Among(m_airParsent, 0.0f, 1.0f);
-        //float parsentAir = m_airParsent;
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// データ集計
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //m_airParsent = ChangeData.Among(m_airParsent, 0.0f, 1.0f);
-        //float parsentAir = m_airParsent;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ集計
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armDurableParsent = ChangeData.Among(m_armDurableParsent, 0.0f, 1.0f);
+        m_bodyDurableParsent = ChangeData.Among(m_bodyDurableParsent, 0.0f, 1.0f);
+        m_headDurableParsent = ChangeData.Among(m_headDurableParsent, 0.0f, 1.0f);
+        m_legDurableParsent = ChangeData.Among(m_legDurableParsent, 0.0f, 1.0f);
+        float parsentArm = MyCalculator.InversionOfProportion(m_armDurableParsent);
+        float parsentBody = MyCalculator.InversionOfProportion(m_bodyDurableParsent);
+        float parsentHead = MyCalculator.InversionOfProportion(m_headDurableParsent);
+        float parsentLeg = MyCalculator.InversionOfProportion(m_legDurableParsent);
 
-
+        float strongArm = 0;
+        if (m_armStrong)
+        {
+            strongArm = 1;
+        }
+        float strongBody = 0;
+        if (m_bodyStrong)
+        {
+            strongBody = 1;
+        }
+        float strongHead = 0;
+        if (m_headStrong)
+        {
+            strongHead = 1;
+        }
+        float strongLeg = 0;
+        if (m_legStrong)
+        {
+            strongLeg = 1;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ集計
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_progressParsentAnimate = ChangeData.Among(m_progressParsentAnimate, 0.0f, 1.0f);
+        float shineAnimate = (m_progressParsentAnimate + 0.5f) / 2.0f;
+        float redAnimate = (m_progressParsentAnimate * 2.0f) - 1.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -907,6 +1127,22 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // そのまま
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsAll.imageUIData.imagePos.x = pointX;
+            m_partsAll.imageUIData.imagePos.y = pointY;
+            m_partsAll.imageUIData.imageScale.x = sizeX;
+            m_partsAll.imageUIData.imageScale.y = sizeY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsAll.gameObjectUI.SetAlpha(m_progressAlphaPlayer);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // そのまま
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_partsArm.imageUIData.imagePos.x = pointX;
             m_partsArm.imageUIData.imagePos.y = pointY;
             m_partsArm.imageUIData.imageScale.x = sizeX;
@@ -914,7 +1150,8 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsArm.gameObjectUI.SetAlpha(m_progressAlphaPlayer);
+            float alphaParsent = m_progressAlphaPlayer * redAnimate * parsentArm;
+            m_partsArm.gameObjectUI.SetAlpha(alphaParsent);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 体パーツ
@@ -930,7 +1167,8 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsBody.gameObjectUI.SetAlpha(m_progressAlphaPlayer);
+            float alphaParsent = m_progressAlphaPlayer * redAnimate * parsentBody;
+            m_partsBody.gameObjectUI.SetAlpha(alphaParsent);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 頭パーツ
@@ -946,7 +1184,8 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsHead.gameObjectUI.SetAlpha(m_progressAlphaPlayer);
+            float alphaParsent = m_progressAlphaPlayer * redAnimate * parsentHead;
+            m_partsHead.gameObjectUI.SetAlpha(alphaParsent);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 脚パーツ
@@ -962,7 +1201,76 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_partsLeg.gameObjectUI.SetAlpha(m_progressAlphaPlayer);
+            float alphaParsent = m_progressAlphaPlayer * redAnimate * parsentLeg;
+            m_partsLeg.gameObjectUI.SetAlpha(alphaParsent);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // そのまま
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsArmShine.imageUIData.imagePos.x = pointX;
+            m_partsArmShine.imageUIData.imagePos.y = pointY;
+            m_partsArmShine.imageUIData.imageScale.x = sizeX;
+            m_partsArmShine.imageUIData.imageScale.y = sizeY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = m_progressAlphaPlayer * shineAnimate * strongArm;
+            m_partsArmShine.gameObjectUI.SetAlpha(alphaParsent);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // そのまま
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsBodyShine.imageUIData.imagePos.x = pointX;
+            m_partsBodyShine.imageUIData.imagePos.y = pointY;
+            m_partsBodyShine.imageUIData.imageScale.x = sizeX;
+            m_partsBodyShine.imageUIData.imageScale.y = sizeY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = m_progressAlphaPlayer * shineAnimate * strongBody;
+            m_partsBodyShine.gameObjectUI.SetAlpha(alphaParsent);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // そのまま
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsHeadShine.imageUIData.imagePos.x = pointX;
+            m_partsHeadShine.imageUIData.imagePos.y = pointY;
+            m_partsHeadShine.imageUIData.imageScale.x = sizeX;
+            m_partsHeadShine.imageUIData.imageScale.y = sizeY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = m_progressAlphaPlayer * shineAnimate * strongHead;
+            m_partsHeadShine.gameObjectUI.SetAlpha(alphaParsent);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // そのまま
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsLegShine.imageUIData.imagePos.x = pointX;
+            m_partsLegShine.imageUIData.imagePos.y = pointY;
+            m_partsLegShine.imageUIData.imageScale.x = sizeX;
+            m_partsLegShine.imageUIData.imageScale.y = sizeY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = m_progressAlphaPlayer * shineAnimate * strongLeg;
+            m_partsLegShine.gameObjectUI.SetAlpha(alphaParsent);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -971,9 +1279,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     void UpdateHealArm()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 画像データ
+        // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        float parsentArm = MyCalculator.InversionOfProportion(m_armDurableParsent);
+        float redAnimate = (m_progressParsentAnimate * 2.0f) - 1.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -993,6 +1302,25 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コマンドのイラスト
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (parsentArm > 0.9f && redAnimate > 0)
+        {
+            m_healArm.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_RED));
+        }
+        else if (parsentArm == 0)
+        {
+            m_healArm.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GOLD));
+        }
+        else
+        {
+            m_healArm.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN));
+        }
+
+
+
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // コマンドの背景
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1050,9 +1378,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     void UpdateHealBody()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 画像データ
+        // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        float parsentBody = MyCalculator.InversionOfProportion(m_bodyDurableParsent);
+        float redAnimate = (m_progressParsentAnimate * 2.0f) - 1.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1072,6 +1401,21 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コマンドのイラスト
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (parsentBody > 0.9f && redAnimate > 0)
+        {
+            m_healBody.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_RED));
+        }
+        else if (parsentBody == 0)
+        {
+            m_healBody.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GOLD));
+        }
+        else
+        {
+            m_healBody.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN));
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // コマンドの背景
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1129,9 +1473,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     void UpdateHealHead()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 画像データ
+        // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        float parsentHead = MyCalculator.InversionOfProportion(m_headDurableParsent);
+        float redAnimate = (m_progressParsentAnimate * 2.0f) - 1.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1151,6 +1496,21 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コマンドのイラスト
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (parsentHead > 0.9f && redAnimate > 0)
+        {
+            m_healHead.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_RED));
+        }
+        else if (parsentHead == 0)
+        {
+            m_healHead.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GOLD));
+        }
+        else
+        {
+            m_healHead.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN));
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // コマンドの背景
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1208,9 +1568,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     void UpdateHealLeg()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 画像データ
+        // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        float parsentLeg = MyCalculator.InversionOfProportion(m_legDurableParsent);
+        float redAnimate = (m_progressParsentAnimate * 2.0f) - 1.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1230,6 +1591,21 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 posScleen = new Vector2(0.0f, 0.0f);
         Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コマンドのイラスト
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (parsentLeg > 0.9f && redAnimate > 0)
+        {
+            m_healLeg.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_RED));
+        }
+        else if (parsentLeg == 0)
+        {
+            m_healLeg.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GOLD));
+        }
+        else
+        {
+            m_healLeg.background.gameObjectUI.SetTexture(m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.RECOVERYUI_HEALBACK_GREEN));
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // コマンドの背景
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1413,6 +1789,12 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     void RenderPartsUI()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 全体パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            AssetSet(ref m_partsAll, m_screenSize, true);
+        }  
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 腕パーツ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
@@ -1435,6 +1817,30 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
             AssetSet(ref m_partsLeg, m_screenSize, true);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            AssetSet(ref m_partsArmShine, m_screenSize, true);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            AssetSet(ref m_partsBodyShine, m_screenSize, true);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            AssetSet(ref m_partsHeadShine, m_screenSize, true);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚輝パーツ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            AssetSet(ref m_partsLegShine, m_screenSize, true);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

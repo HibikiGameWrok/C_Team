@@ -14,7 +14,6 @@ public class PlaySceneDirector : MonoBehaviour
     PlayStarManeger m_starManeger;
     GameObject m_starManegerObject;
 
-
     void Awake()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
