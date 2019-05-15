@@ -1492,6 +1492,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4967934505782629957, guid: dc20e8769d8adeb448d3fc90b64c667e,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc20e8769d8adeb448d3fc90b64c667e, type: 3}
 --- !u!4 &241851237 stripped
@@ -12225,11 +12230,23 @@ MonoBehaviour:
     m_headDurableMax: 0
     m_legDurable: 0
     m_legDurableMax: 0
+    m_armStrong: 0
+    m_armStrongMax: 0
+    m_bodyStrong: 0
+    m_bodyStrongMax: 0
+    m_headStrong: 0
+    m_headStrongMax: 0
+    m_legStrong: 0
+    m_legStrongMax: 0
   m_invincibility: 0
   m_invincibilityTime: 0
   m_nowDamage: 0
   m_damageTime: 0
   m_damageInvincibilityTime: 0
+  m_armStrong: 0
+  m_bodyStrong: 0
+  m_headStrong: 0
+  m_legStrong: 0
   m_animeNum: 0
 --- !u!4 &433070621
 Transform:
@@ -65620,16 +65637,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3596049638920208727, guid: b1424117b4b87a847a2beef48b13d672,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8423713218071042168, guid: b1424117b4b87a847a2beef48b13d672,
         type: 3}
       propertyPath: starDirec
       value: 
       objectReference: {fileID: 316591677}
+    - target: {fileID: 3596049638920208727, guid: b1424117b4b87a847a2beef48b13d672,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1424117b4b87a847a2beef48b13d672, type: 3}
 --- !u!1001 &1910690983
