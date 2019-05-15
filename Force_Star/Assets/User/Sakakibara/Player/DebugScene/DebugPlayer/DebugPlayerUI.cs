@@ -46,7 +46,7 @@ public class DebugPlayerUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー倉庫
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private WarehouseData.PlayerData.WarehousePlayer m_warehousePlayer; 
+    private WarehouseData.PlayerData.WarehousePlayer m_warehousePlayer;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -114,6 +114,18 @@ public class DebugPlayerUI : DebugCanvas
     private OriginUIGroup m_needStarCross;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップタイム
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private class PowerUpIcon
+    {
+        public OriginUIGroup m_icon;
+        public OriginUIGroup m_time;
+    }
+    private PowerUpIcon m_armPowerUp;
+    private PowerUpIcon m_bodyPowerUp;
+    private PowerUpIcon m_headPowerUp;
+    private PowerUpIcon m_legPowerUp;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
@@ -133,7 +145,17 @@ public class DebugPlayerUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     private int m_needStarNumber;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップタイム
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private float m_armStrongTime;
+    [SerializeField]
+    private float m_bodyStrongTime;
+    [SerializeField]
+    private float m_headStrongTime;
+    [SerializeField]
+    private float m_legStrongTime;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 使用する深度
@@ -162,6 +184,11 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
         NEEDSTAR_NUMBER,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        PLAYER_STATE_TIME,
+        PLAYER_STATE,
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 数量
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -210,7 +237,25 @@ public class DebugPlayerUI : DebugCanvas
     {
         m_needStarNumber = number;
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetArmStrongTime(float number)
+    {
+        m_armStrongTime = number;
+    }
+    public void SetBodyStrongTime(float number)
+    {
+        m_bodyStrongTime = number;
+    }
+    public void SetHeadStrongTime(float number)
+    {
+        m_headStrongTime = number;
+    }
+    public void SetLegStrongTime(float number)
+    {
+        m_legStrongTime = number;
+    }
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -247,7 +292,10 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeNeedStarData();
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ起動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakePowerUp();
     }
 
 
@@ -674,7 +722,152 @@ public class DebugPlayerUI : DebugCanvas
             m_needStarCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakePowerUp()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // TexImageData
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TexImageData texTime = null;
+        TexImageData texIcon = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップたち
+        // 実体獲得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armPowerUp = new PowerUpIcon();
+        m_armPowerUp.m_icon = new OriginUIGroup();
+        m_armPowerUp.m_time = new OriginUIGroup();
+        m_bodyPowerUp = new PowerUpIcon();
+        m_bodyPowerUp.m_icon = new OriginUIGroup();
+        m_bodyPowerUp.m_time = new OriginUIGroup();
+        m_headPowerUp = new PowerUpIcon();
+        m_headPowerUp.m_icon = new OriginUIGroup();
+        m_headPowerUp.m_time = new OriginUIGroup();
+        m_legPowerUp = new PowerUpIcon();
+        m_legPowerUp.m_icon = new OriginUIGroup();
+        m_legPowerUp.m_time = new OriginUIGroup();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップたち
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            texTime = new TexImageData();
+            texTime.Reset();
+            texTime.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_TIME);
+            texTime.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texTime.size = new Vector2(1, 1);
 
+            texIcon = new TexImageData();
+            texIcon.Reset();
+            texIcon.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_ARM);
+            texIcon.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texIcon.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armPowerUp.m_icon.gameObjectUI = CreateMenber(texIcon, "ArmIcon");
+            m_armPowerUp.m_time.gameObjectUI = CreateMenber(texTime, "ArmTime");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armPowerUp.m_icon.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE));
+            m_armPowerUp.m_icon.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_armPowerUp.m_time.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE_TIME));
+            m_armPowerUp.m_time.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        m_armStrongTime = 0.0f;
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            texTime = new TexImageData();
+            texTime.Reset();
+            texTime.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_TIME);
+            texTime.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texTime.size = new Vector2(1, 1);
+
+            texIcon = new TexImageData();
+            texIcon.Reset();
+            texIcon.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_BODY);
+            texIcon.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texIcon.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyPowerUp.m_icon.gameObjectUI = CreateMenber(texIcon, "ArmIcon");
+            m_bodyPowerUp.m_time.gameObjectUI = CreateMenber(texTime, "ArmTime");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyPowerUp.m_icon.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE));
+            m_bodyPowerUp.m_icon.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_bodyPowerUp.m_time.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE_TIME));
+            m_bodyPowerUp.m_time.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        m_bodyStrongTime = 0.0f;
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            texTime = new TexImageData();
+            texTime.Reset();
+            texTime.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_TIME);
+            texTime.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texTime.size = new Vector2(1, 1);
+
+            texIcon = new TexImageData();
+            texIcon.Reset();
+            texIcon.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_HEAD);
+            texIcon.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texIcon.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headPowerUp.m_icon.gameObjectUI = CreateMenber(texIcon, "ArmIcon");
+            m_headPowerUp.m_time.gameObjectUI = CreateMenber(texTime, "ArmTime");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headPowerUp.m_icon.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE));
+            m_headPowerUp.m_icon.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_headPowerUp.m_time.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE_TIME));
+            m_headPowerUp.m_time.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        m_headStrongTime = 0.0f;
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            texTime = new TexImageData();
+            texTime.Reset();
+            texTime.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_TIME);
+            texTime.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texTime.size = new Vector2(1, 1);
+
+            texIcon = new TexImageData();
+            texIcon.Reset();
+            texIcon.image = m_warehouseObject.GetTexture2DApp(AppImageNum.POWERUP_LEG);
+            texIcon.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            texIcon.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legPowerUp.m_icon.gameObjectUI = CreateMenber(texIcon, "ArmIcon");
+            m_legPowerUp.m_time.gameObjectUI = CreateMenber(texTime, "ArmTime");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legPowerUp.m_icon.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE));
+            m_legPowerUp.m_icon.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_legPowerUp.m_time.gameObjectUI.SetDepth(GetDepth(DepthAttach.PLAYER_STATE_TIME));
+            m_legPowerUp.m_time.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        m_legStrongTime = 0.0f;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 起動したとき
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -696,6 +889,10 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeNeedStarDataUI();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ起動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakePowerUpUI();
 
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -806,7 +1003,43 @@ public class DebugPlayerUI : DebugCanvas
         m_needStarCross.imageUIData = new ImageUIData();
         m_needStarCross.imageUIData.Init();
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakePowerUpUI()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            m_armPowerUp.m_icon.imageUIData = new ImageUIData();
+            m_armPowerUp.m_icon.imageUIData.Init();
 
+            m_armPowerUp.m_time.imageUIData = new ImageUIData();
+            m_armPowerUp.m_time.imageUIData.Init();
+        }
+        {
+            m_bodyPowerUp.m_icon.imageUIData = new ImageUIData();
+            m_bodyPowerUp.m_icon.imageUIData.Init();
+
+            m_bodyPowerUp.m_time.imageUIData = new ImageUIData();
+            m_bodyPowerUp.m_time.imageUIData.Init();
+        }
+        {
+            m_headPowerUp.m_icon.imageUIData = new ImageUIData();
+            m_headPowerUp.m_icon.imageUIData.Init();
+
+            m_headPowerUp.m_time.imageUIData = new ImageUIData();
+            m_headPowerUp.m_time.imageUIData.Init();
+        }
+        {
+            m_legPowerUp.m_icon.imageUIData = new ImageUIData();
+            m_legPowerUp.m_icon.imageUIData.Init();
+
+            m_legPowerUp.m_time.imageUIData = new ImageUIData();
+            m_legPowerUp.m_time.imageUIData.Init();
+        }
+    }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 更新したとき
@@ -829,6 +1062,10 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateNeedStarData();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdatePowerUp();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ更新
@@ -1477,6 +1714,202 @@ public class DebugPlayerUI : DebugCanvas
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdatePowerUp()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ調整
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrongTime = ChangeData.Among(m_armStrongTime, 0.0f, 1.0f);
+        m_bodyStrongTime = ChangeData.Among(m_bodyStrongTime, 0.0f, 1.0f);
+        m_headStrongTime = ChangeData.Among(m_headStrongTime, 0.0f, 1.0f);
+        m_legStrongTime = ChangeData.Among(m_legStrongTime, 0.0f, 1.0f);
+        float armStrongFlag = 0;
+        float bodyStrongFlag = 0;
+        float headStrongFlag = 0;
+        float legStrongFlag = 0;
+        if (m_armStrongTime > 0)
+        {
+            armStrongFlag = 1;
+        }
+        if (m_bodyStrongTime > 0)
+        {
+            bodyStrongFlag = 1;
+        }
+        if (m_headStrongTime > 0)
+        {
+            headStrongFlag = 1;
+        }
+        if (m_legStrongTime > 0)
+        {
+            legStrongFlag = 1;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posSave = new Vector2(0.0f, 0.0f);
+        Vector2 scaleSave = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 pos = new Vector2(0.0f, 0.0f);
+        Vector2 scale = new Vector2(0.0f, 0.0f);
+        Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
+        Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整済みデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posScleen = new Vector2(0.0f, 0.0f);
+        Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+
+        int areaDigit = 4;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = new Vector2(0.1f, 0.2f + MyCalculator.Division(0.05f, 2));
+            scale = new Vector2(0.2f, 0.05f);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 調整済みデータ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            posScleen = MouseToScreenPos(pos);
+            posReverseY = MyCalculator.EachTimes(posScleen, new Vector2(1.0f, -1.0f));
+            pos = posReverseY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            persent_AssistP = pos;
+            persent_AssistS = scale;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 調整
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, areaDigit);
+            scale.x = persent_AssistS.x;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 以下も同じ場所に現れる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        posSave = pos;
+        scaleSave = scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(0, areaDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, areaDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armPowerUp.m_icon.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_armPowerUp.m_icon.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            m_armPowerUp.m_time.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_armPowerUp.m_time.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = armStrongFlag;
+            m_armPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
+            m_armPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 円形変化
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armPowerUp.m_time.gameObjectUI.SetCircleMode(90, m_armStrongTime);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(1, areaDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, areaDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyPowerUp.m_icon.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_bodyPowerUp.m_icon.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            m_bodyPowerUp.m_time.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_bodyPowerUp.m_time.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = bodyStrongFlag;
+            m_bodyPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
+            m_bodyPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 円形変化
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyPowerUp.m_time.gameObjectUI.SetCircleMode(90, m_bodyStrongTime);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(2, areaDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, areaDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headPowerUp.m_icon.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_headPowerUp.m_icon.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            m_headPowerUp.m_time.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_headPowerUp.m_time.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = headStrongFlag;
+            m_headPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
+            m_headPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 円形変化
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headPowerUp.m_time.gameObjectUI.SetCircleMode(90, m_headStrongTime);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(3, areaDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, areaDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legPowerUp.m_icon.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_legPowerUp.m_icon.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            m_legPowerUp.m_time.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_legPowerUp.m_time.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = legStrongFlag;
+            m_legPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
+            m_legPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 円形変化
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legPowerUp.m_time.gameObjectUI.SetCircleMode(90, m_legStrongTime);
+        }
+
+
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 更新したとき
     //*|***|***|***|***|***|***|***|***|***|***|***|
     protected override void UpdateImage()
@@ -1505,6 +1938,10 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         RenderNeedStarData();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        RenderPowerUp();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ更新
@@ -1653,5 +2090,25 @@ public class DebugPlayerUI : DebugCanvas
 
 
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void RenderPowerUp()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パワーアップ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AssetSet(ref m_armPowerUp.m_time, m_screenSize, true);
+        AssetSet(ref m_armPowerUp.m_icon, m_screenSize, true);
 
+        AssetSet(ref m_bodyPowerUp.m_time, m_screenSize, true);
+        AssetSet(ref m_bodyPowerUp.m_icon, m_screenSize, true);
+
+        AssetSet(ref m_headPowerUp.m_time, m_screenSize, true);
+        AssetSet(ref m_headPowerUp.m_icon, m_screenSize, true);
+
+        AssetSet(ref m_legPowerUp.m_time, m_screenSize, true);
+        AssetSet(ref m_legPowerUp.m_icon, m_screenSize, true);
+
+    }
 }

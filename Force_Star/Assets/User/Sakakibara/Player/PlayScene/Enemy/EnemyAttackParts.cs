@@ -23,6 +23,11 @@ abstract public class EnemyAttackParts : MonoBehaviour
     protected Rigidbody2D m_rigid2D;
     protected string m_hitTag;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 一度きりの攻撃？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    protected bool m_attackOneHit;
+    protected bool m_attackHit;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // パーツデータ起動中
     //*|***|***|***|***|***|***|***|***|***|***|***|
     protected bool m_awakeFlag;
@@ -60,6 +65,11 @@ abstract public class EnemyAttackParts : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_partsDamage = 0;
         m_ignoreInvincibility = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 一度きりの攻撃？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_attackOneHit = false;
+        m_attackHit = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // これが出来たときに続きは個別で
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -105,18 +115,36 @@ abstract public class EnemyAttackParts : MonoBehaviour
         m_partsDamage = damage;
         m_ignoreInvincibility = ignoreInvincibility;
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 攻撃一回限り
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetAttackOne(bool hitOne)
+    {
+        m_attackOneHit = hitOne;
+    }
+    public bool GetAttackOne()
+    {
+        return m_attackHit;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private void OnTriggerStay2D(Collider2D col)
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃一回限り
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_attackHit && m_attackOneHit)
+        {
+            return;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ報告腕
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if(col.tag == WarehousePlayer.GetTag_PlayerHitArmParts())
         {
             m_playerIndex.ExecutionDamageArm(m_partsDamage, m_ignoreInvincibility);
+            m_attackHit = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ報告体
@@ -124,6 +152,7 @@ abstract public class EnemyAttackParts : MonoBehaviour
         if (col.tag == WarehousePlayer.GetTag_PlayerHitBodyParts())
         {
             m_playerIndex.ExecutionDamageBody(m_partsDamage, m_ignoreInvincibility);
+            m_attackHit = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ報告頭
@@ -131,6 +160,7 @@ abstract public class EnemyAttackParts : MonoBehaviour
         if (col.tag == WarehousePlayer.GetTag_PlayerHitHeadParts())
         {
             m_playerIndex.ExecutionDamageHead(m_partsDamage, m_ignoreInvincibility);
+            m_attackHit = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ報告脚
@@ -138,6 +168,7 @@ abstract public class EnemyAttackParts : MonoBehaviour
         if (col.tag == WarehousePlayer.GetTag_PlayerHitLegParts())
         {
             m_playerIndex.ExecutionDamageLeg(m_partsDamage, m_ignoreInvincibility);
+            m_attackHit = true;
         }
     }
 

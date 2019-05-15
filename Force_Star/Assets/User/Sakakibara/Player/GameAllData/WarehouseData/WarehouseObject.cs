@@ -165,6 +165,14 @@ namespace WarehouseData
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.SYMBOL_N1] = Resources.Load<Texture2D>(MyFile + "Symbol_N1");
                     m_texture2DApp[(int)AppImageNum.SYMBOL_N2] = Resources.Load<Texture2D>(MyFile + "Symbol_N2");
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // パワーアップのデータ
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_texture2DApp[(int)AppImageNum.POWERUP_ARM] = Resources.Load<Texture2D>(MyFile + "PowerUpArm");
+                    m_texture2DApp[(int)AppImageNum.POWERUP_BODY] = Resources.Load<Texture2D>(MyFile + "PowerUpBody");
+                    m_texture2DApp[(int)AppImageNum.POWERUP_HEAD] = Resources.Load<Texture2D>(MyFile + "PowerUpHead");
+                    m_texture2DApp[(int)AppImageNum.POWERUP_LEG] = Resources.Load<Texture2D>(MyFile + "PowerUpLeg");
+                    m_texture2DApp[(int)AppImageNum.POWERUP_TIME] = Resources.Load<Texture2D>(MyFile + "PowerUpTime");
                 }
             }
 

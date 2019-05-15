@@ -198,6 +198,26 @@ public class GameObjectUI : MonoBehaviour
         return m_rectTransform.sizeDelta;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 円モードに変更
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetSimpleMode()
+    {
+        m_image.type = Image.Type.Simple;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 円モードに変更
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetCircleMode(int fillOrigin, float circleParsent)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 円モード情報
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_image.type = Image.Type.Filled;
+        m_image.fillMethod = Image.FillMethod.Radial360;
+        m_image.fillOrigin = fillOrigin;
+        m_image.fillAmount = circleParsent;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
     //*|***|***|***|***|***|***|***|***|***|***|***|
     protected void MakeImage()

@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤーナンバー言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
+using PlayerDataNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number;
+using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+
 public partial class PlayerDirector : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -35,8 +42,15 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_animePunch = false;
     private bool m_punchTrigger = false;
     private bool m_punchFlag = false;
-
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツの状態
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    enum PartsState
+    {
+        NORMAL,
+        DAMAGED,
+        STRONG,
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ボディデータ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -95,14 +109,209 @@ public partial class PlayerDirector : MonoBehaviour
         // 操作更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_controller.Update();
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// アニメ更新
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //AnimeStudyFrild();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーのパーツイメージを変える
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        PlayerImageUpdate();
         ////*|***|***|***|***|***|***|***|***|***|***|***|
         //// 操作更新
         ////*|***|***|***|***|***|***|***|***|***|***|***|
         //UpdateMove();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void PlayerImageUpdate()
+    {
+        float hp = 1;
+        bool strong = false;
+        PartsState state = PartsState.NORMAL;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕のテクスチャ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        hp = m_dataBace.GetArmDurableParsent();
+        strong = m_dataBace.GetArmStrong();
+        state = GetPartsState(strong, hp);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        switch (state)
+        {
+            case PartsState.NORMAL:
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 腕の先
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RIGHTHAND].spriteData.m_dataNum = (int)PlayerDataNum.ATTACKBOAL;
+                    m_listAnime[(int)PlayerData_Number_List.LEFTHAND].spriteData.m_dataNum = (int)PlayerDataNum.ATTACKBOAL;
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 腕の関節
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL;
+                    m_listAnime[(int)PlayerData_Number_List.LARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL;
+                    break;
+                }
+            case PartsState.DAMAGED:
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 腕の先
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RIGHTHAND].spriteData.m_dataNum = (int)PlayerDataNum.ATTACKBOAL_DAMAGE;
+                    m_listAnime[(int)PlayerData_Number_List.LEFTHAND].spriteData.m_dataNum = (int)PlayerDataNum.ATTACKBOAL_DAMAGE;
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 腕の関節
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_DAMAGE;
+                    m_listAnime[(int)PlayerData_Number_List.LARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_DAMAGE;
+                    break;
+                }
+            case PartsState.STRONG:
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 腕の先
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RIGHTHAND].spriteData.m_dataNum = (int)PlayerDataNum.ATTACKBOAL_STRONG;
+                    m_listAnime[(int)PlayerData_Number_List.LEFTHAND].spriteData.m_dataNum = (int)PlayerDataNum.ATTACKBOAL_STRONG;
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 腕の関節
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_STRONG;
+                    m_listAnime[(int)PlayerData_Number_List.LARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_STRONG;
+                    break;
+                }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体のテクスチャ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        hp = m_dataBace.GetBodyDurableParsent();
+        strong = m_dataBace.GetBodyStrong();
+        state = GetPartsState(strong, hp);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        switch (state)
+        {
+            case PartsState.NORMAL:
+                {
+                    m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BODYTOP;
+                    m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BODYBOTTOM;
+                    break;
+                }
+            case PartsState.DAMAGED:
+                {
+                    m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BODYTOP_DAMAGE;
+                    m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BODYBOTTOM_DAMAGE;
+                    break;
+                }
+            case PartsState.STRONG:
+                {
+                    m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BODYTOP_STRONG;
+                    m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BODYBOTTOM_STRONG;
+                    break;
+                }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭のテクスチャ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        hp = m_dataBace.GetHeadDurableParsent();
+        strong = m_dataBace.GetHeadStrong();
+        state = GetPartsState(strong, hp);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        switch (state)
+        {
+            case PartsState.NORMAL:
+                {
+                    m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.PLAYERBOAL;
+                    break;
+                }
+            case PartsState.DAMAGED:
+                {
+                    m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.PLAYERBOAL_DAMAGE;
+                    break;
+                }
+            case PartsState.STRONG:
+                {
+                    m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.PLAYERBOAL_STRONG;
+                    break;
+                }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚のテクスチャ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        hp = m_dataBace.GetLegDurableParsent();
+        strong = m_dataBace.GetLegStrong();
+        state = GetPartsState(strong, hp);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 分岐
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        switch (state)
+        {
+            case PartsState.NORMAL:
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 脚の先
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RIGHTLEG].spriteData.m_dataNum = (int)PlayerDataNum.RIGHTLEG;
+                    m_listAnime[(int)PlayerData_Number_List.LEFTLEG].spriteData.m_dataNum = (int)PlayerDataNum.LEFTLEG;
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 脚の関節
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL;
+                    m_listAnime[(int)PlayerData_Number_List.LLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL;
+                    break;
+                }
+            case PartsState.DAMAGED:
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 脚の先
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RIGHTLEG].spriteData.m_dataNum = (int)PlayerDataNum.RIGHTLEG_DAMAGE;
+                    m_listAnime[(int)PlayerData_Number_List.LEFTLEG].spriteData.m_dataNum = (int)PlayerDataNum.LEFTLEG_DAMAGE;
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 脚の関節
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_DAMAGE;
+                    m_listAnime[(int)PlayerData_Number_List.LLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_DAMAGE;
+                    break;
+                }
+            case PartsState.STRONG:
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 脚の先
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RIGHTLEG].spriteData.m_dataNum = (int)PlayerDataNum.RIGHTLEG_STRONG;
+                    m_listAnime[(int)PlayerData_Number_List.LEFTLEG].spriteData.m_dataNum = (int)PlayerDataNum.LEFTLEG_STRONG;
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 脚の関節
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_listAnime[(int)PlayerData_Number_List.RLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_STRONG;
+                    m_listAnime[(int)PlayerData_Number_List.LLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.JOINTBOAL_STRONG;
+                    break;
+                }
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツダメージ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private PartsState GetPartsState(bool strong, float hp)
+    {
+        float damageLine = 0.5f;
+        PartsState state;
+        if (strong)
+        {
+            state = PartsState.STRONG;
+        }
+        else if (hp < damageLine)
+        {
+            state = PartsState.DAMAGED;
+        }
+        else
+        {
+            state = PartsState.NORMAL;
+        }
+        return state;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -375,6 +584,13 @@ public partial class PlayerDirector : MonoBehaviour
     public Vector3 GetPlayerPositon()
     {
         return m_playerMove.GetPosition();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetAirParsent()
+    {
+        return m_dataBace.GetTimeParsent();
     }
 }
 //if(state.fullPathHash == Animator.StringToHash("Base Layer.後方ブレーキ"))
