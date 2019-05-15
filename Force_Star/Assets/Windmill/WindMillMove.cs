@@ -36,7 +36,7 @@ public class WindMillMove : MonoBehaviour
     void Update()
     {
         transform.Rotate(new Vector3(0.0f, 0.0f, -parent.GetComponent<FeatherSetScript>().GetNowSpeed()));
-        Debug.Log(-parent.GetComponent<FeatherSetScript>().GetNowSpeed());
+        //Debug.Log(-parent.GetComponent<FeatherSetScript>().GetNowSpeed());
     }
 
 

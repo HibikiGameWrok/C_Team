@@ -108,6 +108,12 @@ public class PlayerDirectorIndex
     {
         return m_playerDirector.GetPlayerPositon();
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 酸素ゲージはどのくらい残っている？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetAirParsent()
+    {
+        return m_playerDirector.GetAirParsent();
+    }
 
 }

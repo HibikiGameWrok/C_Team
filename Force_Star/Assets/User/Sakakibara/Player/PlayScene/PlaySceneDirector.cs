@@ -8,6 +8,7 @@ public class PlaySceneDirector : MonoBehaviour
     // ゲーム共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlaySceneDirectorIndex m_directorIndex;
+    PlayerDirectorIndex m_playerIndex;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星の運営者
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -20,6 +21,7 @@ public class PlaySceneDirector : MonoBehaviour
         // ゲーム共通ディレクター登録
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex = PlaySceneDirectorIndex.GetInstance();
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 権限にて、メインカメラのターゲットをもらうぞ！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -61,7 +63,29 @@ public class PlaySceneDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float air = m_playerIndex.GetAirParsent();
+        bool clearAnime = m_directorIndex.GetClearAnimation();
+        bool clearFlag = m_directorIndex.GetClearFlag();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // おしまい
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (air == 0 && !clearAnime)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 死にました～
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_directorIndex.SetAliveFlagPlayScene(false);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 帰還
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (clearFlag)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // やったぜ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_directorIndex.SetAliveFlagPlayScene(true);
+        }
     }
 
     void OnApplicationQuit()

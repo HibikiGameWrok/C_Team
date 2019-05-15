@@ -60,6 +60,10 @@ public class PlaySceneDirectorIndex
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starManeger = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲームクリアフラグ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        ClearReset();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ終了
@@ -78,6 +82,10 @@ public class PlaySceneDirectorIndex
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starManeger = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲームクリアフラグ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        ClearReset();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター受付
@@ -132,5 +140,46 @@ public class PlaySceneDirectorIndex
     {
         m_starManeger.CreateStarPisce(position, max);
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲームクリア！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_platinumAngel;
+    bool m_gameClearFlag;
+    public void ClearReset()
+    {
+        m_platinumAngel = false;
+        m_gameClearFlag = false;
+    }
+    public void SetClearAnimation()
+    {
+        m_platinumAngel = true;
+    }
+    public void SetClearFlag()
+    {
+        m_platinumAngel = true;
+        m_gameClearFlag = true;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲームクリア！取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetClearAnimation()
+    {
+        return m_platinumAngel;
+    }
+    public bool GetClearFlag()
+    {
+        return m_gameClearFlag;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲームクリア！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_aliveFlagPlayScene;
+    public void SetAliveFlagPlayScene(bool setBool)
+    {
+        m_aliveFlagPlayScene = setBool;
+    }
+    public bool GetAliveFlagPlayScene()
+    {
+        return m_aliveFlagPlayScene;
+    }
 }

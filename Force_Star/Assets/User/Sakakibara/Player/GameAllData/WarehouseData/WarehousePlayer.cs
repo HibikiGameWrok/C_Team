@@ -55,6 +55,8 @@ namespace WarehouseData
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 PLAYERBOAL_DAMAGE,
                 BODYTOP_DAMAGE,
+                BODYBOTTOM_DAMAGE,
+                JOINTBOAL_DAMAGE,
                 ATTACKBOAL_DAMAGE,
                 LEFTLEG_DAMAGE,
                 RIGHTLEG_DAMAGE,
@@ -63,6 +65,8 @@ namespace WarehouseData
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 PLAYERBOAL_STRONG,
                 BODYTOP_STRONG,
+                BODYBOTTOM_STRONG,
+                JOINTBOAL_STRONG,
                 ATTACKBOAL_STRONG,
                 LEFTLEG_STRONG,
                 RIGHTLEG_STRONG,
@@ -224,19 +228,23 @@ namespace WarehouseData
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // プレイヤーのデータ
                         //*|***|***|***|***|***|***|***|***|***|***|***|
-                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "PlayerBoal");
-                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyTop");
-                        m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "AttackBoal");
-                        m_playerTex2D[(int)PlayerData_Number.LEFTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
-                        m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "JointBoal");
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "PlayerBoalDamage");
+                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyTopDamage");
+                        m_playerTex2D[(int)PlayerData_Number.BODYBOTTOM_DAMAGE] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
+                        m_playerTex2D[(int)PlayerData_Number.JOINTBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "JointBoal");
+                        m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_DAMAGE] = Resources.Load<Texture2D>(MyFile + "AttackBoalDamage");
+                        m_playerTex2D[(int)PlayerData_Number.LEFTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "LeftLegDamage");
+                        m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_DAMAGE] = Resources.Load<Texture2D>(MyFile + "RightLegDamage");
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // プレイヤーのデータ
                         //*|***|***|***|***|***|***|***|***|***|***|***|
-                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "PlayerBoal");
-                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_STRONG] = Resources.Load<Texture2D>(MyFile + "BodyTop");
-                        m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "AttackBoal");
-                        m_playerTex2D[(int)PlayerData_Number.LEFTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "BodyBottom");
-                        m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "JointBoal");
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "PlayerBoalStrong");
+                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_STRONG] = Resources.Load<Texture2D>(MyFile + "BodyTopStrong");
+                        m_playerTex2D[(int)PlayerData_Number.BODYBOTTOM_STRONG] = Resources.Load<Texture2D>(MyFile + "BodyBottomStrong");
+                        m_playerTex2D[(int)PlayerData_Number.JOINTBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "JointBoalStrong");
+                        m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "AttackBoalStrong");
+                        m_playerTex2D[(int)PlayerData_Number.LEFTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "LeftLegStrong");
+                        m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "RightLegStrong");
                     }
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // プレイヤーその他

@@ -75,6 +75,18 @@ public partial class PlayerDirector : MonoBehaviour
     [SerializeField]
     private bool m_legStrong;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 回復の入力データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_recoveryAngle;
+    private bool m_recoveryMove;
+    enum TriggerAngle
+    {
+        UP,
+        DOWN,
+        RIGHT,
+        LEFT,
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private struct PlayerGetStarReservation
@@ -139,6 +151,11 @@ public partial class PlayerDirector : MonoBehaviour
         m_damageTime = 0.5f;
         m_damageInvincibilityTime = 2.0f;
         m_damageTrigger = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回復の入力データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_recoveryAngle = 0.0f;
+        m_recoveryMove = false;
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -196,8 +213,13 @@ public partial class PlayerDirector : MonoBehaviour
         m_dataUI.SetStarGaugeNumber(starParsent);
         m_dataUI.SetHaveStarNumber(haveStar);
         m_dataUI.SetNeedStarNumber(needStar);
-
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 強化をデータベースUIに反映
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataUI.SetArmStrongTime(m_dataBace.GetArmStrongParsent());
+        m_dataUI.SetBodyStrongTime(m_dataBace.GetBodyStrongParsent());
+        m_dataUI.SetHeadStrongTime(m_dataBace.GetHeadStrongParsent());
+        m_dataUI.SetLegStrongTime(m_dataBace.GetLegStrongParsent());
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ受けたか
@@ -243,6 +265,7 @@ public partial class PlayerDirector : MonoBehaviour
         float end = 1.0f;
         float goal = 0.0f;
         m_pushRecoveryKey = m_controller.ChackRecovery();
+        uint trigger = TriggerCompass();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 押されているか？
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -325,45 +348,15 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (m_pushRecoveryKey)
         {
-            bool move = m_controller.ChackCompassMove();
-            float angle = m_controller.ChackCompassAngle();
-            float dif = 15.0f;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 金。いや星。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             float partsParsent = 0.0f;
             int starsFee = 0;
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // コンパス上
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            float upA = 90.0f;
-            float downA = 270.0f;
-            float rightA = 0.0f;
-            float leftA = 180.0f;
-            bool Up = false;
-            bool Down = false;
-            bool Right = false;
-            bool Left = false;
-            if (move)
-            {
-                if (MyCalculator.AngleWheelDeg(angle, upA, dif))
-                {
-                    Up = true;
-                }
-                if (MyCalculator.AngleWheelDeg(angle, downA, dif))
-                {
-                    Down = true;
-                }
-                if (MyCalculator.AngleWheelDeg(angle, rightA, dif))
-                {
-                    Right = true;
-                }
-                if (MyCalculator.AngleWheelDeg(angle, leftA, dif))
-                {
-                    Left = true;
-                }
-            }
-            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 回復。
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            if (Up)
+            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.UP))
             {
                 partsParsent = m_dataBace.GetHeadDurableParsent();
                 if (partsParsent == 1)
@@ -376,7 +369,7 @@ public partial class PlayerDirector : MonoBehaviour
                     m_dataBace.RecoveryHeadDurable(2000.0f);
                 }
             }
-            if (Down)
+            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.DOWN))
             {
                 partsParsent = m_dataBace.GetLegDurableParsent();
                 if (partsParsent == 1)
@@ -389,7 +382,7 @@ public partial class PlayerDirector : MonoBehaviour
                     m_dataBace.RecoveryLegDurable(2000.0f);
                 }
             }
-            if (Right)
+            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.RIGHT))
             {
                 partsParsent = m_dataBace.GetArmDurableParsent();
                 if (partsParsent == 1)
@@ -402,7 +395,7 @@ public partial class PlayerDirector : MonoBehaviour
                     m_dataBace.RecoveryArmDurable(2000.0f);
                 }
             }
-            if (Left)
+            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.LEFT))
             {
                 partsParsent = m_dataBace.GetBodyDurableParsent();
                 if(partsParsent == 1)
@@ -652,6 +645,107 @@ public partial class PlayerDirector : MonoBehaviour
         // ステートチェック
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_dataBace.ChackUpdate();
+    }
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星報告
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private uint TriggerCompass()
+    {
+        uint trigger = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回復の入力データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float nowRecoveryAngle = m_controller.ChackCompassAngle();
+        bool nowRecoveryMove = m_controller.ChackCompassMove();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コンパスデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float dif = 15.0f;
+        float upA = 90.0f;
+        float downA = 270.0f;
+        float rightA = 0.0f;
+        float leftA = 180.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 現在のコンパス
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool Up = false;
+        bool Down = false;
+        bool Right = false;
+        bool Left = false;
+        if (nowRecoveryMove)
+        {
+            if (MyCalculator.AngleWheelDeg(nowRecoveryAngle, upA, dif))
+            {
+                Up = true;
+            }
+            if (MyCalculator.AngleWheelDeg(nowRecoveryAngle, downA, dif))
+            {
+                Down = true;
+            }
+            if (MyCalculator.AngleWheelDeg(nowRecoveryAngle, rightA, dif))
+            {
+                Right = true;
+            }
+            if (MyCalculator.AngleWheelDeg(nowRecoveryAngle, leftA, dif))
+            {
+                Left = true;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 前のコンパス
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool UpJust = false;
+        bool DownJust = false;
+        bool RightJust = false;
+        bool LeftJust = false;
+        if (m_recoveryMove)
+        {
+            if (MyCalculator.AngleWheelDeg(m_recoveryAngle, upA, dif))
+            {
+                UpJust = true;
+            }
+            if (MyCalculator.AngleWheelDeg(m_recoveryAngle, downA, dif))
+            {
+                DownJust = true;
+            }
+            if (MyCalculator.AngleWheelDeg(m_recoveryAngle, rightA, dif))
+            {
+                RightJust = true;
+            }
+            if (MyCalculator.AngleWheelDeg(m_recoveryAngle, leftA, dif))
+            {
+                LeftJust = true;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // トリガーの競合
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (Up && !UpJust)
+        {
+            trigger += MyCalculator.MultiplicationBinary((uint)TriggerAngle.UP);
+        }
+        if (Down && !DownJust)
+        {
+            trigger += MyCalculator.MultiplicationBinary((uint)TriggerAngle.DOWN);
+        }
+        if (Right && !RightJust)
+        {
+            trigger += MyCalculator.MultiplicationBinary((uint)TriggerAngle.RIGHT);
+        }
+        if (Left && !LeftJust)
+        {
+            trigger += MyCalculator.MultiplicationBinary((uint)TriggerAngle.LEFT);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 行動を記録
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_recoveryAngle = nowRecoveryAngle;
+        m_recoveryMove = nowRecoveryMove;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 結果
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return trigger;
     }
 }
 
