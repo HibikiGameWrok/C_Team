@@ -10,32 +10,59 @@ public class SetPartsPos : MonoBehaviour
     [SerializeField]
     private int max = 5;
 
+    // 配置するゲームオブジェクト
+    [SerializeField]
+    private GameObject[] point;
+
     //生成するゲームオブジェクト
     //public GameObject parts;
     //public GameObject parts2;
-    public GameObject[] parts;
+    public GameObject[] parts = null;
 
     //ランダムの結果を代入する変数
-    private int ransu = 0;
-    private int ransu2 = 0;
+    private int[] ransu = null;
+
     //private int[] ransu;
+
+    int start = 1;
+    int end = 5;
+
+    List<int> numbers = new List<int>();
 
 
     void Start()
     {
-        //ランダム生成
-        ransu = Random.Range(min, max + 1);
-        ransu2 = Random.Range(min, max + 1);
 
-
-        while (ransu2 == ransu)
+        for (int i = start; i <= end; i++)
         {
-            ransu2 = Random.Range(min, max + 1);
+            numbers.Add(i);
         }
+
+        while (numbers.Count > 0)
+        {
+
+            int index = Random.Range(0, numbers.Count);
+
+            int ransu = numbers[index];
+            Debug.Log(ransu);
+
+            numbers.RemoveAt(index);
+
+            SetPos(ransu);
+
+        }
+
+        //ransu2 = Random.Range(min, max + 1);
+
+
+        //while (ransu2 == ransu)
+        //{
+        //    ransu2 = Random.Range(min, max + 1);
+        //}
 
         // Debug.Log(ransu);
         //Debug.Log(ransu2);
-        SetPos();
+
     }
 
 
@@ -45,58 +72,82 @@ public class SetPartsPos : MonoBehaviour
 
     }
 
-    void SetPos()
+    void SetPos(int i)
     {
         // parts.transform.position = ransu;
 
-        switch (ransu)
+        switch (ransu[i])
         {
             case 1:
                 //Instantiate( 生成するオブジェクト,  場所, 回転 ); 
-                Instantiate(parts[0], new Vector3(-10.0f, 0.0f, 0.0f), Quaternion.identity);
+                Instantiate(parts[0], point[0].transform.position, Quaternion.identity);
                 break;
 
             case 2:
-                Instantiate(parts[0], new Vector3(-7.0f, 0.0f, 0.0f), Quaternion.identity);
+                Instantiate(parts[0], point[1].transform.position, Quaternion.identity);
                 break;
 
             case 3:
-                Instantiate(parts[0], new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
+                Instantiate(parts[0], point[2].transform.position, Quaternion.identity);
                 break;
 
             case 4:
-                Instantiate(parts[0], new Vector3(4.0f, 0.0f, 0.0f), Quaternion.identity);
+                Instantiate(parts[0], point[3].transform.position, Quaternion.identity);
                 break;
 
             case 5:
-                Instantiate(parts[0], new Vector3(9.0f, 0.0f, 0.0f), Quaternion.identity);
+                Instantiate(parts[0], point[4].transform.position, Quaternion.identity);
                 break;
-
         }
 
-        switch (ransu2)
-        {
-            case 1:
-                //Instantiate( 生成するオブジェクト,  場所, 回転 ); 
-                Instantiate(parts[1], new Vector3(-10.0f, 0.0f, 0.0f), Quaternion.identity);
-                break;
+        //switch (ransu[i])
+        //{
+        //    case 1:
+        //        //Instantiate( 生成するオブジェクト,  場所, 回転 ); 
+        //        Instantiate(parts[0], new Vector3(-10.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
 
-            case 2:
-                Instantiate(parts[1], new Vector3(-7.0f, 0.0f, 0.0f), Quaternion.identity);
-                break;
+        //    case 2:
+        //        Instantiate(parts[0], new Vector3(-7.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
 
-            case 3:
-                Instantiate(parts[1], new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
-                break;
+        //    case 3:
+        //        Instantiate(parts[0], new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
 
-            case 4:
-                Instantiate(parts[1], new Vector3(4.0f, 0.0f, 0.0f), Quaternion.identity);
-                break;
+        //    case 4:
+        //        Instantiate(parts[0], new Vector3(4.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
 
-            case 5:
-                Instantiate(parts[1], new Vector3(9.0f, 0.0f, 0.0f), Quaternion.identity);
-                break;
+        //    case 5:
+        //        Instantiate(parts[0], new Vector3(9.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
 
-        }
+        //}
+
+        //switch (ransu2)
+        //{
+        //    case 1:
+        //        //Instantiate( 生成するオブジェクト,  場所, 回転 ); 
+        //        Instantiate(parts[1], new Vector3(-10.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
+
+        //    case 2:
+        //        Instantiate(parts[1], new Vector3(-7.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
+
+        //    case 3:
+        //        Instantiate(parts[1], new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
+
+        //    case 4:
+        //        Instantiate(parts[1], new Vector3(4.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
+
+        //    case 5:
+        //        Instantiate(parts[1], new Vector3(9.0f, 0.0f, 0.0f), Quaternion.identity);
+        //        break;
+
+        //}
     }
 }

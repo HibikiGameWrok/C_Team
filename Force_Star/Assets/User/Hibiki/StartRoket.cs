@@ -23,6 +23,11 @@ public class StartRoket : MonoBehaviour
     [SerializeField]
     private GameObject[] StartRoketPoint = null;
 
+    // フェードインするオブジェクト
+    private GameObject Panel = null;
+    // フェードインアウトするscript
+    private StartFade StartFade = null;
+
     // 乱数を保管する変数
     private int randPoint;
 
@@ -39,6 +44,11 @@ public class StartRoket : MonoBehaviour
     private GameObject ParentMainCamera;
     // 子のオブジェクトを取得する変数
     private Transform MainCamera;
+
+    // メインカメラを取得するオブジェクト変数
+    private GameObject ParentPlayDirector;
+    // 子のオブジェクトを取得する変数
+    private Transform PlayDirector;
 
     int count = 0;
 
@@ -61,6 +71,15 @@ public class StartRoket : MonoBehaviour
         ParentMainCamera = GameObject.Find("ParentMainCamera");
         // 子の取得
         MainCamera = ParentMainCamera.transform.Find("Main Camera");
+
+        // オブジェクトの取得
+        ParentPlayDirector = GameObject.Find("ParentPlayDirector");
+        // 子の取得
+        PlayDirector = ParentPlayDirector.transform.Find("PlayDirector");
+
+        // オブジェクトの取得
+        Panel = GameObject.Find("Panel");
+        StartFade = Panel.GetComponent<StartFade>();
     }
 
     // Update is called once per frame
@@ -89,24 +108,27 @@ public class StartRoket : MonoBehaviour
         {
             if (moveStopFlag != true)
             {
-                //// ファイアプレハブをGameObject型で取得
-                GameObject Fire = (GameObject)Resources.Load("ExplosionStar");
-                // ファイアプレハブを元に、インスタンスを生成、
-                Instantiate(Fire, this.transform.position, Quaternion.identity);
-
-                // ファイアプレハブをGameObject型で取得
+                // 壊れたロケットプレハブをGameObject型で取得
                 GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
-                // ファイアプレハブを元に、インスタンスを生成、
+                // 壊れたロケットプレハブを元に、インスタンスを生成、
                 Instantiate(Rocket, targetPos, Quaternion.identity);
 
                 // サブカメラが消える前にメインカメラを起動する
                 if (MainCamera != null)
                 {
                     MainCamera.gameObject.SetActive(true);
-                }
+                    
+                    //// プレイヤープレハブをGameObject型で取得
+                    GameObject Player = (GameObject)Resources.Load("PlayerDirector");
+                    // プレイヤープレハブを元に生成、
+                    Instantiate(Player, this.transform.position, Quaternion.identity);
 
+                    PlayDirector.gameObject.SetActive(true);
+                }
                 // 動きを止める
                 moveStopFlag = true;
+
+                StartFade.SetFadeInFlag(true);
             }
 
             // 自身のオブジェクトを消す
@@ -142,13 +164,13 @@ public class StartRoket : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         if (count == 2)
         {
-            //// ファイアプレハブをGameObject型で取得
+            //// ロケットプレハブをGameObject型で取得
             GameObject RoketParts2 = (GameObject)Resources.Load("RocketParts_2");
-            // ファイアプレハブを元に、インスタンスを生成、
+            // ロケットプレハブを元に生成
             Instantiate(RoketParts2, this.transform.position, Quaternion.identity);
             count = 3;
-
-            yield return null;
         }
+        yield return new WaitForSeconds(2.0f);
+        StartFade.SetFadeOutFlag(true);
     }
 }
