@@ -72,29 +72,20 @@ public class StarDirector : MonoBehaviour {
     public void CreateStar(Vector2 objectPosR, Vector2 objectPosL,int maxStar)
     {
 
-        //if (Star != null)
-        //{
-        //    for (int i = 0; i < maxStar; i++)
-        //    {
-        //        StarObj = Instantiate(Star, pos, Quaternion.identity) as GameObject; // 生成
-        //        StarObj.transform.parent = transform;                                // 子にする
-        //        StarObj.GetComponent<StarPieceMove>().SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f)); // 飛んでいく角度をランダムに決める
-        //    }
-        //}
-        // 星の生成
-        GameObject go = Instantiate(Star) as GameObject;
-        GameObject go2 = Instantiate(Star) as GameObject;
-        // 星1
-        starCreate = go.GetComponent<StarMove>();
-        starCreate.SetVecX(starX);         // 横移動の向き
-        starCreate.SetMaxStar(maxStar);    // 星の所有数
-        // 星2
-        starCreate = go2.GetComponent<StarMove>();
-        starCreate.SetVecX(-starX);        // 横移動の向き
-        starCreate.SetMaxStar(maxStar);    // 星の所有数
-        // 配置
-        go.transform.position = new Vector3(objectPosR.x, objectPosR.y, go.transform.position.z);       //　右の星
-        go2.transform.position = new Vector3(objectPosL.x, objectPosL.y, go.transform.position.z);      //　左の星
+        if (Star != null)
+        {
+            for (int i = 0; i < maxStar; i++)
+            {
+                StarObj = Instantiate(Star, objectPosR, Quaternion.identity) as GameObject; // 生成
+                StarObj.transform.parent = transform;                                // 子にする
+                float vecX = Random.Range(-0.2f, 0.2f);
+                while (vecX == 0)                       // 0ならもっかい
+                {
+                    vecX = Random.Range(-0.2f, 0.2f);
+                }
+                StarObj.GetComponent<StarMove>().SetVecX(vecX); // 飛んでいく角度をランダムに決める
+            }
+        }
     }
 
   

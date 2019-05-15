@@ -150,7 +150,7 @@ public class StarMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(stayCount>60)
+        if(stayCount>30)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーの一部に当たったか？

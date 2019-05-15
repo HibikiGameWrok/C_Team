@@ -80,7 +80,7 @@ public class StoneMove : MonoBehaviour
             posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
             // 
-            starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
+            starCreate.CreateOneStar(this.transform.position, 10);
 
             //跡形もなく消えてゆけ
             Destroy(this.gameObject);
