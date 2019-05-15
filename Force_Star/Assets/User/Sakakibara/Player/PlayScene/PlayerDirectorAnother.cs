@@ -79,6 +79,13 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private float m_recoveryAngle;
     private bool m_recoveryMove;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // データベース最大値
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_maxDurable;
+    private float m_maxStrong;
+    private float m_maxAir;
+    private int m_maxStarMokuhyou;
     enum TriggerAngle
     {
         UP,
@@ -104,13 +111,20 @@ public partial class PlayerDirector : MonoBehaviour
     void AwakePlayerUI()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データベース最大値
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_maxDurable = 2000.0f;
+        m_maxStrong = 100.0f;
+        m_maxAir = 7200.0f;
+        m_maxStarMokuhyou = 2000;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベース
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_dataBace = new PlayerDataBace();
-        m_dataBace.ResetAll(7200);
-        m_dataBace.ResetPartsDurable(2000.0f);
-        m_dataBace.ResetPartsStrong(100.0f);
-        m_dataBace.ResetStars(0, 2000);
+        m_dataBace.ResetAll(m_maxAir);
+        m_dataBace.ResetPartsDurable(m_maxDurable);
+        m_dataBace.ResetPartsStrong(m_maxStrong);
+        m_dataBace.ResetStars(0, m_maxStarMokuhyou);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ中
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -352,67 +366,276 @@ public partial class PlayerDirector : MonoBehaviour
             // 金。いや星。
             //*|***|***|***|***|***|***|***|***|***|***|***|
             float partsParsent = 0.0f;
+            float partsDamageParsent = 0.0f;
+            float starsFeeFloat = 0.0f;
+            int starsNum = 0;
             int starsFee = 0;
+            int starsFeeR = 0;
+            int starsFeeS = 0;
+            int starsFeeBasisDamage = 10;
+            int starsFeeBasisStrong = 10;
+            bool strongCommond = false;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 回復。
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.UP))
+            // 頭
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             {
                 partsParsent = m_dataBace.GetHeadDurableParsent();
+                partsDamageParsent = MyCalculator.InversionOfProportion(partsParsent);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 料金設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                starsFeeS = starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // モード設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (partsParsent == 1)
                 {
-                    starsFee = 10;
-                    m_dataBace.StartHeadStrong();
+                    strongCommond = true;
+                    starsFee = starsFeeS;
                 }
                 else
                 {
-                    m_dataBace.RecoveryHeadDurable(2000.0f);
+                    strongCommond = false;
+                    starsFee = starsFeeR;
                 }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // コマンド
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.UP))
+                {
+
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 料金支払って実行
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    starsNum = m_dataBace.GetStarsNum();
+                    if (starsNum >= starsFee)
+                    {
+                        m_dataBace.CatchStars(starsFee * -1);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 強化か否か
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        if (strongCommond)
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 強化だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.StartHeadStrong();
+                        }
+                        else
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 回復だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.RecoveryHeadDurable(m_maxDurable);
+                        }
+                    }
+                }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 設定だ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_dataRecoveryUI.SetHeadStrongFee(starsFeeS);
+                m_dataRecoveryUI.SetHeadRecoveryFee(starsFeeR);
+                m_dataRecoveryUI.SetHeadStrongMode(strongCommond);
             }
-            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.DOWN))
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             {
                 partsParsent = m_dataBace.GetLegDurableParsent();
+                partsDamageParsent = MyCalculator.InversionOfProportion(partsParsent);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 料金設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                starsFeeS = starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // モード設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (partsParsent == 1)
                 {
-                    starsFee = 10;
-                    m_dataBace.StartLegStrong();
+                    strongCommond = true;
+                    starsFee = starsFeeS;
                 }
                 else
                 {
-                    m_dataBace.RecoveryLegDurable(2000.0f);
+                    strongCommond = false;
+                    starsFee = starsFeeR;
                 }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // コマンド
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.DOWN))
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 料金支払って実行
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    starsNum = m_dataBace.GetStarsNum();
+                    if (starsNum >= starsFee)
+                    {
+                        m_dataBace.CatchStars(starsFee * -1);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 強化か否か
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        if (strongCommond)
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 強化だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.StartLegStrong();
+                        }
+                        else
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 回復だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.RecoveryLegDurable(m_maxDurable);
+                        }
+                    }
+                }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 設定だ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_dataRecoveryUI.SetLegStrongFee(starsFeeS);
+                m_dataRecoveryUI.SetLegRecoveryFee(starsFeeR);
+                m_dataRecoveryUI.SetLegStrongMode(strongCommond);
             }
-            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.RIGHT))
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 腕
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             {
                 partsParsent = m_dataBace.GetArmDurableParsent();
+                partsDamageParsent = MyCalculator.InversionOfProportion(partsParsent);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 料金設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                starsFeeS = starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // モード設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (partsParsent == 1)
                 {
-                    starsFee = 10;
-                    m_dataBace.StartArmStrong();
+                    strongCommond = true;
+                    starsFee = starsFeeS;
                 }
                 else
                 {
-                    m_dataBace.RecoveryArmDurable(2000.0f);
+                    strongCommond = false;
+                    starsFee = starsFeeR;
                 }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // コマンド
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.RIGHT))
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 料金支払って実行
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    starsNum = m_dataBace.GetStarsNum();
+                    if (starsNum >= starsFee)
+                    {
+                        m_dataBace.CatchStars(starsFee * -1);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 強化か否か
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        if (strongCommond)
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 強化だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.StartArmStrong();
+                        }
+                        else
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 回復だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.RecoveryArmDurable(m_maxDurable);
+                        }
+                    }
+                }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 設定だ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_dataRecoveryUI.SetArmStrongFee(starsFeeS);
+                m_dataRecoveryUI.SetArmRecoveryFee(starsFeeR);
+                m_dataRecoveryUI.SetArmStrongMode(strongCommond);
             }
-            if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.LEFT))
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 体
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             {
                 partsParsent = m_dataBace.GetBodyDurableParsent();
-                if(partsParsent == 1)
+                partsDamageParsent = MyCalculator.InversionOfProportion(partsParsent);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 料金設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                starsFeeS = starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // モード設定
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (partsParsent == 1)
                 {
-                    starsFee = 10;
-                    m_dataBace.StartBodyStrong();
+                    strongCommond = true;
+                    starsFee = starsFeeS;
                 }
                 else
                 {
-                    m_dataBace.RecoveryBodyDurable(2000.0f);
+                    strongCommond = false;
+                    starsFee = starsFeeR;
                 }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // コマンド
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.LEFT))
+                {
+
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 料金支払って実行
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    starsNum = m_dataBace.GetStarsNum();
+                    if (starsNum >= starsFee)
+                    {
+                        m_dataBace.CatchStars(starsFee * -1);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 強化か否か
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        if (strongCommond)
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 強化だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.StartBodyStrong();
+                        }
+                        else
+                        {
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            // 回復だ
+                            //*|***|***|***|***|***|***|***|***|***|***|***|
+                            m_dataBace.RecoveryBodyDurable(m_maxDurable);
+                        }
+                    }
+                }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 設定だ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_dataRecoveryUI.SetBodyStrongFee(starsFeeS);
+                m_dataRecoveryUI.SetBodyRecoveryFee(starsFeeR);
+                m_dataRecoveryUI.SetBodyStrongMode(strongCommond);
             }
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // ステートチェック
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_dataBace.ChackUpdate();
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ステートチェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataBace.ChackUpdate();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 進行度を記録
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -755,18 +978,18 @@ public partial class PlayerDirector : MonoBehaviour
 //bool Left = m_controller.ChackAttackTrigger();
 //            if (Up)
 //            {
-//                m_dataBace.RecoveryHeadDurable(2000.0f);
+//                m_dataBace.RecoveryHeadDurable(m_maxDurable);
 //            }
 //            if (Down) 
 //            {
-//                m_dataBace.RecoveryLegDurable(2000.0f);
+//                m_dataBace.RecoveryLegDurable(m_maxDurable);
 //            }
 //            if (Right)
 //            {
-//                m_dataBace.RecoveryArmDurable(2000.0f);
+//                m_dataBace.RecoveryArmDurable(m_maxDurable);
 //            }
 //            if (Left)
 //            {
-//                m_dataBace.RecoveryBodyDurable(2000.0f);
+//                m_dataBace.RecoveryBodyDurable(m_maxDurable);
 //            }
 //            m_dataBace.ChackUpdate();

@@ -17,6 +17,7 @@ using TexImageHidden = GameDataPublic.TexImageHidden;
 using WarehouseObject = WarehouseData.WarehouseObject;
 using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
 using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
+using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
@@ -61,6 +62,27 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private RecoveryPartsUI m_healLeg;
     private static string HealLegName = "HealLeg";
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 値
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private int m_feeNumberDigit;
+
+    private List<OriginUIGroup> m_armFeeNumber;
+    private OriginUIGroup m_armFeeStar;
+    private OriginUIGroup m_armFeeCross;
+
+    private List<OriginUIGroup> m_bodyFeeNumber;
+    private OriginUIGroup m_bodyFeeStar;
+    private OriginUIGroup m_bodyFeeCross;
+
+    private List<OriginUIGroup> m_headFeeNumber;
+    private OriginUIGroup m_headFeeStar;
+    private OriginUIGroup m_headFeeCross;
+
+    private List<OriginUIGroup> m_legFeeNumber;
+    private OriginUIGroup m_legFeeStar;
+    private OriginUIGroup m_legFeeCross;
+
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 全体パーツ
@@ -151,6 +173,17 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     [SerializeField]
     private float m_legDurableParsent;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 回復費
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private int m_armRecoveryFee;
+    [SerializeField]
+    private int m_bodyRecoveryFee;
+    [SerializeField]
+    private int m_headRecoveryFee;
+    [SerializeField]
+    private int m_legRecoveryFee;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 強化表示
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
@@ -162,11 +195,32 @@ public class DebugPlayerRecoveryUI : DebugCanvas
     [SerializeField]
     private bool m_legStrong;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 強化費
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private int m_armStrongFee;
+    [SerializeField]
+    private int m_bodyStrongFee;
+    [SerializeField]
+    private int m_headStrongFee;
+    [SerializeField]
+    private int m_legStrongFee;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 全体進行
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     private float m_progressParsentAnimate;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 強化か？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private bool m_armStrongMode;
+    [SerializeField]
+    private bool m_bodyStrongMode;
+    [SerializeField]
+    private bool m_headStrongMode;
+    [SerializeField]
+    private bool m_legStrongMode;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 使用する深度
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -200,6 +254,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         // コマンドの本体
         //*|***|***|***|***|***|***|***|***|***|***|***|
         COMMOND_ACTION,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // コマンドの費
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        COMMOND_FEE,
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 数量
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -244,6 +302,25 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         m_legDurableParsent = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 回復費
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetArmRecoveryFee(int number)
+    {
+        m_armRecoveryFee = number;
+    }
+    public void SetBodyRecoveryFee(int number)
+    {
+        m_bodyRecoveryFee = number;
+    }
+    public void SetHeadRecoveryFee(int number)
+    {
+        m_headRecoveryFee = number;
+    }
+    public void SetLegRecoveryFee(int number)
+    {
+        m_legRecoveryFee = number;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 強化表示
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetArmStrong(bool number)
@@ -263,13 +340,50 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         m_legStrong = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 強化費
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetArmStrongFee(int number)
+    {
+        m_armStrongFee = number;
+    }
+    public void SetBodyStrongFee(int number)
+    {
+        m_bodyStrongFee = number;
+    }
+    public void SetHeadStrongFee(int number)
+    {
+        m_headStrongFee = number;
+    }
+    public void SetLegStrongFee(int number)
+    {
+        m_legStrongFee = number;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 全体進行
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetProgressParsentAnimate(float number)
     {
         m_progressParsentAnimate = number;
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 強化か？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetArmStrongMode(bool number)
+    {
+        m_armStrongMode = number;
+    }
+    public void SetBodyStrongMode(bool number)
+    {
+        m_bodyStrongMode = number;
+    }
+    public void SetHeadStrongMode(bool number)
+    {
+        m_headStrongMode = number;
+    }
+    public void SetLegStrongMode(bool number)
+    {
+        m_legStrongMode = number;
+    }
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -310,6 +424,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         // 脚回復起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeHealLeg();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値起動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakeFee();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -754,6 +872,145 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 値起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakeFee()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // TexImageData
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TexImageData tex = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_feeNumberDigit = 2;
+        m_armFeeNumber = new List<OriginUIGroup>();
+        m_bodyFeeNumber = new List<OriginUIGroup>();
+        m_headFeeNumber = new List<OriginUIGroup>();
+        m_legFeeNumber = new List<OriginUIGroup>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_feeNumberDigit; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.NUMBERS_DATA16_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            OriginUIGroup digitDataArm = new OriginUIGroup();
+            OriginUIGroup digitDataBody = new OriginUIGroup();
+            OriginUIGroup digitDataHead = new OriginUIGroup();
+            OriginUIGroup digitDataLeg = new OriginUIGroup();
+            digitDataArm.gameObjectUI = CreateMenber(tex, "ArmFeeNumber" + index.ToString());
+            digitDataBody.gameObjectUI = CreateMenber(tex, "BodyFeeNumber" + index.ToString());
+            digitDataHead.gameObjectUI = CreateMenber(tex, "HeadFeeNumber" + index.ToString());
+            digitDataLeg.gameObjectUI = CreateMenber(tex, "LegFeeNumber" + index.ToString());
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            digitDataArm.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            digitDataBody.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            digitDataHead.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            digitDataLeg.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+
+            digitDataArm.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            digitDataBody.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            digitDataHead.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            digitDataLeg.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeNumber.Add(digitDataArm);
+            m_bodyFeeNumber.Add(digitDataBody);
+            m_headFeeNumber.Add(digitDataHead);
+            m_legFeeNumber.Add(digitDataLeg);
+        }
+        m_armRecoveryFee = 0;
+        m_armStrongFee = 0;
+        m_bodyRecoveryFee = 0;
+        m_bodyStrongFee = 0;
+        m_headRecoveryFee = 0;
+        m_headStrongFee = 0;
+        m_legRecoveryFee = 0;
+        m_legStrongFee = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armFeeCross = new OriginUIGroup();
+        m_armFeeStar = new OriginUIGroup();
+        m_bodyFeeCross = new OriginUIGroup();
+        m_bodyFeeStar = new OriginUIGroup();
+        m_headFeeCross = new OriginUIGroup();
+        m_headFeeStar = new OriginUIGroup();
+        m_legFeeCross = new OriginUIGroup();
+        m_legFeeStar = new OriginUIGroup();
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.MULTIPLICATION, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeCross.gameObjectUI = CreateMenber(tex, "ArmFeeCross");
+            m_bodyFeeCross.gameObjectUI = CreateMenber(tex, "BodyFeeCross");
+            m_headFeeCross.gameObjectUI = CreateMenber(tex, "HeadFeeCross");
+            m_legFeeCross.gameObjectUI = CreateMenber(tex, "LegFeeCross");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeCross.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            m_bodyFeeCross.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            m_headFeeCross.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            m_legFeeCross.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+
+            m_armFeeCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_bodyFeeCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_headFeeCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_legFeeCross.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.SYMBOL_N1);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y((int)Symbol_ENUM.STAR_IMAGE, 4, 4);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeStar.gameObjectUI = CreateMenber(tex, "ArmFeeStar");
+            m_bodyFeeStar.gameObjectUI = CreateMenber(tex, "BodyFeeStar");
+            m_headFeeStar.gameObjectUI = CreateMenber(tex, "HeadFeeStar");
+            m_legFeeStar.gameObjectUI = CreateMenber(tex, "LegFeeStar");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeStar.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            m_bodyFeeStar.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            m_headFeeStar.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+            m_legFeeStar.gameObjectUI.SetDepth(GetDepth(DepthAttach.COMMOND_FEE));
+
+            m_armFeeStar.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_bodyFeeStar.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_headFeeStar.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_legFeeStar.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // その他起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakeAnoters()
@@ -833,6 +1090,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         // 脚回復起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeHealLegUI();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値起動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakeFeeUI();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -954,6 +1215,48 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         m_healLeg.action.imageUIData.Init();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 値起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakeFeeUI()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_feeNumberDigit; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeNumber[index].imageUIData = new ImageUIData();
+            m_armFeeNumber[index].imageUIData.Init();
+            m_bodyFeeNumber[index].imageUIData = new ImageUIData();
+            m_bodyFeeNumber[index].imageUIData.Init();
+            m_headFeeNumber[index].imageUIData = new ImageUIData();
+            m_headFeeNumber[index].imageUIData.Init();
+            m_legFeeNumber[index].imageUIData = new ImageUIData();
+            m_legFeeNumber[index].imageUIData.Init();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armFeeCross.imageUIData = new ImageUIData();
+        m_armFeeCross.imageUIData.Init();
+        m_armFeeStar.imageUIData = new ImageUIData();
+        m_armFeeStar.imageUIData.Init();
+        m_bodyFeeCross.imageUIData = new ImageUIData();
+        m_bodyFeeCross.imageUIData.Init();
+        m_bodyFeeStar.imageUIData = new ImageUIData();
+        m_bodyFeeStar.imageUIData.Init();
+        m_headFeeCross.imageUIData = new ImageUIData();
+        m_headFeeCross.imageUIData.Init();
+        m_headFeeStar.imageUIData = new ImageUIData();
+        m_headFeeStar.imageUIData.Init();
+        m_legFeeCross.imageUIData = new ImageUIData();
+        m_legFeeCross.imageUIData.Init();
+        m_legFeeStar.imageUIData = new ImageUIData();
+        m_legFeeStar.imageUIData.Init();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // その他起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakeAnotersUI()
@@ -994,6 +1297,14 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         // 脚回復更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateHealLeg();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚回復更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateHealLeg();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateFee();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1658,6 +1969,443 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 値更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateFee()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画像データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ集計
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armRecoveryFee = ChangeData.Among(m_armRecoveryFee, 0, 99);
+        m_bodyRecoveryFee = ChangeData.Among(m_bodyRecoveryFee, 0, 99);
+        m_headRecoveryFee = ChangeData.Among(m_headRecoveryFee, 0, 99);
+        m_legRecoveryFee = ChangeData.Among(m_legRecoveryFee, 0, 99);
+        m_armStrongFee = ChangeData.Among(m_armStrongFee, 0, 99);
+        m_bodyStrongFee = ChangeData.Among(m_bodyStrongFee, 0, 99);
+        m_headStrongFee = ChangeData.Among(m_headStrongFee, 0, 99);
+        m_legStrongFee = ChangeData.Among(m_legStrongFee, 0, 99);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 現れる数値
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int digitNum = 0;
+        for (int digit = 0; digit < m_feeNumberDigit; digit++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 腕
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_armStrongMode)
+            {
+                digitNum = MyCalculator.Get10Digit(m_armStrongFee, digit);
+            }
+            else
+            {
+                digitNum = MyCalculator.Get10Digit(m_armRecoveryFee, digit);
+            }
+            imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
+            m_armFeeNumber[digit].gameObjectUI.SetRect(imageRect);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 体
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_bodyStrongMode)
+            {
+                digitNum = MyCalculator.Get10Digit(m_bodyStrongFee, digit);
+            }
+            else
+            {
+                digitNum = MyCalculator.Get10Digit(m_bodyRecoveryFee, digit);
+            }
+            imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
+            m_bodyFeeNumber[digit].gameObjectUI.SetRect(imageRect);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 頭
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_headStrongMode)
+            {
+                digitNum = MyCalculator.Get10Digit(m_headStrongFee, digit);
+            }
+            else
+            {
+                digitNum = MyCalculator.Get10Digit(m_headRecoveryFee, digit);
+            }
+            imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
+            m_headFeeNumber[digit].gameObjectUI.SetRect(imageRect);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_legStrongMode)
+            {
+                digitNum = MyCalculator.Get10Digit(m_legStrongFee, digit);
+            }
+            else
+            {
+                digitNum = MyCalculator.Get10Digit(m_legRecoveryFee, digit);
+            }
+            imageRect = MyCalculator.RectSizeReverse_Y(digitNum, 4, 4);
+            m_legFeeNumber[digit].gameObjectUI.SetRect(imageRect);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posSave = new Vector2(0.0f, 0.0f);
+        Vector2 scaleSave = new Vector2(0.0f, 0.0f);
+        Vector2 posSaveX = new Vector2(0.0f, 0.0f);
+        int indexReverse = 0;
+        float indexPoint = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 pos = new Vector2(0.0f, 0.0f);
+        Vector2 scale = new Vector2(0.0f, 0.0f);
+        Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
+        Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整済みデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posScleen = new Vector2(0.0f, 0.0f);
+        Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 本当の
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int trueFeeNumberDigit = m_feeNumberDigit + 2;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = new Vector2(0.0f, -0.05f);
+            scale = new Vector2(0.1f, 0.05f);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            persent_AssistP = pos;
+            persent_AssistS = scale;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 調整
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, trueFeeNumberDigit);
+            scale.x = persent_AssistS.x;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 以下も同じ場所に現れる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        posSave = pos;
+        scaleSave = scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            posSaveX = m_healArm.background.imageUIData.imagePos;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 2, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeCross.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_armFeeCross.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeCross.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 1, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_armFeeStar.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_armFeeStar.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_armFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 計算用初期化、データ確保
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                indexReverse = MyCalculator.InversionOfIndex(index, trueFeeNumberDigit);
+                indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+                pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+                pos.y = posSave.y;
+                scale = scaleSave;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 補正
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                pos = pos + posSaveX;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_armFeeNumber[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+                m_armFeeNumber[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 透明度
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_armFeeNumber[index].gameObjectUI.SetAlpha(m_progressAlphaAction);
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            posSaveX = m_healBody.background.imageUIData.imagePos;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 2, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyFeeCross.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_bodyFeeCross.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyFeeCross.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 1, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyFeeStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_bodyFeeStar.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bodyFeeStar.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_bodyFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 計算用初期化、データ確保
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                indexReverse = MyCalculator.InversionOfIndex(index, trueFeeNumberDigit);
+                indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+                pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+                pos.y = posSave.y;
+                scale = scaleSave;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 補正
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                pos = pos + posSaveX;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_bodyFeeNumber[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+                m_bodyFeeNumber[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 透明度
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_bodyFeeNumber[index].gameObjectUI.SetAlpha(m_progressAlphaAction);
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            posSaveX = m_healHead.background.imageUIData.imagePos;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 2, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headFeeCross.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_headFeeCross.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headFeeCross.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 1, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headFeeStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_headFeeStar.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_headFeeStar.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_headFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 計算用初期化、データ確保
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                indexReverse = MyCalculator.InversionOfIndex(index, trueFeeNumberDigit);
+                indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+                pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+                pos.y = posSave.y;
+                scale = scaleSave;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 補正
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                pos = pos + posSaveX;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_headFeeNumber[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+                m_headFeeNumber[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 透明度
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_headFeeNumber[index].gameObjectUI.SetAlpha(m_progressAlphaAction);
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            posSaveX = m_healLeg.background.imageUIData.imagePos;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 2, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legFeeCross.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_legFeeCross.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legFeeCross.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            indexReverse = MyCalculator.InversionOfIndex(trueFeeNumberDigit - 1, trueFeeNumberDigit);
+            indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 補正
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = pos + posSaveX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legFeeStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_legFeeStar.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_legFeeStar.gameObjectUI.SetAlpha(m_progressAlphaAction);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_legFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 計算用初期化、データ確保
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                indexReverse = MyCalculator.InversionOfIndex(index, trueFeeNumberDigit);
+                indexPoint = MyCalculator.IndexCenterPos(indexReverse, trueFeeNumberDigit);
+                pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+                pos.y = posSave.y;
+                scale = scaleSave;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 補正
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                pos = pos + posSaveX;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_legFeeNumber[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+                m_legFeeNumber[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 透明度
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_legFeeNumber[index].gameObjectUI.SetAlpha(m_progressAlphaAction);
+            }
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // その他更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void UpdateAnoters()
@@ -1778,6 +2526,10 @@ public class DebugPlayerRecoveryUI : DebugCanvas
         // 脚回復描画
         //*|***|***|***|***|***|***|***|***|***|***|***|
         RenderHealLeg();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 値描画
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        RenderFee();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他描画
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1916,7 +2668,128 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             AssetSet(ref m_healLeg.action, m_screenSize, true);
         }
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 値描画
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void RenderFee()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_armFeeCross, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_armFeeStar, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_armFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                OriginUIGroup migawari = m_armFeeNumber[index];
+                AssetSet(ref migawari, m_screenSize, true);
+                m_armFeeNumber[index] = migawari;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_bodyFeeCross, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_bodyFeeStar, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_bodyFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                OriginUIGroup migawari = m_bodyFeeNumber[index];
+                AssetSet(ref migawari, m_screenSize, true);
+                m_bodyFeeNumber[index] = migawari;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_headFeeCross, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_headFeeStar, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_headFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                OriginUIGroup migawari = m_headFeeNumber[index];
+                AssetSet(ref migawari, m_screenSize, true);
+                m_headFeeNumber[index] = migawari;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // クロス
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_legFeeCross, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            {
+                AssetSet(ref m_legFeeStar, m_screenSize, true);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            for (int index = 0; index < m_legFeeNumber.Count; index++)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 桁挿入
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                OriginUIGroup migawari = m_legFeeNumber[index];
+                AssetSet(ref migawari, m_screenSize, true);
+                m_legFeeNumber[index] = migawari;
+            }
+        }
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // その他描画
     //*|***|***|***|***|***|***|***|***|***|***|***|
