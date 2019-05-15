@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class RoketClearMove : MonoBehaviour
 {
+    public const float STICKPOW = -0.5f;
+
     // フェードインするオブジェクト
     private GameObject Panel = null;
     // フェードインアウトするscript
@@ -18,6 +20,8 @@ public class RoketClearMove : MonoBehaviour
 
     PlayerController playercont;
     
+   
+
     void Awake()
     {
         playercont = new PlayerController();
@@ -40,19 +44,16 @@ public class RoketClearMove : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
-        Debug.Log("当たっている");
-        Vector2 stick = playercont.ChackStickPower();
-        Debug.Log(stick);
         string layerName = LayerMask.LayerToName(col.gameObject.layer);
         // ロケットに当たっている時
         if (layerName == "PlayerDigid" || col.gameObject.tag == "Player")
         {
-           
+            Vector2 stick = playercont.ChackStickPower();
+            Debug.Log(stick.y);
             if (cooltime == false)
             {
-               
                 // ↑orWを押すとシーン移行
-                if(stick.y > -0.5f || Input.GetKeyDown(KeyCode.UpArrow))
+                if(stick.y < STICKPOW || Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     cooltime = true;
                     // フェードアウト
