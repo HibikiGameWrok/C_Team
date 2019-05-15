@@ -8,9 +8,6 @@ public class StoneMove : MonoBehaviour
 
     private StarDirector starCreate;
 
-    //SE
-    private AudioSource sound01;
-
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃当たり判定データ
@@ -40,8 +37,6 @@ public class StoneMove : MonoBehaviour
         this.m_partsAttack = m_partsAttackObject.AddComponent<EnemyAttackPartsBox>();
 
         
-        //SE再生データ
-        sound01 = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -80,8 +75,6 @@ public class StoneMove : MonoBehaviour
 
         if ((col.gameObject.tag == "AttackBoal"))
         {
-            //SEの再生
-            sound01.PlayOneShot(sound01.clip);
 
             float posX1;
             float posX2;
