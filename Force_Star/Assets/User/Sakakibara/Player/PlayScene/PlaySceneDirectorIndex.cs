@@ -136,9 +136,44 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星の管理者に報告
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void ApplyStar(Vector3 position, int max)
+    public void ApplyStar(Vector3 position, int num)
     {
-        m_starManeger.CreateStarPisce(position, max);
+        m_starManeger.CreateStarPisce(position, num);
+    }
+    public void ApplyStar(Vector3 position, float angle, float angleSwing, float speedMax, float speedMin, int num)
+    {
+        m_starManeger.CreateStarPisce(position, angle, angleSwing, speedMax, speedMin, num);
+    }
+    public void ApplyStar(Vector3 position, float angle, float angleSwing, float speedMax, int num)
+    {
+        m_starManeger.CreateStarPisce(position, angle, angleSwing, speedMax, 0, num);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 左右にぶちまける
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void ApplyStarLeftSide(Vector3 position, float angleSwing, float speedMax, int num)
+    {
+        Vector2 vec = new Vector2(-1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        m_starManeger.CreateStarPisce(position, angle, angleSwing, speedMax, 0, num);
+    }
+    public void ApplyStarLeftSide(Vector3 position, float angleSwing, float speedMax, float speedMin, int num)
+    {
+        Vector2 vec = new Vector2(-1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        m_starManeger.CreateStarPisce(position, angle, angleSwing, speedMax, speedMin, num);
+    }
+    public void ApplyStarRightSide(Vector3 position, float angleSwing, float speedMax, int num)
+    {
+        Vector2 vec = new Vector2(1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        m_starManeger.CreateStarPisce(position, angle, angleSwing, speedMax, 0, num);
+    }
+    public void ApplyStarRightSide(Vector3 position, float angleSwing, float speedMax, float speedMin, int num)
+    {
+        Vector2 vec = new Vector2(1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        m_starManeger.CreateStarPisce(position, angle, angleSwing, speedMax, speedMin, num);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲームクリア！

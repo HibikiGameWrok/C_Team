@@ -90,4 +90,48 @@ public class PlayStarManeger : MonoBehaviour
             newStarObjMove.SetSpeed(0.01f, 0.01f);
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 角度の方向に発射
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void CreateStarPisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, int starNum)
+    {
+        GameObject newStarObj = null;
+        StarPieceMove newStarObjMove = null;
+        float angle = 0;
+        float angleMax = 0;
+        float angleMin = 0;
+        float speed = 0;
+        Vector2 vec;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生成機関
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int count = 0; count < starNum; count++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 生成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newStarObj = Instantiate(m_starObjOrigin) as GameObject;
+            newStarObj.SetActive(true);
+            newStarObjMove = newStarObj.GetComponent<StarPieceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ランダム作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            angleMax = angleCenter + (angleSwing / 2.0f);
+            angleMin = angleCenter - (angleSwing / 2.0f);
+            angle = Random.Range(angleMin, angleMax);
+            speed = Random.Range(speedMin, speedMax);
+            vec = ChangeData.AngleDegToVector2(angle);
+            vec *= speed;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ここにしまう
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newStarObj.transform.parent = transform;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 飛んでいく角度をランダムに決める
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newStarObjMove.SetVec(vec.x, vec.y);
+            newStarObjMove.SetPosition(pos);
+            newStarObjMove.SetSpeed(0.01f, 0.01f);
+        }
+    }
 }
