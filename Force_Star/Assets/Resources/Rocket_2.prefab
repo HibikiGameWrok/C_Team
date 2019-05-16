@@ -93,4 +93,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightPos: 50
-  speed: 1
+  speed: 0.01
