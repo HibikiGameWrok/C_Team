@@ -65,6 +65,9 @@ public class StartRoket : MonoBehaviour
     private Transform BackGround;
 
     // 敵をまとめている親オブジェクト
+    private GameObject ParentEnemys;
+    // 子の敵オブジェクトを取得する変数
+    private Transform Enemys;
 
     int count = 0;
 
@@ -86,25 +89,28 @@ public class StartRoket : MonoBehaviour
         // ロケットと対象物の距離を保管
         journeyLength = Vector3.Distance(this.transform.position, targetPos);
 
-        // オブジェクトの取得
+        // 親オブジェクトの取得
         ParentBGM = GameObject.Find("ParentBGM");
         // 子の取得
         BGM = ParentBGM.transform.Find("BGM");
 
-        // オブジェクトの取得
+        // 親オブジェクトの取得
         ParentMainCamera = GameObject.Find("ParentMainCamera");
         // 子の取得
         MainCamera = ParentMainCamera.transform.Find("Main Camera");
 
-        // オブジェクトの取得
+        // 親オブジェクトの取得
         ParentPlayDirector = GameObject.Find("ParentPlayDirector");
         // 子の取得
         PlayDirector = ParentPlayDirector.transform.Find("PlayDirector");
 
-        // オブジェクトの取得
+        // 親オブジェクトの取得
         ParentBG = GameObject.Find("BackGround");
         // 子の取得
         BackGround = ParentBG.transform.Find("Sea_BackGround_Image");
+
+        // 親オブジェクトの取得
+        ParentEnemys = GameObject.Find("Enemys");
 
         // オブジェクトの取得
         Panel = GameObject.Find("Panel");
@@ -196,6 +202,11 @@ public class StartRoket : MonoBehaviour
                     // BackGround
                     BackGround.gameObject.SetActive(true);
 
+                    foreach (Transform Enemys in ParentEnemys.transform)
+                    {
+                        Debug.Log(Enemys.name);
+                        Enemys.gameObject.SetActive(true);
+                    }
                 }
                 // 動きを止める
                 moveStopFlag = true;
