@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class SEmanager : MonoBehaviour
 {
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲーム共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_directorIndex;
+
     //
     public static string music = "music/";
     public static string se = "SE/";
+
     [SerializeField]
     AudioClip[] m_sounds;
 
-    enum soundID
+    public enum soundID
     {
         NONE,
         ENEMY,
@@ -36,6 +42,8 @@ public class SEmanager : MonoBehaviour
 
     void Awake()
     {
+
+        m_directorIndex = PlaySceneDirectorIndex.GetInstance();
 
         m_sounds = new AudioClip[(int)soundID.MAXNUM];
         ReadData();
@@ -93,24 +101,30 @@ public class SEmanager : MonoBehaviour
         //if (m_soundId != soundID.NONE)
         //    m_soundId = soundID.NONE;
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            m_soundId = soundID.ENEMY;
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    m_soundId = soundID.ENEMY;
 
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            m_soundId = soundID.SAND_BLOCK;
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            m_soundId = soundID.STAR;
-        }
+        //}
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    m_soundId = soundID.SAND_BLOCK;
+        //}
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    m_soundId = soundID.STAR;
+        //}
 
-        if (soundFlag)
-        {
-            m_audiosource.PlayOneShot(GetGameSE(m_soundId));
-            soundFlag = false;
-        }
+        //if (soundFlag)
+        //{
+        //    m_audiosource.PlayOneShot(GetGameSE(m_soundId));
+        //    soundFlag = false;
+        //}
+    }
+
+    public void PlaySoundEffect(soundID id)
+    {
+        m_audiosource.PlayOneShot(GetGameSE(id));
+        soundFlag = true;
     }
 }

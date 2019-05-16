@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01429b84b7f37854b99817bde2abe4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Star: {fileID: 0}
+  Star: {fileID: 4410811510344274275, guid: 1d7f20ad0cb20ea49b741af219191f05, type: 3}
   starX: 0.1
   correctionX: -2.6
 --- !u!4 &619683821
@@ -1224,9 +1224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44df4a0c8a56b24599d47681ec66e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound01: {fileID: 8300000, guid: 1a6326efd1cba54418aa6fcc8d4d8dc9, type: 3}
-  sound02: {fileID: 8300000, guid: a07f59591f446424ea385329bf3e1517, type: 3}
-  sound03: {fileID: 8300000, guid: b6996a15e474ca349b99d20a159d2e80, type: 3}
+  m_sounds: []
+  m_soundId: 0
+  soundFlag: 0
 --- !u!1001 &946399650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1453,7 +1453,7 @@ PrefabInstance:
     - target: {fileID: 3884428854698817740, guid: b1424117b4b87a847a2beef48b13d672,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1757142879699980755, guid: b1424117b4b87a847a2beef48b13d672,
         type: 3}
@@ -1510,7 +1510,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8423713218071042168, guid: b1424117b4b87a847a2beef48b13d672,
+        type: 3}
+      propertyPath: starDirec
+      value: 
+      objectReference: {fileID: 619683819}
+    m_RemovedComponents:
+    - {fileID: 8423713218071042168, guid: b1424117b4b87a847a2beef48b13d672, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1424117b4b87a847a2beef48b13d672, type: 3}
 --- !u!1 &1033695949 stripped
 GameObject:
@@ -2199,12 +2205,12 @@ PrefabInstance:
     - target: {fileID: 4379622801009885541, guid: f837900cc2e790b43b5a77f48af226c0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.179
+      value: 22.15
       objectReference: {fileID: 0}
     - target: {fileID: 4379622801009885541, guid: f837900cc2e790b43b5a77f48af226c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.751
+      value: -1.81
       objectReference: {fileID: 0}
     - target: {fileID: 4379622801009885541, guid: f837900cc2e790b43b5a77f48af226c0,
         type: 3}
