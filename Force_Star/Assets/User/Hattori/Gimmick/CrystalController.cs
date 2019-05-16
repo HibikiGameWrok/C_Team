@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CrystalController : MonoBehaviour
 {
+    private AudioSource sound;
+
     public GameObject starDirec;
 
     private StarDirector starCreate;
@@ -46,6 +48,8 @@ public class CrystalController : MonoBehaviour
         starCreate = starDirec.GetComponent<StarDirector>();
 
         render = gameObject.GetComponent<SpriteRenderer>();
+
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,8 +62,11 @@ public class CrystalController : MonoBehaviour
         }
         else
         {
+            //普通の透明度
             flashCrystale = 1.0f;
         }
+
+        //透明度とかを更新
         render.color = new Color(colorR, colorG, colorB, flashCrystale);
     }
 
@@ -67,19 +74,29 @@ public class CrystalController : MonoBehaviour
     {
         if (col.gameObject.tag == "AttackBoal")
         {
+            //点滅時間初期化
             flashCount = 0.0f;
 
+            //点滅フラグをON
             flashFlag = true;
+
+            //点滅回数 < Ｍａｘ点滅回数
             if (crystalCount < maxCrystalCount)
             {
+                sound.PlayOneShot(sound.clip);
+
                 float posX1;
                 float posY;
                 posX1 = this.transform.position.x;
                 posY = this.transform.position.y;
 
                 starCreate.CreateOneStar(new Vector2(posX1, posY), 5, false, 0.5f);
+
+                //点滅回数をカウント
                 crystalCount += 1;
             }
+
+            //点滅回数 > Ｍａｘ点滅回数
             else
             {
                 flashFlag = false;
