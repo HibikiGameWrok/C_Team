@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoketTakeOff : MonoBehaviour
 {
@@ -27,17 +28,18 @@ public class RoketTakeOff : MonoBehaviour
     // 動きを止める
     bool stop = false;
 
-    // デバッグ用
-    private Vector3 resetP;
 
     void Awake()
     {
         // 開始時間を保管
         startTime = Time.time;
 
+        // 着地地点からの高さを対象物として保管
+        storagePos = new Vector3(this.transform.position.x, heightPos, this.transform.position.z);
 
-        // デバッグ用
-        resetP = this.transform.position;
+        // ロケットと対象物の距離を保管
+        journeyLength = Vector3.Distance(this.transform.position, storagePos);
+
 
         // メインカメラを親から取得
         ParentmainCamera = GameObject.Find("ParentMainCamera");
@@ -50,51 +52,58 @@ public class RoketTakeOff : MonoBehaviour
         // コルーチンを実行  
         StartCoroutine("TakeOff");
 
-        // デバッグ用
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            this.transform.position = resetP;
-            // コルーチンを実行  
-            StartCoroutine("TakeOff");
-        }
-
     }
 
     private IEnumerator TakeOff()
     {
-
-        // 着地地点からの高さを対象物として保管
-        storagePos = new Vector3(this.transform.position.x, heightPos, this.transform.position.z);
-
-        // ロケットと対象物の距離を保管
-        journeyLength = Vector3.Distance(this.transform.position, storagePos);
-
         // 1秒待つ  
         yield return new WaitForSeconds(1.0f);
+
+        Shaking(true);
+
+        // 1秒待つ  
+        yield return new WaitForSeconds(3.0f);
+        // カメラの追従対象を変える
+        targetfollow.SetTarget(this.gameObject);
+
+        // 0.1秒待つ  
+        yield return new WaitForSeconds(0.1f);
+
+        // 距離感の速度
+        float distCovered = (Time.time - startTime) * speed;
+        // 飛ばす(補間移動)
+        this.transform.position = Vector3.Lerp(this.transform.position, storagePos, distCovered);
+
+        EffInstance(true);
+        //作成したオブジェクトを子として登録
+        //StartJetPreFab.transform.SetParent(this.transform);
+
+        yield return new WaitForSeconds(3.0f);
+        //StopCoroutine("TakeOff");
+
+
+        //シーン遷移
+        SceneManager.LoadScene("ResultScene");
+    }
+
+    void Shaking(bool stop)
+    {
         if (stop == false)
         {
             // 震える
             this.transform.position = new Vector3(Mathf.Sin(30.0f * Mathf.PI * 1f * Time.time) + this.transform.position.x, this.transform.position.y, this.transform.position.z);
         }
-        // 1秒待つ  
-        yield return new WaitForSeconds(3.0f);
-        stop = true;
-        // カメラの追従対象を変える
-        targetfollow.SetTarget(this.gameObject);
-        // 0.1秒待つ  
-        yield return new WaitForSeconds(0.1f);
-        // 距離感の速度
-        float distCovered = (Time.time - startTime);
-        // 飛ばす(補間移動)
-        this.transform.position = Vector3.Lerp(this.transform.position, storagePos, 3);
+    }
 
-        //// ロケットプレハブをGameObject型で取得
-        //GameObject StartJetPreFab = (GameObject)Resources.Load("StartJetPreFab");
-        // ロケットプレハブを元に生成
-        //Instantiate(StartJetPreFab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
-        // 作成したオブジェクトを子として登録
-        //StartJetPreFab.transform.SetParent(this.transform);
-
-        StopCoroutine("TakeOff");
+    void EffInstance(bool stop)
+    {
+        if (stop == false)
+        {
+            // ロケットプレハブをGameObject型で取得
+            GameObject StartJetPreFab = (GameObject)Resources.Load("StartJetPreFab");
+            //ロケットプレハブを元に生成
+            Instantiate(StartJetPreFab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+        }
     }
 }
+
