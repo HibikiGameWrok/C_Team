@@ -111,7 +111,7 @@ public class Enemy2Move : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る *5
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_playIndex.ApplyStar(new Vector2(posX1, posY), 20);
+            m_playIndex.ApplyStarBounce(new Vector2(posX1, posY), 20);
 
             //好きな大きさの重力を指定する
             rigid2D.gravityScale = gravityForce;

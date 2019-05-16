@@ -158,7 +158,7 @@ public class StarMove : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 星登場！
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.ApplyStar(this.transform.position, maxStar);
+                m_playIndex.ApplyStarBounce(this.transform.position, maxStar);
                 // パーティクルの再生
                 particle.Play();
             }

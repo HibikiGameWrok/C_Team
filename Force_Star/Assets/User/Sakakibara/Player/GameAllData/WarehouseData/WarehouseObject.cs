@@ -173,6 +173,10 @@ namespace WarehouseData
                     m_texture2DApp[(int)AppImageNum.POWERUP_HEAD] = Resources.Load<Texture2D>(MyFile + "PowerUpHead");
                     m_texture2DApp[(int)AppImageNum.POWERUP_LEG] = Resources.Load<Texture2D>(MyFile + "PowerUpLeg");
                     m_texture2DApp[(int)AppImageNum.POWERUP_TIME] = Resources.Load<Texture2D>(MyFile + "PowerUpTime");
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 大爆発のデータ
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_texture2DApp[(int)AppImageNum.EXPROSION] = Resources.Load<Texture2D>(MyFile + "Exprosion");
                 }
             }
 

@@ -62,7 +62,7 @@ public class LampController : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 星が出る *10
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.ApplyStar(new Vector2(posX1, posY + 8.0f), 10);
+                m_playIndex.ApplyStarBounce(new Vector2(posX1, posY + 8.0f), 10);
 
                 //StarDirector starCreate;
                 // starCreate.CreateOneStar(new Vector2(posX1, posY + 8.0f), 5, false,0.5f);

@@ -56,6 +56,21 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private Rigidbody2D m_player2D;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 昇天
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    struct Ascension
+    {
+        public bool start;
+        public float time;
+        public bool end;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 昇天データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private Ascension m_ascension;
+
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakePlayer()
@@ -98,6 +113,13 @@ public partial class PlayerDirector : MonoBehaviour
         m_animePunch = false;
         m_punchTrigger = false;
         m_punchFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 昇天データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_ascension = new Ascension();
+        m_ascension.start = false;
+        m_ascension.time = 0.0f;
+        m_ascension.end = false;
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -577,6 +599,55 @@ public partial class PlayerDirector : MonoBehaviour
         {
             m_playerMove.SetAttackFlag(m_punchFlag);
         }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 志望しました。
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void GameOverPlayer()
+    {
+ 
+        bool rightPower = m_playerMove.GetRightPowerFlag();
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 飛び上がる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (!m_ascension.start)
+        {
+            m_ascension.start = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 吹き飛べ！
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            Vector2 power = ChangeData.AngleDegToVector2(80.0f);
+            power *= 1000.0f;
+            if (rightPower)
+            {
+                power.x = power.x * -1;
+            }
+            m_player2D.AddForce(power);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発モーション
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_ascension.time = m_ascension.time + 1;
+
+
+        if (!m_ascension.start)
+        {
+            m_ascension.start = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 吹き飛べ！
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            Vector2 power = ChangeData.AngleDegToVector2(80.0f);
+            power *= 1000.0f;
+            if (rightPower)
+            {
+                power.x = power.x * -1;
+            }
+            m_player2D.AddForce(power);
+        }
+
+
+
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報取得
