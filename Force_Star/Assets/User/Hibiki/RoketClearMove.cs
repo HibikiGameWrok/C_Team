@@ -19,11 +19,13 @@ public class RoketClearMove : MonoBehaviour
     private GameObject player = null;
 
     PlayerController playercont;
-    
-   
+
+    PlayerDirectorIndex playerIndex;
+
 
     void Awake()
     {
+        playerIndex = PlayerDirectorIndex.GetInstance();
         playercont = new PlayerController();
         player = GameObject.Find("Player");
     }
@@ -48,19 +50,23 @@ public class RoketClearMove : MonoBehaviour
         // ロケットに当たっている時
         if (layerName == "PlayerDigid" || col.gameObject.tag == "Player")
         {
-            Vector2 stick = playercont.ChackStickPower();
-            Debug.Log(stick.y);
-            if (cooltime == false)
+            Debug.Log(playerIndex.GetHaveStarParsent());
+            if (playerIndex.GetHaveStarParsent() >= 1)
             {
-                // ↑orWを押すとシーン移行
-                if(stick.y < STICKPOW || Input.GetKeyDown(KeyCode.UpArrow))
+                Vector2 stick = playercont.ChackStickPower();
+                Debug.Log(stick.y);
+                if (cooltime == false)
                 {
-                    cooltime = true;
-                    // フェードアウト
-                    StartFade.SetFadeOutFlag(true);
+                    // ↑orWを押すとシーン移行
+                    if (stick.y < STICKPOW || Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        cooltime = true;
+                        // フェードアウト
+                        StartFade.SetFadeOutFlag(true);
 
-                    // コルーチンを実行  
-                    StartCoroutine("ClearMove");
+                        // コルーチンを実行  
+                        StartCoroutine("ClearMove");
+                    }
                 }
             }
         }
