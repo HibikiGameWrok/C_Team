@@ -9,13 +9,13 @@ public class StoneMove : MonoBehaviour
     private StarDirector starCreate;
 
 
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 攻撃当たり判定データ
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private Vector2 m_partsAttackPos;
-    private Vector2 m_partsAttackSize;
-    private EnemyAttackPartsBox m_partsAttack;
-    private GameObject m_partsAttackObject;
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //// 攻撃当たり判定データ
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //private Vector2 m_partsAttackPos;
+    //private Vector2 m_partsAttackSize;
+    //private EnemyAttackPartsBox m_partsAttack;
+    //private GameObject m_partsAttackObject;
 
     Rigidbody2D rigid2D;
 
@@ -25,16 +25,16 @@ public class StoneMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃当たり判定データ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        GameObject parent = this.gameObject;
-        m_partsAttackObject = new GameObject("attackParts");
-        m_partsAttackObject.transform.parent = parent.transform;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃当たり判定のスクリプト
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        this.m_partsAttack = m_partsAttackObject.AddComponent<EnemyAttackPartsBox>();
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //// 攻撃当たり判定データ
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //GameObject parent = this.gameObject;
+        //m_partsAttackObject = new GameObject("attackParts");
+        //m_partsAttackObject.transform.parent = parent.transform;
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //// 攻撃当たり判定のスクリプト
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //this.m_partsAttack = m_partsAttackObject.AddComponent<EnemyAttackPartsBox>();
 
         
     }
@@ -47,21 +47,21 @@ public class StoneMove : MonoBehaviour
         starCreate = starDirec.GetComponent<StarDirector>();
 
 
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃当たり判定の発生
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_partsAttackObject.gameObject.transform.localPosition = Vector3.zero;
-        m_partsAttackObject.gameObject.transform.localRotation = Quaternion.identity;
-        m_partsAttackObject.gameObject.transform.localScale = Vector3.one;
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //// 攻撃当たり判定の発生
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //m_partsAttackObject.gameObject.transform.localPosition = Vector3.zero;
+        //m_partsAttackObject.gameObject.transform.localRotation = Quaternion.identity;
+        //m_partsAttackObject.gameObject.transform.localScale = Vector3.one;
 
-        m_partsAttackPos = new Vector2(0, 0);
-        m_partsAttackSize = new Vector2(1.5f, 1.5f);
-        m_partsAttack.SetPlayHit();
-        m_partsAttack.SetPointSize(m_partsAttackPos, m_partsAttackSize);
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃威力
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_partsAttack.SetAttackData(10.0f, false);
+        //m_partsAttackPos = new Vector2(0, 0);
+        //m_partsAttackSize = new Vector2(1.5f, 1.5f);
+        //m_partsAttack.SetPlayHit();
+        //m_partsAttack.SetPointSize(m_partsAttackPos, m_partsAttackSize);
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //// 攻撃威力
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //m_partsAttack.SetAttackData(10.0f, false);
     }
 
     // Update is called once per frame
