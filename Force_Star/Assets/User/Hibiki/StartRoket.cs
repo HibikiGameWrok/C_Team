@@ -145,7 +145,7 @@ public class StartRoket : MonoBehaviour
         if (count == 0)
         {
             //// ファイアプレハブをGameObject型で取得
-            GameObject RoketParts0 = (GameObject)Resources.Load("RocketParts_0");
+            GameObject RoketParts0 = (GameObject)Resources.Load("StartParts_0");
             // ファイアプレハブを元に、インスタンスを生成、
             Instantiate(RoketParts0, this.transform.position, Quaternion.identity);
             count = 1;
@@ -155,7 +155,7 @@ public class StartRoket : MonoBehaviour
         if (count == 1)
         {
             //// ファイアプレハブをGameObject型で取得
-            GameObject RoketParts1 = (GameObject)Resources.Load("RocketParts_1");
+            GameObject RoketParts1 = (GameObject)Resources.Load("StartParts_1");
             // ファイアプレハブを元に、インスタンスを生成、
             Instantiate(RoketParts1, this.transform.position, Quaternion.identity);
             count = 2;
@@ -165,7 +165,7 @@ public class StartRoket : MonoBehaviour
         if (count == 2)
         {
             //// ロケットプレハブをGameObject型で取得
-            GameObject RoketParts2 = (GameObject)Resources.Load("RocketParts_2");
+            GameObject RoketParts2 = (GameObject)Resources.Load("StartParts_2");
             // ロケットプレハブを元に生成
             Instantiate(RoketParts2, this.transform.position, Quaternion.identity);
             count = 3;
