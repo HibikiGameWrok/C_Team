@@ -122,14 +122,5 @@ public class RoketClearMove : MonoBehaviour
         StartFade.SetFadeOutFlag(true);
 
         Debug.Log("画面暗転");
-
-
-        // 1秒待つ  
-        yield return new WaitForSeconds(5.0f);
-
-        //シーン遷移
-        SceneManager.LoadScene("ResultScene");
-
-        Debug.Log("リザルトシーンへGO");
     }
 }
