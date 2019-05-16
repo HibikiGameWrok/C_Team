@@ -144,6 +144,25 @@ public class GameObjectSprite : MonoBehaviour
         m_spriteObject.transform.localPosition = position;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の位置を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void AddPosition(Vector3 position)
+    {
+        gameObject.transform.position += position;
+    }
+    public void AddPositionLocal(Vector3 position)
+    {
+        gameObject.transform.localPosition += position;
+    }
+    public void AddImagePosition(Vector3 position)
+    {
+        m_spriteObject.transform.position += position;
+    }
+    public void AddImagePositionLocal(Vector3 position)
+    {
+        m_spriteObject.transform.localPosition += position;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の回転を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetRotation(Quaternion rotation)

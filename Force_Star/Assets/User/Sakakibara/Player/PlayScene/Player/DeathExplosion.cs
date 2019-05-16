@@ -29,6 +29,10 @@ using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Numbe
 public class DeathExplosion : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲーム共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private PlaySceneDirectorIndex m_directorIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー倉庫
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private WarehousePlayer m_warehousePlayer;
@@ -49,26 +53,66 @@ public class DeathExplosion : MonoBehaviour
     List<TimeAndVec> m_starExplosionTime;
     private TexImageData m_starTexImageData;
     private RenderImageData m_starRenderImageData;
-    ////*|***|***|***|***|***|***|***|***|***|***|***|
-    ////  大爆発
-    ////*|***|***|***|***|***|***|***|***|***|***|***|
-    //GameObjectSprite m_centerExplosion;
-    //GameObject m_centerExplosionObject;
-    //private TexImageData m_centeTexImageData;
-    //private RenderImageData m_centeRenderImageData;
-    //private int m_centerAnime;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //  爆発
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    List<GameObjectSprite> m_bombExplosion;
+    List<TimeAndVec> m_bombExplosionTime;
+    private TexImageData m_bombTexImageData;
+    private RenderImageData m_bombRenderImageData;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 継承用使用データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private float m_timeExplosion;
-    private float m_timeMax = 90;
-    private float m_timeMaxStar = 10;
-
+    private static float m_timeMax = 90;
+    private static float m_timeMaxStar = 600;
+    private static float m_timeMaxBomb = 12;
+    private static float m_timeAmongBomb = MyCalculator.Division(m_timeMaxBomb, 6);
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発状態
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool m_awakeFlag = false;
+    private bool m_pointReverse = false;
+    private Vector3 m_pointBomb;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void AwakeON()
+    {
+        m_awakeFlag = true;
+        m_timeExplosion = 0;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発終了
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void AwakeOFF()
+    {
+        m_awakeFlag = false;
+        m_timeExplosion = 0;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発地点
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPoint(Vector3 point)
+    {
+        m_pointBomb = point;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発地点
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetReverse(bool reverse)
+    {
+        m_pointReverse = reverse;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 爆発
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲーム共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex = PlaySceneDirectorIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー倉庫
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -97,8 +141,29 @@ public class DeathExplosion : MonoBehaviour
 
         m_starRenderImageData = new RenderImageData();
         m_starRenderImageData.depth = 99;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発バラマキ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_bombExplosion = new List<GameObjectSprite>();
+        m_bombExplosionTime = new List<TimeAndVec>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発バラマキイメージ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_bombTexImageData = new TexImageData();
+        m_bombTexImageData.image = m_warehouseObject.GetTexture2DApp(AppImageNum.EXPROSION);
+        m_bombTexImageData.pibot = new Vector2(0.5f, 0.5f);
+        m_bombTexImageData.size = new Vector2(1.0f, 1.0f);
+        m_bombTexImageData.rextParsent = MyCalculator.RectSizeReverse_Y(0, 6, 1);
 
+        m_bombRenderImageData = new RenderImageData();
+        m_bombRenderImageData.depth = 100;
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         m_timeExplosion = 0;
+        m_awakeFlag = false;
+        m_pointBomb = Vector3.zero;
     }
     void Start()
     {
@@ -108,54 +173,62 @@ public class DeathExplosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float lp = 0.0f;
-        float size = 0.0f;
-        float harfTime = MyCalculator.Division(m_timeMax, 2);
-        float animeNum = 0;
-        if(m_timeExplosion != m_timeMax)
-        {
-            if (m_timeExplosion < harfTime)
-            {
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // 大きさ
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                lp = MyCalculator.LeapReverseCalculation(0.0f, harfTime, m_timeExplosion);
-                size = MyCalculator.Leap(1.0f, 5.0f, lp);
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // アニメ番号
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                animeNum = 0;
-            }
-            else
-            {
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // 大きさ
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                size = 5.0f;
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // アニメ番号
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                animeNum = MyCalculator.Division(m_timeExplosion - harfTime, MyCalculator.Division(harfTime, 6));
-                animeNum = ChangeData.AntiOverflow(animeNum, 6);
-            }
-        }
-        else
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 地点移動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_awakeFlag)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 時間経過
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_timeExplosion++;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 散らばり
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            StarMade();
+            if (m_timeExplosion >= m_timeMax)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 大きく星が散らばる
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                StarMade();
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 爆発が散らばる
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_awakeFlag = false;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 音：ドーン
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_directorIndex.PlaySoundEffect(SEManager.SoundID.DAMAGE_01);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // X
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                gameObject.transform.position = m_pointBomb;
+                m_directorIndex.SetObjectTargetCamera(this.gameObject);
+            }
+            else
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 時間経過
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_timeExplosion++;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 爆発が散らばる
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                BombMade();
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 音：ドーン
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (m_timeExplosion % 24 == 0)
+                {
+                    m_directorIndex.PlaySoundEffect(SEManager.SoundID.DAMAGE_02);
+                }
+            }
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 破壊
         //*|***|***|***|***|***|***|***|***|***|***|***|
         StarDelete();
+        BombDelete();
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     void StarMade()
     {
         TexImageData starTex = m_starTexImageData;
@@ -169,20 +242,24 @@ public class DeathExplosion : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 生成用
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 場所
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector3 point = m_pointBomb;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 射角
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        float angleMax = 0;
-        float angleMin = 360;
+        float angleMax = 360;
+        float angleMin = 0;
         float angle = 0.0f;
-        float speedMax = 0.5f;
-        float speedMin = 0.22f;
+        float speedMax = 1.5f;
+        float speedMin = 0.001f;
         float speed = 0.0f;
         Vector2 vec;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 大きさ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        float sizeMax = 2.5f;
-        float sizeMin = 0.5f;
+        float sizeMax = 5.0f;
+        float sizeMin = 2.5f;
         float size;
         Vector2 sizeVector2;
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -194,7 +271,13 @@ public class DeathExplosion : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         for (int count = 0; count < starNum; count++)
         {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = new GameObject("StarExplosion" + count.ToString());
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発絵
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarSprite = newStarObj.AddComponent<GameObjectSprite>();
             m_starExplosion.Add(newStarSprite);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -210,6 +293,22 @@ public class DeathExplosion : MonoBehaviour
             size = Random.Range(sizeMax, sizeMin);
             sizeVector2 = new Vector2(size, size);
             starTex.size = sizeVector2;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発地点
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            //point = point;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 反転
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_pointReverse)
+            {
+                point = MyCalculator.EachTimes(point, new Vector3(-1, 1, 1));
+                vec = MyCalculator.EachTimes(vec, new Vector2(-1, 1));
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 適応
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newStarSprite.SetPosition(point);
             newStarSprite.SetImageUpdate(starTex);
             newStarSprite.SetRenderUpdate(starRen);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -239,8 +338,7 @@ public class DeathExplosion : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // うごく
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starExplosion[index].gameObject.transform.position += ChangeData.GetVector3(getTime.vec);
-
+            m_starExplosion[index].AddPosition(ChangeData.GetVector3(getTime.vec));
             m_starExplosionTime[index] = getTime;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -259,6 +357,160 @@ public class DeathExplosion : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 m_starExplosionTime.RemoveAt(index);
                 m_starExplosion.RemoveAt(index);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 削除する
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                Destroy(sprite.gameObject);
+                index = 0;
+            }
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void BombMade()
+    {
+        TexImageData bombTex = m_bombTexImageData;
+        RenderImageData bombRen = m_bombRenderImageData;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生成
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject newBombObj = null;
+        GameObjectSprite newBombSprite = null;
+        int bombNum = 1;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生成用
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 場所
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector3 point = m_pointBomb;
+        Vector2 pointDif = new Vector2(-0.5f, 1.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 射角
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float angleMax = 135 + MyCalculator.Division(45.0f, 2.0f);
+        float angleMin = 135 - MyCalculator.Division(45.0f, 2.0f);
+        float angle = 0.0f;
+        //float speedMax = 0.5f;
+        //float speedMin = 0.3f;
+
+        float speedMax = 0.35f;
+        float speedMin = 0.05f;
+        float speed = 0.0f;
+        Vector2 vec;
+        //vecDif = Vector2.zero;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 大きさ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float sizeMax = 1.5f;
+        float sizeMin = 0.05f;
+        float size;
+        Vector2 sizeVector2;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時計
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TimeAndVec newTime;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 作成
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int count = 0; count < bombNum; count++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newBombObj = new GameObject("BombExplosion" + count.ToString());
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発絵
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newBombSprite = newBombObj.AddComponent<GameObjectSprite>();
+            m_bombExplosion.Add(newBombSprite);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 射角
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            angle = Random.Range(angleMin, angleMax);
+            speed = Random.Range(speedMin, speedMax);
+            vec = ChangeData.AngleDegToVector2(angle);
+            vec *= speed;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 大きさ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            size = Random.Range(sizeMax, sizeMin);
+            sizeVector2 = new Vector2(size, size);
+            bombTex.size = sizeVector2;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発地点
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            point = point + ChangeData.GetVector3(pointDif);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 反転
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_pointReverse)
+            {
+                point = MyCalculator.EachTimes(point, new Vector3(-1, 1, 1));
+                vec = MyCalculator.EachTimes(vec, new Vector2(-1, 1));
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 適応
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newBombSprite.SetPosition(point);
+            newBombSprite.SetImageUpdate(bombTex);
+            newBombSprite.SetRenderUpdate(bombRen);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 時計
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newTime = new TimeAndVec();
+            newTime.time = 0;
+            newTime.vec = vec;
+            m_bombExplosionTime.Add(newTime);
+        }
+    }
+    void BombDelete()
+    {
+        int animeNum = 0;
+        TimeAndVec getTime;
+        GameObjectSprite sprite;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_bombExplosionTime.Count; index++)
+        {
+            getTime = m_bombExplosionTime[index];
+
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 時間
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            animeNum = Mathf.FloorToInt(MyCalculator.Division(getTime.time, m_timeAmongBomb));
+            getTime.time++;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // うごく絵
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            animeNum = ChangeData.AntiOverflow(animeNum, 6);
+            m_bombExplosion[index].SetRect(MyCalculator.RectSizeReverse_Y(animeNum, 6, 1));
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // うごく
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bombExplosion[index].AddPosition(ChangeData.GetVector3(getTime.vec));
+
+
+
+            m_bombExplosionTime[index] = getTime;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 削除
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_bombExplosionTime.Count; index++)
+        {
+            if (m_bombExplosionTime[index].time > m_timeMaxBomb)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 削除する準備
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                sprite = m_bombExplosion[index];
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 削除
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_bombExplosionTime.RemoveAt(index);
+                m_bombExplosion.RemoveAt(index);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 削除する
                 //*|***|***|***|***|***|***|***|***|***|***|***|

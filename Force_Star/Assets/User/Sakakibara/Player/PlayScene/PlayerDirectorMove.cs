@@ -70,7 +70,8 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     private Ascension m_ascension;
-
+    private GameObject m_ascensionObject;
+    private DeathExplosion m_ascensionEffect;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -122,6 +123,11 @@ public partial class PlayerDirector : MonoBehaviour
         m_ascension.start = false;
         m_ascension.time = 0.0f;
         m_ascension.end = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 昇天データ絵
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_ascensionObject = new GameObject("AscensionEffect");
+        m_ascensionEffect = m_ascensionObject.AddComponent<DeathExplosion>();
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -142,6 +148,10 @@ public partial class PlayerDirector : MonoBehaviour
             // プレイヤーのパーツイメージを変える
             //*|***|***|***|***|***|***|***|***|***|***|***|
             PlayerImageUpdate();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ゲーム共通ディレクターに自らが狙われると名乗り出る
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_directorIndex.SetObjectTargetCamera(m_playerCenter);
         }
         else
         {
@@ -602,6 +612,13 @@ public partial class PlayerDirector : MonoBehaviour
             m_myAnime.SetInteger("MoveEnum", 0);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 死んでいるなら
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_ascension.start)
+        {
+            m_myAnime.SetInteger("MoveEnum", 5);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // フラグ更新なら
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_myAnime.SetBool("ClipLand", groundFlag);
@@ -657,6 +674,12 @@ public partial class PlayerDirector : MonoBehaviour
 
 
 
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発の
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_ascensionEffect.SetPoint(GetPlayerPositon());
+
+
         if (!m_ascension.end && m_ascension.time >= 90.0f)
         {
             m_ascension.end = true;
@@ -681,10 +704,16 @@ public partial class PlayerDirector : MonoBehaviour
             m_ascension.time = 0;
             m_ascension.end = false;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発の
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_ascensionEffect.AwakeON();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 吹き飛べ！
             //*|***|***|***|***|***|***|***|***|***|***|***|
             Vector2 power = ChangeData.AngleDegToVector2(80.0f);
-            power *= 1000.0f;
+            power = ChangeData.AngleDegToVector2(10.0f);
+            power = ChangeData.AngleDegToVector2(45.0f);
+            power *= 500.0f;
             if (rightPower)
             {
                 power.x = power.x * -1;

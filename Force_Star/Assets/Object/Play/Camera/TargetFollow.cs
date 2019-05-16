@@ -21,18 +21,17 @@ public class TargetFollow : MonoBehaviour
 
     private GameObject Player = null;  // プレイヤーの管理オブジェクト 
 
+    private void Awake()
+    {
+        Player = GameObject.Find("Player");
+        target = Player;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(Player == null)
-        {
-            Player = GameObject.Find("Player");
-        }
-        if (Player != null)
-        {
-            target = Player;
-        }
+
+
         transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z);
 
         //if (transform.position.y < MinimumLimit)
