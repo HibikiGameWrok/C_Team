@@ -119,7 +119,7 @@ public class Enemy1Move : MonoBehaviour
             posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
             // 
-            starCreate.CreateStar(new Vector2(posX1, posY), new Vector2(posX2, posY), 10);
+            starCreate.CreateOneStar(this.transform.position, 10);
 
             rigid2D.gravityScale = gravityForce;
 
