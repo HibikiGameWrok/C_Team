@@ -26,8 +26,8 @@ public class RoketTakeOff : MonoBehaviour
     private float journeyLength;
 
     // 動きを止める
-    bool stop = false;
-
+    bool stopFlag = false;
+    bool stopFlag1 = false;
 
     void Awake()
     {
@@ -35,7 +35,7 @@ public class RoketTakeOff : MonoBehaviour
         startTime = Time.time;
 
         // 着地地点からの高さを対象物として保管
-        storagePos = new Vector3(this.transform.position.x, heightPos, this.transform.position.z);
+        storagePos = new Vector3(this.transform.position.x, this.transform.position.y + heightPos, this.transform.position.z);
 
         // ロケットと対象物の距離を保管
         journeyLength = Vector3.Distance(this.transform.position, storagePos);
@@ -59,10 +59,14 @@ public class RoketTakeOff : MonoBehaviour
         // 1秒待つ  
         yield return new WaitForSeconds(1.0f);
 
-        Shaking(true);
-
+        if (stopFlag == false)
+        {
+            // 震える
+            this.transform.position = new Vector3(Mathf.Sin(30.0f * Mathf.PI * 1f * Time.time) + this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        }
         // 1秒待つ  
         yield return new WaitForSeconds(3.0f);
+        stopFlag = true;
         // カメラの追従対象を変える
         targetfollow.SetTarget(this.gameObject);
 
@@ -74,36 +78,18 @@ public class RoketTakeOff : MonoBehaviour
         // 飛ばす(補間移動)
         this.transform.position = Vector3.Lerp(this.transform.position, storagePos, distCovered);
 
-        EffInstance(true);
-        //作成したオブジェクトを子として登録
-        //StartJetPreFab.transform.SetParent(this.transform);
-
-        yield return new WaitForSeconds(3.0f);
-        //StopCoroutine("TakeOff");
-
-
-        //シーン遷移
-        SceneManager.LoadScene("ResultScene");
-    }
-
-    void Shaking(bool stop)
-    {
-        if (stop == false)
-        {
-            // 震える
-            this.transform.position = new Vector3(Mathf.Sin(30.0f * Mathf.PI * 1f * Time.time) + this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        }
-    }
-
-    void EffInstance(bool stop)
-    {
-        if (stop == false)
+        if (stopFlag1 == false)
         {
             // ロケットプレハブをGameObject型で取得
             GameObject StartJetPreFab = (GameObject)Resources.Load("StartJetPreFab");
             //ロケットプレハブを元に生成
             Instantiate(StartJetPreFab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+            stopFlag1 = true;
         }
+        
+
+        yield return new WaitForSeconds(3.0f);
+
     }
 }
 

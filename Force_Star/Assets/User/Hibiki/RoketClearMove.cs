@@ -110,13 +110,12 @@ public class RoketClearMove : MonoBehaviour
 
 
 
-        // 1秒待つ  
-        yield return new WaitForSeconds(2.0f);
+        // 5秒待つ  
+        yield return new WaitForSeconds(5.0f);
 
         Debug.Log("ロケットが飛んだ");
 
-
-        yield return new WaitForSeconds(3.0f);
+        //yield return new WaitForSeconds(3.0f);
 
         // フェードアウト
         StartFade.SetFadeOutFlag(true);
