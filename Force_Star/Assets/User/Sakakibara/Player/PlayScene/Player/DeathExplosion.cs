@@ -98,6 +98,11 @@ public class DeathExplosion : MonoBehaviour
 
         m_timeExplosion = 0;
     }
+    void Start()
+    {
+        m_centerExplosion.SetImage(m_centeTexImageData);
+        m_centerExplosion.SetRenderUpdate(m_centeRenderImageData);
+    }
 
     // Update is called once per frame
     void Update()
@@ -108,6 +113,6 @@ public class DeathExplosion : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_centerAnime = m_timeExplosion;
         m_centerAnime = ChangeData.AntiOverflow(m_centerAnime, 6);
-
+        m_centerExplosion.SetRect(MyCalculator.RectSizeReverse_Y(m_centerAnime, 6, 1));
     }
 }
