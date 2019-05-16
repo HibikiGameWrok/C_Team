@@ -120,6 +120,6 @@ public class PlayerDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public float GetHaveStarParsent()
     {
-        return m_playerDirector.GetAirParsent();
+        return m_playerDirector.GetHaveStarParsent();
     }
 }
