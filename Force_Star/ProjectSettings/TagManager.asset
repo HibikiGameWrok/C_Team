@@ -25,6 +25,7 @@ TagManager:
   - ground
   - Shell
   - StartRoketPoint
+  - WaterWall
   layers:
   - Default
   - TransparentFX
