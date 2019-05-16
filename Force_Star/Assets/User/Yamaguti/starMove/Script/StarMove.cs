@@ -27,6 +27,7 @@ public class StarMove : MonoBehaviour
     float vecX;                        // X軸への移動用
     float startJF;                     // 初期のジャンプ力保存用
     int maxStar;                       // 星の最大数
+    int stayCount;
     //-------------------------
 
 
@@ -74,12 +75,14 @@ public class StarMove : MonoBehaviour
         timeElapsed = 0.0f;
         particle.Stop();
         startJF = jumpForce;
+        stayCount = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (!hitFlag)
         {
+            stayCount++;
             // 当たった子を参照して星の跳ねる方向を変える
             switch (hitName)
             {
@@ -106,7 +109,10 @@ public class StarMove : MonoBehaviour
             }
 
             transform.position = new Vector3(transform.position.x + vecX, transform.position.y + jumpForce, transform.position.z);
-            jumpForce = jumpForce - grv;
+            if(jumpForce>-0.2f)
+            {
+                jumpForce = jumpForce - grv;
+            }
             FlashStar();                // 点滅用の関数
         }
         else
@@ -144,26 +150,29 @@ public class StarMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!hitFlag)
+        if(stayCount>30)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーの一部に当たったか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
-                SetStopHit();
-                hitFlag = true;
-                // 衝突時星の本体を見えなくする
-                this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // 星登場！
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.ApplyStar(this.transform.position, maxStar);
-                // パーティクルの再生
-                particle.Play();
+                //SetStopHit();
+                //hitFlag = true;
+                //// 衝突時星の本体を見えなくする
+                //this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.0f);
+                ////*|***|***|***|***|***|***|***|***|***|***|***|
+                //// 星登場！
+                ////*|***|***|***|***|***|***|***|***|***|***|***|
+                //m_playIndex.ApplyStar(this.transform.position, maxStar);
+                //// パーティクルの再生
+                //particle.Play();
+                PlayerDirectorIndex.GetInstance().GetStar(1);
+                Destroy(this.gameObject);
+
             }
-         
         }
+           
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定停止

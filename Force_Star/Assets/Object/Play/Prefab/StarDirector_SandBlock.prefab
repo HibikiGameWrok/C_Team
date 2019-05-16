@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01429b84b7f37854b99817bde2abe4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  star: {fileID: 4410811510344274275, guid: 1d7f20ad0cb20ea49b741af219191f05, type: 3}
-  playerObject: {fileID: 0}
+  Star: {fileID: 4410811510344274275, guid: 1d7f20ad0cb20ea49b741af219191f05, type: 3}
   starX: 0.1
   correctionX: -2.6
