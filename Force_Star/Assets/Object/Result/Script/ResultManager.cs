@@ -6,6 +6,11 @@ public class ResultManager : MonoBehaviour
 {
     //private O2BarCtr aliveFlag;
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲーム共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_directorIndex;
+
     public GameObject ClearManager;
     public GameObject OverManeger;
 
@@ -16,7 +21,14 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameFlag = O2BarCtr.aliveFlag;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲーム共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲームに生き残れたか？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        gameFlag = m_directorIndex.GetAliveFlagPlayScene();
     }
 
     // Update is called once per frame

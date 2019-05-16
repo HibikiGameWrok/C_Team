@@ -58,6 +58,7 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 昇天
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    [Serializable]
     struct Ascension
     {
         public bool start;
@@ -67,6 +68,7 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 昇天データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
     private Ascension m_ascension;
 
 
@@ -132,9 +134,22 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_controller.Update();
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // プレイヤーのパーツイメージを変える
+        // プレイヤーの状態確認
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        PlayerImageUpdate();
+        if (!m_ascension.start)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーのパーツイメージを変える
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            PlayerImageUpdate();
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーを殺す
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            UpdateGameOver();
+        }
         ////*|***|***|***|***|***|***|***|***|***|***|***|
         //// 操作更新
         ////*|***|***|***|***|***|***|***|***|***|***|***|
@@ -603,37 +618,68 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 志望しました。
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    void GameOverPlayer()
+    void UpdateGameOver()
     {
- 
-        bool rightPower = m_playerMove.GetRightPowerFlag();
-
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 飛び上がる
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (!m_ascension.start)
-        {
-            m_ascension.start = true;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 吹き飛べ！
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            Vector2 power = ChangeData.AngleDegToVector2(80.0f);
-            power *= 1000.0f;
-            if (rightPower)
-            {
-                power.x = power.x * -1;
-            }
-            m_player2D.AddForce(power);
-        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 爆発モーション
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_ascension.time = m_ascension.time + 1;
 
 
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パーツ耐久チェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_dataBace.GetArmDurable() == 0.0f)
+        {
+            UpdateWhiteArm();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体パーツ耐久チェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_dataBace.GetBodyDurable() == 0.0f)
+        {
+            UpdateWhiteBody();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭パーツ耐久チェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_dataBace.GetHeadDurable() == 0.0f)
+        {
+            UpdateWhiteHead();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚パーツ耐久チェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_dataBace.GetLegDurable() == 0.0f)
+        {
+            UpdateWhiteLeg();
+        }
+
+
+
+        if (!m_ascension.end && m_ascension.time >= 90.0f)
+        {
+            m_ascension.end = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 吹き飛べ！
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            UpdateWhite();
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 志望しました。
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void GameOverPlayer()
+    {
+        bool rightPower = m_playerMove.GetRightPowerFlag();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 飛び上がる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         if (!m_ascension.start)
         {
             m_ascension.start = true;
+            m_ascension.time = 0;
+            m_ascension.end = false;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 吹き飛べ！
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -645,9 +691,6 @@ public partial class PlayerDirector : MonoBehaviour
             }
             m_player2D.AddForce(power);
         }
-
-
-
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報取得
@@ -655,13 +698,6 @@ public partial class PlayerDirector : MonoBehaviour
     public Vector3 GetPlayerPositon()
     {
         return m_playerMove.GetPosition();
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // プレイヤー情報取得
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    public float GetAirParsent()
-    {
-        return m_dataBace.GetTimeParsent();
     }
 }
 //if(state.fullPathHash == Animator.StringToHash("Base Layer.後方ブレーキ"))

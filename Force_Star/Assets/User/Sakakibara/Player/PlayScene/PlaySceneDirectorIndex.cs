@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+
 public class PlaySceneDirectorIndex
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -44,6 +49,10 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayStarManeger m_starManeger;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // SEの運営者
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    SEManager m_seManeger;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ初期化
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlaySceneDirectorIndex()
@@ -60,6 +69,10 @@ public class PlaySceneDirectorIndex
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starManeger = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // SEの運営者
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_seManeger = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ゲームクリアフラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -86,6 +99,10 @@ public class PlaySceneDirectorIndex
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starManeger = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // SEの運営者
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_seManeger = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ゲームクリアフラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -115,6 +132,13 @@ public class PlaySceneDirectorIndex
     public void SetPointerStarManeger(PlayStarManeger maneger)
     {
         m_starManeger = maneger;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ポインター受付
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPointerSEManeger(SEManager maneger)
+    {
+        m_seManeger = maneger;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター受付
@@ -230,6 +254,13 @@ public class PlaySceneDirectorIndex
         Vector2 vec = new Vector2(1, 0);
         float angle = ChangeData.Vector2ToAngleDeg(vec);
         m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, num);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // サウンドON!SE.GO!
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void PlaySoundEffect(SoundID id)
+    {
+        m_seManeger.PlaySoundEffect(id);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲームクリア！

@@ -457,7 +457,6 @@ public static class MyCalculator
         ans.w = number1.w * number2.w;
         return ans;
     }
-#pragma region BetweenRing
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 周回の隙間
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -880,6 +879,7 @@ public static class MyCalculator
         float difAngleDeg = ChangeData.RadToDeg(difAngle);
         return AngleWheelDeg(angleDeg, targetAngleDeg, difAngleDeg);
     }
+    #region 角度の輪の方向
     public static bool AngleWheelDeg(double angle, double targetAngle, double difAngle)
     {
         double loopLong = 360.0f;
@@ -912,7 +912,7 @@ public static class MyCalculator
         double difAngleDeg = ChangeData.RadToDeg(difAngle);
         return AngleWheelDeg(angleDeg, targetAngleDeg, difAngleDeg);
     }
-#pragma endregion
+    #endregion
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポイント１からポイント２までの
     // 直線距離を返す

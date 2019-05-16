@@ -803,6 +803,9 @@ public partial class PlayerDirector : MonoBehaviour
             m_invincibilityTime = m_damageInvincibilityTime;
 
             m_damageTrigger = true;
+
+
+            m_directorIndex.PlaySoundEffect(SEManager.SoundID.DAMAGE_01);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ステートチェック
@@ -984,8 +987,30 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         return trigger;
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetAirParsent()
+    {
+        return m_dataBace.GetTimeParsent();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetHaveStarParsent()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データベースから取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int haveStar = m_dataBace.GetStarsNum();
+        int needStar = m_dataBace.GetNeedStarsNum();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 計算
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float starParsent = MyCalculator.Division((float)haveStar, (float)needStar);
+        return starParsent;
+    }
 }
-
 //bool Up = m_controller.ChackStartTrigger();
 //bool Down = m_controller.ChackTrampleTrigger();
 //bool Right = m_controller.ChackJumpTrigger();

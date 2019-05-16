@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlaySceneDirector : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class PlaySceneDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayStarManeger m_starManeger;
     GameObject m_starManegerObject;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星の運営者
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    SEManager m_seManager;
+    GameObject m_seManagerObject;
 
     void Awake()
     {
@@ -41,7 +47,13 @@ public class PlaySceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starManegerObject = new GameObject("starManeger");
         m_starManeger = m_starManegerObject.AddComponent<PlayStarManeger>();
-        
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 権限にて、星の運営者をもらうぞ！
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_seManagerObject = new GameObject("SEManager");
+        m_seManager = m_seManagerObject.AddComponent<SEManager>();
+
         //m_starManeger.
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -53,6 +65,10 @@ public class PlaySceneDirector : MonoBehaviour
         // ポインターの星の運営者を登録する
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex.SetPointerStarManeger(m_starManeger);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // SEの運営者を登録する
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex.SetPointerSEManeger(m_seManager);
     }
 
     void Start()
@@ -75,6 +91,12 @@ public class PlaySceneDirector : MonoBehaviour
             // 死にました～
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_directorIndex.SetAliveFlagPlayScene(false);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // シーン切り替え＞リザルト行き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            SceneManager.LoadScene("ResultScene");
+
+
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 帰還
@@ -85,6 +107,12 @@ public class PlaySceneDirector : MonoBehaviour
             // やったぜ
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_directorIndex.SetAliveFlagPlayScene(true);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // シーン切り替え＞リザルト行き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            SceneManager.LoadScene("ResultScene");
+
+
         }
     }
 
@@ -95,5 +123,8 @@ public class PlaySceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 倉庫の終了
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        WarehouseData.WarehouseObject.Remove();
+        WarehouseData.WarehouseUnity.Remove();
+        WarehouseData.PlayerData.WarehousePlayer.Remove();
     }
 }

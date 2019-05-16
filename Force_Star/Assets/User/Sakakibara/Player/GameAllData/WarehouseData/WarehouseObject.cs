@@ -34,6 +34,18 @@ namespace WarehouseData
             }
             return m_warehouseObject;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // シングルトン消滅
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        public static void Remove()
+        {
+            if (m_warehouseObject != null)
+            {
+                m_warehouseObject = null;
+            }
+        }
+
+
 
         private WarehouseObject()
         {

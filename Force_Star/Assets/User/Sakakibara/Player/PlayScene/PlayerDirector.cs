@@ -678,7 +678,74 @@ public partial class PlayerDirector : MonoBehaviour
             m_listAnime[partsNum].spriteData.m_depth = m_listData.listData[partsNum].depth;
         }
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 白々しい
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private void UpdateWhite()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 名前を取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|    
+        for (int partsNum = 0; partsNum < m_listData.listData.Count; partsNum++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // まるで透明みたいだ。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_listAnime[partsNum].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツが白々しい
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private void UpdateWhiteArm()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // まるで透明みたいだ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕の先
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_listAnime[(int)PlayerData_Number_List.RIGHTHAND].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.LEFTHAND].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕の関節
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_listAnime[(int)PlayerData_Number_List.RARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.LARMJOINT].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+    }
+    private void UpdateWhiteBody()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // まるで透明みたいだ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+    }
+    private void UpdateWhiteHead()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // まるで透明みたいだ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 頭
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+    }
+    private void UpdateWhiteLeg()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // まるで透明みたいだ。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚の先
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_listAnime[(int)PlayerData_Number_List.RIGHTLEG].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.LEFTLEG].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚の関節
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_listAnime[(int)PlayerData_Number_List.RLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.LLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+    }
 
 
 }

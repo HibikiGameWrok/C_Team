@@ -115,5 +115,11 @@ public class PlayerDirectorIndex
     {
         return m_playerDirector.GetAirParsent();
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持数は目標量の何割か？
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetHaveStarParsent()
+    {
+        return m_playerDirector.GetAirParsent();
+    }
 }

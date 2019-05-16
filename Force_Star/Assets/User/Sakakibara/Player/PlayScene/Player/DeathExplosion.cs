@@ -49,20 +49,20 @@ public class DeathExplosion : MonoBehaviour
     List<TimeAndVec> m_starExplosionTime;
     private TexImageData m_starTexImageData;
     private RenderImageData m_starRenderImageData;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    //  大爆発
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    GameObjectSprite m_centerExplosion;
-    GameObject m_centerExplosionObject;
-    private TexImageData m_centeTexImageData;
-    private RenderImageData m_centeRenderImageData;
-    private int m_centerAnime;
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    ////  大爆発
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //GameObjectSprite m_centerExplosion;
+    //GameObject m_centerExplosionObject;
+    //private TexImageData m_centeTexImageData;
+    //private RenderImageData m_centeRenderImageData;
+    //private int m_centerAnime;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 継承用使用データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private int m_timeExplosion;
-    private int m_timeMax = 90;
-    private int m_timeMaxStar = 10;
+    private float m_timeExplosion;
+    private float m_timeMax = 90;
+    private float m_timeMaxStar = 10;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 爆発
@@ -97,48 +97,62 @@ public class DeathExplosion : MonoBehaviour
 
         m_starRenderImageData = new RenderImageData();
         m_starRenderImageData.depth = 99;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        //  大爆発
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_centerExplosionObject = new GameObject("CenterExplosionObject");
-        m_centerExplosion = m_centerExplosionObject.AddComponent<GameObjectSprite>();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        //  大爆発イメージ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_centeTexImageData = new TexImageData();
-        m_centeTexImageData.image = m_warehouseObject.GetTexture2DApp(AppImageNum.EXPROSION);
-        m_centeTexImageData.pibot = new Vector2(0.5f, 0.5f);
-        m_centeTexImageData.size = new Vector2(3.0f, 3.0f);
-        m_centeTexImageData.rextParsent = MyCalculator.RectSizeReverse_Y(0, 6, 1);
-
-        m_centeRenderImageData = new RenderImageData();
-        m_centeRenderImageData.depth = 100;
 
         m_timeExplosion = 0;
     }
     void Start()
     {
-        m_centerExplosion.SetImageUpdate(m_centeTexImageData);
-        m_centerExplosion.SetRenderUpdate(m_centeRenderImageData);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_timeExplosion++;
-        if(m_timeExplosion < m_timeMax)
+        float lp = 0.0f;
+        float size = 0.0f;
+        float harfTime = MyCalculator.Division(m_timeMax, 2);
+        float animeNum = 0;
+        if(m_timeExplosion != m_timeMax)
+        {
+            if (m_timeExplosion < harfTime)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 大きさ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                lp = MyCalculator.LeapReverseCalculation(0.0f, harfTime, m_timeExplosion);
+                size = MyCalculator.Leap(1.0f, 5.0f, lp);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // アニメ番号
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                animeNum = 0;
+            }
+            else
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 大きさ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                size = 5.0f;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // アニメ番号
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                animeNum = MyCalculator.Division(m_timeExplosion - harfTime, MyCalculator.Division(harfTime, 6));
+                animeNum = ChangeData.AntiOverflow(animeNum, 6);
+            }
+        }
+        else
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 
+            // 時間経過
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_centerAnime = MyCalculator.Division(m_timeExplosion, MyCalculator.Division(m_timeMax, 6));
-            m_centerAnime = ChangeData.AntiOverflow(m_centerAnime, 6);
-            m_centerExplosion.SetRect(MyCalculator.RectSizeReverse_Y(m_centerAnime, 6, 1));
+            m_timeExplosion++;
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 散らばりと破壊
+            // 散らばり
             //*|***|***|***|***|***|***|***|***|***|***|***|
             StarMade();
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 破壊
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         StarDelete();
     }
 
@@ -149,35 +163,63 @@ public class DeathExplosion : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 生成
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        GameObject newStarObj = new GameObject("StarExplosion");
+        GameObject newStarObj = null;
         GameObjectSprite newStarSprite = null;
-        newStarSprite  = newStarObj.AddComponent<GameObjectSprite>();
-        m_starExplosion.Add(newStarSprite);
+        int starNum = 100;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ランダム作成
+        // 生成用
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 射角
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float angleMax = 0;
         float angleMin = 360;
-        float angle = Random.Range(angleMin, angleMax);
-        float speed = Random.Range(0.22f,0.5f);
-        Vector2 vec = ChangeData.AngleDegToVector2(angle);
-        vec *= speed;
+        float angle = 0.0f;
+        float speedMax = 0.5f;
+        float speedMin = 0.22f;
+        float speed = 0.0f;
+        Vector2 vec;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ランダム作成
+        // 大きさ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float sizeMax = 2.5f;
         float sizeMin = 0.5f;
-        float size = Random.Range(sizeMax, sizeMin);
-        Vector2 sizeVector2 = new Vector2(size, size);
-        starTex.size = sizeVector2;
-        newStarSprite.SetImageUpdate(starTex);
-        newStarSprite.SetRenderUpdate(starRen);
-
-
-        TimeAndVec newTime = new TimeAndVec();
-        newTime.time = 0;
-        newTime.vec = vec;
-        m_starExplosionTime.Add(newTime);
+        float size;
+        Vector2 sizeVector2;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時計
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TimeAndVec newTime;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 作成
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int count = 0; count < starNum; count++)
+        {
+            newStarObj = new GameObject("StarExplosion" + count.ToString());
+            newStarSprite = newStarObj.AddComponent<GameObjectSprite>();
+            m_starExplosion.Add(newStarSprite);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 射角
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            angle = Random.Range(angleMin, angleMax);
+            speed = Random.Range(speedMin, speedMax);
+            vec = ChangeData.AngleDegToVector2(angle);
+            vec *= speed;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 大きさ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            size = Random.Range(sizeMax, sizeMin);
+            sizeVector2 = new Vector2(size, size);
+            starTex.size = sizeVector2;
+            newStarSprite.SetImageUpdate(starTex);
+            newStarSprite.SetRenderUpdate(starRen);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 時計
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newTime = new TimeAndVec();
+            newTime.time = 0;
+            newTime.vec = vec;
+            m_starExplosionTime.Add(newTime);
+        }
     }
     void StarDelete()
     {

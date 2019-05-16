@@ -182,6 +182,14 @@ public class GameObjectSprite : MonoBehaviour
         MakeImage();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の大きさを決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetSize(Vector2 size)
+    {
+        m_texImageData.size = size;
+        MakeImage();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の切り取り点を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetRect(Rect rect)
