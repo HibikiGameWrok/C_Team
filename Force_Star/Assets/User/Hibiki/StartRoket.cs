@@ -204,7 +204,6 @@ public class StartRoket : MonoBehaviour
 
                     foreach (Transform Enemys in ParentEnemys.transform)
                     {
-                        Debug.Log(Enemys.name);
                         Enemys.gameObject.SetActive(true);
                     }
                 }
