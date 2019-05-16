@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartRoket : MonoBehaviour
 {
@@ -40,6 +41,14 @@ public class StartRoket : MonoBehaviour
     // 対象物間のマーカー
     private float journeyLength;
 
+    // TitleSceneのBGM管理オブジェクトを取得する変数
+    private GameObject TitleBGMMane;
+
+    // 親のBGMオブジェクト
+    private GameObject ParentBGM;
+    // 子のBGMオブジェクト
+    private Transform BGM;
+
     // メインカメラを取得するオブジェクト変数
     private GameObject ParentMainCamera;
     // 子のオブジェクトを取得する変数
@@ -50,7 +59,22 @@ public class StartRoket : MonoBehaviour
     // 子のオブジェクトを取得する変数
     private Transform PlayDirector;
 
+    // 背景の親を取得するオブジェクト
+    private GameObject ParentBG;
+    // 子の背景オブジェクトを取得する変数
+    private Transform BackGround;
+
+    // 敵をまとめている親オブジェクト
+    private GameObject ParentEnemys;
+    // 子の敵オブジェクトを取得する変数
+    private Transform Enemys;
+
     int count = 0;
+
+    void Awake()
+    {
+        TitleBGMMane = GameObject.Find("BGMManager");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -60,22 +84,33 @@ public class StartRoket : MonoBehaviour
 
         // 対象物の座標
         targetPos = StartRoketPoint[randPoint].transform.position;
-
         // 開始時間を保管
         startTime = Time.time;
-
         // ロケットと対象物の距離を保管
         journeyLength = Vector3.Distance(this.transform.position, targetPos);
 
-        // オブジェクトの取得
+        // 親オブジェクトの取得
+        ParentBGM = GameObject.Find("ParentBGM");
+        // 子の取得
+        BGM = ParentBGM.transform.Find("BGM");
+
+        // 親オブジェクトの取得
         ParentMainCamera = GameObject.Find("ParentMainCamera");
         // 子の取得
         MainCamera = ParentMainCamera.transform.Find("Main Camera");
 
-        // オブジェクトの取得
+        // 親オブジェクトの取得
         ParentPlayDirector = GameObject.Find("ParentPlayDirector");
         // 子の取得
         PlayDirector = ParentPlayDirector.transform.Find("PlayDirector");
+
+        // 親オブジェクトの取得
+        ParentBG = GameObject.Find("BackGround");
+        // 子の取得
+        BackGround = ParentBG.transform.Find("Sea_BackGround_Image");
+
+        // 親オブジェクトの取得
+        ParentEnemys = GameObject.Find("Enemys");
 
         // オブジェクトの取得
         Panel = GameObject.Find("Panel");
@@ -98,41 +133,6 @@ public class StartRoket : MonoBehaviour
                 // コルーチンを実行  
                 StartCoroutine("PartsInstance");
             }
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D col2D)
-    {
-        // 
-        if (col2D.gameObject.tag == "StartRoketPoint")
-        {
-            if (moveStopFlag != true)
-            {
-                // 壊れたロケットプレハブをGameObject型で取得
-                GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
-                // 壊れたロケットプレハブを元に、インスタンスを生成、
-                Instantiate(Rocket, targetPos, Quaternion.identity);
-
-                // サブカメラが消える前にメインカメラを起動する
-                if (MainCamera != null)
-                {
-                    MainCamera.gameObject.SetActive(true);
-                    
-                    //// プレイヤープレハブをGameObject型で取得
-                    GameObject Player = (GameObject)Resources.Load("PlayerDirector");
-                    // プレイヤープレハブを元に生成、
-                    Instantiate(Player, this.transform.position, Quaternion.identity);
-
-                    PlayDirector.gameObject.SetActive(true);
-                }
-                // 動きを止める
-                moveStopFlag = true;
-
-                StartFade.SetFadeInFlag(true);
-            }
-
-            // 自身のオブジェクトを消す
-            Destroy(this.gameObject);
         }
     }
 
@@ -173,4 +173,51 @@ public class StartRoket : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         StartFade.SetFadeOutFlag(true);
     }
+
+    void OnTriggerEnter2D(Collider2D col2D)
+    {
+        // 
+        if (col2D.gameObject.tag == "StartRoketPoint")
+        {
+            if (moveStopFlag != true)
+            {
+                // 壊れたロケットプレハブをGameObject型で取得
+                GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
+                // 壊れたロケットプレハブを元に、インスタンスを生成、
+                Instantiate(Rocket, targetPos, Quaternion.identity);
+
+                // サブカメラが消える前にメインカメラを起動する
+                if (MainCamera != null)
+                {
+                    //// プレイヤープレハブをGameObject型で取得
+                    GameObject Player = (GameObject)Resources.Load("PlayerDirector");
+                    // プレイヤープレハブを元に生成、
+                    Instantiate(Player, this.transform.position, Quaternion.identity);
+
+                    // プレイシーン全体を管理するオブジェクトを起動
+                    PlayDirector.gameObject.SetActive(true);
+
+                    MainCamera.gameObject.SetActive(true);
+
+                    // BackGround
+                    BackGround.gameObject.SetActive(true);
+
+                    foreach (Transform Enemys in ParentEnemys.transform)
+                    {
+                        Debug.Log(Enemys.name);
+                        Enemys.gameObject.SetActive(true);
+                    }
+                }
+                // 動きを止める
+                moveStopFlag = true;
+
+                StartFade.SetFadeInFlag(true);
+            }
+            BGM.gameObject.SetActive(true);
+            Destroy(TitleBGMMane);
+            // 自身のオブジェクトを消す
+            Destroy(this.gameObject);
+        }
+    }
+
 }

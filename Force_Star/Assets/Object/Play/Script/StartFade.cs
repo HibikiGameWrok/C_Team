@@ -8,7 +8,7 @@ public class StartFade : MonoBehaviour
     // Imageの赤青緑の値を最大値で固定
     public const float MAX_RBG = 1;
 
-    float fadeSpeed = 0.02f;        //透明度が変わるスピードを管理
+    float fadeSpeed = 0.03f;        //透明度が変わるスピードを管理
     float alfa;                     //不透明度を管理
 
     public bool isFadeOut = false;  //フェードアウト処理の開始、完了を管理するフラグ
