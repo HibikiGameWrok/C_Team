@@ -26,8 +26,6 @@ public class WindMillMove : MonoBehaviour
     GameObject parent; // 一つ上の親のオブジェクト
     GameObject punchObject;
 
-    //SE
-    private AudioSource sound01;
 
     // Use this for initialization
     void Start()
@@ -35,8 +33,6 @@ public class WindMillMove : MonoBehaviour
         parent = transform.parent.gameObject;
         punchObject = parent.GetComponent<WindMillCollisionScript>().punchObject;
 
-        //SE再生データ
-        sound01 = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -55,13 +51,13 @@ public class WindMillMove : MonoBehaviour
             if (other.gameObject.tag == "AttackBoal")
                 {
                 //SEの再生
-                sound01.PlayOneShot(sound01.clip);
+                //sound01.PlayOneShot(sound01.clip);
 
                 parent.GetComponent<WindMillCollisionScript>().SetCheckHitFlag(true);
                 }
         }
-    //}
-}
+    }
+
 
     //void SetNowSpeed()
     //{
