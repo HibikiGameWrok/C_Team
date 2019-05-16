@@ -111,17 +111,53 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private bool m_attackingFlag;
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パワーアップ中
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private bool m_armStrong;
+    [SerializeField]
+    private bool m_bodyStrong;
+    [SerializeField]
+    private bool m_headStrong;
+    [SerializeField]
+    private bool m_legStrong;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // データベース設定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 移動力
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_moveNormalPower;
+    private float m_moveMaxNormalPower;
+    private float m_moveStrongPower;
+    private float m_moveMaxStrongPower;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ジャンプ力
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_jumpNormalPower;
+    private float m_jumpMaxNormalPower;
+    private float m_jumpStrongPower;
+    private float m_jumpMaxStrongPower;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 関係：コマンド全般
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private Vector2 m_addForce;
+
+
+
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
         gameObject.layer = 8;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データベース設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        SetDataBase();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ボディデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -162,6 +198,33 @@ public class PlayerMove : MonoBehaviour
         m_rightPower = false;
         m_reverseArrow = false;
         m_movePowerX = 0.0f;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // データベース設定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void SetDataBase()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動力設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_moveNormalPower = 20.0f;
+        m_moveMaxNormalPower = 20.0f;
+        m_moveStrongPower = 50.0f;
+        m_moveMaxStrongPower = 50.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ジャンプ力設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_jumpNormalPower = 500.0f;
+        m_jumpMaxNormalPower = 20.0f;
+        m_jumpStrongPower = 1000.0f;
+        m_jumpMaxStrongPower = 20.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 強化フラグ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armStrong = false;
+        m_bodyStrong = false;
+        m_headStrong = false;
+        m_legStrong = false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
@@ -474,22 +537,33 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void UpdateMoveCommond()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 初期化
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 force = m_controllerData.ChackStickPower();
-        float forceDead = 1.0f;
-        m_addForce = (force * 20.0f);
-        m_addForce.y = 0;
+        float forceDead = 0.05f;
+        force.y = 0;
         m_addPower = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 十字キーの力をつぎ込む
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (forceDead < MyCalculator.LongVector2(m_addForce))
+        if (forceDead < MyCalculator.LongVector2(force))
         {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚強化状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_legStrong)
+            {
+                m_addForce = (force * m_moveStrongPower);
+            }
+            else
+            {
+                m_addForce = (force * m_moveNormalPower);
+            }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 力を加える
             //*|***|***|***|***|***|***|***|***|***|***|***|
             this.m_rigid2D.AddForce(m_addForce);
-
-
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 力を加えられた
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -525,6 +599,20 @@ public class PlayerMove : MonoBehaviour
         // 移動ベクトルが大きいと制限される
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float maxPower = 20.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 脚強化状態で最大速度が変わる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_legStrong)
+        {
+            maxPower = m_moveMaxStrongPower;
+        }
+        else
+        {
+            maxPower = m_moveMaxNormalPower;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 速度オーバー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         if (absVelX > maxPower)
         {
             float speedMax = MyCalculator.Multiplication(maxPower, 2);
@@ -571,13 +659,25 @@ public class PlayerMove : MonoBehaviour
     void UpdateJumpCommond()
     {
         Vector2 velocityData = m_rigid2D.velocity;
+        Vector2 jumpForce;
         if (m_controllerData.ChackJumpTrigger() && m_groundFlagFlame)
         {
             m_rigid2D.velocity = new Vector2(velocityData.x, 0);
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚強化状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_legStrong)
+            {
+                jumpForce = (transform.up * m_jumpStrongPower);
+            }
+            else
+            {
+                jumpForce = (transform.up * m_jumpNormalPower);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // ジャンプパワー
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            this.m_rigid2D.AddForce(transform.up * 500);
+            this.m_rigid2D.AddForce(jumpForce);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ジャンプの音~~~~
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -758,6 +858,16 @@ public class PlayerMove : MonoBehaviour
     public Vector3 GetPosition()
     {
         return gameObject.transform.position;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 強化状態共有
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPowerUp(bool arm, bool body, bool head, bool leg)
+    {
+        m_armStrong = arm;
+        m_bodyStrong = body;
+        m_headStrong = head;
+        m_legStrong = leg;
     }
     ////*|***|***|***|***|***|***|***|***|***|***|***|
     //// 当たり判定取得

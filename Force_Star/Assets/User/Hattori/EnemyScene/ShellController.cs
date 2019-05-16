@@ -109,7 +109,7 @@ public class ShellController : MonoBehaviour
                 posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
 
                 // ☆を生成
-                m_playIndex.ApplyStar(new Vector2(posX1, posY), 20);
+                m_playIndex.ApplyStarBounce(new Vector2(posX1, posY), 20);
 
                 rigid2D.gravityScale = gravityForce;
 

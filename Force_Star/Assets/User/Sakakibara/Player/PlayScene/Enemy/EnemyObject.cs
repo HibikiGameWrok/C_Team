@@ -238,7 +238,7 @@ public class EnemyObject : EnemyIObject
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星が出る *100
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_playIndex.ApplyStar(new Vector2(posX1, posY), 100);
+        m_playIndex.ApplyStarBounce(new Vector2(posX1, posY), 100);
 
         float gravityForce = 0.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
