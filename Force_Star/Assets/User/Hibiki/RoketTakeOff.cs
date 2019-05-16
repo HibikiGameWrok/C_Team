@@ -8,6 +8,8 @@ public class RoketTakeOff : MonoBehaviour
     private GameObject ParentmainCamera;
     private TargetFollow targetfollow;
 
+   private PlaySceneDirectorIndex directorIndex;
+
     // 自身からどれくらい飛ばすか
     [SerializeField]
     private float heightPos = 50.0f;
@@ -31,6 +33,8 @@ public class RoketTakeOff : MonoBehaviour
 
     void Awake()
     {
+        directorIndex = directorIndex = PlaySceneDirectorIndex.GetInstance();
+
         // 開始時間を保管
         startTime = Time.time;
 
@@ -90,6 +94,7 @@ public class RoketTakeOff : MonoBehaviour
 
         yield return new WaitForSeconds(3.0f);
 
+        directorIndex.SetClearFlag();
     }
 }
 
