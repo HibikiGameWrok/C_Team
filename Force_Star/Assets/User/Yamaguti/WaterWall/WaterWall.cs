@@ -96,15 +96,15 @@ public class WaterWall : MonoBehaviour
             {
                 for (int i = 0; i < sMyList.Count; i++)
                 {
-                    Debug.Log(sMyList.Count);
-                    Debug.Log(i);
+                    //Debug.Log(sMyList.Count);
+                    //Debug.Log(i);
                     Destroy(sMyList[i]);
-                    Debug.Log(i);
+                    //Debug.Log(i);
                 }
                 // 詰める
                 for (int i = 0; i < sMyList.Count; i++)
                 {
-                    Debug.Log(i);
+                    //Debug.Log(i);
                     sMyList.RemoveAt(i);
                 }
                 //   sMyList.RemoveAll(sMyList => sMyList == sMyList);
