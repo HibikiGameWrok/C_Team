@@ -23,21 +23,17 @@ using PartsData = GameDataPublic.PartsData;
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using PartsID = PlayStaticData.PartsID;
 
-
-public class StarPieceMove : MonoBehaviour
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// パーツロケット
+//*|***|***|***|***|***|***|***|***|***|***|***|
+public class PlayRocketParts : MonoBehaviour
 {
-
-
-
-
-
-    // 速度
-    public float m_speed;
-    public float m_attenuation;
-    private Vector3 m_velocity;
-
-    bool flag = false;      // 当たった時のフラグ
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツ情報
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    PartsID m_partsId;
+    bool m_getFlag;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -45,27 +41,7 @@ public class StarPieceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 画像
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    GameObjectSprite m_starSprite;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 広がる時間
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    [SerializeField]
-    private int count = 20;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 広がり中
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    [SerializeField]
-    private bool m_diffusion;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 動き用
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private float vecX;
-    private float vecY;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 動き用
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private float m_speedData;
-    private float m_speedAdd;
+    GameObjectSprite m_partsSprite;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -85,108 +61,68 @@ public class StarPieceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         WarehouseObject warehouseObject = WarehouseObject.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 広がり中
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_diffusion = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_starSprite = gameObject.GetComponent<GameObjectSprite>();
-        if(m_starSprite == null)
+        m_partsSprite = gameObject.GetComponent<GameObjectSprite>();
+        if (m_partsSprite == null)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starSprite = gameObject.AddComponent<GameObjectSprite>();
+            m_partsSprite = gameObject.AddComponent<GameObjectSprite>();
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 貼り付け
             //*|***|***|***|***|***|***|***|***|***|***|***|
             TexImageData tex = new TexImageData();
             tex.Reset();
-            tex.image = warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE);
-            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
-            tex.size = new Vector2(1, 1);
+            tex.image = warehouseObject.GetTexture2DApp(AppImageNum.ROCKETPARTS);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 3, 1);
+            tex.size = new Vector2(3, 3);
             tex.pibot = new Vector2(0.5f, 0.5f);
-            m_starSprite.SetImageUpdate(tex);
+            m_partsSprite.SetImageUpdate(tex);
         }
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 星のレイヤーに変更
+        // パーツのレイヤーに変更
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        gameObject.layer = 12;
+        gameObject.layer = 14;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         CreateCollision();
+        m_getFlag = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり設定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_rigidBody2D.isKinematic = true;
         SetStopHit();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 更新時
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     void Update()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 眠る
+        // IDのイメージにする
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (!this.isActiveAndEnabled)
-        {
-            return;
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 広がり中か？
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (!m_diffusion)
-        {
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 拡散時間
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            count--;
-            if(count <= 0)
-            {
-                m_diffusion = true;
-                SetPlayHit();
-            }
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 拡散中
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            this.transform.position = new Vector3(this.transform.position.x + vecX, this.transform.position.y + vecY, this.transform.position.z); // 拡散
-        }
-        else
-        {
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // スピード計算
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_speedData += m_speedAdd;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // プレイヤーの方向
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            Vector3 pointSet = m_playerIndex.GetPlayerPosition();
-            Vector3 playerPos = transform.position;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // へ向かう
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            Vector3 playerDif = (pointSet - playerPos);
-            Vector3 playerDifUnit = playerDif;
-            playerDifUnit.Normalize();
-            Vector3 movePower = playerDifUnit * m_speedData;
-            transform.position += movePower;
-
-
-            //m_velocity += (pointSet - transform.position) * m_speed;
-            //m_velocity *= m_attenuation;
-            //transform.position += m_velocity *= Time.deltaTime;
-        }
+        Rect rect;
+        rect = MyCalculator.RectSizeReverse_Y((int)m_partsId, 3, 1);
+        m_partsSprite.SetRect(rect);
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり設定移動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPointArea(Vector3 point)
+    {
+        m_partsSprite.SetPosition(point);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 種類設定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPartsID(PartsID partsId)
+    {
+        m_partsId = partsId;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定停止
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -200,35 +136,6 @@ public class StarPieceMove : MonoBehaviour
     public void SetPlayHit()
     {
         m_box2D.enabled = true;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 速度
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetVec(float x,float y)
-    {
-        vecX = x;
-        vecY = y;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // プレイヤーに駆け付ける速さ
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetSpeed(float speedData, float speedAdd)
-    {
-        m_speedData = speedData;
-        m_speedAdd = speedAdd;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 移動
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetPosition(Vector2 pos)
-    {
-        Vector3 posV3 = ChangeData.GetVector3(pos);
-        gameObject.transform.position = posV3;
-    }
-    public void SetPosition(Vector3 pos)
-    {
-        Vector3 posV3 = pos;
-        gameObject.transform.position = posV3;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定作成
@@ -258,23 +165,24 @@ public class StarPieceMove : MonoBehaviour
             m_box2D = this.gameObject.AddComponent<BoxCollider2D>();
         }
     }
-
-
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり判定を測定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(!flag)
+        if (!m_getFlag)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーの一部に当たったか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
-                flag = true;
-                PlayerDirectorIndex.GetInstance().GetStar(1);
+                m_getFlag = true;
+                m_playerIndex.GetParts(m_partsId);
                 Destroy(this.gameObject);
             }
         }
-      
+
     }
+
 }

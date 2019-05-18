@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// パーツ言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using PartsID = PlayStaticData.PartsID;
+
 public class PlayerDirectorIndex
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -100,6 +105,13 @@ public class PlayerDirectorIndex
     public void GetStar(int starNum)
     {
         m_playerDirector.GetStar(starNum);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツ獲得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void GetParts(PartsID partsID)
+    {
+        m_playerDirector.GetParts(partsID);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤーの場所を取る

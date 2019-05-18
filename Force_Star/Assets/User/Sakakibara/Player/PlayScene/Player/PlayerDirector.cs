@@ -286,6 +286,7 @@ public partial class PlayerDirector : MonoBehaviour
         // プレイヤーUI情報
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakePlayerUI();
+
     }
 
 

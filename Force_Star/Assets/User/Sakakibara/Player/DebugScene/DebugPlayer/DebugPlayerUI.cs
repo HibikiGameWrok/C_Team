@@ -21,6 +21,12 @@ using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// パーツ言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using PartsID = PlayStaticData.PartsID;
+
+
 
 public class DebugPlayerUI : DebugCanvas
 {
@@ -112,7 +118,11 @@ public class DebugPlayerUI : DebugCanvas
     private OriginUIGroup m_needStarKO;
     private OriginUIGroup m_needStarStar;
     private OriginUIGroup m_needStarCross;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private int m_partsCollectionDigit;
+    private List<OriginUIGroup> m_partsCollection;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップタイム
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -145,6 +155,11 @@ public class DebugPlayerUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     private int m_needStarNumber;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツのデータ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private uint m_partsCollectionNumber;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップタイム
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -238,6 +253,13 @@ public class DebugPlayerUI : DebugCanvas
         m_needStarNumber = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツのデータ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPartsCollectionNumber(uint number)
+    {
+        m_partsCollectionNumber = number;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetArmStrongTime(float number)
@@ -292,6 +314,10 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeNeedStarData();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ起動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakePartsCollection();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -723,6 +749,49 @@ public class DebugPlayerUI : DebugCanvas
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakePartsCollection()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // TexImageData
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        TexImageData tex = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsCollectionDigit = (int)PartsID.NUM;
+        m_partsCollection = new List<OriginUIGroup>();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 目標数星量数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_partsCollectionDigit; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.ROCKETPARTS);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(index, 3, 1);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            OriginUIGroup digitData = new OriginUIGroup();
+            digitData.gameObjectUI = CreateMenber(tex, "PartCollection" + index.ToString());
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            digitData.gameObjectUI.SetDepth(GetDepth(DepthAttach.HAVESTAR_NUMBER));
+            digitData.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsCollection.Add(digitData);
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakePowerUp()
@@ -890,6 +959,10 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeNeedStarDataUI();
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ起動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakePartsCollectionUI();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakePowerUpUI();
@@ -1004,6 +1077,23 @@ public class DebugPlayerUI : DebugCanvas
         m_needStarCross.imageUIData.Init();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakePartsCollectionUI()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_partsCollectionDigit; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsCollection[index].imageUIData = new ImageUIData();
+            m_partsCollection[index].imageUIData.Init();
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakePowerUpUI()
@@ -1062,6 +1152,10 @@ public class DebugPlayerUI : DebugCanvas
         // 目標数星量更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateNeedStarData();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdatePartsCollection();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1714,6 +1808,102 @@ public class DebugPlayerUI : DebugCanvas
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdatePartsCollection()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画像データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ集計
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 現れる数値
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int digitNum = 0;
+        for (int digit = 0; digit < m_partsCollectionDigit; digit++)
+        {
+            //m_partsCollection[digit].gameObjectUI.SetRect(imageRect);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posSave = new Vector2(0.0f, 0.0f);
+        Vector2 scaleSave = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整用データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 pos = new Vector2(0.0f, 0.0f);
+        Vector2 scale = new Vector2(0.0f, 0.0f);
+        Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
+        Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 調整済みデータ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 posScleen = new Vector2(0.0f, 0.0f);
+        Vector2 posReverseY = new Vector2(0.0f, 0.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 本当の
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int truePartsCollectionDigit = m_partsCollectionDigit + 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持数星量その他
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+
+            scale.x = MyCalculator.Division(0.2f, 1);
+            scale.y = 0.1f;
+            pos.x = 1.0f - MyCalculator.Division(scale.x, 2);
+            pos.y = 0.2f + MyCalculator.Division(scale.y, 2.0f);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 調整済みデータ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            posScleen = MouseToScreenPos(pos);
+            posReverseY = MyCalculator.EachTimes(posScleen, new Vector2(1.0f, -1.0f));
+            pos = posReverseY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            persent_AssistP = pos;
+            persent_AssistS = scale;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 調整
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, truePartsCollectionDigit);
+            scale.x = persent_AssistS.x;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 以下も同じ場所に現れる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        posSave = pos;
+        scaleSave = scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_partsCollectionDigit; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            int indexReverse = MyCalculator.InversionOfIndex(index + 1, truePartsCollectionDigit);
+            float indexPoint = MyCalculator.IndexCenterPos(indexReverse, truePartsCollectionDigit);
+            pos.x = posSave.x + (persent_AssistS.x * indexPoint);
+            pos.y = posSave.y;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_partsCollection[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_partsCollection[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void UpdatePowerUp()
@@ -1939,6 +2129,10 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         RenderNeedStarData();
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        RenderPartsCollection();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         RenderPowerUp();
@@ -2027,15 +2221,6 @@ public class DebugPlayerUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void RenderHaveStarData()
     {
-        Vector2 pos = new Vector2(0.0f, 0.0f);
-        Vector2 scale = new Vector2(0.0f, 0.0f);
-        Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
-        Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 調整済みデータ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 posScleen = new Vector2(0.0f, 0.0f);
-        Vector2 posReverseY = new Vector2(0.0f, 0.0f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 所持数星量数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2060,15 +2245,6 @@ public class DebugPlayerUI : DebugCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void RenderNeedStarData()
     {
-        Vector2 pos = new Vector2(0.0f, 0.0f);
-        Vector2 scale = new Vector2(0.0f, 0.0f);
-        Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
-        Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 調整済みデータ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 posScleen = new Vector2(0.0f, 0.0f);
-        Vector2 posReverseY = new Vector2(0.0f, 0.0f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 目標数星量数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2089,6 +2265,24 @@ public class DebugPlayerUI : DebugCanvas
         AssetSet(ref m_needStarCross, m_screenSize, true);
 
 
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void RenderPartsCollection()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ数字
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_partsCollection.Count; index++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            OriginUIGroup migawari = m_partsCollection[index];
+            AssetSet(ref migawari, m_screenSize, true);
+            m_partsCollection[index] = migawari;
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ更新
