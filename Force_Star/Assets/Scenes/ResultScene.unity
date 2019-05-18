@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClearManager: {fileID: 1338141093}
   OverManeger: {fileID: 598600717}
-  gameFlag: 1
+  gameFlag: 0
 --- !u!212 &881022982
 SpriteRenderer:
   m_ObjectHideFlags: 0
