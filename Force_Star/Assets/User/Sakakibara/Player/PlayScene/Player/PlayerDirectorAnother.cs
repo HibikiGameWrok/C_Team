@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// パーツ言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using PartsID = PlayStaticData.PartsID;
+
 public partial class PlayerDirector : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -230,12 +235,17 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float starParsent = MyCalculator.Division((float)haveStar, (float)needStar);
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツ所持状況
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        uint partsCollection = m_dataBace.GetHavePartsId();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベースUIに反映
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_dataUI.SetAirGaugeNumber(time);
         m_dataUI.SetStarGaugeNumber(starParsent);
         m_dataUI.SetHaveStarNumber(haveStar);
         m_dataUI.SetNeedStarNumber(needStar);
+        m_dataUI.SetPartsCollectionNumber(partsCollection);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 強化をデータベースUIに反映
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -886,7 +896,17 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_dataBace.ChackUpdate();
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // パーツ報告
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void GetParts(PartsID partsID)
+    {
+        m_dataBace.CatchPartID(partsID);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ステートチェック
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_dataBace.ChackUpdate();
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星報告
     //*|***|***|***|***|***|***|***|***|***|***|***|

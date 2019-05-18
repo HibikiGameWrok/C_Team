@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// パーツ言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using PartsID = PlayStaticData.PartsID;
+
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // 主人公と周りの環境のデータ
 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -436,6 +442,11 @@ public class PlayerDataBace
         uint numberToID = MyCalculator.MultiplicationBinary((uint)number);
         m_havePartsId = MyCalculator.DigitOR(numberToID, m_havePartsId);
     }
+    public void CatchPartID(PartsID number)
+    {
+        uint numberToID = MyCalculator.MultiplicationBinary((uint)number);
+        m_havePartsId = MyCalculator.DigitOR(numberToID, m_havePartsId);
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 時間であらわされる命
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -620,9 +631,13 @@ public class PlayerDataBace
     {
         return m_havePartsNum;
     }
-    public bool GetPartsId(uint id)
+    public bool GetHavePartsId(uint id)
     {
         return MyCalculator.DigitBoolean(m_havePartsId, id);
+    }
+    public uint GetHavePartsId()
+    {
+        return m_havePartsId;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 時間であらわされる命

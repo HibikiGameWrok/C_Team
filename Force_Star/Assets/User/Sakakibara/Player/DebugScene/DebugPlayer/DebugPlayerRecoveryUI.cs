@@ -2088,6 +2088,8 @@ public class DebugPlayerRecoveryUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 調整
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = persent_AssistP;
+            scale = persent_AssistS;
             persent_AssistS.x = MyCalculator.Division(persent_AssistS.x, trueFeeNumberDigit);
             scale.x = persent_AssistS.x;
         }

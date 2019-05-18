@@ -98,4 +98,132 @@ public static class XORShiftRand
             GetSeedRand();
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //! @brief 乱数ツール移動
+    //! Fisher-Yatesアルゴリズム
+    //! @param[int]  num 回数
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static List<int> Shuffle(int dataNum)
+    {
+        List<int> numberData = new List<int>();
+        numberData.Clear();
+        for (int count = 0; count < dataNum; count++)
+        {
+            numberData.Add(count);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 交換
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberEx = 0;
+        int numberTa = 0;
+        for (int tail = dataNum - 1; tail > 0; tail--)
+        {
+            int exchange = GetSeedDivRand(tail);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字入れ替え
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            numberEx = numberData[exchange];
+            numberTa = numberData[tail];
+            ChangeData.Change2Data(ref numberEx, ref numberTa);
+            numberData[exchange] = numberEx;
+            numberData[tail] = numberTa;
+        }
+        return numberData;
+    }
+    public static List<int> Shuffle(ref List<int> dataNumVector)
+    {
+        int dataNum = dataNumVector.Count;
+        List<int> numberData = new List<int>();
+        numberData.Clear();
+        for (int count = 0; count < dataNum; count++)
+        {
+            numberData.Add(dataNumVector[count]);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 交換
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberEx = 0;
+        int numberTa = 0;
+        for (int tail = dataNum - 1; tail > 0; tail--)
+        {
+            int exchange = GetSeedDivRand(tail);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字入れ替え
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            numberEx = numberData[exchange];
+            numberTa = numberData[tail];
+            ChangeData.Change2Data(ref numberEx, ref numberTa);
+            numberData[exchange] = numberEx;
+            numberData[tail] = numberTa;
+        }
+        return numberData;
+    }
+
+    public static List<int> Shuffle(int dataNum, int getNum)
+    {
+        int getExchangeNum;
+        List<int> numberData = new List<int>();
+        List<int> numberGetData = new List<int>();
+        numberData.Clear();
+        numberGetData.Clear();
+        for (int count = 0; count < dataNum; count++)
+        {
+            numberData.Add(count);
+            numberGetData.Add(count);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 交換
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberEx = 0;
+        int numberTa = 0;
+        for (int tail = dataNum - 1, count = 0; tail > 0 && count < getNum; tail--, count++)
+        {
+            int exchange = GetSeedDivRand(tail);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字入れ替え
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            getExchangeNum = numberData[exchange];
+            numberEx = numberData[exchange];
+            numberTa = numberData[tail];
+            ChangeData.Change2Data(ref numberEx, ref numberTa);
+            numberData[exchange] = numberEx;
+            numberData[tail] = numberTa;
+            numberGetData[count] = getExchangeNum;
+        }
+        return numberGetData;
+    }
+    public static List<int> Shuffle(ref List<int> dataNumVector, int getNum)
+    {
+        int dataNum = dataNumVector.Count;
+        int getExchangeNum;
+        List<int> numberData = new List<int>();
+        List<int> numberGetData = new List<int>();
+        numberData.Clear();
+        numberGetData.Clear();
+        for (int count = 0; count < dataNum; count++)
+        {
+            numberData.Add(dataNumVector[count]);
+            numberGetData.Add(dataNumVector[count]);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 交換
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberEx = 0;
+        int numberTa = 0;
+        for (int tail = dataNum - 1, count = 0; tail > 0 && count < getNum; tail--, count++)
+        {
+            int exchange = GetSeedDivRand(tail);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 数字入れ替え
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            getExchangeNum = numberData[exchange];
+            numberEx = numberData[exchange];
+            numberTa = numberData[tail];
+            ChangeData.Change2Data(ref numberEx, ref numberTa);
+            numberData[exchange] = numberEx;
+            numberData[tail] = numberTa;
+            numberGetData[count] = getExchangeNum;
+        }
+        return numberGetData;
+    }
 }

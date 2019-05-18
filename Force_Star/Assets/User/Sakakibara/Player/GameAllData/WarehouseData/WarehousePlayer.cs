@@ -126,6 +126,14 @@ namespace WarehouseData
                 STAR_GAUGE_FRAME,
                 STAR_GAUGE_SHADOW,
                 //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 所持数
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                SHOJIRYO,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 目標
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                MOKUHYO,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 回復のUIのデータ
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -270,6 +278,14 @@ namespace WarehouseData
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_MAIN] = Resources.Load<Texture2D>(MyFile + SubFile + "star_gauge3");
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_FRAME] = Resources.Load<Texture2D>(MyFile + SubFile + "star_gauge1");
                         m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.STAR_GAUGE_SHADOW] = Resources.Load<Texture2D>(MyFile + SubFile + "star_gauge2");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 所持数
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.SHOJIRYO] = Resources.Load<Texture2D>(MyFile + SubFile + "UIShojiryo");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 目標
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerAnotherTex2D[(int)PlayerData_Another_Number_List.MOKUHYO] = Resources.Load<Texture2D>(MyFile + SubFile + "UIMokuhyo");
                     }
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // 回復のUIのデータ
