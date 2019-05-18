@@ -15,15 +15,20 @@ public class ImageDisplaySwitching : MonoBehaviour
 
     public GameObject clsarImage;
 
+    // コントロールを管理しているクラス
+    PlayerController playercont;
+
     // Start is called before the first frame update
     void Start()
     {
+        playercont = new PlayerController();
         displayFlag = rocket.GetMoveEndFlag();
     }
 
     // Update is called once per frame
     void Update()
     {
+        playercont.Update();
         displayFlag = rocket.GetMoveEndFlag();
 
         if (displayFlag == true)
@@ -32,7 +37,7 @@ public class ImageDisplaySwitching : MonoBehaviour
             clsarImage.SetActive(true);
 
             //スペースキーが押されたとき
-            if (Input.GetKeyDown(KeyCode.Space))
+            if ((playercont.ChackStartTrigger()) || (Input.GetKeyDown(KeyCode.Space)))
             {
                 stageFlag = true;
             }

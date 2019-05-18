@@ -40,15 +40,21 @@ public class RocketTracking : MonoBehaviour
     //最小値
     const int MIN = 0;
 
+    // コントロールを管理しているクラス
+    PlayerController playercont;
+
     void Start()
     {
+        playercont = new PlayerController();
         pos = new Vector2(this.transform.position.x,this.transform.position.y);
     }
 
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        playercont.Update();
+
+        if((playercont.ChackStartTrigger()) || (Input.GetKeyDown(KeyCode.Space)))
         {
             moveFlag = true;
         }
