@@ -10,7 +10,7 @@ public class DeathMove : MonoBehaviour
 {
     Rigidbody2D rigid2D;
 
-    private Collider2D collider;
+    Collider2D collider;
 
     //プレイヤーそのものの当たり判定を有効にするフラグ
     [SerializeField]

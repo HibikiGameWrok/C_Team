@@ -33,9 +33,9 @@ public class Enemy1Move : MonoBehaviour
     [SerializeField]
     private float maxDistance = 2.0f;
 
-    //消えるまでのタイマー
-    [SerializeField]
-    private float deathTimer;
+    ////消えるまでのタイマー
+    //[SerializeField]
+    //private float deathTimer;
 
     //掛けたい重力の大きさ
     [SerializeField]
@@ -43,8 +43,8 @@ public class Enemy1Move : MonoBehaviour
 
     Rigidbody2D rigid2D;
 
-    //消すためのカウント
-    private float deathCount = 0.0f;
+    ////消すためのカウント
+    //private float deathCount = 0.0f;
 
     //消すためのフラグ
     private bool deathFlag = false;
@@ -147,17 +147,17 @@ public class Enemy1Move : MonoBehaviour
             distance += moveSpeed;
         }
 
-        //死んでしまったら
-        if (deathFlag == true)
-        {
-            ////死んで消えてしまうまでの猶予はここで決まっているのだ
-            //deathCount++;
-            ////だからそれまで余生を過ごし時が来たら
-            //if (deathTimer < deathCount)
-            //{
-            //    //跡形もなく消えてゆけ
-            //    Destroy(this.gameObject);
-            //}
-        }
+        ////死んでしまったら
+        //if (deathFlag == true)
+        //{
+        //    ////死んで消えてしまうまでの猶予はここで決まっているのだ
+        //    //deathCount++;
+        //    ////だからそれまで余生を過ごし時が来たら
+        //    //if (deathTimer < deathCount)
+        //    //{
+        //    //    //跡形もなく消えてゆけ
+        //    //    Destroy(this.gameObject);
+        //    //}
+        //}
     }
 }

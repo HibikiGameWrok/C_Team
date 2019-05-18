@@ -32,8 +32,8 @@ public class ShellController : MonoBehaviour
     [SerializeField]
     private float range = 9.0f;
 
-    //攻撃してくるか色別判定する
-    Renderer shellRenderer;
+    ////攻撃してくるか色別判定する
+    //Renderer shellRenderer;
 
     bool playerApproachFlag = false;
 
@@ -77,7 +77,7 @@ public class ShellController : MonoBehaviour
         //rigid2Dを使う
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
         xScale = this.transform.localScale.x;
-        shellRenderer = GetComponent<Renderer>();
+        //shellRenderer = GetComponent<Renderer>();
         shellSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 

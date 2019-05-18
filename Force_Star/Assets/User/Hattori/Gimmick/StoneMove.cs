@@ -76,15 +76,10 @@ public class StoneMove : MonoBehaviour
         if ((col.gameObject.tag == "AttackBoal"))
         {
 
-            float posX1;
-            float posX2;
-            float posY;
-            posX1 = this.transform.position.x + this.GetComponent<Renderer>().bounds.size.x / 2 + 3;
-            posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
-            posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
+            Vector2 pos = this.transform.position;
 
             // 
-            starCreate.CreateOneStar(this.transform.position, 10);
+            starCreate.CreateOneStar(pos, 10);
 
             //跡形もなく消えてゆけ
             Destroy(this.gameObject);

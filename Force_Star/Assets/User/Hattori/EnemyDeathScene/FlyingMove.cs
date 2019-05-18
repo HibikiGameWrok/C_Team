@@ -36,14 +36,11 @@ public class FlyingMove : MonoBehaviour
     //消すためのフラグ
     private bool deathFlag = false;
 
-    //重力を掛けるかどうかを決めるフラグ
-    private bool gravityFlag = false;
-
     // Start is called before the first frame update
     void Start()
     {
         //rigid2Dを使う
-        this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
+        this.rigid2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -88,7 +85,7 @@ public class FlyingMove : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             //カモメの重力を有効にする
-            gravityFlag = true;
+            rigid2D.gravityScale = 1.0f;
 
             //好きな大きさの重力を指定する
             rigid2D.gravityScale = gravityForce;
