@@ -101,15 +101,10 @@ public class ShellController : MonoBehaviour
         {
             if ((col.gameObject.tag == "AttackBoal"))
             {
-                float posX1;
-                float posX2;
-                float posY;
-                posX1 = this.transform.position.x + this.GetComponent<Renderer>().bounds.size.x / 2 + 3;
-                posX2 = this.transform.position.x - this.GetComponent<Renderer>().bounds.size.x / 2 - 3;
-                posY = this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2;
+                Vector2 pos = this.transform.position;
 
                 // ☆を生成
-                m_playIndex.ApplyStarBounce(new Vector2(posX1, posY), 20);
+                m_playIndex.ApplyStarBounce(pos, 20);
 
                 rigid2D.gravityScale = gravityForce;
 
