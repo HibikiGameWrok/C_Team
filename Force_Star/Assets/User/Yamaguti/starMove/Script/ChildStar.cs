@@ -27,11 +27,12 @@ public class ChildStar : MonoBehaviour
 
         m_hitFloorFlagFlame = false;
         m_hitFloorFlag = false;
+        m_objectCollider.isTrigger = true;
     }
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         SetPlayHit();
     }
@@ -71,6 +72,7 @@ public class ChildStar : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void FixedUpdate()
     {
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -86,7 +88,14 @@ public class ChildStar : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Floor"|| other.gameObject.tag == "")   // 床のタグと空いているほうは壁用
+        if (other.gameObject.tag == "Floor")   // 床のタグと空いているほうは壁用
+        {
+            m_hitFloorFlag = true;
+        }
+    }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Floor")   // 床のタグと空いているほうは壁用
         {
             m_hitFloorFlag = true;
         }

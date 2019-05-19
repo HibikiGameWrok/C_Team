@@ -21,13 +21,26 @@ using PartsData = GameDataPublic.PartsData;
 
 public class StarPieceBounceMove : MonoBehaviour
 {
-    
+
     // 速度
     public float m_speed;
     public float m_attenuation;
     private Vector3 m_velocity;
 
     bool flag = false;      // 当たった時のフラグ
+
+    private float jumpForce = 0.2f;            // ジャンプ力   
+    float startJF;                     // 初期のジャンプ力保存用
+
+    // 時間・点滅情報----------
+    private float timeElapsed=0.0f;     // タイムカウント用
+    private int flashInterval=5;      // 点滅間隔
+    private int flashTime=3;          // 点滅時間
+    private int startFlashJumpCount=3;// 点滅を開始する回数
+    int time = 0;                  // 点滅消滅の時間計測用変数
+    int JumpCount ;                 // 現在のジャンプ回数
+    private float grv = 0.005f;                  // 重力
+                                                //-------------------------
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
@@ -55,17 +68,20 @@ public class StarPieceBounceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ４辺
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    GameObject m_up;
+    GameObject m_up =null;
     ChildStar m_upChildStar;
 
-    GameObject m_down;
+    GameObject m_down=null;
     ChildStar m_downChildStar;
 
-    GameObject m_left;
+    GameObject m_left =null;
     ChildStar m_leftChildStar;
 
-    GameObject m_right;
+    GameObject m_right=null;
     ChildStar m_rightChildStar;
+
+    bool countFlag;
+    bool objectFlag = false;
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -106,21 +122,53 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ４辺を用意する
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_up = new GameObject();
-        m_upChildStar = m_up.AddComponent<ChildStar>();
+
+        //if (m_upChildStar == null)
+        //{
+        //    m_up = new GameObject("Up");
+        //    m_upChildStar = m_up.AddComponent<ChildStar>();
+        //    m_up.transform.parent = gameObject.transform;
+        //}
+
+        //if (m_downChildStar == null)
+        //{
+        //    m_down = new GameObject("Down");
+        //    m_downChildStar = m_down.AddComponent<ChildStar>();
+        //    m_down.transform.parent = gameObject.transform;
+        //}
+
+        //if (m_leftChildStar == null)
+        //{
+        //    m_left = new GameObject("Left");
+        //    m_leftChildStar = m_left.AddComponent<ChildStar>();
+        //    m_left.transform.parent = gameObject.transform;
+        //}
+
+        //if (m_rightChildStar == null)
+        //{
+        //    m_right = new GameObject("Right");
+        //    m_rightChildStar = m_right.AddComponent<ChildStar>();
+        //    m_right.transform.parent = gameObject.transform;
+        //}
+        m_up = new GameObject("Up");
+
         m_up.transform.parent = gameObject.transform;
 
-        m_down = new GameObject();
-        m_downChildStar = m_up.AddComponent<ChildStar>();
+        m_down = new GameObject("Down");
+
         m_down.transform.parent = gameObject.transform;
 
-        m_left = new GameObject();
-        m_leftChildStar = m_up.AddComponent<ChildStar>();
+        m_left = new GameObject("Left");
+
         m_left.transform.parent = gameObject.transform;
 
-        m_right = new GameObject();
-        m_rightChildStar = m_up.AddComponent<ChildStar>();
+        m_right = new GameObject("Right");
+
         m_right.transform.parent = gameObject.transform;
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たり判定上
+        //*|***|***|***|***|***|***|***|***|***|***|***|
 
 
 
@@ -128,29 +176,42 @@ public class StarPieceBounceMove : MonoBehaviour
         // 星のレイヤーに変更
         //*|***|***|***|***|***|***|***|***|***|***|***|
         gameObject.layer = 12;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり判定
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        CreateCollision();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり設定
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_rigidBody2D.isKinematic = true;
-        SetStopHit();
+
+
+        countFlag = false;
     }
-    
+
     void Start()
     {
+        m_upChildStar = m_up.AddComponent<ChildStar>();
+        m_downChildStar = m_down.AddComponent<ChildStar>();
+        m_leftChildStar = m_left.AddComponent<ChildStar>();
+        m_rightChildStar = m_right.AddComponent<ChildStar>();
         Vector2 pos, size;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定上
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        pos = new Vector2(0.0f, 0.5f);
-        size = new Vector2(0.5f, 0.5f);
+        pos = new Vector2(0.0f, 0.35f);
+        size = new Vector2(0.5f, 0.2f);
         m_upChildStar.SetPointSize(pos, size);
         m_upChildStar.SetPointSize(pos, size);
+        pos = new Vector2(0.0f, -0.45f);
+        size = new Vector2(0.5f, 0.4f);
+        m_downChildStar.SetPointSize(pos, size);
+        m_downChildStar.SetPointSize(pos, size);
+        pos = new Vector2(-0.35f, 0.0f);
+        size = new Vector2(0.2f, 0.5f);
+        m_leftChildStar.SetPointSize(pos, size);
+        m_leftChildStar.SetPointSize(pos, size);
+        pos = new Vector2(0.35f, 0.0f);
+        size = new Vector2(0.2f, 0.5f);
+        m_rightChildStar.SetPointSize(pos, size);
+        m_rightChildStar.SetPointSize(pos, size);
+
+        //       jumpForce = vecY;
+        startJF = jumpForce;
     }
-    
+
     void Update()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -163,13 +224,30 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 無敵時間
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        Debug.Log(count);
         if (count <= 0)
         {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たり判定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        CreateCollision();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たり設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rigidBody2D.isKinematic = true;
+        SetStopHit();
+            Debug.Log("なぜ");
             SetPlayHit();
+            countFlag = true;
         }
         else
         {
-            count--;
+            if (countFlag)
+                count--;
+        }
+        if(!objectFlag)
+        {
+            objectFlag = true;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ぽ四ぽ四移動
@@ -178,6 +256,36 @@ public class StarPieceBounceMove : MonoBehaviour
         bool hitDown = m_downChildStar.GetHitFlag();
         bool hitLeft = m_leftChildStar.GetHitFlag();
         bool hitRight = m_rightChildStar.GetHitFlag();
+
+        if (hitUp)
+        {
+            jumpForce = 0.0f;
+        }
+        if (hitDown)
+        {
+            jumpForce = startJF;
+            JumpCount++;
+        }
+        if (hitLeft)
+        {
+            vecX = -vecX;
+            JumpCount++;
+        }
+        if (hitRight)
+        {
+            vecX = -vecX;
+            JumpCount++;
+        }
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 跳ねる移動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        transform.position = new Vector3(transform.position.x + vecX, transform.position.y + jumpForce, transform.position.z);
+        if (jumpForce > -0.2f)
+        {
+            jumpForce = jumpForce - grv;
+        }
+        FlashStar();                // 点滅用の関数
 
 
     }
@@ -203,6 +311,10 @@ public class StarPieceBounceMove : MonoBehaviour
     {
         vecX = x;
         vecY = y;
+        countFlag = true;
+        jumpForce = Random.Range(0.02f,0.3f);
+        startJF = jumpForce;
+
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 移動
@@ -246,6 +358,28 @@ public class StarPieceBounceMove : MonoBehaviour
         }
     }
 
+    // 点滅関数
+    public void FlashStar()
+    {
+        if (startFlashJumpCount <= JumpCount) // ジャンプ回数が規定ジャンプ回数を超えたら点滅スタート
+        {
+
+            // Do anything
+            float level = Mathf.Abs(Mathf.Sin(Time.time * flashInterval)); // 点滅間隔
+            this.GetComponent<GameObjectSprite>().GetSpriteRenderer().color= new Color(1f, 1f, 1f, level); // 点滅
+            //gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, level);
+            timeElapsed += Time.deltaTime;
+
+            if (timeElapsed >= 0.6f) 
+            {
+                time++;
+                if (time >= flashTime)
+                    Destroy(transform.gameObject);
+                timeElapsed = 0.0f;
+            }
+
+        }
+    }
 
 
     void OnTriggerEnter2D(Collider2D other)
