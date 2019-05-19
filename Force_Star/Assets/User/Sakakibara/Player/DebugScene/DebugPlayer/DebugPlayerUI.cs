@@ -1891,7 +1891,7 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            int indexReverse = MyCalculator.InversionOfIndex(index + 1, truePartsCollectionDigit);
+            int indexReverse = MyCalculator.InversionOfIndex(index, truePartsCollectionDigit);
             float indexPoint = MyCalculator.IndexCenterPos(indexReverse, truePartsCollectionDigit);
             pos.x = posSave.x + (persent_AssistS.x * indexPoint);
             pos.y = posSave.y;

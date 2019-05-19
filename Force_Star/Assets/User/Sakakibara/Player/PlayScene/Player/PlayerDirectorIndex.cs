@@ -134,4 +134,11 @@ public class PlayerDirectorIndex
     {
         return m_playerDirector.GetHaveStarParsent();
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetHaveAllPartsFlag()
+    {
+        return m_playerDirector.GetHaveAllPartsFlag();
+    }
 }
