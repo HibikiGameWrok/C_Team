@@ -27,7 +27,7 @@ public class PlayStarManeger : MonoBehaviour
     // 星オブジェクト(隠し)(跳ねる)
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_starObjOriginBounce = null;
-    private StarPieceMove m_starObjOriginBounceMove = null;
+    private StarPieceBounceMove m_starObjOriginBounceMove = null;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星オブジェクト
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -54,7 +54,7 @@ public class PlayStarManeger : MonoBehaviour
         // 星オブジェクト(隠し)(跳ねる)
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starObjOriginBounce = new GameObject("starOriginBounce");
-        m_starObjOriginBounceMove = m_starObjOriginBounce.AddComponent<StarPieceMove>();
+        m_starObjOriginBounceMove = m_starObjOriginBounce.AddComponent<StarPieceBounceMove>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ここにしまう
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -152,7 +152,7 @@ public class PlayStarManeger : MonoBehaviour
     public void CreateStarBouncePisce(Vector3 pos, int max)
     {
         GameObject newStarObj = null;
-        StarPieceMove newStarObjMove = null;
+        StarPieceBounceMove newStarObjMove = null;
         for (int i = 0; i < max; i++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -160,7 +160,7 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = Instantiate(m_starObjOriginBounce) as GameObject;
             newStarObj.SetActive(true);
-            newStarObjMove = newStarObj.GetComponent<StarPieceMove>();
+            newStarObjMove = newStarObj.GetComponent<StarPieceBounceMove>();
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ここにしまう
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -170,7 +170,6 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObjMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
             newStarObjMove.SetPosition(pos);
-            newStarObjMove.SetSpeed(0.01f, 0.01f);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -179,7 +178,7 @@ public class PlayStarManeger : MonoBehaviour
     public void CreateStarBouncePisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, int starNum)
     {
         GameObject newStarObj = null;
-        StarPieceMove newStarObjMove = null;
+        StarPieceBounceMove newStarObjMove = null;
         float angle = 0;
         float angleMax = 0;
         float angleMin = 0;
@@ -195,7 +194,7 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = Instantiate(m_starObjOriginBounce) as GameObject;
             newStarObj.SetActive(true);
-            newStarObjMove = newStarObj.GetComponent<StarPieceMove>();
+            newStarObjMove = newStarObj.GetComponent<StarPieceBounceMove>();
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ランダム作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -214,7 +213,6 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObjMove.SetVec(vec.x, vec.y);
             newStarObjMove.SetPosition(pos);
-            newStarObjMove.SetSpeed(0.01f, 0.01f);
         }
     }
 }

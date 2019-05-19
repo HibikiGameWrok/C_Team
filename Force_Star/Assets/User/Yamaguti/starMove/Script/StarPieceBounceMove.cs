@@ -366,7 +366,7 @@ public class StarPieceBounceMove : MonoBehaviour
 
             // Do anything
             float level = Mathf.Abs(Mathf.Sin(Time.time * flashInterval)); // 点滅間隔
-            this.GetComponent<GameObjectSprite>().GetSpriteRenderer().color= new Color(1f, 1f, 1f, level); // 点滅
+          //  this.GetComponent<GameObjectSprite>().GetSpriteRenderer().color= new Color(1f, 1f, 1f, level); // 点滅
             //gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, level);
             timeElapsed += Time.deltaTime;
 
