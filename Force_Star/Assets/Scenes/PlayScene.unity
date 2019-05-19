@@ -1852,6 +1852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7adb0224e7d6904bbcef7f60a321dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fileName: 
 --- !u!4 &305743770
 Transform:
   m_ObjectHideFlags: 0
@@ -20915,6 +20916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SandyBeach_Image_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884428854698817740, guid: b1424117b4b87a847a2beef48b13d672,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 1757142879699980755, guid: b1424117b4b87a847a2beef48b13d672,
         type: 3}
@@ -44457,6 +44463,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SandyBeach_Image_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884428854698817740, guid: b1424117b4b87a847a2beef48b13d672,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 1757142879699980755, guid: b1424117b4b87a847a2beef48b13d672,
         type: 3}
