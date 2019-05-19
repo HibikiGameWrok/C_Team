@@ -109,6 +109,10 @@ public partial class PlayerDirector : MonoBehaviour
         public int starNum;
     }
     private List<PlayerGetStarReservation> m_getStar;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ状況
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool m_haveAllPartsFlag;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -172,6 +176,10 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_recoveryAngle = 0.0f;
         m_recoveryMove = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ状況
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_haveAllPartsFlag = false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データベース設定
@@ -290,6 +298,40 @@ public partial class PlayerDirector : MonoBehaviour
         // ダメージ更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateHitFlag();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 所持パーツ状況
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdatePartsId();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ状況
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdatePartsId()
+    {
+        uint havePartsID = m_dataBace.GetHavePartsId();
+        bool haveAllParts = true;
+        bool haveParts = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ダメージ報告脚
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int partsNum = 0; partsNum < (int)PartsID.NUM; partsNum++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // パーツ持っている？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            haveParts = MyCalculator.DigitBoolean(havePartsID, (uint)partsNum);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 全部持っているか？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!haveParts)
+            {
+                haveAllParts = false;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 全部持っている情報更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_haveAllPartsFlag = haveAllParts;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ダメージ回復
@@ -1029,6 +1071,13 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float starParsent = MyCalculator.Division((float)haveStar, (float)needStar);
         return starParsent;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 所持パーツ情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetHaveAllPartsFlag()
+    {
+        return m_haveAllPartsFlag;
     }
 }
 //bool Up = m_controller.ChackStartTrigger();
