@@ -12,6 +12,14 @@ public class WaterWallMove : MonoBehaviour
     PlaySceneDirectorIndex m_playIndex;
     PlayerDirectorIndex m_playerIndex;
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 攻撃当たり判定データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private Vector2 m_partsAttackPos;
+    private Vector2 m_partsAttackSize;
+    private EnemyAttackPartsBox m_partsAttack;
+    private GameObject m_partsAttackObject;
+
     // Rayフラグ管理用/////////////////////////
     bool[] playerHF = { false, false,false ,false,false,false};
     bool waterHF = false;
@@ -25,6 +33,22 @@ public class WaterWallMove : MonoBehaviour
 
     public ParticleSystem HitEffect;         //エフェクトパーティクル格納用
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // これが出来たときに
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void Awake()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃当たり判定データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GameObject parent = this.gameObject;
+        m_partsAttackObject = new GameObject("attackParts");
+        m_partsAttackObject.transform.parent = parent.transform;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃当たり判定のスクリプト
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        this.m_partsAttack = m_partsAttackObject.AddComponent<EnemyAttackPartsBox>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +65,22 @@ public class WaterWallMove : MonoBehaviour
         playerlayer = LayerMask.GetMask(LayerMask.LayerToName(8));
         playerHitlayer = LayerMask.GetMask(LayerMask.LayerToName(10));
         waterlayer = LayerMask.GetMask(LayerMask.LayerToName(14));
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃当たり判定の発生
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsAttackObject.gameObject.transform.localPosition = Vector3.zero;
+        m_partsAttackObject.gameObject.transform.localRotation = Quaternion.identity;
+        m_partsAttackObject.gameObject.transform.localScale = Vector3.one;
+
+        m_partsAttackPos = new Vector2(0, 0);
+        m_partsAttackSize = new Vector2(1.5f, 1.5f);
+        m_partsAttack.SetPlayHit();
+        m_partsAttack.SetPointSize(m_partsAttackPos, m_partsAttackSize);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃威力
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_partsAttack.SetAttackData(25.0f, true);
     }
 
     // Update is called once per frame
@@ -106,7 +146,7 @@ public class WaterWallMove : MonoBehaviour
                 // this.transform.parent.GetComponent<WaterWall>().SetHitflag(true);
                 if (HitEffect != null)
                 {
-                    m_playIndex.ApplyStarBounce(this.transform.position, 20);
+                    m_playIndex.ApplyStarDiffusion(this.transform.position, 20);
                     Vector3 pos = new Vector3(this.transform.position.x, this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2, this.transform.position.z);
                     ParticleSystem par = Instantiate(HitEffect, pos, Quaternion.identity) as ParticleSystem;
                     par.Play();
