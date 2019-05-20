@@ -39,9 +39,11 @@ public class BackgroundMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector3 playerPos = m_playerIndex.GetPlayerPosition();
 
-        Vector2 direction = new Vector2(playerPos.x - transform.position.x, playerPos.y - transform.position.y);
-     
-        GetComponent<Rigidbody2D>().velocity = (direction * power);
+        //Vector2 direction = new Vector2(playerPos.x - transform.position.x, playerPos.y - transform.position.y);
+
+        //GetComponent<Rigidbody2D>().velocity = (direction * power);
+
+        transform.position = new Vector2(playerPos.x, playerPos.y * power + 15);
     }
 
 }
