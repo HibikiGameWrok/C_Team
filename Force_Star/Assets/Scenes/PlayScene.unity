@@ -1343,7 +1343,7 @@ PrefabInstance:
     - target: {fileID: 1080834507341459247, guid: c0dbbfdcb9464c44c8e16a375822594e,
         type: 3}
       propertyPath: m_scale
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0dbbfdcb9464c44c8e16a375822594e, type: 3}
@@ -20133,7 +20133,7 @@ PrefabInstance:
     - target: {fileID: 139104306324852519, guid: 1a5a5f095d534d7479ef037d09d10a9a,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.32
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6162678122462802523, guid: 1a5a5f095d534d7479ef037d09d10a9a,
         type: 3}
@@ -47150,7 +47150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2b385cf58af72469cd144fcb9b70e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 1
+  power: 1.05
 --- !u!50 &1538563967
 Rigidbody2D:
   serializedVersion: 4
