@@ -69,7 +69,11 @@ public class StartRoket : MonoBehaviour
     // 子の敵オブジェクトを取得する変数
     private Transform Enemys;
 
+    // 手順を示す変数
     int count = 0;
+
+    // コントロールを管理しているクラス
+    PlayerController playercont;
 
     void Awake()
     {
@@ -79,6 +83,9 @@ public class StartRoket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // コントロールスクリプトを生成
+        playercont = new PlayerController();
+
         // Inspectorで設定したオブジェクトの数の乱数を決める
         randPoint = Random.Range(0, StartRoketPoint.Length);
 
@@ -120,8 +127,18 @@ public class StartRoket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // コントロール管理クラスを更新
+        playercont.Update();
+        // コントローラーXボタンかXキーが押された時
+        if (playercont.ChackAttack() || (Input.GetKeyDown(KeyCode.X)))
+        {
+            // スキップするコルーチンを作動
+            // コルーチンを実行  
+            StartCoroutine("SkipMove");
+            //moveStopFlag = true;
+        }
         // 距離感の速度
-        float distCovered = (Time.time - startTime) * 0.001f;
+            float distCovered = (Time.time - startTime) * 0.001f;
 
         // 移動を止める処理
         if (moveStopFlag != true)
@@ -134,6 +151,18 @@ public class StartRoket : MonoBehaviour
                 StartCoroutine("PartsInstance");
             }
         }
+    }
+
+    private IEnumerator SkipMove()
+    {
+        if (moveStopFlag != true)
+        {
+            StartFade.SetFadeOutFlag(true);
+            moveStopFlag = true;
+        }
+        // 1秒待つ  
+        yield return new WaitForSeconds(4.0f);
+        OnActiveObj();
     }
 
     // コルーチン  
@@ -171,48 +200,63 @@ public class StartRoket : MonoBehaviour
             count = 3;
         }
         yield return new WaitForSeconds(2.0f);
-        StartFade.SetFadeOutFlag(true);
+        if (count == 3)
+        {
+            StartFade.SetFadeOutFlag(true);
+            count = 4;
+        }
+        yield return new WaitForSeconds(2.0f);
+        OnActiveObj();
     }
 
-    void OnTriggerEnter2D(Collider2D col2D)
+    //void OnTriggerEnter2D(Collider2D col2D)
+    //{
+    //    // ポイントに当たった時
+    //    if (col2D.gameObject.tag == "StartRoketPoint")
+    //    {
+    //        OnActiveObj();
+    //    }
+    //}
+
+
+    void OnActiveObj()
     {
-        // 
-        if (col2D.gameObject.tag == "StartRoketPoint")
+        // 壊れたロケットプレハブをGameObject型で取得
+        GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
+        // 壊れたロケットプレハブを元に、インスタンスを生成、
+        Instantiate(Rocket, targetPos, Quaternion.identity);
+
+        // サブカメラが消える前にメインカメラを起動する
+        if (MainCamera != null)
         {
-            if (moveStopFlag != true)
+            //// プレイヤープレハブをGameObject型で取得
+            GameObject Player = (GameObject)Resources.Load("PlayerDirector");
+            // プレイヤープレハブを元に生成、
+            Instantiate(Player, this.transform.position, Quaternion.identity);
+
+            // プレイシーン全体を管理するオブジェクトを起動
+            PlayDirector.gameObject.SetActive(true);
+
+            // メインカメラをアクティブにする
+            MainCamera.gameObject.SetActive(true);
+
+            // BackGround
+            BackGround.gameObject.SetActive(true);
+
+            // 敵を全てアクティブにする
+            foreach (Transform Enemys in ParentEnemys.transform)
             {
-                // 壊れたロケットプレハブをGameObject型で取得
-                GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
-                // 壊れたロケットプレハブを元に、インスタンスを生成、
-                Instantiate(Rocket, targetPos, Quaternion.identity);
-
-                // サブカメラが消える前にメインカメラを起動する
-                if (MainCamera != null)
-                {
-                    //// プレイヤープレハブをGameObject型で取得
-                    GameObject Player = (GameObject)Resources.Load("PlayerDirector");
-                    // プレイヤープレハブを元に生成、
-                    Instantiate(Player, this.transform.position, Quaternion.identity);
-
-                    // プレイシーン全体を管理するオブジェクトを起動
-                    PlayDirector.gameObject.SetActive(true);
-
-                    MainCamera.gameObject.SetActive(true);
-
-                    // BackGround
-                    BackGround.gameObject.SetActive(true);
-
-                    foreach (Transform Enemys in ParentEnemys.transform)
-                    {
-                        Enemys.gameObject.SetActive(true);
-                    }
-                }
-                // 動きを止める
-                moveStopFlag = true;
-
-                StartFade.SetFadeInFlag(true);
+                Enemys.gameObject.SetActive(true);
             }
+
+            // 動きを止める
+            moveStopFlag = true;
+            // フェードをする
+            StartFade.SetFadeInFlag(true);
+            // BGMを切り替える
             BGM.gameObject.SetActive(true);
+
+            // TitleBGMオブジェクトを削除
             Destroy(TitleBGMMane);
             // 自身のオブジェクトを消す
             Destroy(this.gameObject);
