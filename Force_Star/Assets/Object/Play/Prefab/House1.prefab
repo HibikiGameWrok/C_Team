@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6755378365081019660}
   - component: {fileID: 3085303134224715375}
   - component: {fileID: 6744522000988087048}
+  - component: {fileID: 6214076985957487877}
   m_Layer: 0
   m_Name: House1
   m_TagString: Untagged
@@ -126,3 +127,16 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &6214076985957487877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8742368845709413447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 29
