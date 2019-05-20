@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2188090959103007950}
   - component: {fileID: 1626933203514116713}
   m_Layer: 0
-  m_Name: RocketParts_0
+  m_Name: StartParts_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

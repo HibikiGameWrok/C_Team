@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6942072015355104041}
   - component: {fileID: 6942072015355104046}
   - component: {fileID: 6942072015355104047}
+  - component: {fileID: 8042709025498477755}
   m_Layer: 0
   m_Name: Shell
   m_TagString: Enemy
@@ -141,11 +142,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfca9e57c15c05f4e8f8da97cb4f7539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starDirec: {fileID: 0}
-  attackHand: {fileID: 0}
   wait_Image: {fileID: 21300004, guid: f9edb84fe3baa884ea6631e554dd83db, type: 3}
   action_Image: {fileID: 21300002, guid: f9edb84fe3baa884ea6631e554dd83db, type: 3}
   damage_Image: {fileID: 21300000, guid: f9edb84fe3baa884ea6631e554dd83db, type: 3}
-  player: {fileID: 0}
   speed: 0.25
   range: 6.5
+  deathTimer: 0
+  gravityForce: 1
+--- !u!114 &8042709025498477755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2698644373562113806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 1

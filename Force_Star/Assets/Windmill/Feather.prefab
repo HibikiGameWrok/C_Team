@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7485070105690756097}
   - component: {fileID: 3530549813771947860}
   - component: {fileID: 3589464403782054503}
+  - component: {fileID: 2079707260880046042}
   m_Layer: 0
   m_Name: Feather
   m_TagString: Untagged
@@ -119,3 +120,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0c875051fffa645bb780e51e502d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2079707260880046042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739754647364841892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 4

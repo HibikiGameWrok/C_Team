@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9018455245436308205}
   - component: {fileID: 9018455245436308204}
   - component: {fileID: 9018455245436308207}
+  - component: {fileID: 1059501511503762879}
   m_Layer: 0
   m_Name: PalmTree_leaf3
   m_TagString: Floor
@@ -126,6 +127,19 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &1059501511503762879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9018455245436308206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 22
 --- !u!1 &9018455245637924720
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9018455245637924734}
   - component: {fileID: 9018455245637924721}
+  - component: {fileID: 4864014709004716704}
   m_Layer: 0
   m_Name: PalmTree_leaf2
   m_TagString: Untagged
@@ -206,6 +221,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4864014709004716704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9018455245637924720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 23
 --- !u!1 &9018455246760827962
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9018455247284121119}
   - component: {fileID: 9018455247284121118}
+  - component: {fileID: 7065874371587271992}
   m_Layer: 0
   m_Name: PalmTree_0
   m_TagString: Floor
@@ -364,3 +393,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7065874371587271992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9018455247284121105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 21
