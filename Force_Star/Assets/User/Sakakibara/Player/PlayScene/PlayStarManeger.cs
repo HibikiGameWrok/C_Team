@@ -57,22 +57,22 @@ public class PlayStarManeger : MonoBehaviour
         // 星オブジェクト(隠し)
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starObjOriginDiffusion = new GameObject("starOriginDiffusion");
-        m_starObjOriginDiffusionMove = m_starObjOriginDiffusion.AddComponent<StarPieceMove>();
+        //m_starObjOriginDiffusionMove = m_starObjOriginDiffusion.AddComponent<StarPieceMove>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星オブジェクトレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_starObjOriginDiffusionOrder = m_starObjOriginDiffusion.AddComponent<Common_GameObjectSprite_Order>();
-        m_starObjOriginDiffusionOrder.SetBoth(m_starObjOriginDiffusionMove.GetSpriteData(), Object_Order_Number.STAR);
+        //m_starObjOriginDiffusionOrder = m_starObjOriginDiffusion.AddComponent<Common_GameObjectSprite_Order>();
+        //m_starObjOriginDiffusionOrder.SetBoth(m_starObjOriginDiffusionMove.GetSpriteData(), Object_Order_Number.STAR);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星オブジェクト(隠し)(跳ねる)
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starObjOriginBounce = new GameObject("starOriginBounce");
-        m_starObjOriginBounceMove = m_starObjOriginBounce.AddComponent<StarPieceBounceMove>();
+        //m_starObjOriginBounceMove = m_starObjOriginBounce.AddComponent<StarPieceBounceMove>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星オブジェクトレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_starObjOriginBounceOrder = m_starObjOriginBounce.AddComponent<Common_GameObjectSprite_Order>();
-        m_starObjOriginBounceOrder.SetBoth(m_starObjOriginBounceMove.GetSpriteData(), Object_Order_Number.STAR);
+        //m_starObjOriginBounceOrder = m_starObjOriginBounce.AddComponent<Common_GameObjectSprite_Order>();
+        //m_starObjOriginBounceOrder.SetBoth(m_starObjOriginBounceMove.GetSpriteData(), Object_Order_Number.STAR);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ここにしまう
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -99,7 +99,15 @@ public class PlayStarManeger : MonoBehaviour
     public void CreateStarDiffusionPisce(Vector3 pos, int max)
     {
         GameObject newStarObj = null;
-        StarPieceMove newStarObjMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトの動き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        StarPieceMove starDiffusionMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトのレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Common_GameObjectSprite_Order starDiffusionOrder = null;
+
         for (int i = 0; i < max; i++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -107,7 +115,15 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = Instantiate(m_starObjOriginDiffusion) as GameObject;
             newStarObj.SetActive(true);
-            newStarObjMove = newStarObj.GetComponent<StarPieceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトの動き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starDiffusionMove = newStarObj.AddComponent<StarPieceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトのレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starDiffusionOrder = newStarObj.AddComponent<Common_GameObjectSprite_Order>();
+            starDiffusionOrder.SetBoth(starDiffusionMove.GetSpriteData(), Object_Order_Number.STAR);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ここにしまう
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -115,9 +131,9 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 飛んでいく角度をランダムに決める
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            newStarObjMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
-            newStarObjMove.SetPosition(pos);
-            newStarObjMove.SetSpeed(0.01f, 0.01f);
+            starDiffusionMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
+            starDiffusionMove.SetPosition(pos);
+            starDiffusionMove.SetSpeed(0.01f, 0.01f);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -126,12 +142,19 @@ public class PlayStarManeger : MonoBehaviour
     public void CreateStarDiffusionPisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, int starNum)
     {
         GameObject newStarObj = null;
-        StarPieceMove newStarObjMove = null;
         float angle = 0;
         float angleMax = 0;
         float angleMin = 0;
         float speed = 0;
         Vector2 vec;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトの動き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        StarPieceMove starDiffusionMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトのレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Common_GameObjectSprite_Order starDiffusionOrder = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 生成機関
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -142,7 +165,15 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = Instantiate(m_starObjOriginDiffusion) as GameObject;
             newStarObj.SetActive(true);
-            newStarObjMove = newStarObj.GetComponent<StarPieceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトの動き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starDiffusionMove = newStarObj.AddComponent<StarPieceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトのレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starDiffusionOrder = newStarObj.AddComponent<Common_GameObjectSprite_Order>();
+            starDiffusionOrder.SetBoth(starDiffusionMove.GetSpriteData(), Object_Order_Number.STAR);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ランダム作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -159,9 +190,9 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 飛んでいく角度をランダムに決める
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            newStarObjMove.SetVec(vec.x, vec.y);
-            newStarObjMove.SetPosition(pos);
-            newStarObjMove.SetSpeed(0.01f, 0.01f);
+            starDiffusionMove.SetVec(vec.x, vec.y);
+            starDiffusionMove.SetPosition(pos);
+            starDiffusionMove.SetSpeed(0.01f, 0.01f);
         }
     }
 
@@ -170,7 +201,15 @@ public class PlayStarManeger : MonoBehaviour
     public void CreateStarBouncePisce(Vector3 pos, int max)
     {
         GameObject newStarObj = null;
-        StarPieceBounceMove newStarObjMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトの動き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        StarPieceBounceMove starBounceMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトのレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Common_GameObjectSprite_Order starBounceOrder = null;
+
         for (int i = 0; i < max; i++)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -178,7 +217,15 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = Instantiate(m_starObjOriginBounce) as GameObject;
             newStarObj.SetActive(true);
-            newStarObjMove = newStarObj.GetComponent<StarPieceBounceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトの動き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceMove = newStarObj.AddComponent<StarPieceBounceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトのレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceOrder = newStarObj.AddComponent<Common_GameObjectSprite_Order>();
+            starBounceOrder.SetBoth(starBounceMove.GetSpriteData(), Object_Order_Number.STAR);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ここにしまう
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -186,8 +233,8 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 飛んでいく角度をランダムに決める
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            newStarObjMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
-            newStarObjMove.SetPosition(pos);
+            starBounceMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
+            starBounceMove.SetPosition(pos);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -196,12 +243,19 @@ public class PlayStarManeger : MonoBehaviour
     public void CreateStarBouncePisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, int starNum)
     {
         GameObject newStarObj = null;
-        StarPieceBounceMove newStarObjMove = null;
         float angle = 0;
         float angleMax = 0;
         float angleMin = 0;
         float speed = 0;
         Vector2 vec;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトの動き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        StarPieceBounceMove starBounceMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトのレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Common_GameObjectSprite_Order starBounceOrder = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 生成機関
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -212,7 +266,15 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             newStarObj = Instantiate(m_starObjOriginBounce) as GameObject;
             newStarObj.SetActive(true);
-            newStarObjMove = newStarObj.GetComponent<StarPieceBounceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトの動き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceMove = newStarObj.AddComponent<StarPieceBounceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトのレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceOrder = newStarObj.AddComponent<Common_GameObjectSprite_Order>();
+            starBounceOrder.SetBoth(starBounceMove.GetSpriteData(), Object_Order_Number.STAR);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ランダム作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -229,8 +291,8 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 飛んでいく角度をランダムに決める
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            newStarObjMove.SetVec(vec.x, vec.y);
-            newStarObjMove.SetPosition(pos);
+            starBounceMove.SetVec(vec.x, vec.y);
+            starBounceMove.SetPosition(pos);
         }
     }
 }

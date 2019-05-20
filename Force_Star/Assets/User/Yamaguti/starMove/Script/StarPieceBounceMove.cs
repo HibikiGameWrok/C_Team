@@ -123,6 +123,13 @@ public class StarPieceBounceMove : MonoBehaviour
         // ４辺を用意する
         //*|***|***|***|***|***|***|***|***|***|***|***|
 
+        if (m_up == null)
+        {
+            m_up = new GameObject("Up");
+            m_upChildStar = m_up.AddComponent<ChildStar>();
+            m_up.transform.parent = gameObject.transform;
+        }
+
         //if (m_upChildStar == null)
         //{
         //    m_up = new GameObject("Up");
@@ -150,9 +157,10 @@ public class StarPieceBounceMove : MonoBehaviour
         //    m_rightChildStar = m_right.AddComponent<ChildStar>();
         //    m_right.transform.parent = gameObject.transform;
         //}
-        m_up = new GameObject("Up");
 
-        m_up.transform.parent = gameObject.transform;
+        //m_up = new GameObject("Up");
+
+        //m_up.transform.parent = gameObject.transform;
 
         m_down = new GameObject("Down");
 
@@ -183,7 +191,7 @@ public class StarPieceBounceMove : MonoBehaviour
 
     void Start()
     {
-        m_upChildStar = m_up.AddComponent<ChildStar>();
+
         m_downChildStar = m_down.AddComponent<ChildStar>();
         m_leftChildStar = m_left.AddComponent<ChildStar>();
         m_rightChildStar = m_right.AddComponent<ChildStar>();
@@ -364,7 +372,11 @@ public class StarPieceBounceMove : MonoBehaviour
 
             // Do anything
             float level = Mathf.Abs(Mathf.Sin(Time.time * flashInterval)); // 点滅間隔
-          //  this.GetComponent<GameObjectSprite>().GetSpriteRenderer().color= new Color(1f, 1f, 1f, level); // 点滅
+
+
+            m_starSprite.SetAlpha(level);
+
+            //  this.GetComponent<GameObjectSprite>().GetSpriteRenderer().color= new Color(1f, 1f, 1f, level); // 点滅
             //gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, level);
             timeElapsed += Time.deltaTime;
 

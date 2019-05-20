@@ -166,6 +166,14 @@ public class PlayRocketParts : MonoBehaviour
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // GameObjectSprite情報獲得
+    // 取扱注意
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public GameObjectSprite GetSpriteData()
+    {
+        return m_partsSprite;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定を測定
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void OnTriggerEnter2D(Collider2D other)

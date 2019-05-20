@@ -8,6 +8,12 @@ using UnityEngine.SceneManagement;
 // パーツ言い換え
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using PartsID = PlayStaticData.PartsID;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// オーダー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseOrder = WarehouseData.WarehouseOrder;
+using Object_Order_Number = WarehouseData.WarehouseOrder.Object_Order_Number;
+
 
 public class PlaySceneDirector : MonoBehaviour
 {
@@ -114,6 +120,7 @@ public class PlaySceneDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void AwakeRokcetData()
     {
+        Common_GameObjectSprite_Order order = null;
         m_rocketDataNum = (int)PartsID.NUM;
         m_rocketData = new List<RocketPartsData>();
         m_rocketPartsCandidatePosition = new List<Vector3>();
@@ -142,6 +149,11 @@ public class PlaySceneDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             partsData.m_rocketPartsID = (PartsID)index;
             partsData.m_rocketPartsPosition = Vector3.zero;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // オーダーの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            order = partsData.m_rocketPartsObject.AddComponent<Common_GameObjectSprite_Order>();
+            order.SetBoth(partsScript.GetSpriteData(), Object_Order_Number.STAR);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
