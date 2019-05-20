@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3087144534123115754}
   - component: {fileID: 4040391783299129390}
   - component: {fileID: 2900841383751064387}
+  - component: {fileID: 3357151004857174416}
   m_Layer: 14
   m_Name: WaterFall_1
   m_TagString: Untagged
@@ -121,3 +122,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.05, y: 0.95}
   m_EdgeRadius: 0
+--- !u!114 &3357151004857174416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8717099745841726789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 31

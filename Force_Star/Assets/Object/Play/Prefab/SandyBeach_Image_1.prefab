@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 48140614837373738}
   - component: {fileID: 3596049638920208727}
   - component: {fileID: 8423713218071042168}
+  - component: {fileID: 7228153767770623966}
   m_Layer: 0
   m_Name: SandyBeach_Image_1
   m_TagString: Untagged
@@ -142,3 +143,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starDirec: {fileID: 0}
+--- !u!114 &7228153767770623966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884428854698817740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 3

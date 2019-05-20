@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7937041352321347756}
   - component: {fileID: 1864836413569897769}
   - component: {fileID: 8893310004186010678}
+  - component: {fileID: 2110779363961575024}
   m_Layer: 0
   m_Name: Joint
   m_TagString: Untagged
@@ -143,6 +144,19 @@ MonoBehaviour:
   addSpeed: 0.5
   subSpeed: 0.2
   countTime: 3
+--- !u!114 &2110779363961575024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744659693859812124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 4
 --- !u!1 &2068548423741177134
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644529026703452390}
   - component: {fileID: 4426180145925190847}
+  - component: {fileID: 6306230900111934168}
   m_Layer: 0
   m_Name: phantomStar
   m_TagString: Untagged
@@ -222,6 +237,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6306230900111934168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068548423741177134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 5
 --- !u!1 &2799047702508500207
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +263,7 @@ GameObject:
   - component: {fileID: 1627553556204747582}
   - component: {fileID: 3726493840368761580}
   - component: {fileID: 3922669788460554005}
+  - component: {fileID: 1826168625260161757}
   m_Layer: 0
   m_Name: WindMill
   m_TagString: Untagged
@@ -440,3 +469,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1826168625260161757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799047702508500207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 3

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3843643357458545963}
   - component: {fileID: 4628206521459950102}
   - component: {fileID: 3580550112825891309}
+  - component: {fileID: 4118459866793802929}
   m_Layer: 0
   m_Name: SandyBeach_Image_0
   m_TagString: Floor
@@ -142,3 +143,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starDirec: {fileID: 0}
+--- !u!114 &4118459866793802929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149829465900865482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 3
