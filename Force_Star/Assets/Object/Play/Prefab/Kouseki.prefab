@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 673099838358513320}
   - component: {fileID: 5537122199146575145}
+  - component: {fileID: 1557612607588579369}
   m_Layer: 0
   m_Name: Kouseki
   m_TagString: Untagged
@@ -79,3 +80,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1557612607588579369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743826944684605831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 3

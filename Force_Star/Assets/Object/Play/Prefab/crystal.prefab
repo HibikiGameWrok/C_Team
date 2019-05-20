@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8773332874508029386}
   - component: {fileID: 8773332874508029384}
   - component: {fileID: 7409636696006268160}
+  - component: {fileID: 937622505781384896}
   m_Layer: 0
   m_Name: crystal
   m_TagString: Untagged
@@ -241,3 +242,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &937622505781384896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172409703268863032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 3
