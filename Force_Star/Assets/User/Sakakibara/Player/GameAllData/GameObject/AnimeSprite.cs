@@ -13,18 +13,26 @@ using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerDa
 using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 using PartsData = GameDataPublic.PartsData;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// オーダー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseOrder = WarehouseData.WarehouseOrder;
+using Object_Order_Number = WarehouseData.WarehouseOrder.Object_Order_Number;
 
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // ゲームオブジェクトデータは眠らない
 //*|***|***|***|***|***|***|***|***|***|***|***|
-//[ExecuteInEditMode]
 abstract public class AnimeSprite : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲーム共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    protected WarehouseOrder m_warehouseOrder;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    GameObjectSprite m_mySprite;
+    protected GameObjectSprite m_mySprite;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 継承用使用データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -56,6 +64,10 @@ abstract public class AnimeSprite : MonoBehaviour
 
     public int m_dataNum;
     public int m_depth;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 真の深度
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    protected int m_depthData;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
@@ -76,6 +88,10 @@ abstract public class AnimeSprite : MonoBehaviour
         m_texImageData = new TexImageData();
         m_texImageData.Reset();
         m_renderImageData = new RenderImageData();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーダー倉庫
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_warehouseOrder = WarehouseOrder.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 継承用取得データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -136,6 +152,9 @@ abstract public class AnimeSprite : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 反映
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ノータッチ対策
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_depthData = m_depth;
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // イメージを作成
@@ -167,7 +186,7 @@ abstract public class AnimeSprite : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 描画を作成
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_renderImageData.depth = m_depth;
+        m_renderImageData.depth = m_depthData;
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 実施

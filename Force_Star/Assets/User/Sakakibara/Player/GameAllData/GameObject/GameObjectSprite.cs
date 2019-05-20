@@ -224,6 +224,14 @@ public class GameObjectSprite : MonoBehaviour
         return m_spriteRenderer.size;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の深度を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetDepth(int depth)
+    {
+        m_renderImageData.depth = depth;
+        m_spriteRenderer.sortingOrder = m_renderImageData.depth;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の透明度を決める
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetAlpha(float alpha)

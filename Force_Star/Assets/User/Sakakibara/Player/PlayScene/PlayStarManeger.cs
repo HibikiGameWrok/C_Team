@@ -29,13 +29,13 @@ public class PlayStarManeger : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_starObjOriginDiffusion = null;
     private StarPieceMove m_starObjOriginDiffusionMove = null;
-    private Common_Order m_starObjOriginDiffusionOrder = null;
+    private Common_GameObjectSprite_Order m_starObjOriginDiffusionOrder = null;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星オブジェクト(隠し)(跳ねる)
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_starObjOriginBounce = null;
     private StarPieceBounceMove m_starObjOriginBounceMove = null;
-    private Common_Order m_starObjOriginBounceOrder = null;
+    private Common_GameObjectSprite_Order m_starObjOriginBounceOrder = null;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星オブジェクト
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -58,15 +58,21 @@ public class PlayStarManeger : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starObjOriginDiffusion = new GameObject("starOriginDiffusion");
         m_starObjOriginDiffusionMove = m_starObjOriginDiffusion.AddComponent<StarPieceMove>();
-        m_starObjOriginDiffusionOrder = m_starObjOriginDiffusion.AddComponent<Common_Order>();
-        m_starObjOriginDiffusionOrder.SetNumber(Object_Order_Number.STAR);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starObjOriginDiffusionOrder = m_starObjOriginDiffusion.AddComponent<Common_GameObjectSprite_Order>();
+        m_starObjOriginDiffusionOrder.SetBoth(m_starObjOriginDiffusionMove.GetSpriteData(), Object_Order_Number.STAR);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星オブジェクト(隠し)(跳ねる)
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_starObjOriginBounce = new GameObject("starOriginBounce");
         m_starObjOriginBounceMove = m_starObjOriginBounce.AddComponent<StarPieceBounceMove>();
-        m_starObjOriginBounceOrder = m_starObjOriginBounce.AddComponent<Common_Order>();
-        m_starObjOriginBounceOrder.SetNumber(Object_Order_Number.STAR);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starObjOriginBounceOrder = m_starObjOriginBounce.AddComponent<Common_GameObjectSprite_Order>();
+        m_starObjOriginBounceOrder.SetBoth(m_starObjOriginBounceMove.GetSpriteData(), Object_Order_Number.STAR);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ここにしまう
         //*|***|***|***|***|***|***|***|***|***|***|***|
