@@ -96,22 +96,22 @@ public class PlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 上下
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             m_controllerData.m_stickPower.y += 1;
         }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             m_controllerData.m_stickPower.y += -1;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 上下
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             m_controllerData.m_stickPower.x += 1;
         }
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             m_controllerData.m_stickPower.x += -1;
         }

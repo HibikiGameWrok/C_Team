@@ -30,13 +30,13 @@ namespace WarehouseData
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 時間で初期シード作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            timeSend = nowTime.Millisecond * magnification;
+            timeSend += nowTime.Millisecond * magnification;
             magnification *= 1000;
-            timeSend = nowTime.Second * magnification;
+            timeSend += nowTime.Second * magnification;
             magnification *= 60;
-            timeSend = nowTime.Minute * magnification;
+            timeSend += nowTime.Minute * magnification;
             magnification *= 60;
-            timeSend = nowTime.Hour * magnification;
+            timeSend += nowTime.Hour * magnification;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 初期シードで乱数作成
             //*|***|***|***|***|***|***|***|***|***|***|***|
