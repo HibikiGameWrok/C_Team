@@ -58,7 +58,9 @@ public class PlaySceneDirector : MonoBehaviour
         // ゲーム共通ディレクター登録
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex = PlaySceneDirectorIndex.GetInstance();
+        m_directorIndex.AllReset();
         m_playerIndex = PlayerDirectorIndex.GetInstance();
+        m_playerIndex.AllReset();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 権限にて、メインカメラのターゲットをもらうぞ！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -227,7 +229,7 @@ public class PlaySceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // おしまい
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (air == 0 && !clearAnime)
+        if (deathFlag && !clearAnime)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 死にました～
@@ -237,8 +239,6 @@ public class PlaySceneDirector : MonoBehaviour
             // シーン切り替え＞リザルト行き
             //*|***|***|***|***|***|***|***|***|***|***|***|
             SceneManager.LoadScene("ResultScene");
-
-
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 帰還
