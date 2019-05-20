@@ -64,7 +64,7 @@ public class DeathExplosion : MonoBehaviour
     // 継承用使用データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private float m_timeExplosion;
-    private static float m_timeMax = 90;
+    private static float m_timeMax = 40;
     private static float m_timeMaxStar = 600;
     private static float m_timeMaxBomb = 12;
     private static float m_timeAmongBomb = MyCalculator.Division(m_timeMaxBomb, 6);
@@ -74,6 +74,13 @@ public class DeathExplosion : MonoBehaviour
     private bool m_awakeFlag = false;
     private bool m_pointReverse = false;
     private Vector3 m_pointBomb;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetMaxTime(float time)
+    {
+        m_timeMax = time;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 爆発起動
     //*|***|***|***|***|***|***|***|***|***|***|***|

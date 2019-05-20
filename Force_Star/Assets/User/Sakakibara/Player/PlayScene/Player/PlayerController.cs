@@ -42,9 +42,9 @@ public class PlayerController
         // キーボード用
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateKeyPad();
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
-        //// ジョイコン用
-        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ジョイコン用
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         //UpdateJoyPad();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // コード情報登録
@@ -160,6 +160,7 @@ public class PlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float joyKeyAttack = Input.GetAxis("JoyKeyAttack");
         float joyKeyJump = Input.GetAxis("JoyKeyJump");
+        float joyKeyStart = Input.GetAxis("JoyKeyStart");
         float joyKeyRecovery = Input.GetAxis("JoyKeyRecovery");
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃コード
@@ -187,11 +188,10 @@ public class PlayerController
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // スタートコード
         //*|***|***|***|***|***|***|***|***|***|***|***|
-
-        //if (joyKeyRecovery != 0.0f)
-        //{
-        //    m_controllerData.m_flagStartKey = true;
-        //}
+        if (joyKeyStart != 0.0f)
+        {
+            m_controllerData.m_flagStartKey = true;
+        }
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 回復コード

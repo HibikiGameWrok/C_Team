@@ -70,6 +70,8 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     private Ascension m_ascension;
+    private float m_deathTime;
+    private float m_ascensionTime;
     private GameObject m_ascensionObject;
     private DeathExplosion m_ascensionEffect;
 
@@ -128,6 +130,8 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_ascensionObject = new GameObject("AscensionEffect");
         m_ascensionEffect = m_ascensionObject.AddComponent<DeathExplosion>();
+        m_deathTime = 40.0f;
+        m_ascensionTime = 90.0f;
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -145,6 +149,10 @@ public partial class PlayerDirector : MonoBehaviour
         if (!m_ascension.start)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーを生かすも
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playerMove.SetArive(true);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーのパーツイメージを変える
             //*|***|***|***|***|***|***|***|***|***|***|***|
             PlayerImageUpdate();
@@ -155,6 +163,10 @@ public partial class PlayerDirector : MonoBehaviour
         }
         else
         {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーを殺すも
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playerMove.SetArive(false);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーを殺す
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -681,15 +693,12 @@ public partial class PlayerDirector : MonoBehaviour
 
 
 
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 爆発の
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_ascensionEffect.SetPoint(GetPlayerPositon());
+
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 爆発！
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (!m_ascension.end && m_ascension.time >= 90.0f)
+        if (!m_ascension.end && m_ascension.time >= m_deathTime)
         {
             m_ascension.end = true;
             m_ascension.time = 0;
@@ -697,17 +706,28 @@ public partial class PlayerDirector : MonoBehaviour
             // 吹き飛べ！
             //*|***|***|***|***|***|***|***|***|***|***|***|
             UpdateWhite();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーを生かすも
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playerMove.SetStop(true);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 風前
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_ascension.start && m_ascension.end && m_ascension.time >= 90.0f)
+        if (m_ascension.start && m_ascension.end && m_ascension.time >= m_ascensionTime)
         {
-            m_ascension.time = 90.0f;
+            m_ascension.time = m_ascensionTime;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 志望完了
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_directorIndex.SetGameOverFlag();
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発の
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_ascensionEffect.SetPoint(GetPlayerPositon());
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -732,13 +752,14 @@ public partial class PlayerDirector : MonoBehaviour
             // 爆発の
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_ascensionEffect.AwakeON();
+            m_ascensionEffect.SetMaxTime(m_deathTime);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 吹き飛べ！
             //*|***|***|***|***|***|***|***|***|***|***|***|
             Vector2 power = ChangeData.AngleDegToVector2(80.0f);
             power = ChangeData.AngleDegToVector2(10.0f);
             power = ChangeData.AngleDegToVector2(45.0f);
-            power *= 500.0f;
+            power *= 1000.0f;
             if (rightPower)
             {
                 power.x = power.x * -1;

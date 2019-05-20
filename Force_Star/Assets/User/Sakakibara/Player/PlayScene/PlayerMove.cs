@@ -144,7 +144,12 @@ public class PlayerMove : MonoBehaviour
     // 関係：コマンド全般
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private Vector2 m_addForce;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 関係：生死判定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool m_arive;
+    private bool m_stop;
+    private bool m_death;
 
 
 
@@ -198,6 +203,11 @@ public class PlayerMove : MonoBehaviour
         m_rightPower = false;
         m_reverseArrow = false;
         m_movePowerX = 0.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 関係：生死判定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_arive = true;
+        m_death = false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データベース設定
@@ -528,7 +538,10 @@ public class PlayerMove : MonoBehaviour
         // 当たりの判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateAttackParts();
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生死判定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateArive();
 
 
     }
@@ -779,6 +792,90 @@ public class PlayerMove : MonoBehaviour
 
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 生死判定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateArive()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 停止
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_stop)
+        {
+            UpdateStopCommond();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生死
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_arive == false)
+        {
+            if (m_death == false)
+            {
+                UpdateDeathCommond();
+            }
+        }
+        else
+        {
+            if (m_death == true)
+            {
+                UpdateRegenerationCommond();
+            }
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動：復活
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateRegenerationCommond()
+    {
+        //m_rigid2D.isKinematic = false;
+        //m_rigid2D.velocity = Vector2.zero;
+        SetAllPlayHit();
+        m_death = false;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動：死
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateDeathCommond()
+    {
+        //m_rigid2D.isKinematic = true;
+        //m_rigid2D.velocity = Vector2.zero;
+        SetAllStopHit();
+        m_death = true;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動：停止
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateStopCommond()
+    {
+        m_rigid2D.isKinematic = true;
+        m_rigid2D.velocity = Vector2.zero;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり判定あり
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void SetAllPlayHit()
+    {
+        m_box2D.enabled = true;
+        m_hitFlagArmParts_L.SetPlayHit();
+        m_hitFlagArmParts_R.SetPlayHit();
+        m_hitFlagBodyParts.SetPlayHit();
+        m_hitFlagHeadParts.SetPlayHit();
+        m_hitFlagLegParts_L.SetPlayHit();
+        m_hitFlagLegParts_R.SetPlayHit();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たり判定消失
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void SetAllStopHit()
+    {
+        m_box2D.enabled = false;
+        m_hitFlagArmParts_L.SetStopHit();
+        m_hitFlagArmParts_R.SetStopHit();
+        m_hitFlagBodyParts.SetStopHit();
+        m_hitFlagHeadParts.SetStopHit();
+        m_hitFlagLegParts_L.SetStopHit();
+        m_hitFlagLegParts_R.SetStopHit();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // コントローラー取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void LinkController(PlayerControllerData getController)
@@ -868,6 +965,17 @@ public class PlayerMove : MonoBehaviour
         m_bodyStrong = body;
         m_headStrong = head;
         m_legStrong = leg;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 生死判定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetArive(bool data)
+    {
+        m_arive = data;
+    }
+    public void SetStop(bool data)
+    {
+        m_stop = data;
     }
     ////*|***|***|***|***|***|***|***|***|***|***|***|
     //// 当たり判定取得
