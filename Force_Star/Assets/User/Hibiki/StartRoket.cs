@@ -229,11 +229,14 @@ public class StartRoket : MonoBehaviour
         // サブカメラが消える前にメインカメラを起動する
         if (MainCamera != null)
         {
-            //// プレイヤープレハブをGameObject型で取得
-            GameObject Player = (GameObject)Resources.Load("PlayerDirector");
-            // プレイヤープレハブを元に生成、
-            Instantiate(Player, this.transform.position, Quaternion.identity);
-
+            if (count == 4)
+            {
+                //// プレイヤープレハブをGameObject型で取得
+                GameObject Player = (GameObject)Resources.Load("PlayerDirector");
+                // プレイヤープレハブを元に生成、
+                Instantiate(Player, this.transform.position, Quaternion.identity);
+                count = 5;
+            }
             // プレイシーン全体を管理するオブジェクトを起動
             PlayDirector.gameObject.SetActive(true);
 
