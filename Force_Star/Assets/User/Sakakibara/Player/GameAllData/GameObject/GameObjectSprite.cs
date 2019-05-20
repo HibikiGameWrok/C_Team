@@ -228,10 +228,10 @@ public class GameObjectSprite : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetAlpha(float alpha)
     {
-        //m_spriteRenderer.alpha = alpha;
-        //Color imageLast = m_image.color;
-        //imageLast.a = m_renderUIData.alpha;
-        //m_image.color = imageLast;
+        m_renderImageData.alpha = alpha;
+        Color imageLast = m_spriteRenderer.color;
+        imageLast.a = m_renderImageData.alpha;
+        m_spriteRenderer.color = imageLast;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
