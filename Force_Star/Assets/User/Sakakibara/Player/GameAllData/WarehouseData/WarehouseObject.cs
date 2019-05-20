@@ -189,11 +189,15 @@ namespace WarehouseData
                     // 大爆発のデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.EXPROSION] = Resources.Load<Texture2D>(MyFile + "Exprosion");
-                      //*|***|***|***|***|***|***|***|***|***|***|***|
-                    // 大爆発のデータ
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // ロケットパーツのデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.ROCKETPARTS] = Resources.Load<Texture2D>(MyFile + "RocketParts");
                     m_texture2DApp[(int)AppImageNum.ROCKETPARTSSHADOW] = Resources.Load<Texture2D>(MyFile + "RocketPartsShadow");
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 警報のデータ
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_texture2DApp[(int)AppImageNum.ALARMRED] = Resources.Load<Texture2D>(MyFile + "AlarmRed");
                 }
             }
 

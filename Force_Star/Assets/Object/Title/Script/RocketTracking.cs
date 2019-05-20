@@ -54,7 +54,11 @@ public class RocketTracking : MonoBehaviour
     {
         playercont.Update();
 
-        if((playercont.ChackStartTrigger()) || (Input.GetKeyDown(KeyCode.Space)))
+        if((playercont.ChackStartTrigger()) || (playercont.ChackAttack()))
+        {
+            moveFlag = true;
+        }
+        if ((Input.GetKeyDown(KeyCode.Space)))
         {
             moveFlag = true;
         }

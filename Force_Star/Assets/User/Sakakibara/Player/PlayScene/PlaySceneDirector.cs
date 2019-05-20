@@ -18,6 +18,10 @@ using Object_Order_Number = WarehouseData.WarehouseOrder.Object_Order_Number;
 public class PlaySceneDirector : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ロケットのディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorRocketIndex m_directorIndexRocket;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲーム共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlaySceneDirectorIndex m_directorIndex;
@@ -61,6 +65,10 @@ public class PlaySceneDirector : MonoBehaviour
     void Awake()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ロケットのディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndexRocket = PlaySceneDirectorRocketIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // ゲーム共通ディレクター登録
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex = PlaySceneDirectorIndex.GetInstance();
@@ -70,17 +78,8 @@ public class PlaySceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 権限にて、メインカメラのターゲットをもらうぞ！
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Camera mainCamera = Camera.main;
-        GameObject mainCameraObject = mainCamera.gameObject;
-        TargetFollow mainCameraTarget = null;
-        if (mainCameraObject.GetComponent<TargetFollow>())
-        {
-            mainCameraTarget = mainCameraObject.GetComponent<TargetFollow>();
-        }
-        else
-        {
-            mainCameraTarget = mainCameraObject.AddComponent<TargetFollow>();
-        }
+        Camera mainCamera = m_directorIndexRocket.GetPointerMainCamera();
+        TargetFollow mainCameraTarget = m_directorIndexRocket.GetPointerTargetCamera();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 権限にて、星の運営者をもらうぞ！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -419,6 +418,7 @@ public class PlaySceneDirector : MonoBehaviour
     void OnApplicationQuit()
     {
         PlaySceneDirectorIndex.Remove();
+        PlaySceneDirectorRocketIndex.Remove();
         PlayerDirectorIndex.Remove();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 倉庫の終了

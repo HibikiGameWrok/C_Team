@@ -113,6 +113,12 @@ public partial class PlayerDirector : MonoBehaviour
     // 所持パーツ状況
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private bool m_haveAllPartsFlag;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 危険
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool m_danger;
+    private float m_dangerTime;
+
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -180,6 +186,10 @@ public partial class PlayerDirector : MonoBehaviour
         // 所持パーツ状況
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_haveAllPartsFlag = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 危険
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_danger = false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データベース設定
@@ -262,6 +272,8 @@ public partial class PlayerDirector : MonoBehaviour
         m_dataUI.SetHeadStrongTime(m_dataBace.GetHeadStrongParsent());
         m_dataUI.SetLegStrongTime(m_dataBace.GetLegStrongParsent());
 
+
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ受けたか
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -273,21 +285,71 @@ public partial class PlayerDirector : MonoBehaviour
         {
             m_nowDamage = false;
         }
-
-
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 星更新
+        // 死んだあとのお話。
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        UpdateGetStar();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ダメージ回復
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        UpdateRecovery();
+        if (!m_ascension.start)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星更新
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            UpdateGetStar();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージ回復
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            UpdateRecovery();
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 強化適用
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerMove.SetPowerUp(m_armStrong, m_bodyStrong, m_headStrong, m_legStrong);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 危険因子
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            float air = GetAirParsent();
+            float airP = 0.25f;
 
+            float arm = m_dataBace.GetArmDurableParsent();
+            float body = m_dataBace.GetBodyDurableParsent();
+            float head = m_dataBace.GetHeadDurableParsent();
+            float leg = m_dataBace.GetLegDurableParsent();
+            float partsP = 0.25f;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 危険か？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_danger = false;
+            if (air < airP)
+            {
+                m_danger = true;
+            }
+            if (arm < partsP || body < partsP || head < partsP || leg < partsP)
+            {
+                m_danger = true;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 危険
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_danger)
+        {
+            m_dangerTime += 0.25f;
+            float dangerParsent = MyCalculator.WaveSin(m_dangerTime, 0.4f, 0.9f);
+            m_dataUI.SetAlarmStrong(dangerParsent);
+        }
+        else
+        {
+            m_dangerTime = 0.0f;
+
+            m_dataUI.SetAlarmStrong(0.0f);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 昇天
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_ascension.start)
+        {
+            m_dataUI.SetAlarmStrong(1.0f);
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報

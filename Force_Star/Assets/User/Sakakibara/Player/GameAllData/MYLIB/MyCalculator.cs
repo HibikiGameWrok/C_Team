@@ -1383,6 +1383,24 @@ public static class MyCalculator
         return false;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // サイン波は襲い来る
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static float WaveSin(float getPoint, float start, float goal)
+    {
+        float waveParsent = Mathf.Sin(getPoint);
+        float move = MyCalculator.Division(waveParsent + 1.0f, 2.0f);
+        return Leap(start, goal, move);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // コサイン波は襲い来る
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static float WaveCos(float getPoint, float start, float goal)
+    {
+        float waveParsent = Mathf.Cos(getPoint);
+        float move = MyCalculator.Division(waveParsent + 1.0f, 2.0f);
+        return Leap(start, goal, move);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // Matrix作成
     // point に確実に移動（回転、拡縮の影響を受けない）
     // rotate に回転
