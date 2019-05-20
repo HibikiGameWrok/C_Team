@@ -60,9 +60,12 @@ public class GameDataPublic
     {
         [SerializeField]
         public int depth;
+        [SerializeField]
+        public float alpha;
         public void Reset()
         {
             depth = 0;
+            alpha = 1.0f;
         }
     } 
     //*|***|***|***|***|***|***|***|***|***|***|***|

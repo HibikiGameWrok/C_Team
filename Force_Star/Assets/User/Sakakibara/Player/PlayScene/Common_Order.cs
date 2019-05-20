@@ -17,7 +17,7 @@ public class Common_Order : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // オブジェクトの番号
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public Object_Order_Number number;
+    public Object_Order_Number m_number = Object_Order_Number.ZERO;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 起動
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -27,12 +27,42 @@ public class Common_Order : MonoBehaviour
         // これの情報を選択
         //*|***|***|***|***|***|***|***|***|***|***|***|
         int order = 0;
-        Object_Order_Number number = Object_Order_Number.CONSTRUCTION_APARTMENT;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // オーダー倉庫
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_warehouseOrder = WarehouseOrder.GetInstance();
-        order = m_warehouseOrder.GetOrderToLayerSprite(number);
+        order = m_warehouseOrder.GetOrderToLayerSprite(m_number);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーダー設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        if (renderer)
+        {
+            renderer.sortingOrder = order;
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetNumber(Object_Order_Number number)
+    {
+        m_number = number;
+        AwakeSecond();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 更新
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void AwakeSecond()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // これの情報を選択
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int order = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーダー倉庫
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_warehouseOrder = WarehouseOrder.GetInstance();
+        order = m_warehouseOrder.GetOrderToLayerSprite(m_number);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // オーダー設定
         //*|***|***|***|***|***|***|***|***|***|***|***|

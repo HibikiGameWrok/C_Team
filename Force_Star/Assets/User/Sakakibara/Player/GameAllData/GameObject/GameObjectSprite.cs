@@ -224,6 +224,16 @@ public class GameObjectSprite : MonoBehaviour
         return m_spriteRenderer.size;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自身の透明度を決める
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetAlpha(float alpha)
+    {
+        //m_spriteRenderer.alpha = alpha;
+        //Color imageLast = m_image.color;
+        //imageLast.a = m_renderUIData.alpha;
+        //m_image.color = imageLast;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自身の絵を変化させる
     //*|***|***|***|***|***|***|***|***|***|***|***|
     protected void MakeImage()
