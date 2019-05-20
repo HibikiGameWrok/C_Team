@@ -217,6 +217,9 @@ public class PlaySceneDirector : MonoBehaviour
         float air = m_playerIndex.GetAirParsent();
         bool clearAnime = m_directorIndex.GetClearAnimation();
         bool clearFlag = m_directorIndex.GetClearFlag();
+
+        bool deathAnime = m_directorIndex.GetGameOverAnimation();
+        bool deathFlag = m_directorIndex.GetGameOver();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パーツの場所更新
         //*|***|***|***|***|***|***|***|***|***|***|***|

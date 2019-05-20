@@ -1819,14 +1819,15 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-
+        List<bool> dataBool = new List<bool>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 現れる数値
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        int digitNum = 0;
+        bool digitNum = false;
         for (int digit = 0; digit < m_partsCollectionDigit; digit++)
         {
-            //m_partsCollection[digit].gameObjectUI.SetRect(imageRect);
+            digitNum = MyCalculator.DigitBoolean(m_partsCollectionNumber, (uint)digit);
+            dataBool.Add(digitNum);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
@@ -1883,6 +1884,8 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         posSave = pos;
         scaleSave = scale;
+        Texture2D parts = m_warehouseObject.GetTexture2DApp(AppImageNum.ROCKETPARTS);
+        Texture2D partsShadow = m_warehouseObject.GetTexture2DApp(AppImageNum.ROCKETPARTSSHADOW);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 所持パーツ数字
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1901,6 +1904,18 @@ public class DebugPlayerUI : DebugCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_partsCollection[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
             m_partsCollection[index].imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 持っているか？
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            digitNum = dataBool[index];
+            if(digitNum)
+            {
+                m_partsCollection[index].gameObjectUI.SetTexture(parts);
+            }
+            else
+            {
+                m_partsCollection[index].gameObjectUI.SetTexture(partsShadow);
+            }
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

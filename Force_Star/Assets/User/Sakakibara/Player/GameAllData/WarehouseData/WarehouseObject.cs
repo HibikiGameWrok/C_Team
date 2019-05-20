@@ -193,6 +193,7 @@ namespace WarehouseData
                     // 大爆発のデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.ROCKETPARTS] = Resources.Load<Texture2D>(MyFile + "RocketParts");
+                    m_texture2DApp[(int)AppImageNum.ROCKETPARTSSHADOW] = Resources.Load<Texture2D>(MyFile + "RocketPartsShadow");
                 }
             }
 
