@@ -133,6 +133,7 @@ public partial class PlayerDirector : MonoBehaviour
         AllPartsData makeDataAllParts;
         AnimePartsData makeDataAnimeParts;
         PlayerData_Number_List partsListNum;
+        Common_GameObjectSprite_Order makeSpriteOrder;
         string partsName;
         m_listData.listData = new List<PartsData>();
         for (int partsNum = 0; partsNum < (int)PlayerData_Number_List.NUM; partsNum++)

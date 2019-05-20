@@ -219,24 +219,22 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (!this.isActiveAndEnabled)
         {
+            SetStopHit();
             return;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 無敵時間
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Debug.Log(count);
         if (count <= 0)
         {
-                    //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり判定
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        CreateCollision();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり設定
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_rigidBody2D.isKinematic = true;
-        SetStopHit();
-            Debug.Log("なぜ");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 当たり判定
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            CreateCollision();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 当たり設定
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_rigidBody2D.isKinematic = true;
             SetPlayHit();
             countFlag = true;
         }
@@ -380,7 +378,14 @@ public class StarPieceBounceMove : MonoBehaviour
 
         }
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // GameObjectSprite情報獲得
+    // 取扱注意
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public GameObjectSprite GetSpriteData()
+    {
+        return m_starSprite;
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {

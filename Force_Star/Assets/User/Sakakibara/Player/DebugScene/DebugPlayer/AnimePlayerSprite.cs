@@ -13,12 +13,15 @@ using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerDa
 using TexImageData = GameDataPublic.TexImageData;
 using RenderImageData = GameDataPublic.RenderImageData;
 using PartsData = GameDataPublic.PartsData;
-
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// オーダー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseOrder = WarehouseData.WarehouseOrder;
+using Object_Order_Number = WarehouseData.WarehouseOrder.Object_Order_Number;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // ゲームオブジェクトデータは眠らない
 //*|***|***|***|***|***|***|***|***|***|***|***|
-//[ExecuteInEditMode]
 public class AnimePlayerSprite : AnimeSprite
 {
 
@@ -46,6 +49,15 @@ public class AnimePlayerSprite : AnimeSprite
     {
         int rectX = ChangeData.AmongLess(m_rectX, 1, 16);
         int rectY = ChangeData.AmongLess(m_rectY, 1, 16);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // これの情報を選択
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int order = 0;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // レイヤー設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        order = m_warehouseOrder.GetOrderToLayerSprite(Object_Order_Number.PLAYER);
+        m_depthData = m_depth + order;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // イメージを作成
         //*|***|***|***|***|***|***|***|***|***|***|***|

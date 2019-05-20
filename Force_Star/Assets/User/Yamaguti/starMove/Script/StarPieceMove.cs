@@ -258,7 +258,14 @@ public class StarPieceMove : MonoBehaviour
             m_box2D = this.gameObject.AddComponent<BoxCollider2D>();
         }
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // GameObjectSprite情報獲得
+    // 取扱注意
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public GameObjectSprite GetSpriteData()
+    {
+        return m_starSprite;
+    }
 
 
     void OnTriggerEnter2D(Collider2D other)
