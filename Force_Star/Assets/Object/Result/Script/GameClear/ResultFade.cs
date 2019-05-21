@@ -17,6 +17,8 @@ public class ResultFade : MonoBehaviour
 
     Image fadeImage;                //透明度を変更するパネルのイメージ
 
+    bool compFlag = false;
+
     bool clearFlag = false;
     bool overFlag = false;
 
@@ -53,10 +55,8 @@ public class ResultFade : MonoBehaviour
             if(isFadeIn == false)
             {
                 isFadeOut = true;
-            }
-            
+            }   
         }
-
     }
 
 
@@ -74,15 +74,12 @@ public class ResultFade : MonoBehaviour
 
     void StartFadeOut()
     {
-
         fadeImage.enabled = true;  // a)パネルの表示をオンにする
         alfa += fadeSpeed;         // b)不透明度を徐々にあげる
         SetAlpha();               // c)変更した透明度をパネルに反映する
         if (alfa >= 1)
         {             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
-            //タイトルシーンに戻る
-            SceneManager.LoadScene("TitleScene");
         }
     }
 
@@ -94,5 +91,33 @@ public class ResultFade : MonoBehaviour
     public float GetAlfa()
     {
         return alfa;
+    }
+
+
+    public bool GetCompFlag()
+    {
+        return compFlag;
+    }
+
+    public bool GetFadeOutFlag()
+    {
+        return isFadeOut;
+    }
+
+    public bool GetFadeInFlag()
+    {
+        return isFadeIn;
+    }
+
+    public void SetFadeFlag(bool fadeInFlag = true)
+    {
+        if(fadeInFlag == true)
+        {
+            isFadeIn = true;
+        }
+        else
+        {
+            isFadeOut = true;
+        }
     }
 }
