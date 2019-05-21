@@ -64,7 +64,7 @@ public class WaterWallMove : MonoBehaviour
         //レイヤー格納
         playerlayer = LayerMask.GetMask(LayerMask.LayerToName(8));
         playerHitlayer = LayerMask.GetMask(LayerMask.LayerToName(10));
-        waterlayer = LayerMask.GetMask(LayerMask.LayerToName(14));
+        waterlayer = LayerMask.GetMask(LayerMask.LayerToName(15));
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃当たり判定の発生
