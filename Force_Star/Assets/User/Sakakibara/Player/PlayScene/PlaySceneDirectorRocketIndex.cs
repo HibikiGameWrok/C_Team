@@ -41,6 +41,10 @@ public class PlaySceneDirectorRocketIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     TargetFollow m_targetCamera;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // フェードアウト
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    StartFade m_fadeOut;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // データ初期化
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlaySceneDirectorRocketIndex()
@@ -109,6 +113,13 @@ public class PlaySceneDirectorRocketIndex
         m_targetCamera = follow;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ポインター受付
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPointerFadeData(StartFade fade)
+    {
+        m_fadeOut = fade;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public Camera GetPointerMainCamera()
@@ -122,6 +133,7 @@ public class PlaySceneDirectorRocketIndex
     {
         return m_targetCamera;
     }
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲームクリア！
     //*|***|***|***|***|***|***|***|***|***|***|***|
