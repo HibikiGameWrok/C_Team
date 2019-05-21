@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaterWall : MonoBehaviour
 {
     [SerializeField]
-    private GameObject WaterWallObject=null;　　　// 滝の水の部分
+    private GameObject WaterWallObject = null;　　　// 滝の水の部分
 
     [SerializeField]
     private int MaxWater = 1;                     //　最初の滝の長さ
@@ -28,29 +28,30 @@ public class WaterWall : MonoBehaviour
     {
         // 初期位置
         StartPosition = transform.position;
-        if (WaterWallObject!=null)
+        if (WaterWallObject != null)
         {
             //StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater + 1);
             // 長さ分滝を作る
-            for (int i=0;i<MaxWater;i++)
+            for (int i = 0; i < MaxWater; i++)
             {
                 WaterWallClone = Instantiate(WaterWallObject, StartPosition, Quaternion.identity) as GameObject;    // インスタンス
                 WaterWallClone.transform.localScale = transform.localScale;                                         // 根本と滝の大きさを合わせる
-                WaterWallClone.transform.position=new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y-WaterWallClone.GetComponent<Renderer>().bounds.size.y*(MaxWater-i), WaterWallClone.transform.position.z); // 下から順に滝を作る
-               // StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater - i);
+                WaterWallClone.transform.position = new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y - Createcount * (i + 1), WaterWallClone.transform.position.z); // 下から順に滝を作る
+                                                                                                                                                                                                        // StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater - i);
                 WaterWallClone.transform.parent = transform;                                                        // 根元を親にする
                 myList.Add(WaterWallClone);                                                                         // リストに登録
             }
         }
+        myList.Reverse();
         count = 0.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        count+=0.1f;
+        count += 0.1f;
         // タイマーが生成を超えたら
-        if(count> Createcount)
+        if (count >= Createcount)
         {
             //　次足し用の滝を作る
             WaterWallClone = Instantiate(WaterWallObject, transform.position, Quaternion.identity) as GameObject;
@@ -65,7 +66,7 @@ public class WaterWall : MonoBehaviour
     public void WaterList(GameObject Wobject)
     {
         // オブジェクトが通常時のリストに入っているか確認(要素無しで-1が帰ってくる)
-        if(myList.IndexOf(Wobject)>-1)
+        if (myList.IndexOf(Wobject) > -1)
         {
             // 対応した要素のオブジェクトを消して消した要素を詰める
             int i = myList.IndexOf(Wobject);
@@ -111,7 +112,7 @@ public class WaterWall : MonoBehaviour
                 //sMyList.RemoveAt(sMyList.Count);
             }
             // 通常時を消したところから詰める
-            myList.RemoveAll(myList => myList == Wobject);            
+            myList.RemoveAll(myList => myList == Wobject);
         }
         else　　　　　　　// 追加分ならこっち
         {
@@ -130,19 +131,36 @@ public class WaterWall : MonoBehaviour
 
     public void SetSList(GameObject obj)
     {
-        // 初期位置
+        //// 初期位置
         StartPosition = obj.transform.position;
-        // 滝の下からプレイヤーがいなくなったので滝を埋める
-        for (int i = 0; i < MaxWater; i++)
+        Debug.Log(obj.transform.position);
+        //// 滝の下からプレイヤーがいなくなったので滝を埋める
+        //for (int i = 0; i < MaxWater; i++)
+        //{
+        //    WaterWallClone = Instantiate(WaterWallObject, StartPosition, Quaternion.identity) as GameObject;
+        //    WaterWallClone.transform.localScale = transform.localScale;
+        //    WaterWallClone.transform.position = new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y - WaterWallClone.GetComponent<Renderer>().bounds.size.y * (i + 1), WaterWallClone.transform.position.z);
+        //    WaterWallClone.transform.parent = transform;
+        //    sMyList.Add(WaterWallClone);                // 追加分に入れる
+        //}
+
+        //StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater + 1);
+        // 長さ分滝を作る
+        if (myList != null)
         {
-            WaterWallClone = Instantiate(WaterWallObject, StartPosition, Quaternion.identity) as GameObject;
-            WaterWallClone.transform.localScale = transform.localScale;
-            WaterWallClone.transform.position = new Vector3(WaterWallClone.transform.position.x, WaterWallClone.transform.position.y - WaterWallClone.GetComponent<Renderer>().bounds.size.y * (i + 1), WaterWallClone.transform.position.z);
-            WaterWallClone.transform.parent = transform;
-            sMyList.Add(WaterWallClone);                // 追加分に入れる
+            for (int i = 0; i < MaxWater; i++)
+            {
+                WaterWallClone = Instantiate(WaterWallObject, StartPosition, Quaternion.identity) as GameObject;    // インスタンス
+                WaterWallClone.transform.localScale = transform.localScale;                                         // 根本と滝の大きさを合わせる
+                WaterWallClone.transform.position = new Vector3(WaterWallClone.transform.position.x, (WaterWallClone.transform.position.y - Createcount), WaterWallClone.transform.position.z); // 滝を作る
+                StartPosition = WaterWallClone.transform.position;                                                                                                                                                                                                      // StartPosition.y = StartPosition.y - WaterWallObject.GetComponent<Renderer>().bounds.size.y * (MaxWater - i);
+                WaterWallClone.transform.parent = transform;                                                        // 根元を親にする
+                sMyList.Add(WaterWallClone);                                                                         // リストに登録
+            }
+            HitPW = false;                                  // 滝が割れたことをなかったことにする
+            sMyList.Reverse();
         }
-        HitPW = false;                                  // 滝が割れたことをなかったことにする
-        sMyList.Reverse();                              // 要素を逆にする
+        // 要素を逆にする
     }
     public bool CheckListNum(GameObject obj)
     {
