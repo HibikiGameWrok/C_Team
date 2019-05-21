@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7632054378884658710}
   - component: {fileID: 6270187346873295610}
   - component: {fileID: 8131091789898181165}
-  - component: {fileID: 2260593309002003166}
   m_Layer: 0
   m_Name: WaterWallTop
   m_TagString: Untagged
@@ -97,20 +96,7 @@ MonoBehaviour:
   WaterWallObject: {fileID: 8717099745841726789, guid: ad766b417d5a26a488a2d945876eef77,
     type: 3}
   MaxWater: 10
-  Createcount: 3
---- !u!114 &2260593309002003166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2163094832503265313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_number: 30
+  Createcount: 3.4
 --- !u!1 &6971581760174049716
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +107,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8806969662622135713}
   - component: {fileID: 5827128378212512804}
-  - component: {fileID: 5787784983159084259}
   m_Layer: 0
   m_Name: WaterFall_3
   m_TagString: Untagged
@@ -191,16 +176,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5787784983159084259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6971581760174049716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_number: 30
