@@ -21,7 +21,7 @@ public class WaterWallMove : MonoBehaviour
     private GameObject m_partsAttackObject;
 
     // Rayフラグ管理用/////////////////////////
-    bool[] playerHF = { false, false,false ,false,false,false};
+    bool[] playerHF = { false, false, false, false, false, false };
     bool waterHF = false;
     ///////////////////////////////////////////
 
@@ -86,8 +86,10 @@ public class WaterWallMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 現在の座標からのxyz を1ずつ加算して移動
+        //transform.Translate(0.0f, -0.1f, 0.0f);
         // 滝の動き
-        transform.position = new Vector3(transform.position.x, transform.position.y+-0.1f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + -0.1f, transform.position.z);
         // 滝がプレイヤーに当たり続けているかどうか
         HitCheck();
     }
@@ -95,12 +97,12 @@ public class WaterWallMove : MonoBehaviour
     void HitCheck()
     {
         // Ray プレイヤー
-        Vector3 pos=new Vector3(transform.position.x - (transform.GetComponent<Renderer>().bounds.size.x / 2.0f - 1.0f), transform.position.y, transform.position.z);
+        Vector3 pos = new Vector3(transform.position.x - (transform.GetComponent<Renderer>().bounds.size.x / 2.0f - 1.0f), transform.position.y, transform.position.z);
         playerHF[0] = Physics2D.Linecast(pos, pos - transform.up * 14.0f, playerlayer);
-        pos = new Vector3(transform.position.x + (transform.GetComponent<Renderer>().bounds.size.x / 2.0f-1.0f), transform.position.y, transform.position.z);
+        pos = new Vector3(transform.position.x + (transform.GetComponent<Renderer>().bounds.size.x / 2.0f - 1.0f), transform.position.y, transform.position.z);
         playerHF[1] = Physics2D.Linecast(pos, pos - transform.up * 14.0f, playerlayer);
         playerHF[2] = Physics2D.Linecast(this.transform.position, this.transform.position - transform.up * 14.0f, playerlayer);
-        pos = new Vector3(transform.position.x - (transform.GetComponent<Renderer>().bounds.size.x / 2.0f ), transform.position.y, transform.position.z);
+        pos = new Vector3(transform.position.x - (transform.GetComponent<Renderer>().bounds.size.x / 2.0f), transform.position.y, transform.position.z);
         playerHF[3] = Physics2D.Linecast(pos, pos - transform.up * 14.0f, playerHitlayer);
         pos = new Vector3(transform.position.x + (transform.GetComponent<Renderer>().bounds.size.x / 2.0f), transform.position.y, transform.position.z);
         playerHF[4] = Physics2D.Linecast(pos, pos - transform.up * 14.0f, playerHitlayer);
@@ -111,7 +113,7 @@ public class WaterWallMove : MonoBehaviour
         waterHF = Physics2D.Linecast(new Vector3(transform.position.x, transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2, transform.position.z), pos - transform.up * 1.0f, waterlayer);
 
         // Rayに当たっておらずすでに一度滝を割っていた場合新しく滝を作る
-        if (!playerHF[0] && !playerHF[1]&&!playerHF[2] && !playerHF[3] && !playerHF[4] && !playerHF[5]&& !waterHF && this.transform.parent.GetComponent<WaterWall>().GetHitCheck())
+        if (!playerHF[0] && !playerHF[1] && !playerHF[2] && !playerHF[3] && !playerHF[4] && !playerHF[5] && !waterHF && this.transform.parent.GetComponent<WaterWall>().GetHitCheck())
         {
             Debug.Log(1);
             this.transform.parent.GetComponent<WaterWall>().SetSList(this.gameObject);
@@ -141,7 +143,7 @@ public class WaterWallMove : MonoBehaviour
             playerHF[4] = Physics2D.Linecast(raypos, raypos - transform.up * 14.0f, playerHitlayer);
             playerHF[5] = Physics2D.Linecast(this.transform.position, this.transform.position - transform.up * 14.0f, playerHitlayer);
             // 下から触れた時だけ星とエフェクトを出す
-            if (playerHF[0] || playerHF[1]|| playerHF[2]||!playerHF[3] || !playerHF[4] || !playerHF[5] )
+            if (playerHF[0] || playerHF[1] || playerHF[2] || !playerHF[3] || !playerHF[4] || !playerHF[5])
             {
                 // this.transform.parent.GetComponent<WaterWall>().SetHitflag(true);
                 if (HitEffect != null)
@@ -151,7 +153,7 @@ public class WaterWallMove : MonoBehaviour
                     ParticleSystem par = Instantiate(HitEffect, pos, Quaternion.identity) as ParticleSystem;
                     par.Play();
                 }
-            }          
+            }
             // 当たった滝とそれより下の滝を全て消す
             this.transform.parent.GetComponent<WaterWall>().WaterListAt(gameObject);
         }

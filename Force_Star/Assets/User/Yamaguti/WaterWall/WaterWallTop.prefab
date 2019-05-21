@@ -96,8 +96,7 @@ MonoBehaviour:
   WaterWallObject: {fileID: 8717099745841726789, guid: ad766b417d5a26a488a2d945876eef77,
     type: 3}
   MaxWater: 10
-  HitEffect: {fileID: 5785971807688486233, guid: 024c7f280f97050449756cd76c5ed064,
-    type: 3}
+  Createcount: 3.4
 --- !u!1 &6971581760174049716
 GameObject:
   m_ObjectHideFlags: 0
