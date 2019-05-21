@@ -32,6 +32,7 @@ public partial class PlayerDirector : MonoBehaviour
     // ゲーム共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlaySceneDirectorIndex m_directorIndex;
+    PlaySceneDirectorRocketIndex m_directorRocketIndex;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -100,6 +101,7 @@ public partial class PlayerDirector : MonoBehaviour
         // ゲーム共通ディレクター登録
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex = PlaySceneDirectorIndex.GetInstance();
+        m_directorRocketIndex = PlaySceneDirectorRocketIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー共通ディレクター登録
         //*|***|***|***|***|***|***|***|***|***|***|***|

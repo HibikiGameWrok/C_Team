@@ -87,6 +87,12 @@ public class SEManager : MonoBehaviour
         SIREN_01,
         SIREN_02,
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        //  爆発SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        PLAYERFIRE_SE,
+        PLAYERBOMB_SE_01,
+        PLAYERBOMB_SE_02,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 総数
         //*|***|***|***|***|***|***|***|***|***|***|***|
         MAXNUM
@@ -216,6 +222,12 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_sounds[(int)SoundID.SIREN_01] = Resources.Load<AudioClip>(filepass + "Siren_SE_01");
         m_sounds[(int)SoundID.SIREN_02] = Resources.Load<AudioClip>(filepass + "Siren_SE_02");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        //  爆発SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_sounds[(int)SoundID.PLAYERFIRE_SE] = Resources.Load<AudioClip>(filepass + "PlayerFire_SE");
+        m_sounds[(int)SoundID.PLAYERBOMB_SE_01] = Resources.Load<AudioClip>(filepass + "PlayerBomb_SE_01");
+        m_sounds[(int)SoundID.PLAYERBOMB_SE_02] = Resources.Load<AudioClip>(filepass + "PlayerBomb_SE_02");
     }
 
     private AudioClip GetGameSE(SoundID textureNum)
