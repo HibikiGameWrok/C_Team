@@ -71,7 +71,10 @@ public partial class PlayerDirector : MonoBehaviour
     [SerializeField]
     private Ascension m_ascension;
     private float m_deathTime;
+    private float m_deathBombTime;
     private float m_ascensionTime;
+    private float m_fadeOutTimeRate;
+    private bool m_fadeOutFlag;
     private GameObject m_ascensionObject;
     private DeathExplosion m_ascensionEffect;
 
@@ -131,7 +134,11 @@ public partial class PlayerDirector : MonoBehaviour
         m_ascensionObject = new GameObject("AscensionEffect");
         m_ascensionEffect = m_ascensionObject.AddComponent<DeathExplosion>();
         m_deathTime = 40.0f;
-        m_ascensionTime = 90.0f;
+        m_deathBombTime = 20.0f;
+        m_ascensionTime = 180.0f;
+        m_fadeOutFlag = false;
+        m_fadeOutTimeRate = MyCalculator.Division(90.0f, m_ascensionTime);
+
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -692,9 +699,33 @@ public partial class PlayerDirector : MonoBehaviour
         }
 
 
-
-
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // フェードアウト更新
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (!m_fadeOutFlag)
+        {
+            float parsent = MyCalculator.Division(m_ascension.time, m_ascensionTime);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // フェードアウトトリガー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_ascension.end && m_fadeOutTimeRate <= parsent)
+            {
+                float timeN = m_ascensionTime - m_ascension.time;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // フェードアウト！
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_directorRocketIndex.SetFadeAlpha(0.0f);
+                m_directorRocketIndex.StartFadeOut(MyCalculator.Division(1.0f, timeN));
+                m_fadeOutFlag = true;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // BGMストッパー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_ascension.start && m_ascension.end)
+        {
+            m_directorRocketIndex.SetBGMFlow(false);
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 爆発！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -745,6 +776,10 @@ public partial class PlayerDirector : MonoBehaviour
             m_ascension.time = 0;
             m_ascension.end = false;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 幕引き準備
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_fadeOutFlag = false;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 志望する
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_directorIndex.SetGameOverAnimation();
@@ -753,6 +788,7 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_ascensionEffect.AwakeON();
             m_ascensionEffect.SetMaxTime(m_deathTime);
+            m_ascensionEffect.SetMaxSecondTime(m_deathBombTime);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 吹き飛べ！
             //*|***|***|***|***|***|***|***|***|***|***|***|

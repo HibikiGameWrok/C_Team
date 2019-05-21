@@ -122,9 +122,12 @@ public class StartRoket : MonoBehaviour
         // オブジェクトの取得
         Panel = GameObject.Find("Panel");
         StartFade = Panel.GetComponent<StartFade>();
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データ登録
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         PlaySceneDirectorRocketIndex rocketIn = PlaySceneDirectorRocketIndex.GetInstance();
         rocketIn.SetPointerFadeData(StartFade);
+        rocketIn.SetPointerBGMObjectData(BGM.gameObject);
     }
 
     // Update is called once per frame
