@@ -8,19 +8,25 @@ public class PlaySound : MonoBehaviour
 
    　public bool seFlag = false;
 
+    // コントロールを管理しているクラス
+    PlayerController playercont;
+
     void Start()
     {
+        playercont = new PlayerController();
         //AudioSourceコンポーネントを取得し、変数に格納
         sound01 = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        playercont.Update();
+
         //SEがなっていないとき
         if (seFlag == false)
         {
             //スペースキーが押されたら音声ファイル再生
-            if (Input.GetKeyDown(KeyCode.Space))
+            if ((playercont.ChackAttack()) || (Input.GetKeyDown(KeyCode.Space)))
             {
                 sound01.PlayOneShot(sound01.clip);
                 seFlag = true;
