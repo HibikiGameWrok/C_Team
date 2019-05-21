@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1080834507341459245}
   - component: {fileID: 1080834507341459246}
   - component: {fileID: 1080834507341459247}
+  - component: {fileID: 349095706965399873}
   m_Layer: 0
   m_Name: sea
   m_TagString: Untagged
@@ -92,4 +93,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5823c443555016b4ba45a89b0595ff0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 0.05
+  m_backSpeed: 0.2
+  m_scale: 1
+--- !u!114 &349095706965399873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080834507341455568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721d2a1c332da4349a1ce92f804df64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_number: 17
