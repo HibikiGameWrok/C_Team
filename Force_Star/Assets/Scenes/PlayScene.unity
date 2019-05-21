@@ -886,7 +886,7 @@ GameObject:
   - component: {fileID: 103611305}
   - component: {fileID: 103611304}
   - component: {fileID: 103611307}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: WallColl
   m_TagString: WaterWall
   m_Icon: {fileID: 0}
@@ -63293,7 +63293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1611589907
 Transform:
   m_ObjectHideFlags: 0
