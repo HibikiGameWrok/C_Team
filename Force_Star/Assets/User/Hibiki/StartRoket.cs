@@ -72,6 +72,16 @@ public class StartRoket : MonoBehaviour
     // 手順を示す変数
     int count = 0;
 
+    ///////////////////////////////////////
+    //// プレイヤー周辺用オブジェクト
+    // プレイヤーの星回収用オブジェクトの格納
+    [SerializeField]
+    private GameObject PlayerStarCheckColi = null;
+    StarSearch starSearch;
+    ///////////////////////////////////////
+
+
+
     // コントロールを管理しているクラス
     PlayerController playercont;
 
@@ -128,6 +138,9 @@ public class StartRoket : MonoBehaviour
         PlaySceneDirectorRocketIndex rocketIn = PlaySceneDirectorRocketIndex.GetInstance();
         rocketIn.SetPointerFadeData(StartFade);
         rocketIn.SetPointerBGMObjectData(BGM.gameObject);
+
+        // 星の回収用スクリプトの格納
+        starSearch = PlayerStarCheckColi.GetComponent<StarSearch>();
     }
 
     // Update is called once per frame
@@ -244,6 +257,7 @@ public class StartRoket : MonoBehaviour
                 GameObject Player = (GameObject)Resources.Load("PlayerDirector");
                 // プレイヤープレハブを元に生成、
                 Instantiate(Player, this.transform.position, Quaternion.identity);
+                starSearch.CheckFlag();
                 count = 5;
             }
 
@@ -272,5 +286,4 @@ public class StartRoket : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
 }

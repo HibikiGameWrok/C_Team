@@ -61,6 +61,11 @@ public class StarPieceBounceMove : MonoBehaviour
     private float vecX;
     private float vecY;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 動き用
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_speedData;
+    private float m_speedAdd;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
     Rigidbody2D m_rigidBody2D;
@@ -82,6 +87,8 @@ public class StarPieceBounceMove : MonoBehaviour
 
     bool countFlag;
     bool objectFlag = false;
+
+    bool starCirHitCheckFlag;
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -187,6 +194,8 @@ public class StarPieceBounceMove : MonoBehaviour
 
 
         countFlag = false;
+
+        starCirHitCheckFlag = false;
     }
 
     void Start()
@@ -244,7 +253,7 @@ public class StarPieceBounceMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_rigidBody2D.isKinematic = true;
             SetPlayHit();
-            countFlag = true;
+            countFlag = false;
         }
         else
         {
@@ -255,43 +264,67 @@ public class StarPieceBounceMove : MonoBehaviour
         {
             objectFlag = true;
         }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ぽ四ぽ四移動
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        bool hitUp = m_upChildStar.GetHitFlag();
-        bool hitDown = m_downChildStar.GetHitFlag();
-        bool hitLeft = m_leftChildStar.GetHitFlag();
-        bool hitRight = m_rightChildStar.GetHitFlag();
+        if(!starCirHitCheckFlag)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ぽ四ぽ四移動
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            bool hitUp = m_upChildStar.GetHitFlag();
+            bool hitDown = m_downChildStar.GetHitFlag();
+            bool hitLeft = m_leftChildStar.GetHitFlag();
+            bool hitRight = m_rightChildStar.GetHitFlag();
 
-        if (hitUp)
-        {
-            jumpForce = 0.0f;
-        }
-        if (hitDown)
-        {
-            jumpForce = startJF;
-            JumpCount++;
-        }
-        if (hitLeft)
-        {
-            vecX = -vecX;
-            JumpCount++;
-        }
-        if (hitRight)
-        {
-            vecX = -vecX;
-            JumpCount++;
-        }
+            if (hitUp)
+            {
+                jumpForce = 0.0f;
+            }
+            if (hitDown)
+            {
+                jumpForce = startJF;
+                JumpCount++;
+            }
+            if (hitLeft)
+            {
+                vecX = -vecX;
+                JumpCount++;
+            }
+            if (hitRight)
+            {
+                vecX = -vecX;
+                JumpCount++;
+            }
 
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 跳ねる移動
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        transform.position = new Vector3(transform.position.x + vecX, transform.position.y + jumpForce, transform.position.z);
-        if (jumpForce > -0.2f)
-        {
-            jumpForce = jumpForce - grv;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 跳ねる移動
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            transform.position = new Vector3(transform.position.x + vecX, transform.position.y + jumpForce, transform.position.z);
+            if (jumpForce > -0.2f)
+            {
+                jumpForce = jumpForce - grv;
+            }
+            FlashStar();                // 点滅用の関数
         }
-        FlashStar();                // 点滅用の関数
+      else if(starCirHitCheckFlag)
+        {
+            Debug.Log("ok");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // スピード計算
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_speedData += m_speedAdd;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーの方向
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            Vector3 pointSet = m_playerIndex.GetPlayerPosition();
+            Vector3 playerPos = transform.position;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // へ向かう
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            Vector3 playerDif = (pointSet - playerPos);
+            Vector3 playerDifUnit = playerDif;
+            playerDifUnit.Normalize();
+            Vector3 movePower = playerDifUnit * m_speedData;
+            transform.position += movePower;
+        }
 
 
     }
@@ -321,6 +354,14 @@ public class StarPieceBounceMove : MonoBehaviour
         jumpForce = Random.Range(0.02f,0.3f);
         startJF = jumpForce;
 
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーに駆け付ける速さ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetSpeed(float speedData, float speedAdd)
+    {
+        m_speedData = speedData;
+        m_speedAdd = speedAdd;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 移動
@@ -412,8 +453,22 @@ public class StarPieceBounceMove : MonoBehaviour
                 PlayerDirectorIndex.GetInstance().GetStar(1);
                 Destroy(this.gameObject);
             }
+            if(m_box2D.enabled)
+            {
+                Debug.Log(other.gameObject.tag);
+                if (other.gameObject.tag == "R")
+                {
+                    Debug.Log("a");
+                    starCirHitCheckFlag = true;
+                }
+            }
+
         }
 
+    }
+    public void SetCirHitCheckFlag()
+    {
+        starCirHitCheckFlag = true;
     }
 }
 

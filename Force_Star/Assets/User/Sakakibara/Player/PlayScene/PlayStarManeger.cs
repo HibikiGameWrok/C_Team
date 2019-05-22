@@ -235,6 +235,7 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             starBounceMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
             starBounceMove.SetPosition(pos);
+            starBounceMove.SetSpeed(0.01f, 0.01f);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -293,6 +294,7 @@ public class PlayStarManeger : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             starBounceMove.SetVec(vec.x, vec.y);
             starBounceMove.SetPosition(pos);
+            starBounceMove.SetSpeed(0.01f, 0.01f);
         }
     }
 }
