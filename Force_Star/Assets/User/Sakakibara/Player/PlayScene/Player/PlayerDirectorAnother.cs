@@ -536,13 +536,15 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (MyCalculator.DigitBoolean(trigger, (uint)TriggerAngle.UP))
                 {
-
+                    
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // 料金支払って実行
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     starsNum = m_dataBace.GetStarsNum();
                     if (starsNum >= starsFee)
                     {
+                        //SE再生
+                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -606,6 +608,8 @@ public partial class PlayerDirector : MonoBehaviour
                     starsNum = m_dataBace.GetStarsNum();
                     if (starsNum >= starsFee)
                     {
+                        //SE再生
+                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -669,6 +673,8 @@ public partial class PlayerDirector : MonoBehaviour
                     starsNum = m_dataBace.GetStarsNum();
                     if (starsNum >= starsFee)
                     {
+                        //SE再生
+                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -733,6 +739,8 @@ public partial class PlayerDirector : MonoBehaviour
                     starsNum = m_dataBace.GetStarsNum();
                     if (starsNum >= starsFee)
                     {
+                        //SE再生
+                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
