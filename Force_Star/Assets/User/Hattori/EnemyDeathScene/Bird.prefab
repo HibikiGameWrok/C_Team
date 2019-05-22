@@ -92,6 +92,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 3341888346181588787, guid: 400ddde7e952d604bbaaa373085e4c58,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1449126061505790692, guid: 400ddde7e952d604bbaaa373085e4c58,
         type: 3}
       propertyPath: m_LocalPosition.x
