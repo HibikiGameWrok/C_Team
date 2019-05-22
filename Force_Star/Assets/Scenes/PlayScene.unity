@@ -70731,6 +70731,16 @@ PrefabInstance:
       propertyPath: attackHand
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 931310178747320911, guid: 00066a281180dc144ab6f1bbc259cdf6,
+        type: 3}
+      propertyPath: deathTimer
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 931310178747320911, guid: 00066a281180dc144ab6f1bbc259cdf6,
+        type: 3}
+      propertyPath: gravityForce
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00066a281180dc144ab6f1bbc259cdf6, type: 3}
 --- !u!1001 &995930540606601406

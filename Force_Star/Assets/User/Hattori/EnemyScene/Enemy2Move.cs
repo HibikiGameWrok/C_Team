@@ -154,6 +154,9 @@ public class Enemy2Move : MonoBehaviour
 
             //「死にました」とフラグで伝える
             deathFlag = true;
+
+            //当たり判定をoffにする
+            m_partsAttack.SetStopHit();
         }
     }
 

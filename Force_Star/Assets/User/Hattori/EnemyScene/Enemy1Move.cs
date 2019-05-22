@@ -12,7 +12,6 @@ public class Enemy1Move : MonoBehaviour
 
     private StarDirector starCreate;
 
-
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃当たり判定データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -33,9 +32,9 @@ public class Enemy1Move : MonoBehaviour
     [SerializeField]
     private float maxDistance = 2.0f;
 
-    ////消えるまでのタイマー
-    //[SerializeField]
-    //private float deathTimer;
+    //消えるまでのタイマー
+    [SerializeField]
+    private float deathTimer;
 
     //掛けたい重力の大きさ
     [SerializeField]
@@ -43,8 +42,8 @@ public class Enemy1Move : MonoBehaviour
 
     Rigidbody2D rigid2D;
 
-    ////消すためのカウント
-    //private float deathCount = 0.0f;
+    //消すためのカウント
+    private float deathCount = 0.0f;
 
     //消すためのフラグ
     private bool deathFlag = false;
@@ -119,8 +118,12 @@ public class Enemy1Move : MonoBehaviour
 
             //「死にました」とフラグで伝える
             deathFlag = true;
+
+            //当たり判定をoffにする
+            m_partsAttack.SetStopHit();
+
             //跡形もなく消えてゆけ
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
     
@@ -147,17 +150,17 @@ public class Enemy1Move : MonoBehaviour
             distance += moveSpeed;
         }
 
-        ////死んでしまったら
-        //if (deathFlag == true)
-        //{
-        //    ////死んで消えてしまうまでの猶予はここで決まっているのだ
-        //    //deathCount++;
-        //    ////だからそれまで余生を過ごし時が来たら
-        //    //if (deathTimer < deathCount)
-        //    //{
-        //    //    //跡形もなく消えてゆけ
-        //    //    Destroy(this.gameObject);
-        //    //}
-        //}
+        //死んでしまったら
+        if (deathFlag == true)
+        {
+            //死んで消えてしまうまでの猶予はここで決まっているのだ
+            deathCount++;
+            //だからそれまで余生を過ごし時が来たら
+            if (deathTimer < deathCount)
+            {
+                //跡形もなく消えてゆけ
+                Destroy(this.gameObject);
+            }
+        }
     }
 }
