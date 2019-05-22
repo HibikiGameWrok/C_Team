@@ -50,11 +50,11 @@ public class RoketClearMove : MonoBehaviour
         // ロケットに当たっている時
         if (layerName == "PlayerDigid" || col.gameObject.tag == "Player")
         {
-            Debug.Log(playerIndex.GetHaveStarParsent());
-            if (playerIndex.GetHaveStarParsent() >= 1)
+            // ☆が目標量を達成して尚且つパーツが全て取得できているならば
+            if (playerIndex.GetHaveStarParsent() >= 1 && playerIndex.GetHaveAllPartsFlag())
             {
+                // コントロールのスティックの情報
                 Vector2 stick = playercont.ChackStickPower();
-                Debug.Log(stick.y);
                 if (cooltime == false)
                 {
                     // ↑orWを押すとシーン移行

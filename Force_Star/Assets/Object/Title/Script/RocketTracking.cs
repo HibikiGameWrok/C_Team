@@ -58,7 +58,7 @@ public class RocketTracking : MonoBehaviour
         {
             moveFlag = true;
         }
-        if ((Input.GetKeyDown(KeyCode.Space)))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             moveFlag = true;
         }
