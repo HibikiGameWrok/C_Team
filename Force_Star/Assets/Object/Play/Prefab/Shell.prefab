@@ -147,8 +147,10 @@ MonoBehaviour:
   damage_Image: {fileID: 21300000, guid: f9edb84fe3baa884ea6631e554dd83db, type: 3}
   speed: 0.25
   range: 6.5
-  deathTimer: 0
+  deathTimer: 30
   gravityForce: 1
+  blowoutRate: 100
+  upForce: 300
 --- !u!114 &8042709025498477755
 MonoBehaviour:
   m_ObjectHideFlags: 0

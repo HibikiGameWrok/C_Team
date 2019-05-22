@@ -86,7 +86,7 @@ public class DeathMove : MonoBehaviour
         if (col.gameObject.tag == "AttackBoal")
         {
             //プレイヤーの向きを取得する
-            float downVel = attackHand.transform.position.x - this.transform.position.x;
+            float downVel = player.transform.position.x - this.transform.position.x;
 
             //プレイヤーの向きに飛ばすから反転する
             downVel *= -1;

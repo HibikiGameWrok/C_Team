@@ -23,6 +23,8 @@ public class ShellController : MonoBehaviour
 
     private bool checkAttack;
 
+    Collider2D collider;
+
     SpriteRenderer shellSprite;
     [SerializeField]
     private Sprite wait_Image = null;
@@ -54,6 +56,14 @@ public class ShellController : MonoBehaviour
     //掛けたい重力の大きさ
     [SerializeField]
     private float gravityForce = 1.0f;
+
+    //吹っ飛び率(X軸)
+    [SerializeField]
+    private float blowoutRate = 100.0f;
+
+    //吹っ飛び率(Y軸)
+    [SerializeField]
+    private float upForce = 300.0f;
 
     Rigidbody2D rigid2D;
 
@@ -94,6 +104,7 @@ public class ShellController : MonoBehaviour
     {
         //rigid2Dを使う
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
+        this.collider = gameObject.GetComponent<Collider2D>();
         xScale = this.transform.localScale.x;
         //shellRenderer = GetComponent<Renderer>();
         shellSprite = gameObject.GetComponent<SpriteRenderer>();
@@ -137,13 +148,30 @@ public class ShellController : MonoBehaviour
             {
                 Vector2 pos = this.transform.position;
 
+                Vector3 playerPos = m_playerIndex.GetPlayerPosition();
+
                 // ☆を生成
                 m_playIndex.ApplyStarBounce(pos, 20);
 
                 rigid2D.gravityScale = gravityForce;
 
+                //プレイヤーの向きを取得する
+                float downVel = playerPos.x - this.transform.position.x;
+
+                //プレイヤーの向きに飛ばすから反転する
+                downVel *= -1;
+
+                //移動
+                this.rigid2D.AddForce(transform.up * this.upForce + transform.right * downVel * blowoutRate);
+
+                //当たり判定をoffにする
+                collider.enabled = false;
+
                 //「死にました」とフラグで伝える
                 deathFlag = true;
+
+                //当たり判定をoffにする
+                m_partsAttack.SetStopHit();
             }
         }
     }
