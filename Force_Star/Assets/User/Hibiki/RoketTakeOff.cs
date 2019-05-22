@@ -31,6 +31,8 @@ public class RoketTakeOff : MonoBehaviour
     bool stopFlag = false;
     bool stopFlag1 = false;
 
+    float sinVecX = 0.0f; 
+
     void Awake()
     {
         directorIndex = directorIndex = PlaySceneDirectorIndex.GetInstance();
@@ -48,6 +50,8 @@ public class RoketTakeOff : MonoBehaviour
         // メインカメラを親から取得
         ParentmainCamera = GameObject.Find("ParentMainCamera");
         targetfollow = ParentmainCamera.transform.Find("Main Camera").GetComponent<TargetFollow>();
+
+        sinVecX = this.transform.position.x;
     }
 
     // Update is called once per frame
@@ -66,7 +70,7 @@ public class RoketTakeOff : MonoBehaviour
         if (stopFlag == false)
         {
             // 震える
-            this.transform.position = new Vector3(Mathf.Sin(30.0f * Mathf.PI * 1f * Time.time) + this.transform.position.x, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(Mathf.Sin(30.0f * Mathf.PI * 1f * Time.time) + sinVecX, this.transform.position.y, this.transform.position.z);
         }
         // 1秒待つ  
         yield return new WaitForSeconds(3.0f);
