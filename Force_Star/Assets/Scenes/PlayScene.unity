@@ -21151,7 +21151,7 @@ GameObject:
   - component: {fileID: 703721803}
   - component: {fileID: 703721804}
   - component: {fileID: 703721805}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: StarCheck
   m_TagString: R
   m_Icon: {fileID: 0}
