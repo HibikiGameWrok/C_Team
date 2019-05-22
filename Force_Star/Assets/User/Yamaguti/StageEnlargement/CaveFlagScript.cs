@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// プレイヤー倉庫言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
+
 
 public class CaveFlagScript : MonoBehaviour
 {
@@ -13,7 +18,19 @@ public class CaveFlagScript : MonoBehaviour
     [SerializeField]
     private GameObject CaveBackGround = null;
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlayerDirectorIndex m_playerIndex;
+
     bool CaveEnterFlag = false;
+    void Awake()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -24,17 +41,29 @@ public class CaveFlagScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(CaveEnterFlag)
+        {
+            Mask.transform.position= m_playerIndex.GetPlayerPosition();
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ok");
-        if (other.gameObject.tag == "Player")
+        if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
         {
             CaveEnterFlag = true;
             CaveFloor.SetActive(true);
             Mask.SetActive(true);
         }
+    }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
+        {
+            CaveEnterFlag = true;
+            CaveFloor.SetActive(true);
+            Mask.SetActive(true);
+        }
+
     }
     //void OnTriggerStay2D(Collision2D other)
     //{
@@ -50,7 +79,7 @@ public class CaveFlagScript : MonoBehaviour
     {
         if (!CaveBackGround.GetComponent<CaveBackFlag>().GetCaveBackFlag())
         {
-            if (other.gameObject.tag == "Player")
+            if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
                 CaveEnterFlag = false;
                 CaveFloor.SetActive(false);
