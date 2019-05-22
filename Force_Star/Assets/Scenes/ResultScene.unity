@@ -782,7 +782,7 @@ PrefabInstance:
     - target: {fileID: 3066527943309036370, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.08
+      value: 4.24
       objectReference: {fileID: 0}
     - target: {fileID: 3066527943309036370, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
@@ -812,7 +812,7 @@ PrefabInstance:
     - target: {fileID: 3066527943309036370, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3066527943309036370, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
@@ -837,7 +837,7 @@ PrefabInstance:
     - target: {fileID: 3066527943309036369, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
       propertyPath: ShapeModule.m_Scale.z
-      value: 17.543182
+      value: 4.6892753
       objectReference: {fileID: 0}
     - target: {fileID: 3066527943309036369, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
@@ -924,8 +924,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598600717}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.20116, y: -0.21521538, z: -10.113541}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -44.20116, y: -0.21521568, z: -10.113541}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 835531587}
@@ -936,7 +936,7 @@ Transform:
   - {fileID: 1547700189}
   - {fileID: 1477987265}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &598600720
 MonoBehaviour:
@@ -1670,7 +1670,7 @@ PrefabInstance:
     - target: {fileID: 3066527943309036370, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3066527943309036370, guid: 52676a32ca2bd0146b4be78772ebae2b,
         type: 3}
@@ -2959,7 +2959,7 @@ PrefabInstance:
     - target: {fileID: 139104306324852519, guid: 1a5a5f095d534d7479ef037d09d10a9a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 139104306324852519, guid: 1a5a5f095d534d7479ef037d09d10a9a,
         type: 3}
