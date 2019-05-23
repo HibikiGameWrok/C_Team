@@ -18,13 +18,18 @@ public class RoketClearMove : MonoBehaviour
     // プレイヤー
     private GameObject player = null;
 
+
     PlayerController playercont;
 
     PlayerDirectorIndex playerIndex;
 
+    PlaySceneDirectorIndex playDrectorIndex;
+
+
 
     void Awake()
     {
+        playDrectorIndex = PlaySceneDirectorIndex.GetInstance();
         playerIndex = PlayerDirectorIndex.GetInstance();
         playercont = new PlayerController();
         player = GameObject.Find("Player");
@@ -79,21 +84,22 @@ public class RoketClearMove : MonoBehaviour
         Debug.Log("ロケットに☆を渡した");
 
         // 1秒待つ  
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
+
+        if (player != null)
+        {
+            // カメラのターゲットをロケットに変更
+            playDrectorIndex.SetObjectTargetCamera(this.gameObject);
+        }
         // プレイヤーを消す
-        //Destroy(player.gameObject);
+        player.SetActive(false);
+        player = null;
 
         // フェードイン
         StartFade.SetFadeInFlag(true);
-        
-        //// ☆の破裂プレハブをGameObject型で取得
-        GameObject GoodEff = (GameObject)Resources.Load("GoodEffect");
-        // ☆の破裂プレハブを元に、インスタンスを生成、
-        Instantiate(GoodEff, new Vector3(this.transform.position.x + 1, this.transform.position.y + 3, this.transform.position.z), Quaternion.identity);
-
-
+       
         // 1秒待つ  
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(3.0f);
 
         // 自身のスプライトコンポーネントを削除
         Destroy(GetComponent<SpriteRenderer>());
@@ -107,21 +113,18 @@ public class RoketClearMove : MonoBehaviour
         //// ☆の破裂プレハブをGameObject型で取得
         GameObject ExStar = (GameObject)Resources.Load("ExplosionStar");
         // ☆の破裂プレハブを元に生成
-        Instantiate(ExStar, new Vector3(this.transform.position.x + 3.8f, this.transform.position.y + 3, this.transform.position.z), Quaternion.identity);
+        Instantiate(ExStar, new Vector3(this.transform.position.x, this.transform.position.y + 3, this.transform.position.z), Quaternion.identity);
 
         //// ロケットプレハブをGameObject型で取得
-        GameObject Roket_2 = (GameObject)Resources.Load("Rocket_2");
+        GameObject Roket_2 = (GameObject)Resources.Load("SkyRoket");
         // ロケットプレハブを元に生成
-        Instantiate(Roket_2, new Vector3(this.transform.position.x + 3.8f, this.transform.position.y, this.transform.position.z), Quaternion.identity);
-
+        Instantiate(Roket_2, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
 
 
         // 5秒待つ  
         yield return new WaitForSeconds(5.0f);
 
         Debug.Log("ロケットが飛んだ");
-
-        //yield return new WaitForSeconds(3.0f);
 
         // フェードアウト
         StartFade.SetFadeOutFlag(true);
