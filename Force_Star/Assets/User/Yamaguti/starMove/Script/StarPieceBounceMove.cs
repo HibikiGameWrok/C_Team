@@ -31,6 +31,7 @@ public class StarPieceBounceMove : MonoBehaviour
 
     private float jumpForce = 0.2f;            // ジャンプ力   
     float startJF;                     // 初期のジャンプ力保存用
+    private int maxStar = 1;
 
     // 時間・点滅情報----------
     private float timeElapsed=0.0f;     // タイムカウント用
@@ -121,7 +122,8 @@ public class StarPieceBounceMove : MonoBehaviour
             tex.Reset();
             tex.image = warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
-            float size = Random.Range(1.0f, 3.0f);
+            float size = Random.Range(1.0f, 4.0f);
+            SizeMaxStar(size);
             tex.size = new Vector2(size, size);
             tex.pibot = new Vector2(0.5f, 0.5f);
             m_starSprite.SetImageUpdate(tex);
@@ -451,7 +453,7 @@ public class StarPieceBounceMove : MonoBehaviour
             if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
                 flag = true;
-                PlayerDirectorIndex.GetInstance().GetStar(1);
+                PlayerDirectorIndex.GetInstance().GetStar(maxStar);
                 Destroy(this.gameObject);
             }
             if(m_box2D.enabled)
@@ -470,6 +472,22 @@ public class StarPieceBounceMove : MonoBehaviour
     public void SetCirHitCheckFlag()
     {
         starCirHitCheckFlag = true;
+    }
+
+    private void SizeMaxStar(float size)
+    {
+        if(size>=1.0f&&size<2.0f)
+        {
+            maxStar = 1;
+        }
+        else if (size >= 2.0f && size < 3.0f)
+        {
+            maxStar = 5;
+        }
+        else if (size >= 3.0f && size <= 4.0f)
+        {
+            maxStar = 10;
+        }
     }
 }
 
