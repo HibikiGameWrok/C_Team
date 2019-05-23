@@ -7,17 +7,9 @@ using UnityEngine;
 using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// 番号データ共通
+// 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
-using WarehouseObject = WarehouseData.WarehouseObject;
-using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
-using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
-//*|***|***|***|***|***|***|***|***|***|***|***|
-// 画像データ言い換え
-//*|***|***|***|***|***|***|***|***|***|***|***|
-using TexImageData = GameDataPublic.TexImageData;
-using RenderImageData = GameDataPublic.RenderImageData;
-using PartsData = GameDataPublic.PartsData;
+using SoundID = SEManager.SoundID;
 
 
 public class FloorTreasure : MonoBehaviour
@@ -430,6 +422,10 @@ public class FloorTreasure : MonoBehaviour
         float magnitudeMin = 0.05f;
         m_directorIndex.LetsHeightShake(duration, magnitudeMax, magnitudeMin);
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex.PlaySoundEffect(SoundID.FOOTSTEP_01);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
         int starNum = AppStarNum();
@@ -555,6 +551,10 @@ public class FloorTreasure : MonoBehaviour
         float magnitudeMax = 0.2f;
         float magnitudeMin = 0.05f;
         m_directorIndex.LetsWidthShake(duration, magnitudeMax, magnitudeMin);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex.PlaySoundEffect(SoundID.FOOTSTEP_01);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
