@@ -39,7 +39,7 @@ public class StarPieceBounceMove : MonoBehaviour
     private int startFlashJumpCount=3;// 点滅を開始する回数
     int time = 0;                  // 点滅消滅の時間計測用変数
     int JumpCount ;                 // 現在のジャンプ回数
-    private float grv = 0.005f;                  // 重力
+    private float grv = 0.001f;                  // 重力
                                                 //-------------------------
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -121,7 +121,8 @@ public class StarPieceBounceMove : MonoBehaviour
             tex.Reset();
             tex.image = warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
-            tex.size = new Vector2(1, 1);
+            float size = Random.Range(1.0f, 3.0f);
+            tex.size = new Vector2(size, size);
             tex.pibot = new Vector2(0.5f, 0.5f);
             m_starSprite.SetImageUpdate(tex);
         }
@@ -180,10 +181,6 @@ public class StarPieceBounceMove : MonoBehaviour
         m_right = new GameObject("Right");
 
         m_right.transform.parent = gameObject.transform;
-
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり判定上
-        //*|***|***|***|***|***|***|***|***|***|***|***|
 
 
 
@@ -350,8 +347,12 @@ public class StarPieceBounceMove : MonoBehaviour
     {
         vecX = x;
         vecY = y;
+        Debug.Log(vecY);
         countFlag = true;
-        jumpForce = Random.Range(0.02f,0.3f);
+        jumpForce = vecY;
+        if (jumpForce < 0)
+            jumpForce -= jumpForce;
+        //jumpForce = Random.Range(0.06f,0.3f);
         startJF = jumpForce;
 
     }

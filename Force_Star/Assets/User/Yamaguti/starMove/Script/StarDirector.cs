@@ -204,11 +204,11 @@ public class StarDirector : MonoBehaviour
         {
             if (m_playerIndex.GetPlayerPosition().x < pos.x)
             {
-                m_playIndex.ApplyStarBounceRightSide(pos, 90.0f, 0.2f, maxStar);
+                m_playIndex.ApplyStarBounceRightSide(pos, 2.0f, 0.2f, maxStar);
             }
             else
             {
-                m_playIndex.ApplyStarBounceLeftSide(pos, 90.0f, 0.2f, maxStar);
+                m_playIndex.ApplyStarBounceLeftSide(pos, 25.0f, 0.2f, maxStar);
             }
         }
         else
