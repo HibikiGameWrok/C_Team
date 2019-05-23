@@ -81,7 +81,6 @@ public class StartRoket : MonoBehaviour
     ///////////////////////////////////////
 
 
-
     // コントロールを管理しているクラス
     PlayerController playercont;
 
@@ -148,23 +147,30 @@ public class StartRoket : MonoBehaviour
     {
         // コントロール管理クラスを更新
         playercont.Update();
-        // コントローラーXボタンかXキーが押された時
-        if (playercont.ChackAttack() || (Input.GetKeyDown(KeyCode.X)))
-        {
-            // スキップするコルーチンを作動
-            // コルーチンを実行  
-            StartCoroutine("SkipMove");
-            //moveStopFlag = true;
-        }
+
         // 距離感の速度
-            float distCovered = (Time.time - startTime) * 0.001f;
+        float distCovered = (Time.time - startTime) * 0.001f;
+        // 補間移動
+        transform.position = Vector3.Lerp(this.transform.position, targetPos, distCovered);
+
+        if (moveStopFlag != true)
+        {
+            // コントローラーXボタンかXキーが押された時
+            if (playercont.ChackAttack() || (Input.GetKeyDown(KeyCode.X)))
+            {
+                // フェードインが終わった時
+                if (StartFade.GetFadeInFlag() != true)
+                {
+                    // スキップするコルーチンを実行
+                    StartCoroutine("SkipMove");
+                }
+            }
+        }
 
         // 移動を止める処理
         if (moveStopFlag != true)
         {
-            // 補間移動
-            transform.position = Vector3.Lerp(this.transform.position, targetPos, distCovered);
-            if (count != 3)
+            if (count == 0)
             {
                 // コルーチンを実行  
                 StartCoroutine("PartsInstance");
@@ -174,14 +180,21 @@ public class StartRoket : MonoBehaviour
 
     private IEnumerator SkipMove()
     {
-        if (moveStopFlag != true)
+        // フェードアウト
+        StartFade.SetFadeOutFlag(true);
+        // 動きを止める
+        moveStopFlag = true;
+
+        // 1.0F待つ
+        yield return new WaitForSeconds(1.0f);
+
+        // フェードアウトの動作していない時
+        if (StartFade.GetFadeOutFlag() != true)
         {
-            StartFade.SetFadeOutFlag(true);
-            moveStopFlag = true;
+            count = 4;
+            // オブジェクトをアクティブ化
+            OnActiveObj();
         }
-        // 1秒待つ  
-        yield return new WaitForSeconds(4.0f);
-        OnActiveObj();
     }
 
     // コルーチン  
@@ -228,16 +241,7 @@ public class StartRoket : MonoBehaviour
         OnActiveObj();
     }
 
-    //void OnTriggerEnter2D(Collider2D col2D)
-    //{
-    //    // ポイントに当たった時
-    //    if (col2D.gameObject.tag == "StartRoketPoint")
-    //    {
-    //        OnActiveObj();
-    //    }
-    //}
-
-
+    // オブジェクトをアクティブ化
     void OnActiveObj()
     {
         // 壊れたロケットプレハブをGameObject型で取得
@@ -245,43 +249,43 @@ public class StartRoket : MonoBehaviour
         // 壊れたロケットプレハブを元に、インスタンスを生成、
         Instantiate(Rocket, targetPos, Quaternion.identity);
 
+
+
         // サブカメラが消える前にメインカメラを起動する
         if (MainCamera != null)
         {
             // プレイシーン全体を管理するオブジェクトを起動
             PlayDirector.gameObject.SetActive(true);
-
+            // プレイヤーを１回だけ生成
             if (count == 4)
             {
                 //// プレイヤープレハブをGameObject型で取得
                 GameObject Player = (GameObject)Resources.Load("PlayerDirector");
-                // プレイヤープレハブを元に生成、
+                // プレイヤープレハブを元に生成
                 Instantiate(Player, this.transform.position, Quaternion.identity);
                 starSearch.CheckFlag();
                 count = 5;
             }
-
             // メインカメラをアクティブにする
             MainCamera.gameObject.SetActive(true);
-
-            // BackGround
+            // 背景をアクティブ
             BackGround.gameObject.SetActive(true);
-
             // 敵を全てアクティブにする
             foreach (Transform Enemys in ParentEnemys.transform)
             {
                 Enemys.gameObject.SetActive(true);
             }
-
-            // 動きを止める
-            moveStopFlag = true;
-            // フェードをする
-            StartFade.SetFadeInFlag(true);
             // BGMを切り替える
             BGM.gameObject.SetActive(true);
 
+
+            // フェードインをする
+            StartFade.SetFadeInFlag(true);
+
+
             // TitleBGMオブジェクトを削除
             Destroy(TitleBGMMane);
+
             // 自身のオブジェクトを消す
             Destroy(this.gameObject);
         }
