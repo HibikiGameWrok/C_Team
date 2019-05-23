@@ -23,6 +23,8 @@ public class WaterWall : MonoBehaviour
     bool HitPW = false;                                         // 滝が割られているか
 
     Vector3 StartPosition;                                      // 滝の最初生成位置
+
+    int m_maxMyStar;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +46,7 @@ public class WaterWall : MonoBehaviour
         }
         myList.Reverse();
         count = 0.0f;
+        m_maxMyStar = 5;// 星の最大値
     }
 
     // Update is called once per frame
@@ -192,5 +195,20 @@ public class WaterWall : MonoBehaviour
     public void SetHitflag(bool flag)
     {
         HitPW = flag;           // 割ったかどうか
+    }
+
+    // 星の最大値を下げる
+    public int MaxStar()
+    {
+        int i = m_maxMyStar;
+        if(m_maxMyStar>1)
+        {
+            m_maxMyStar -= 1;
+        }
+        if(m_maxMyStar<=0)
+        {
+            m_maxMyStar = 1;
+        }
+        return i;
     }
 }

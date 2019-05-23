@@ -46,7 +46,7 @@ public class StarDirector : MonoBehaviour
         //vecX2 = playerObject.transform.position.x - playerObject.GetComponent<Renderer>().bounds.size.x / 2 - correctionX;
         //vecY = playerObject.transform.position.y - playerObject.GetComponent<Renderer>().bounds.size.y / 2;
     }
-
+   
     // 仮の床用星作成関数
     public void CreateStar()
     {
@@ -90,6 +90,7 @@ public class StarDirector : MonoBehaviour
         {
             for (int i = 0; i < maxStar; i++)
             {
+
                 StarObj = Instantiate(Star, objectPosR, Quaternion.identity) as GameObject; // 生成
                 StarObj.transform.parent = transform;                                // 子にする
                 float vecX = Random.Range(-0.2f, 0.2f);
@@ -159,56 +160,63 @@ public class StarDirector : MonoBehaviour
 
     }
 
+
     // 星を個別で作るようの関数
     // 外部から出現位置と星の取得数を入力し生成する関数(壁衝突,ジャンプ力を外部で操作する用)
     // 引数(星の位置,星の取得数,X軸の方向(flase:左　true:右),最初のジャンプ力)
-    public void CreateOneStar(Vector2 objectPos, int maxStar, bool flag, float jump,bool center=false)
+    public void CreateOneStar(Vector2 pos, int maxStar, bool flag, float jump,bool center=false)
     {
-        if(!center)
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 位置移動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 leftAngleV = new Vector2(-1, 1);
+        Vector2 rightAngleV = new Vector2(1, 1);
+        float leftAngle = ChangeData.Vector2ToAngleDeg(leftAngleV);
+        float rightAngle = ChangeData.Vector2ToAngleDeg(rightAngleV);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星が出る * starNum
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (!center)
         {
-            if (m_playerIndex.GetPlayerPosition().x < objectPos.x)
+            if (m_playerIndex.GetPlayerPosition().x < pos.x)
             {
-                m_playIndex.ApplyStarBounceRightSide(objectPos, 90.0f, 0.2f, maxStar);
+                m_playIndex.ApplyStarBounceRightSide(pos, rightAngle, 0.2f, 0.01f, maxStar);
             }
             else
             {
-                m_playIndex.ApplyStarBounceLeftSide(objectPos, 90.0f, 0.2f, maxStar);
+                m_playIndex.ApplyStarBounceLeftSide(pos, leftAngle, 0.2f, 0.01f, maxStar);
             }
         }
         else
         {
-            m_playIndex.ApplyStarBounce(objectPos, maxStar);
+            m_playIndex.ApplyStarBounce(pos, maxStar);
         }
-       
-
-        //if (Star != null)
-        //{
-        //    for (int i = 0; i < maxStar; i++)
-        //    {
-        //        StarObj = Instantiate(Star, objectPos, Quaternion.identity) as GameObject; // 生成
-        //        StarObj.transform.parent = transform;                                // 子にする
-        //        float vecX = Random.Range(-0.2f, 0.2f);
-        //        while (vecX == 0)                       // 0ならもっかい
-        //        {
-        //            vecX = Random.Range(-0.2f, 0.2f);
-        //        }
-        //        StarObj.GetComponent<StarMove>().SetVecX(vecX); // 飛んでいく角度をランダムに決める
-        //    }
-        //}
+      
     }
 
     public void CreateOneStar(Vector2 pos, int maxStar, bool center = false)
     {
 
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 位置移動
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 leftAngleV = new Vector2(-1, 1);
+        Vector2 rightAngleV = new Vector2(1, 1);
+        float leftAngle = ChangeData.Vector2ToAngleDeg(leftAngleV);
+        float rightAngle = ChangeData.Vector2ToAngleDeg(rightAngleV);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星が出る * starNum
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         if (!center)
         {
             if (m_playerIndex.GetPlayerPosition().x < pos.x)
             {
-                m_playIndex.ApplyStarBounceRightSide(pos, 90.0f, 0.2f, maxStar);
+                m_playIndex.ApplyStarBounceRightSide(pos, rightAngle, 0.2f, 0.01f, maxStar);
             }
             else
             {
-                m_playIndex.ApplyStarBounceLeftSide(pos, 90.0f, 0.2f, maxStar);
+                m_playIndex.ApplyStarBounceLeftSide(pos, leftAngle, 0.2f, 0.01f, maxStar);
             }
         }
         else
