@@ -29,18 +29,22 @@ public class StarPieceBounceMove : MonoBehaviour
 
     bool flag = false;      // 当たった時のフラグ
 
-    private float jumpForce = 0.2f;            // ジャンプ力   
-    float startJF;                     // 初期のジャンプ力保存用
+    public float jumpForce = 0.2f;            // ジャンプ力   
+    public float startJF;                     // 初期のジャンプ力保存用
+    private int maxStar = 1;
+    private float chengSize = 0.0f;
 
     // 時間・点滅情報----------
-    private float timeElapsed=0.0f;     // タイムカウント用
-    private int flashInterval=5;      // 点滅間隔
-    private int flashTime=3;          // 点滅時間
-    private int startFlashJumpCount=3;// 点滅を開始する回数
+    private float timeElapsed = 0.0f;     // タイムカウント用
+    private int flashInterval = 5;      // 点滅間隔
+    private int flashTime = 3;          // 点滅時間
+    private int startFlashJumpCount = 3;// 点滅を開始する回数
     int time = 0;                  // 点滅消滅の時間計測用変数
-    int JumpCount ;                 // 現在のジャンプ回数
+    int JumpCount;                 // 現在のジャンプ回数
     private float grv = 0.005f;                  // 重力
-                                                //-------------------------
+    private float jumpAddF;
+    float size;
+    //-------------------------
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
@@ -54,7 +58,7 @@ public class StarPieceBounceMove : MonoBehaviour
     // 無敵時間
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    private int count = 20;
+    private int count = 60;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 動き用
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -73,22 +77,23 @@ public class StarPieceBounceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ４辺
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    GameObject m_up =null;
+    GameObject m_up = null;
     ChildStar m_upChildStar;
 
-    GameObject m_down=null;
+    GameObject m_down = null;
     ChildStar m_downChildStar;
 
-    GameObject m_left =null;
+    GameObject m_left = null;
     ChildStar m_leftChildStar;
 
-    GameObject m_right=null;
+    GameObject m_right = null;
     ChildStar m_rightChildStar;
 
     bool countFlag;
     bool objectFlag = false;
 
     bool starCirHitCheckFlag;
+    bool hitUpCheck, hitDownCheck, hitLeftCheck, hitRightCheck;
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -121,7 +126,9 @@ public class StarPieceBounceMove : MonoBehaviour
             tex.Reset();
             tex.image = warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
-            tex.size = new Vector2(1, 1);
+            size = Random.Range(1.0f, 2.0f);
+            SizeMaxStar(size);
+            tex.size = new Vector2(size, size);
             tex.pibot = new Vector2(0.5f, 0.5f);
             m_starSprite.SetImageUpdate(tex);
         }
@@ -137,6 +144,7 @@ public class StarPieceBounceMove : MonoBehaviour
             m_up.transform.parent = gameObject.transform;
         }
 
+
         //if (m_upChildStar == null)
         //{
         //    m_up = new GameObject("Up");
@@ -144,46 +152,46 @@ public class StarPieceBounceMove : MonoBehaviour
         //    m_up.transform.parent = gameObject.transform;
         //}
 
-        //if (m_downChildStar == null)
-        //{
-        //    m_down = new GameObject("Down");
-        //    m_downChildStar = m_down.AddComponent<ChildStar>();
-        //    m_down.transform.parent = gameObject.transform;
-        //}
+        if (m_down == null)
+        {
+            m_down = new GameObject("Down");
+            m_downChildStar = m_down.AddComponent<ChildStar>();
+            m_down.transform.parent = gameObject.transform;
+        }
 
-        //if (m_leftChildStar == null)
-        //{
-        //    m_left = new GameObject("Left");
-        //    m_leftChildStar = m_left.AddComponent<ChildStar>();
-        //    m_left.transform.parent = gameObject.transform;
-        //}
+        if (m_left == null)
+        {
+            m_left = new GameObject("Left");
+            m_leftChildStar = m_left.AddComponent<ChildStar>();
+            m_left.transform.parent = gameObject.transform;
+        }
 
-        //if (m_rightChildStar == null)
-        //{
-        //    m_right = new GameObject("Right");
-        //    m_rightChildStar = m_right.AddComponent<ChildStar>();
-        //    m_right.transform.parent = gameObject.transform;
-        //}
+        if (m_right == null)
+        {
+            m_right = new GameObject("Right");
+            m_rightChildStar = m_right.AddComponent<ChildStar>();
+            m_right.transform.parent = gameObject.transform;
+        }
 
         //m_up = new GameObject("Up");
 
         //m_up.transform.parent = gameObject.transform;
 
-        m_down = new GameObject("Down");
+        //m_down = new GameObject("Down");
 
-        m_down.transform.parent = gameObject.transform;
+        //m_down.transform.parent = gameObject.transform;
 
-        m_left = new GameObject("Left");
+        //m_left = new GameObject("Left");
 
-        m_left.transform.parent = gameObject.transform;
+        //m_left.transform.parent = gameObject.transform;
 
-        m_right = new GameObject("Right");
+        //m_right = new GameObject("Right");
 
-        m_right.transform.parent = gameObject.transform;
-
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 当たり判定上
-        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // m_right.transform.parent = gameObject.transform;
+        hitUpCheck = true;
+        hitDownCheck = true;
+        hitLeftCheck = true;
+        hitRightCheck = true;
 
 
 
@@ -193,6 +201,15 @@ public class StarPieceBounceMove : MonoBehaviour
         gameObject.layer = 12;
 
 
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たり判定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        CreateCollision();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たり設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rigidBody2D.isKinematic = true;
+
         countFlag = false;
 
         starCirHitCheckFlag = false;
@@ -201,32 +218,29 @@ public class StarPieceBounceMove : MonoBehaviour
     void Start()
     {
 
-        m_downChildStar = m_down.AddComponent<ChildStar>();
-        m_leftChildStar = m_left.AddComponent<ChildStar>();
-        m_rightChildStar = m_right.AddComponent<ChildStar>();
+        //m_downChildStar = m_down.AddComponent<ChildStar>();
+        //m_leftChildStar = m_left.AddComponent<ChildStar>();
+        //m_rightChildStar = m_right.AddComponent<ChildStar>();
         Vector2 pos, size;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定上
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        pos = new Vector2(0.0f, 0.35f);
-        size = new Vector2(0.5f, 0.2f);
+        pos = new Vector2(0.0f, 0.35f + chengSize);
+        size = new Vector2(0.5f + chengSize, 0.2f + chengSize);
         m_upChildStar.SetPointSize(pos, size);
         m_upChildStar.SetPointSize(pos, size);
-        pos = new Vector2(0.0f, -0.45f);
-        size = new Vector2(0.5f, 0.4f);
+        pos = new Vector2(0.0f, -0.45f - chengSize);
+        size = new Vector2(0.5f + chengSize, 0.6f + chengSize);
         m_downChildStar.SetPointSize(pos, size);
         m_downChildStar.SetPointSize(pos, size);
-        pos = new Vector2(-0.35f, 0.0f);
-        size = new Vector2(0.2f, 0.5f);
+        pos = new Vector2(-0.35f - chengSize, 0.0f);
+        size = new Vector2(0.2f + chengSize, 0.5f + chengSize);
         m_leftChildStar.SetPointSize(pos, size);
         m_leftChildStar.SetPointSize(pos, size);
-        pos = new Vector2(0.35f, 0.0f);
-        size = new Vector2(0.2f, 0.5f);
+        pos = new Vector2(0.35f + chengSize, 0.0f);
+        size = new Vector2(0.2f + chengSize, 0.5f + chengSize);
         m_rightChildStar.SetPointSize(pos, size);
         m_rightChildStar.SetPointSize(pos, size);
-
-        //       jumpForce = vecY;
-        startJF = jumpForce;
     }
 
     void Update()
@@ -244,15 +258,8 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (count <= 0)
         {
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 当たり判定
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            CreateCollision();
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 当たり設定
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_rigidBody2D.isKinematic = true;
             SetPlayHit();
+            m_box2D.size = new Vector2(size, size);
             countFlag = false;
         }
         else
@@ -260,11 +267,12 @@ public class StarPieceBounceMove : MonoBehaviour
             if (countFlag)
                 count--;
         }
-        if(!objectFlag)
+        if (!objectFlag)
         {
             objectFlag = true;
         }
-        if(!starCirHitCheckFlag)
+
+        if (!starCirHitCheckFlag)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ぽ四ぽ四移動
@@ -274,24 +282,47 @@ public class StarPieceBounceMove : MonoBehaviour
             bool hitLeft = m_leftChildStar.GetHitFlag();
             bool hitRight = m_rightChildStar.GetHitFlag();
 
-            if (hitUp)
+            if (hitUp && hitUpCheck)
             {
                 jumpForce = 0.0f;
+                hitUpCheck = false;
             }
-            if (hitDown)
+            else if (!hitUp && !hitUpCheck)
+            {
+                hitUpCheck = true;
+            }
+            if (hitDown && hitDownCheck)
             {
                 jumpForce = startJF;
-                JumpCount++;
+
+                hitDownCheck = false;
             }
-            if (hitLeft)
+            else if (!hitDown && !hitDownCheck)
+            {
+                AddCountJump();
+                hitDownCheck = true;
+            }
+            if (hitLeft && hitLeftCheck)
             {
                 vecX = -vecX;
-                JumpCount++;
+
+                hitLeftCheck = false;
             }
-            if (hitRight)
+            else if (!hitLeft && !hitLeftCheck)
+            {
+                AddCountJump();
+                hitLeftCheck = true;
+            }
+            if (hitRight && hitRightCheck)
             {
                 vecX = -vecX;
-                JumpCount++;
+
+                hitRightCheck = false;
+            }
+            else if (!hitRight && !hitRightCheck)
+            {
+                AddCountJump();
+                hitRightCheck = true;
             }
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -304,9 +335,8 @@ public class StarPieceBounceMove : MonoBehaviour
             }
             FlashStar();                // 点滅用の関数
         }
-      else if(starCirHitCheckFlag)
+        else if (starCirHitCheckFlag)
         {
-            Debug.Log("ok");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // スピード計算
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -325,8 +355,6 @@ public class StarPieceBounceMove : MonoBehaviour
             Vector3 movePower = playerDifUnit * m_speedData;
             transform.position += movePower;
         }
-
-
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -351,10 +379,18 @@ public class StarPieceBounceMove : MonoBehaviour
         vecX = x;
         vecY = y;
         countFlag = true;
-        jumpForce = Random.Range(0.02f,0.3f);
         jumpForce = vecY;
+        if (jumpForce < 0)
+        {
+            jumpForce -= jumpForce;
+        }
+        jumpForce += jumpAddF;
+        //jumpForce = Random.Range(0.06f,0.3f);
         startJF = jumpForce;
-
+        if (startJF == 0.0f)
+        {
+            startJF = 0.1f;
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤーに駆け付ける速さ
@@ -422,7 +458,7 @@ public class StarPieceBounceMove : MonoBehaviour
             //gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, level);
             timeElapsed += Time.deltaTime;
 
-            if (timeElapsed >= 0.6f) 
+            if (timeElapsed >= 0.6f)
             {
                 time++;
                 if (time >= flashTime)
@@ -445,31 +481,59 @@ public class StarPieceBounceMove : MonoBehaviour
     {
         if (!flag)
         {
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // プレイヤーの一部に当たったか？
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
+            if (!countFlag)
             {
-                flag = true;
-                PlayerDirectorIndex.GetInstance().GetStar(1);
-                Destroy(this.gameObject);
-            }
-            if(m_box2D.enabled)
-            {
-                Debug.Log(other.gameObject.tag);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // プレイヤーの一部に当たったか？
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
+                {
+                    flag = true;
+                    PlayerDirectorIndex.GetInstance().GetStar(maxStar);
+                    Destroy(this.gameObject);
+                }
+
                 if (other.gameObject.tag == "R")
                 {
-                    Debug.Log("a");
                     starCirHitCheckFlag = true;
                 }
             }
-
         }
 
     }
     public void SetCirHitCheckFlag()
     {
         starCirHitCheckFlag = true;
+    }
+
+    private void SizeMaxStar(float size)
+    {
+        if (size >= 1.0f && size < 1.5f)
+        {
+            jumpAddF = 0.0f;
+            maxStar = 1;
+            grv = 0.001f;
+        }
+        //else if (size >= 1.5f && size < 2.0f)
+        //{
+        //    jumpAddF = 0.1f;
+        //    maxStar = 5;
+        //    grv = 0.005f;
+        //}
+        else if (size >= 1.5f && size <= 2.0f)
+        {
+            jumpAddF = 0.0f;
+            maxStar = 3;
+            grv = 0.001f;
+        }
+        chengSize = size / 6;
+    }
+    void AddCountJump()
+    {
+        if (!countFlag)
+        {
+            JumpCount++;
+        }
     }
 }
 
