@@ -251,6 +251,18 @@ public class PlayerDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 大きさ取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetGroundFlag()
+    {
+        bool data = false;
+        if (m_playerDirector)
+        {
+            data = m_playerDirector.GetGroundFlag();
+        }
+        return data;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 大きさ取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     public float GetScale()
     {
         float data = 0.0f;
