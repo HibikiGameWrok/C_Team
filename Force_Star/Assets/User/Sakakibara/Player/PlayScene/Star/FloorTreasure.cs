@@ -423,6 +423,13 @@ public class FloorTreasure : MonoBehaviour
             ChangeData.Change2Data(ref pointLeft.x, ref pointRight.x);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画面横揺れ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float duration = 3.0f;
+        float magnitudeMax = 0.2f;
+        float magnitudeMin = 0.05f;
+        m_directorIndex.LetsHeightShake(duration, magnitudeMax, magnitudeMin);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
         int starNum = AppStarNum();
@@ -463,6 +470,13 @@ public class FloorTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         pointLeft.x = pointLeft.x - scale;
         pointRight.x = pointRight.x + scale;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画面横揺れ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float duration = 3.0f;
+        float magnitudeMax = 0.2f;
+        float magnitudeMin = 0.05f;
+        m_directorIndex.LetsHeightShake(duration, magnitudeMax, magnitudeMin);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -534,6 +548,13 @@ public class FloorTreasure : MonoBehaviour
         }
         upAngle = ChangeData.Vector2ToAngleDeg(upAngleV);
         downAngle = ChangeData.Vector2ToAngleDeg(downAngleV);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画面横揺れ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float duration = 3.0f;
+        float magnitudeMax = 0.2f;
+        float magnitudeMin = 0.05f;
+        m_directorIndex.LetsWidthShake(duration, magnitudeMax, magnitudeMin);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|

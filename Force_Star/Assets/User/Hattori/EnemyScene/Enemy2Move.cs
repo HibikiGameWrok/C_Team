@@ -73,6 +73,15 @@ public class Enemy2Move : MonoBehaviour
     void Awake()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃当たり判定データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         GameObject parent = this.gameObject;
@@ -86,14 +95,6 @@ public class Enemy2Move : MonoBehaviour
 
     void Start()
     {
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // プレイシーン共通ディレクター
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_playIndex = PlaySceneDirectorIndex.GetInstance();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // プレイヤー共通ディレクター
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_playerIndex = PlayerDirectorIndex.GetInstance();
 
         //当たり判定の初期化
         this.rigid2D = GetComponent<Rigidbody2D>();
@@ -143,11 +144,11 @@ public class Enemy2Move : MonoBehaviour
         if ((col.gameObject.tag == "AttackBoal"))
         {
             Vector2 pos = this.transform.position;
-
+            Vector2 posPlayer = m_playerIndex.GetPlayerPosition();
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 星が出る *5
+            // 星が出る
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_playIndex.ApplyStarBounce(pos, 20);
+            m_playIndex.CreateOneStar(pos, posPlayer, 20);
 
             //好きな大きさの重力を指定する
             rigid2D.gravityScale = gravityForce;

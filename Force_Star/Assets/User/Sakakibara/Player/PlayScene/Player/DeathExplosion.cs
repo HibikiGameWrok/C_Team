@@ -259,6 +259,13 @@ public class DeathExplosion : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 gameObject.transform.position = m_pointBomb;
                 m_directorIndex.SetObjectTargetCamera(this.gameObject);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 画面揺れ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                float duration = m_timeMaxSecond;
+                float magnitudeMax = 0.7f;
+                float magnitudeMin = 0.2f;
+                m_directorIndex.LetsShake(duration, magnitudeMax, magnitudeMin);
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // フェーズ２ フレアのあれ

@@ -8,9 +8,14 @@ using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 
 public class Enemy1Move : MonoBehaviour
 {
-    public GameObject starDirec;
-
-    private StarDirector starCreate;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlayerDirectorIndex m_playerIndex;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃当たり判定データ
@@ -55,6 +60,15 @@ public class Enemy1Move : MonoBehaviour
     void Awake()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃当たり判定データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         GameObject parent = this.gameObject;
@@ -69,10 +83,9 @@ public class Enemy1Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
-
-        starCreate = starDirec.GetComponent<StarDirector>();
-
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃当たり判定の発生
@@ -111,8 +124,12 @@ public class Enemy1Move : MonoBehaviour
         if ((col.gameObject.tag == "AttackBoal"))
         {
             Vector2 pos = this.transform.position;
-
-            starCreate.CreateOneStar(pos, 10);
+            Vector2 posPlayer = m_playerIndex.GetPlayerPosition();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星が出る
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.CreateOneStar(pos, posPlayer, 20);
+            //starCreate.CreateOneStar(pos, 10);
 
             rigid2D.gravityScale = gravityForce;
 
