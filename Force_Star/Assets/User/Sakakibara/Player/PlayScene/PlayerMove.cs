@@ -325,7 +325,7 @@ public class PlayerMove : MonoBehaviour
         m_jumpPowerMax_S = 2.0f;
         m_jumpPowerMaxUnder = 1.0f;
         m_movePowerMax = 0.70f;
-        m_movePowerMax_S = 1.50f;
+        m_movePowerMax_S = 1.20f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 強化フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -834,6 +834,7 @@ public class PlayerMove : MonoBehaviour
             // ジャンプするなら
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_rigid_Vec.y = 0;
+            
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 脚強化状態
             //*|***|***|***|***|***|***|***|***|***|***|***|
