@@ -41,13 +41,9 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     Camera m_mainCamera;
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // メインカメラにターゲットされている
+    // メインカメラの技
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    TargetFollow m_targetCamera;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // カメラ子のシェイク取得
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    ShakeCamera m_shakeCamera;
+    CameraArts m_mainCameraArts;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星の運営者
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -68,11 +64,7 @@ public class PlaySceneDirectorIndex
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // メインカメラにターゲットされている
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_targetCamera = null;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // カメラ子のシェイク取得
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_shakeCamera = null;
+        m_mainCameraArts = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -102,11 +94,7 @@ public class PlaySceneDirectorIndex
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // メインカメラにターゲットされている
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_targetCamera = null;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // カメラ子のシェイク取得
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_shakeCamera = null;
+        m_mainCameraArts = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -136,11 +124,7 @@ public class PlaySceneDirectorIndex
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // メインカメラにターゲットされている
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_targetCamera = null;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // カメラ子のシェイク取得
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_shakeCamera = null;
+        m_mainCameraArts = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星の運営者
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -168,16 +152,9 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター受付
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetPointerTargetCamera(TargetFollow follow)
+    public void SetPointerMainCameraArts(CameraArts arts)
     {
-        m_targetCamera = follow;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // ポインター受付
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void SetPointerShakeCamera(ShakeCamera shake)
-    {
-        m_shakeCamera = shake;
+        m_mainCameraArts = arts;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ポインター受付
@@ -205,9 +182,9 @@ public class PlaySceneDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetObjectTargetCamera(GameObject target)
     {
-        if (m_targetCamera != null && target != null)
+        if (m_mainCameraArts != null && target != null)
         {
-            m_targetCamera.SetTarget(target);
+            m_mainCameraArts.SetTarget(target);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -309,6 +286,48 @@ public class PlaySceneDirectorIndex
         m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, num);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星を個別で作るようの関数
+    // 外部から出現位置と星の取得数を入力し生成する関数(壁衝突,ジャンプ力を外部で操作する用)
+    // 引数(星の位置,星の取得数,X軸の方向(flase:左　true:右),最初のジャンプ力)
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void CreateOneStar(Vector2 objectPos, Vector2 playerPos, int maxStar, bool flag, float jump, bool center = false)
+    {
+        if (!center)
+        {
+            if (playerPos.x < objectPos.x)
+            {
+                ApplyStarBounceRightSide(objectPos, 90.0f, 0.2f, maxStar);
+            }
+            else
+            {
+                ApplyStarBounceLeftSide(objectPos, 90.0f, 0.2f, maxStar);
+            }
+        }
+        else
+        {
+            ApplyStarBounce(objectPos, maxStar);
+        }
+    }
+    public void CreateOneStar(Vector2 pos, Vector2 playerPos, int maxStar, bool center = false)
+    {
+
+        if (!center)
+        {
+            if (playerPos.x < pos.x)
+            {
+                ApplyStarBounceRightSide(pos, 90.0f, 0.2f, maxStar);
+            }
+            else
+            {
+                ApplyStarBounceLeftSide(pos, 90.0f, 0.2f, maxStar);
+            }
+        }
+        else
+        {
+            ApplyStarBounce(pos, maxStar);
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // サウンドON!SE.GO!
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void PlaySoundEffect(SoundID id)
@@ -341,9 +360,68 @@ public class PlaySceneDirectorIndex
     {
         float duration = 0.5f;
         float magnitude = 0.5f;
-        duration = 0.25f;
+        duration = 30.0f;
         magnitude = 0.5f;
-        m_shakeCamera.Shake(duration, magnitude);
+        m_mainCameraArts.Shake(duration, magnitude);
+    }
+    public void LetsShake(float duration, float magnitude)
+    {
+        m_mainCameraArts.Shake(duration, magnitude);
+    }
+    public void LetsShake(float duration, float magnitudeMax, float magnitudeMin)
+    {
+        m_mainCameraArts.Shake(duration, magnitudeMax, magnitudeMin);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // リアルバネ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void LetsHeightShake()
+    {
+        float duration = 0.5f;
+        float magnitude = 0.5f;
+        duration = 30.0f;
+        magnitude = 0.5f;
+        m_mainCameraArts.HeightShake(duration, magnitude);
+    }
+    public void LetsHeightShake(float duration, float magnitude)
+    {
+        m_mainCameraArts.HeightShake(duration, magnitude);
+    }
+    public void LetsHeightShake(float duration, float magnitudeMax, float magnitudeMin)
+    {
+        m_mainCameraArts.HeightShake(duration, magnitudeMax, magnitudeMin);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 地震
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void LetsWidthShake()
+    {
+        float duration = 0.5f;
+        float magnitude = 0.5f;
+        duration = 30.0f;
+        magnitude = 0.5f;
+        m_mainCameraArts.WidthShake(duration, magnitude);
+    }
+    public void LetsWidthShake(float duration, float magnitude)
+    {
+        m_mainCameraArts.WidthShake(duration, magnitude);
+    }
+    public void LetsWidthShake(float duration, float magnitudeMax, float magnitudeMin)
+    {
+        m_mainCameraArts.WidthShake(duration, magnitudeMax, magnitudeMin);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 爆発は画面まで揺れる！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void WowEnemy()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画面揺れ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float duration = 3.0f;
+        float magnitudeMax = 0.10f;
+        float magnitudeMin = 0.05f;
+        m_mainCameraArts.WidthShake(duration, magnitudeMax, magnitudeMin);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲームクリア！取得

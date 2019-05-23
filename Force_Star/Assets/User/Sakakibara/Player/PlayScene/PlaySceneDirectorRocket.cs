@@ -24,11 +24,7 @@ public class PlaySceneDirectorRocket : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // カメラ子のターゲット取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private TargetFollow m_mainCameraTarget;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // カメラ子のシェイク取得
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private ShakeCamera m_mainCameraShake;
+    private CameraArts m_mainCameraArts;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ロケットのディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -53,26 +49,20 @@ public class PlaySceneDirectorRocket : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // カメラ子のターゲット取得
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_mainCameraTarget = m_mainCamera.GetComponent<TargetFollow>();
-        if (!m_mainCameraTarget)
+        m_mainCameraArts = m_mainCamera.GetComponent<CameraArts>();
+        if (!m_mainCameraArts)
         {
-            m_mainCameraTarget = m_mainCamera.AddComponent<TargetFollow>();
+            m_mainCameraArts = m_mainCamera.AddComponent<CameraArts>();
         }
         m_mainCameraCamera = m_mainCamera.GetComponent<Camera>();
         if (!m_mainCameraCamera)
         {
             m_mainCameraCamera = m_mainCamera.AddComponent<Camera>();
         }
-        m_mainCameraShake = m_mainCamera.GetComponent<ShakeCamera>();
-        if (!m_mainCameraShake)
-        {
-            m_mainCameraShake = m_mainCamera.AddComponent<ShakeCamera>();
-        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ポインターのデータを登録する
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndexRocket.SetPointerMainCamera(m_mainCameraCamera);
-        m_directorIndexRocket.SetPointerTargetCamera(m_mainCameraTarget);
-        m_directorIndexRocket.SetPointerShakeCamera(m_mainCameraShake);
+        m_directorIndexRocket.SetPointerMainCameraArts(m_mainCameraArts);
     }
 }

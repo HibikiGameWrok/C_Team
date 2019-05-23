@@ -147,11 +147,11 @@ public class ShellController : MonoBehaviour
             if ((col.gameObject.tag == "AttackBoal"))
             {
                 Vector2 pos = this.transform.position;
-
-                Vector3 playerPos = m_playerIndex.GetPlayerPosition();
-
+                Vector2 playerPos = m_playerIndex.GetPlayerPosition();
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 // ☆を生成
-                m_playIndex.ApplyStarBounce(pos, 20);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.CreateOneStar(pos, playerPos, 20);
 
                 rigid2D.gravityScale = gravityForce;
 

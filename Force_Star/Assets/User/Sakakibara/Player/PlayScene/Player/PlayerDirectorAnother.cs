@@ -929,6 +929,13 @@ public partial class PlayerDirector : MonoBehaviour
 
 
             m_directorIndex.PlaySoundEffect(SEManager.SoundID.DAMAGE_01);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 画面揺れ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float duration = 6.0f;
+            float magnitudeMax = 1.2f;
+            float magnitudeMin = 0.5f;
+            m_directorIndex.LetsShake(duration, magnitudeMax, magnitudeMin);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ステートチェック
