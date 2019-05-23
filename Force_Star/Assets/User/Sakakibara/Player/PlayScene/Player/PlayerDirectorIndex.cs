@@ -41,6 +41,10 @@ public class PlayerDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirector m_playerDirector;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーの最後の床
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    FloorTreasure m_playerLastPanel;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー
     //*|***|***|***|***|***|***|***|***|***|***|***|
 
@@ -53,6 +57,10 @@ public class PlayerDirectorIndex
         // プレイヤーの元締め
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerDirector = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerLastPanel = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -68,6 +76,10 @@ public class PlayerDirectorIndex
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerDirector = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerLastPanel = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
 
@@ -81,6 +93,10 @@ public class PlayerDirectorIndex
         // プレイヤーの元締め
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerDirector = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerLastPanel = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -132,27 +148,192 @@ public class PlayerDirectorIndex
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public Vector3 GetPlayerPosition()
     {
-        return m_playerDirector.GetPlayerPositon();
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerPositon();
+        }
+        return point;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーパーツ位置情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector3 GetPlayerArmRightPositon()
+    {
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerPositon();
+        }
+        return point;
+    }
+    public Vector3 GetPlayerArmLeftPositon()
+    {
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerPositon();
+        }
+        return point;
+    }
+    public Vector3 GetPlayerBodyPositon()
+    {
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerPositon();
+        }
+        return point;
+    }
+    public Vector3 GetPlayerHeadPositon()
+    {
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerPositon();
+        }
+        return point;
+    }
+    public Vector3 GetPlayerLegRightPositon()
+    {
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerLegRightPositon();
+        }
+        return point;
+    }
+    public Vector3 GetPlayerLegLeftPositon()
+    {
+        Vector3 point = Vector3.zero;
+        if (m_playerDirector)
+        {
+            point = m_playerDirector.GetPlayerLegLeftPositon();
+        }
+        return point;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージはどのくらい残っている？
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public float GetAirParsent()
     {
-        return m_playerDirector.GetAirParsent();
+        float data = 1.0f;
+        if (m_playerDirector)
+        {
+            data = m_playerDirector.GetAirParsent();
+        }
+        return data;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 所持数は目標量の何割か？
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public float GetHaveStarParsent()
     {
-        return m_playerDirector.GetHaveStarParsent();
+        float data = 0;
+        if (m_playerDirector)
+        {
+            data = m_playerDirector.GetHaveStarParsent();
+        }
+        return data;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 所持パーツ情報取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public bool GetHaveAllPartsFlag()
     {
-        return m_playerDirector.GetHaveAllPartsFlag();
+        bool data = false;
+        if (m_playerDirector)
+        {
+            data = m_playerDirector.GetHaveAllPartsFlag();
+        }
+        return data;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 大きさ取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetScale()
+    {
+        float data = 0.0f;
+        if (m_playerDirector)
+        {
+            data = m_playerDirector.GetScale();
+        }
+        return data;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーの最後の床
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetPointerLastPanel(FloorTreasure panel)
+    {
+        m_playerLastPanel = panel;
+    }
+    public bool GetPointerLastPanel(FloorTreasure panel)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床は同じ？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_playerLastPanel == panel)
+        {
+            return true;
+        }
+        return false;
+    }
+    public FloorTreasure GetPointerLastPanel()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return m_playerLastPanel;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 当たったフラグ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public bool GetLastPanel_Arm()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool data = false;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetArm();
+        }
+        return data;
+    }
+    public bool GetLastPanel_Body()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool data = false;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetBody();
+        }
+        return data;
+    }
+    public bool GetLastPanel_Head()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool data = false;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetHead();
+        }
+        return data;
+    }
+    public bool GetLastPanel_Leg()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool data = false;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetLeg();
+        }
+        return data;
     }
 }

@@ -352,6 +352,7 @@ public class StarPieceBounceMove : MonoBehaviour
         vecY = y;
         countFlag = true;
         jumpForce = Random.Range(0.02f,0.3f);
+        jumpForce = vecY;
         startJF = jumpForce;
 
     }

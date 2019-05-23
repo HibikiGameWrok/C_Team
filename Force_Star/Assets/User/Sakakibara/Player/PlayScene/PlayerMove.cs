@@ -17,6 +17,8 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private Rigidbody2D m_rigid2D;
     private BoxCollider2D m_box2D;
+
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 足データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -38,6 +40,11 @@ public class PlayerMove : MonoBehaviour
     private GameObject m_hitFlagArmObject_R;
     private PlayerPartsPain m_hitFlagArmParts_L;
     private PlayerPartsPain m_hitFlagArmParts_R;
+
+    private GameObject m_catchArmObject_L;
+    private GameObject m_catchArmObject_R;
+    private PlayerPartsCatch m_catchArmParts_L;
+    private PlayerPartsCatch m_catchArmParts_R;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -48,6 +55,9 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_hitFlagBodyObject;
     private PlayerPartsPain m_hitFlagBodyParts;
+
+    private GameObject m_catchBodyObject;
+    private PlayerPartsCatch m_catchBodyParts;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -58,11 +68,14 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_hitFlagHeadObject;
     private PlayerPartsPain m_hitFlagHeadParts;
+
+    private GameObject m_catchHeadObject;
+    private PlayerPartsCatch m_catchHeadParts;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private bool m_hitFlagHead;
-    
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定脚
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -70,11 +83,16 @@ public class PlayerMove : MonoBehaviour
     private GameObject m_hitFlagLegObject_R;
     private PlayerPartsPain m_hitFlagLegParts_L;
     private PlayerPartsPain m_hitFlagLegParts_R;
+
+    private GameObject m_catchLegObject_L;
+    private GameObject m_catchLegObject_R;
+    private PlayerPartsCatch m_catchLegParts_L;
+    private PlayerPartsCatch m_catchLegParts_R;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private bool m_hitFlagLeg;
-
+    private float m_scale;
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -101,6 +119,8 @@ public class PlayerMove : MonoBehaviour
     private bool m_reverseArrow;
     [SerializeField]
     private float m_movePowerX;
+    [SerializeField]
+    private float m_movePowerY;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 動き、向きフラグ(マスク)
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -125,25 +145,26 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データベース設定
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 移動力
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private float m_moveNormalPower;
-    private float m_moveMaxNormalPower;
-    private float m_moveStrongPower;
-    private float m_moveMaxStrongPower;
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // ジャンプ力
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private float m_jumpNormalPower;
-    private float m_jumpMaxNormalPower;
-    private float m_jumpStrongPower;
-    private float m_jumpMaxStrongPower;
+
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //// 移動力
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //private float m_moveNormalPower;
+    //private float m_moveMaxNormalPower;
+    //private float m_moveStrongPower;
+    //private float m_moveMaxStrongPower;
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //// ジャンプ力
+    ////*|***|***|***|***|***|***|***|***|***|***|***|
+    //private float m_jumpNormalPower;
+    //private float m_jumpMaxNormalPower;
+    //private float m_jumpStrongPower;
+    //private float m_jumpMaxStrongPower;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 関係：コマンド全般
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private Vector2 m_addForce;
+    //private Vector2 m_addForce;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 関係：生死判定
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -151,6 +172,43 @@ public class PlayerMove : MonoBehaviour
     private bool m_stop;
     private bool m_death;
 
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // データマリオベース設定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 移動データマリオ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private Vector2 m_rigid_Vec;
+    private Vector2 m_addForce;
+    private bool m_jumpingFlag;
+    private float m_jumpingTime;
+    private float m_jumpingGravity;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ジャンプ力マリオ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_jumpPower;
+    private float m_jumpPowerTime;
+    private float m_jumpPower_S;
+    private float m_jumpPowerTime_S;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 移動力マリオ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_movePower;
+    private float m_movePowerTime;
+    private float m_movePower_S;
+    private float m_movePowerTime_S;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 移動力限界マリオ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_jumpPowerMax;
+    private float m_jumpPowerMax_S;
+    private float m_jumpPowerMaxUnder;
+    private float m_movePowerMax;
+    private float m_movePowerMax_S;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 外からの力
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private Vector2 m_addForceOut;
 
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -164,18 +222,29 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         SetDataBase();
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データマリオベース設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        SetDataBaseMario();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // ボディデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         this.m_rigid2D = gameObject.AddComponent<Rigidbody2D>();
         this.m_box2D = gameObject.AddComponent<BoxCollider2D>();
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        this.m_rigid2D.gravityScale = 0.0f;
+        this.m_rigid2D.angularDrag = 0.0f;
+        this.m_rigid2D.drag = 0.0f;
+        this.m_rigid2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         this.m_rigid2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 親たちのデータ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        PlayerData_Number_List partsListNum;
-        string partsName;
-        GameObject parent = null;
+        this.m_rigid2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //// 親たちのデータ
+        ////*|***|***|***|***|***|***|***|***|***|***|***|
+        //PlayerData_Number_List partsListNum;
+        //string partsName;
+        //GameObject parent = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 足データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -203,11 +272,17 @@ public class PlayerMove : MonoBehaviour
         m_rightPower = false;
         m_reverseArrow = false;
         m_movePowerX = 0.0f;
+        m_movePowerY = 0.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 関係：生死判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_arive = true;
         m_death = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 大きさ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_scale = 2.0f;
+        gameObject.transform.localScale = new Vector3(m_scale, m_scale, m_scale);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // データベース設定
@@ -215,19 +290,35 @@ public class PlayerMove : MonoBehaviour
     void SetDataBase()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 移動力設定
+        // 移動データマリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_moveNormalPower = 20.0f;
-        m_moveMaxNormalPower = 20.0f;
-        m_moveStrongPower = 50.0f;
-        m_moveMaxStrongPower = 50.0f;
+        m_rigid_Vec = Vector2.zero;
+        m_addForce = Vector2.zero;
+        m_jumpingFlag = false;
+        m_jumpingTime = 0;
+        m_jumpingGravity = 0.0098f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ジャンプ力設定
+        // ジャンプ力マリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_jumpNormalPower = 500.0f;
-        m_jumpMaxNormalPower = 20.0f;
-        m_jumpStrongPower = 1000.0f;
-        m_jumpMaxStrongPower = 20.0f;
+        m_jumpPower = 0.3f;
+        m_jumpPowerTime = 15.0f;
+        m_jumpPower_S = 0.4f;
+        m_jumpPowerTime_S = 50.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動力マリオ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_movePower = 0.025f;
+        m_movePowerTime = 20.0f;
+        m_movePower_S = 0.05f;
+        m_movePowerTime_S = 30.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動力限界マリオ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_jumpPowerMax = 1.0f;
+        m_jumpPowerMax_S = 1.0f;
+        m_jumpPowerMaxUnder = 0.5f;
+        m_movePowerMax = 0.35f;
+        m_movePowerMax_S = 0.75f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 強化フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -235,6 +326,14 @@ public class PlayerMove : MonoBehaviour
         m_bodyStrong = false;
         m_headStrong = false;
         m_legStrong = false;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // データマリオベース設定
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void SetDataBaseMario()
+    {
+
+
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
@@ -287,6 +386,9 @@ public class PlayerMove : MonoBehaviour
         parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
         m_hitFlagArmObject_L = new GameObject("hitFlagArm_L");
         m_hitFlagArmObject_L.transform.parent = parent.transform;
+
+        m_catchArmObject_L = new GameObject("catchArm_L");
+        m_catchArmObject_L.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 右
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -295,6 +397,9 @@ public class PlayerMove : MonoBehaviour
         parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
         m_hitFlagArmObject_R = new GameObject("hitFlagArm_R");
         m_hitFlagArmObject_R.transform.parent = parent.transform;
+
+        m_catchArmObject_R = new GameObject("catchArm_R");
+        m_catchArmObject_R.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定腕
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -302,13 +407,18 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_hitFlagArmObject_L.tag = WarehousePlayer.GetTag_PlayerHitArmParts();
         this.m_hitFlagArmParts_L = m_hitFlagArmObject_L.AddComponent<PlayerPartsPain>();
+
+        m_catchArmObject_L.tag = WarehousePlayer.GetTag_PlayerHitArmParts();
+        this.m_catchArmParts_L = m_catchArmObject_L.AddComponent<PlayerPartsCatch>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 右
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_hitFlagArmObject_R.tag = WarehousePlayer.GetTag_PlayerHitArmParts();
         this.m_hitFlagArmParts_R = m_hitFlagArmObject_R.AddComponent<PlayerPartsPain>();
 
-        
+        m_catchArmObject_R.tag = WarehousePlayer.GetTag_PlayerHitArmParts();
+        this.m_catchArmParts_R = m_catchArmObject_R.AddComponent<PlayerPartsCatch>();
+
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定体のタグ
@@ -318,11 +428,17 @@ public class PlayerMove : MonoBehaviour
         parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
         m_hitFlagBodyObject = new GameObject("hitFlagBody");
         m_hitFlagBodyObject.transform.parent = parent.transform;
+
+        m_catchBodyObject = new GameObject("catchBody");
+        m_catchBodyObject.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定頭
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_hitFlagBodyObject.tag = WarehousePlayer.GetTag_PlayerHitBodyParts();
         this.m_hitFlagBodyParts = m_hitFlagBodyObject.AddComponent<PlayerPartsPain>();
+
+        m_catchBodyObject.tag = WarehousePlayer.GetTag_PlayerHitBodyParts();
+        this.m_catchBodyParts = m_catchBodyObject.AddComponent<PlayerPartsCatch>();
 
 
 
@@ -334,13 +450,17 @@ public class PlayerMove : MonoBehaviour
         parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
         m_hitFlagHeadObject = new GameObject("hitFlagHead");
         m_hitFlagHeadObject.transform.parent = parent.transform;
+
+        m_catchHeadObject = new GameObject("catchHead");
+        m_catchHeadObject.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定頭
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_hitFlagHeadObject.tag = WarehousePlayer.GetTag_PlayerHitHeadParts();
         this.m_hitFlagHeadParts = m_hitFlagHeadObject.AddComponent<PlayerPartsPain>();
 
-
+        m_catchHeadObject.tag = WarehousePlayer.GetTag_PlayerHitHeadParts();
+        this.m_catchHeadParts = m_catchHeadObject.AddComponent<PlayerPartsCatch>();
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定脚のタグ
@@ -352,6 +472,9 @@ public class PlayerMove : MonoBehaviour
         parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
         m_hitFlagLegObject_L = new GameObject("hitFlagLeg_L");
         m_hitFlagLegObject_L.transform.parent = parent.transform;
+
+        m_catchLegObject_L = new GameObject("catchLeg_L");
+        m_catchLegObject_L.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 右
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -360,6 +483,9 @@ public class PlayerMove : MonoBehaviour
         parent = GameDataPublic.SearchChildAllHierarchy(gameObject, partsName);
         m_hitFlagLegObject_R = new GameObject("hitFlagLeg_R");
         m_hitFlagLegObject_R.transform.parent = parent.transform;
+
+        m_catchLegObject_R = new GameObject("catchLeg_R");
+        m_catchLegObject_R.transform.parent = parent.transform;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定脚
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -367,11 +493,17 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_hitFlagLegObject_L.tag = WarehousePlayer.GetTag_PlayerHitLegParts();
         this.m_hitFlagLegParts_L = m_hitFlagLegObject_L.AddComponent<PlayerPartsPain>();
+
+        m_catchLegObject_L.tag = WarehousePlayer.GetTag_PlayerHitLegParts();
+        this.m_catchLegParts_L = m_catchLegObject_L.AddComponent<PlayerPartsCatch>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 右
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_hitFlagLegObject_R.tag = WarehousePlayer.GetTag_PlayerHitLegParts();
         this.m_hitFlagLegParts_R = m_hitFlagLegObject_R.AddComponent<PlayerPartsPain>();
+
+        m_catchLegObject_R.tag = WarehousePlayer.GetTag_PlayerHitLegParts();
+        this.m_catchLegParts_R = m_catchLegObject_R.AddComponent<PlayerPartsCatch>();
     }
 
 
@@ -385,7 +517,7 @@ public class PlayerMove : MonoBehaviour
     }
     void Start()
     {
-        Vector2 sizeLeg = new Vector2(1.0f, 0.2f);
+        Vector2 sizeLeg = new Vector2(0.8f, 0.2f);
         Vector2 pointLeg = new Vector2(0.0f, -0.5f);
         m_partsLeg2D.SetPointSize(pointLeg, sizeLeg);
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -424,6 +556,9 @@ public class PlayerMove : MonoBehaviour
         size = new Vector2(0.5f, 0.5f);
         m_hitFlagArmParts_L.SetPointSize(pos, size);
         m_hitFlagArmParts_R.SetPointSize(pos, size);
+
+        m_catchArmParts_L.SetPointSize(pos, size);
+        m_catchArmParts_R.SetPointSize(pos, size);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -434,6 +569,8 @@ public class PlayerMove : MonoBehaviour
         pos = new Vector2(0.0f, 0.0f);
         size = new Vector2(1.0f, 1.0f);
         m_hitFlagBodyParts.SetPointSize(pos, size);
+
+        m_catchBodyParts.SetPointSize(pos, size);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -444,6 +581,8 @@ public class PlayerMove : MonoBehaviour
         pos = new Vector2(0.0f, 0.0f);
         size = new Vector2(1.0f, 1.0f);
         m_hitFlagHeadParts.SetPointSize(pos, size);
+
+        m_catchHeadParts.SetPointSize(pos, size);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -455,6 +594,9 @@ public class PlayerMove : MonoBehaviour
         size = new Vector2(0.5f, 0.5f);
         m_hitFlagLegParts_L.SetPointSize(pos, size);
         m_hitFlagLegParts_R.SetPointSize(pos, size);
+
+        m_catchLegParts_L.SetPointSize(pos, size);
+        m_catchLegParts_R.SetPointSize(pos, size);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -535,6 +677,10 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateResistance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 外からの力
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateForseOut();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たりの判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateAttackParts();
@@ -544,158 +690,6 @@ public class PlayerMove : MonoBehaviour
         UpdateArive();
 
 
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 起動：横移動
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    void UpdateMoveCommond()
-    {
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 初期化
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 force = m_controllerData.ChackStickPower();
-        float forceDead = 0.05f;
-        force.y = 0;
-        m_addPower = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 十字キーの力をつぎ込む
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (forceDead < MyCalculator.LongVector2(force))
-        {
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 脚強化状態
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            if (m_legStrong)
-            {
-                m_addForce = (force * m_moveStrongPower);
-            }
-            else
-            {
-                m_addForce = (force * m_moveNormalPower);
-            }
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 力を加える
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            this.m_rigid2D.AddForce(m_addForce);
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 力を加えられた
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_addPower = true;
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 移動ベクトル取得
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 velocityData = m_rigid2D.velocity;
-        m_movePowerX = velocityData.x;
-        float absVelX = Mathf.Abs(m_movePowerX);
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 移動ベクトルが小さいと認知しない
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (absVelX < 0.01f)
-        {
-            m_movePowerX = 0;
-        }
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 起動：抵抗＆重力
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    void UpdateResistance()
-    {
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 移動ベクトル取得
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector2 velocityData = m_rigid2D.velocity;
-        m_movePowerX = velocityData.x;
-        float absVelX = Mathf.Abs(m_movePowerX);
-        float resistance = 0.0f;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 移動ベクトルが大きいと制限される
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        float maxPower = 20.0f;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 脚強化状態で最大速度が変わる
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_legStrong)
-        {
-            maxPower = m_moveMaxStrongPower;
-        }
-        else
-        {
-            maxPower = m_moveMaxNormalPower;
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 速度オーバー
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (absVelX > maxPower)
-        {
-            float speedMax = MyCalculator.Multiplication(maxPower, 2);
-            float speedNow = MyCalculator.Multiplication(absVelX, 2);
-            float speedOver = MyCalculator.LeapReverseCalculation(0, speedNow, speedMax);
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 抵抗度
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            float resistancePar = MyCalculator.InversionOfProportion(speedOver);
-            float resistanceParX = MyCalculator.Multiplication(resistancePar, 2);
-            resistance = MyCalculator.InversionOfProportion(resistanceParX);
-
-            m_movePowerX *= resistance;
-
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 前方に進んでいないと制限される
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_reverseArrow || !m_addPower)
-        {
-            resistance = 0.98f;
-            m_movePowerX *= resistance;
-            absVelX = Mathf.Abs(m_movePowerX);
-            if (absVelX < 0.01f)
-            {
-                m_movePowerX = 0;
-                if (m_addPower)
-                {
-                    m_moveingPower = true;
-                }
-                else
-                {
-                    m_moveingPower = false;
-                }
-            }
-        }
-
-        velocityData.x = m_movePowerX;
-        this.m_rigid2D.velocity = velocityData;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 起動：ジャンプ
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    void UpdateJumpCommond()
-    {
-        Vector2 velocityData = m_rigid2D.velocity;
-        Vector2 jumpForce;
-        if (m_controllerData.ChackJumpTrigger() && m_groundFlagFlame)
-        {
-            m_rigid2D.velocity = new Vector2(velocityData.x, 0);
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 脚強化状態
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            if (m_legStrong)
-            {
-                jumpForce = (transform.up * m_jumpStrongPower);
-            }
-            else
-            {
-                jumpForce = (transform.up * m_jumpNormalPower);
-            }
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // ジャンプパワー
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            this.m_rigid2D.AddForce(jumpForce);
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // ジャンプの音~~~~
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            //soundJump.PlayOneShot(soundJump.clip);
-        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
@@ -713,7 +707,20 @@ public class PlayerMove : MonoBehaviour
         {
             m_partsAttack2D.SetStopHit();
         }
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 腕パワーアップ中なら
+        // 腕ダメージなし。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_armStrong && m_attackingFlag)
+        {
+            m_hitFlagArmParts_L.SetStopHit();
+            m_hitFlagArmParts_R.SetStopHit();
+        }
+        else
+        {
+            m_hitFlagArmParts_L.SetPlayHit();
+            m_hitFlagArmParts_R.SetPlayHit();
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃ボールデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -721,6 +728,334 @@ public class PlayerMove : MonoBehaviour
         m_partsAttackSize = new Vector2(0.5f, 0.5f);
         m_partsAttack2D.SetPointSize(m_partsAttackPos, m_partsAttackSize);
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動：横移動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateMoveCommond()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 初期化
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector2 force = m_controllerData.ChackStickPower();
+        float forceDead = 0.15f;
+        force.y = 0;
+        m_addPower = false;
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 十字キーの力をつぎ込む
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (forceDead < MyCalculator.LongVector2(force))
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 体強化状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_bodyStrong)
+            {
+                m_addForce.x = force.x * m_movePower_S;
+                m_rigid_Vec.x += m_addForce.x;
+            }
+            else
+            {
+                m_addForce.x = force.x * m_movePower;
+                m_rigid_Vec.x += m_addForce.x;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 力を加えられた
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_addPower = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動ベクトル取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_movePowerX = m_rigid_Vec.x;
+        float absVelX = Mathf.Abs(m_movePowerX);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動ベクトルが小さいと認知しない
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (absVelX < 0.01f)
+        {
+            m_movePowerX = 0;
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動マリオ：ジャンプ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateJumpCommond()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ジャンプの瞬間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_controllerData.ChackJumpTrigger() && m_groundFlagFlame)
+        {
+            m_jumpingFlag = true;
+            if (m_rigid_Vec.y < 0)
+            {
+                m_rigid_Vec.y = 0;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ジャンプ中
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_controllerData.ChackJump() && m_jumpingFlag)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ジャンプ時間
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_jumpingTime += 1.0f;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚強化状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_legStrong)
+            {
+                if (m_jumpingTime >= m_jumpPowerTime_S)
+                {
+                    m_jumpingFlag = false;
+                }
+            }
+            else
+            {
+                if (m_jumpingTime >= m_jumpPowerTime)
+                {
+                    m_jumpingFlag = false;
+                }
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ジャンプするなら
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_rigid_Vec.y = 0;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚強化状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_legStrong)
+            {
+                m_addForce.y = m_jumpPower_S;
+                m_rigid_Vec.y = m_addForce.y;
+            }
+            else
+            {
+                m_addForce.y = m_jumpPower;
+                m_rigid_Vec.y = m_addForce.y;
+            }
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ジャンプフラグ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_jumpingFlag = false;
+            m_jumpingTime = 0;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 空中
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!m_groundFlagFlame)
+            {
+                float resistance = 0.75f;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 推進力低下
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (m_rigid_Vec.y > 0)
+                {
+                    m_rigid_Vec.y = m_rigid_Vec.y * resistance;
+                }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 重力の影響
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_addForce.y = m_jumpingGravity * -1;
+                m_rigid_Vec.y += m_addForce.y;
+            }
+            else
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 重力の影響
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_addForce.y = 0;
+                m_rigid_Vec.y = m_addForce.y;
+            }
+        }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動マリオ：抵抗＆重力
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateResistance()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動ベクトル取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_movePowerX = m_rigid_Vec.x;
+        m_movePowerY = m_rigid_Vec.y;
+        float absVelX = Mathf.Abs(m_movePowerX);
+        float absVelY = Mathf.Abs(m_movePowerY);
+        float resistance = 0.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動ベクトルが大きいと制限される
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float maxPowerX = 20.0f;
+        float maxPowerY = m_jumpPowerMaxUnder;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 体強化状態で最大速度が変わる
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_bodyStrong)
+        {
+            maxPowerX = m_movePowerMax_S;
+        }
+        else
+        {
+            maxPowerX = m_movePowerMax;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 速度オーバー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (absVelX > maxPowerX)
+        {
+            float speedMax = MyCalculator.Multiplication(maxPowerX, 2);
+            float speedNow = MyCalculator.Multiplication(absVelX, 2);
+            float speedOver = MyCalculator.LeapReverseCalculation(0, speedNow, speedMax);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 抵抗度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float resistancePar = MyCalculator.InversionOfProportion(speedOver);
+            float resistanceParX = MyCalculator.Multiplication(resistancePar, 2);
+            resistance = MyCalculator.InversionOfProportion(resistanceParX);
+
+            m_movePowerX *= resistance;
+
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 前方に進んでいないと制限される
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_reverseArrow || !m_addPower)
+        {
+            resistance = 0.75f;
+            m_movePowerX *= resistance;
+            absVelX = Mathf.Abs(m_movePowerX);
+            if (absVelX < 0.01f)
+            {
+                m_movePowerX = 0;
+                if (m_addPower)
+                {
+                    m_moveingPower = true;
+                }
+                else
+                {
+                    m_moveingPower = false;
+                }
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 上昇か落下か
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_movePowerY > 0)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 脚強化状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_legStrong)
+            {
+                maxPowerY = m_jumpPowerMax_S;
+            }
+            else
+            {
+                maxPowerY = m_jumpPowerMax;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 上昇速度オーバー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (absVelY > maxPowerY)
+            {
+                float speedMax = MyCalculator.Multiplication(maxPowerY, 2);
+                float speedNow = MyCalculator.Multiplication(absVelY, 2);
+                float speedOver = MyCalculator.LeapReverseCalculation(0, speedNow, speedMax);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 抵抗度
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                float resistancePar = MyCalculator.InversionOfProportion(speedOver);
+                float resistanceParX = MyCalculator.Multiplication(resistancePar, 2);
+                resistance = MyCalculator.InversionOfProportion(resistanceParX);
+
+                m_movePowerY *= resistance;
+
+            }
+        }
+        else
+        {
+            maxPowerY = m_jumpPowerMaxUnder;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 落下速度オーバー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (absVelY > maxPowerY)
+            {
+                float speedMax = MyCalculator.Multiplication(maxPowerY, 2);
+                float speedNow = MyCalculator.Multiplication(absVelY, 2);
+                float speedOver = MyCalculator.LeapReverseCalculation(0, speedNow, speedMax);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 抵抗度
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                float resistancePar = MyCalculator.InversionOfProportion(speedOver);
+                float resistanceParX = MyCalculator.Multiplication(resistancePar, 2);
+                resistance = MyCalculator.InversionOfProportion(resistanceParX);
+
+                m_movePowerY *= resistance;
+            }
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動力計算
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rigid_Vec.x = m_movePowerX;
+        m_rigid_Vec.y = m_movePowerY;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動結果
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector3 position = gameObject.transform.position;
+        position += ChangeData.GetVector3(m_rigid_Vec);
+        gameObject.transform.position = position;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 外からの力
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateForseOut()
+    {
+        float resistance = 0.75f;
+        float addPowerOutX;
+        float addPowerOutY;
+        {
+            float absVelX;
+            float absVelY;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // X
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            addPowerOutX = m_addForceOut.x * resistance;
+            absVelX = Mathf.Abs(addPowerOutX);
+            if (absVelX < 0.01f)
+            {
+                addPowerOutX = 0;
+            }
+            m_addForceOut.x = addPowerOutX;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // Y
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            addPowerOutY = m_addForceOut.y * resistance;
+            absVelY = Mathf.Abs(addPowerOutY);
+            if (absVelY < 0.01f)
+            {
+                addPowerOutY = 0;
+            }
+            m_addForceOut.y = addPowerOutY;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 外からの終焉
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (MyCalculator.LongVector2(m_addForceOut) == 0.0f)
+        {
+            m_rigid2D.velocity = Vector2.zero;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 移動結果
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector3 position = gameObject.transform.position;
+        position += ChangeData.GetVector3(m_addForceOut);
+        gameObject.transform.position = position;
+    }
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 定期更新データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -782,14 +1117,6 @@ public class PlayerMove : MonoBehaviour
         {
             m_hitFlagLeg = false;
         }
-
-
-
-
-
-
-
-
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 生死判定
@@ -848,6 +1175,8 @@ public class PlayerMove : MonoBehaviour
     {
         m_rigid2D.isKinematic = true;
         m_rigid2D.velocity = Vector2.zero;
+
+        m_rigid_Vec = Vector2.zero;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定あり
@@ -861,6 +1190,13 @@ public class PlayerMove : MonoBehaviour
         m_hitFlagHeadParts.SetPlayHit();
         m_hitFlagLegParts_L.SetPlayHit();
         m_hitFlagLegParts_R.SetPlayHit();
+
+        m_catchArmParts_L.SetPlayHit();
+        m_catchArmParts_R.SetPlayHit();
+        m_catchBodyParts.SetPlayHit();
+        m_catchHeadParts.SetPlayHit();
+        m_catchLegParts_L.SetPlayHit();
+        m_catchLegParts_R.SetPlayHit();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定消失
@@ -874,6 +1210,13 @@ public class PlayerMove : MonoBehaviour
         m_hitFlagHeadParts.SetStopHit();
         m_hitFlagLegParts_L.SetStopHit();
         m_hitFlagLegParts_R.SetStopHit();
+
+        m_catchArmParts_L.SetStopHit();
+        m_catchArmParts_R.SetStopHit();
+        m_catchBodyParts.SetStopHit();
+        m_catchHeadParts.SetStopHit();
+        m_catchLegParts_L.SetStopHit();
+        m_catchLegParts_R.SetStopHit();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // コントローラー取得
@@ -882,6 +1225,11 @@ public class PlayerMove : MonoBehaviour
     {
         m_controllerData = getController;
     }
+    public void AddForsePower(Vector2 addForce)
+    {
+        m_addForceOut += addForce;
+    }
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 向き判定取得
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -957,6 +1305,33 @@ public class PlayerMove : MonoBehaviour
         return gameObject.transform.position;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーパーツ位置情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector3 GetPlayerArmRightPositon()
+    {
+        return m_catchArmObject_R.transform.position;
+    }
+    public Vector3 GetPlayerArmLeftPositon()
+    {
+        return m_catchArmObject_L.transform.position;
+    }
+    public Vector3 GetPlayerBodyPositon()
+    {
+        return m_catchBodyObject.transform.position;
+    }
+    public Vector3 GetPlayerHeadPositon()
+    {
+        return m_catchHeadObject.transform.position;
+    }
+    public Vector3 GetPlayerLegRightPositon()
+    {
+        return m_catchLegObject_R.transform.position;
+    }
+    public Vector3 GetPlayerLegLeftPositon()
+    {
+        return m_catchLegObject_L.transform.position;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 強化状態共有
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void SetPowerUp(bool arm, bool body, bool head, bool leg)
@@ -977,6 +1352,13 @@ public class PlayerMove : MonoBehaviour
     {
         m_stop = data;
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetScale()
+    {
+        return m_scale;
+    }
     ////*|***|***|***|***|***|***|***|***|***|***|***|
     //// 当たり判定取得
     ////*|***|***|***|***|***|***|***|***|***|***|***|
@@ -989,3 +1371,156 @@ public class PlayerMove : MonoBehaviour
     //    }
     //}
 }
+
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//// 起動：横移動
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//void UpdateMoveCommond()
+//{
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 初期化
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    Vector2 force = m_controllerData.ChackStickPower();
+//    float forceDead = 0.05f;
+//    force.y = 0;
+//    m_addPower = false;
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 十字キーの力をつぎ込む
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    if (forceDead < MyCalculator.LongVector2(force))
+//    {
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // 脚強化状態
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        if (m_legStrong)
+//        {
+//            m_addForce = (force * m_moveStrongPower);
+//        }
+//        else
+//        {
+//            m_addForce = (force * m_moveNormalPower);
+//        }
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // 力を加える
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        this.m_rigid2D.AddForce(m_addForce);
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // 力を加えられた
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        m_addPower = true;
+//    }
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 移動ベクトル取得
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    Vector2 velocityData = m_rigid2D.velocity;
+//    m_movePowerX = velocityData.x;
+//    float absVelX = Mathf.Abs(m_movePowerX);
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 移動ベクトルが小さいと認知しない
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    if (absVelX < 0.01f)
+//    {
+//        m_movePowerX = 0;
+//    }
+//}
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//// 起動：抵抗＆重力
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//void UpdateResistance()
+//{
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 移動ベクトル取得
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    Vector2 velocityData = m_rigid2D.velocity;
+//    m_movePowerX = velocityData.x;
+//    float absVelX = Mathf.Abs(m_movePowerX);
+//    float resistance = 0.0f;
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 移動ベクトルが大きいと制限される
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    float maxPower = 20.0f;
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 脚強化状態で最大速度が変わる
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    if (m_legStrong)
+//    {
+//        maxPower = m_moveMaxStrongPower;
+//    }
+//    else
+//    {
+//        maxPower = m_moveMaxNormalPower;
+//    }
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 速度オーバー
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    if (absVelX > maxPower)
+//    {
+//        float speedMax = MyCalculator.Multiplication(maxPower, 2);
+//        float speedNow = MyCalculator.Multiplication(absVelX, 2);
+//        float speedOver = MyCalculator.LeapReverseCalculation(0, speedNow, speedMax);
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // 抵抗度
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        float resistancePar = MyCalculator.InversionOfProportion(speedOver);
+//        float resistanceParX = MyCalculator.Multiplication(resistancePar, 2);
+//        resistance = MyCalculator.InversionOfProportion(resistanceParX);
+
+//        m_movePowerX *= resistance;
+
+//    }
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    // 前方に進んでいないと制限される
+//    //*|***|***|***|***|***|***|***|***|***|***|***|
+//    if (m_reverseArrow || !m_addPower)
+//    {
+//        resistance = 0.98f;
+//        m_movePowerX *= resistance;
+//        absVelX = Mathf.Abs(m_movePowerX);
+//        if (absVelX < 0.01f)
+//        {
+//            m_movePowerX = 0;
+//            if (m_addPower)
+//            {
+//                m_moveingPower = true;
+//            }
+//            else
+//            {
+//                m_moveingPower = false;
+//            }
+//        }
+//    }
+
+//    velocityData.x = m_movePowerX;
+//    this.m_rigid2D.velocity = velocityData;
+//}
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//// 起動：ジャンプ
+////*|***|***|***|***|***|***|***|***|***|***|***|
+//void UpdateJumpCommond()
+//{
+//    Vector2 velocityData = m_rigid2D.velocity;
+//    Vector2 jumpForce;
+//    if (m_controllerData.ChackJumpTrigger() && m_groundFlagFlame)
+//    {
+//        m_rigid2D.velocity = new Vector2(velocityData.x, 0);
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // 脚強化状態
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        if (m_legStrong)
+//        {
+//            jumpForce = (transform.up * m_jumpStrongPower);
+//        }
+//        else
+//        {
+//            jumpForce = (transform.up * m_jumpNormalPower);
+//        }
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // ジャンプパワー
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        this.m_rigid2D.AddForce(jumpForce);
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        // ジャンプの音~~~~
+//        //*|***|***|***|***|***|***|***|***|***|***|***|
+//        //soundJump.PlayOneShot(soundJump.clip);
+//    }
+//}

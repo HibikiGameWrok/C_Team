@@ -2024,8 +2024,8 @@ public class DebugPlayerUI : DebugCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Vector2 pos = new Vector2(0.0f, 0.0f);
         Vector2 scale = new Vector2(0.0f, 0.0f);
-        Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
-        Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
+        //Vector2 persent_AssistS = new Vector2(0.5f, 0.5f);
+        //Vector2 persent_AssistP = new Vector2(0.5f, 0.5f);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整済みデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2053,11 +2053,6 @@ public class DebugPlayerUI : DebugCanvas
             posScleen = MouseToScreenPos(pos);
             posReverseY = MyCalculator.EachTimes(posScleen, new Vector2(1.0f, -1.0f));
             pos = posReverseY;
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 計算用初期化、データ確保
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            persent_AssistP = pos;
-            persent_AssistS = scale;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 以下も同じ場所に現れる
