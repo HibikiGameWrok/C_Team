@@ -421,6 +421,14 @@ namespace WarehouseData
                 return Layer_PlayerHitParts;
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーが触れるレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            public static int Layer_PlayerCatchParts = 17;
+            public static int GetLayer_PlayerCatchParts()
+            {
+                return Layer_PlayerCatchParts;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 敵がダメージを与えるレイヤー
             //*|***|***|***|***|***|***|***|***|***|***|***|
             public static int Layer_EnemyAttackParts = 11;

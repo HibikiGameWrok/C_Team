@@ -28,14 +28,14 @@ public class PlayStarManeger : MonoBehaviour
     // 星オブジェクト(隠し)(ばらまく)
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_starObjOriginDiffusion = null;
-    private StarPieceMove m_starObjOriginDiffusionMove = null;
-    private Common_GameObjectSprite_Order m_starObjOriginDiffusionOrder = null;
+    //private StarPieceMove m_starObjOriginDiffusionMove = null;
+    //private Common_GameObjectSprite_Order m_starObjOriginDiffusionOrder = null;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星オブジェクト(隠し)(跳ねる)
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_starObjOriginBounce = null;
-    private StarPieceBounceMove m_starObjOriginBounceMove = null;
-    private Common_GameObjectSprite_Order m_starObjOriginBounceOrder = null;
+    //private StarPieceBounceMove m_starObjOriginBounceMove = null;
+    //private Common_GameObjectSprite_Order m_starObjOriginBounceOrder = null;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星オブジェクト
     //*|***|***|***|***|***|***|***|***|***|***|***|

@@ -99,7 +99,7 @@ public partial class PlayerDirector : MonoBehaviour
         // ボディデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_player2D = m_playerCenter.GetComponent<Rigidbody2D>();
-        m_player2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        //m_player2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         m_nextMirror = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // アニメーション用取得フラグ
@@ -557,12 +557,13 @@ public partial class PlayerDirector : MonoBehaviour
         if (m_damageTrigger)
         {
             Vector2 power = new Vector2(1, 1);
-            power *= 500.0f;
+            power *= 1.0f;
             if (rightPower)
             {
                 power.x = power.x * -1;
             }
-            m_player2D.AddForce(power);
+            m_playerMove.AddForsePower(power);
+            //m_player2D.AddForce(power);
             m_damageTrigger = false;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -795,12 +796,13 @@ public partial class PlayerDirector : MonoBehaviour
             Vector2 power = ChangeData.AngleDegToVector2(80.0f);
             power = ChangeData.AngleDegToVector2(10.0f);
             power = ChangeData.AngleDegToVector2(45.0f);
-            power *= 1000.0f;
+            power *= 10.0f;
             if (rightPower)
             {
                 power.x = power.x * -1;
             }
-            m_player2D.AddForce(power);
+            m_playerMove.AddForsePower(power);
+            //m_player2D.AddForce(power);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -809,6 +811,40 @@ public partial class PlayerDirector : MonoBehaviour
     public Vector3 GetPlayerPositon()
     {
         return m_playerMove.GetPosition();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤーパーツ位置情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public Vector3 GetPlayerArmRightPositon()
+    {
+        return m_playerMove.GetPlayerArmRightPositon();
+    }
+    public Vector3 GetPlayerArmLeftPositon()
+    {
+        return m_playerMove.GetPlayerArmLeftPositon();
+    }
+    public Vector3 GetPlayerBodyPositon()
+    {
+        return m_playerMove.GetPlayerBodyPositon();
+    }
+    public Vector3 GetPlayerHeadPositon()
+    {
+        return m_playerMove.GetPlayerHeadPositon();
+    }
+    public Vector3 GetPlayerLegRightPositon()
+    {
+        return m_playerMove.GetPlayerLegRightPositon();
+    }
+    public Vector3 GetPlayerLegLeftPositon()
+    {
+        return m_playerMove.GetPlayerLegLeftPositon();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー情報取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetScale()
+    {
+        return m_playerMove.GetScale();
     }
 }
 //if(state.fullPathHash == Animator.StringToHash("Base Layer.後方ブレーキ"))
