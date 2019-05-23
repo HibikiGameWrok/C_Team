@@ -846,6 +846,10 @@ public partial class PlayerDirector : MonoBehaviour
     {
         return m_playerMove.GetScale();
     }
+    public bool GetGroundFlag()
+    {
+        return m_playerMove.GetGroundFlag();
+    }
 }
 //if(state.fullPathHash == Animator.StringToHash("Base Layer.後方ブレーキ"))
 //{

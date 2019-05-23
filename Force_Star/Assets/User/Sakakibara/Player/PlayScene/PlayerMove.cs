@@ -24,6 +24,9 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private DebugPlayerParts m_partsLeg2D;
     private GameObject m_rigidOnlyLeg;
+
+    private DebugPlayerParts m_partsLegFalse2D;
+    private GameObject m_rigidOnlyFalseLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃ボールデータ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -251,6 +254,10 @@ public class PlayerMove : MonoBehaviour
         m_rigidOnlyLeg = new GameObject("rigidLeg");
         m_rigidOnlyLeg.transform.parent = gameObject.transform;
         this.m_partsLeg2D = m_rigidOnlyLeg.AddComponent<DebugPlayerParts>();
+
+        m_rigidOnlyFalseLeg = new GameObject("rigidLeg");
+        m_rigidOnlyFalseLeg.transform.parent = gameObject.transform;
+        this.m_partsLegFalse2D = m_rigidOnlyFalseLeg.AddComponent<DebugPlayerParts>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たりの判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -302,8 +309,8 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_jumpPower = 0.3f;
         m_jumpPowerTime = 15.0f;
-        m_jumpPower_S = 0.4f;
-        m_jumpPowerTime_S = 50.0f;
+        m_jumpPower_S = 0.6f;
+        m_jumpPowerTime_S = 30.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動力マリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -314,11 +321,11 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動力限界マリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_jumpPowerMax = 1.0f;
-        m_jumpPowerMax_S = 1.0f;
-        m_jumpPowerMaxUnder = 0.5f;
-        m_movePowerMax = 0.35f;
-        m_movePowerMax_S = 0.75f;
+        m_jumpPowerMax = 2.0f;
+        m_jumpPowerMax_S = 2.0f;
+        m_jumpPowerMaxUnder = 1.0f;
+        m_movePowerMax = 0.70f;
+        m_movePowerMax_S = 1.50f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 強化フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -520,6 +527,10 @@ public class PlayerMove : MonoBehaviour
         Vector2 sizeLeg = new Vector2(0.8f, 0.2f);
         Vector2 pointLeg = new Vector2(0.0f, -0.5f);
         m_partsLeg2D.SetPointSize(pointLeg, sizeLeg);
+
+        sizeLeg = new Vector2(0.8f, 0.4f);
+        pointLeg = new Vector2(0.0f, 0.0f);
+        m_partsLegFalse2D.SetPointSize(pointLeg, sizeLeg);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー大きさ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1066,7 +1077,17 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (m_partsLeg2D.GetHitFlag())
         {
-            m_groundFlagFlame = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 偽当たり判定にあたっている状態での遷移禁止。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!m_groundFlagFlame && m_partsLegFalse2D.GetHitFlag())
+            {
+                m_groundFlagFlame = false;
+            }
+            else
+            {
+                m_groundFlagFlame = true;
+            }
         }
         else
         {
