@@ -244,19 +244,12 @@ public class StartRoket : MonoBehaviour
     // オブジェクトをアクティブ化
     void OnActiveObj()
     {
-        // 壊れたロケットプレハブをGameObject型で取得
-        GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
-        // 壊れたロケットプレハブを元に、インスタンスを生成、
-        Instantiate(Rocket, targetPos, Quaternion.identity);
-
-
-
         // サブカメラが消える前にメインカメラを起動する
         if (MainCamera != null)
         {
             // プレイシーン全体を管理するオブジェクトを起動
             PlayDirector.gameObject.SetActive(true);
-            // プレイヤーを１回だけ生成
+            // プレイヤーとロケットを１回だけ生成
             if (count == 4)
             {
                 //// プレイヤープレハブをGameObject型で取得
@@ -264,6 +257,12 @@ public class StartRoket : MonoBehaviour
                 // プレイヤープレハブを元に生成
                 Instantiate(Player, this.transform.position, Quaternion.identity);
                 starSearch.CheckFlag();
+
+                // 壊れたロケットプレハブをGameObject型で取得
+                GameObject Rocket = (GameObject)Resources.Load("Rocket_1");
+                // 壊れたロケットプレハブを元に、インスタンスを生成、
+                Instantiate(Rocket, targetPos, Quaternion.identity);
+
                 count = 5;
             }
             // メインカメラをアクティブにする

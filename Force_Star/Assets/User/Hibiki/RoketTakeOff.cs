@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class RoketTakeOff : MonoBehaviour
 {
-    private GameObject ParentmainCamera;
-    private TargetFollow targetfollow;
-
    private PlaySceneDirectorIndex directorIndex;
 
     // 自身からどれくらい飛ばすか
@@ -35,7 +32,7 @@ public class RoketTakeOff : MonoBehaviour
 
     void Awake()
     {
-        directorIndex = directorIndex = PlaySceneDirectorIndex.GetInstance();
+        directorIndex = PlaySceneDirectorIndex.GetInstance();
 
         // 開始時間を保管
         startTime = Time.time;
@@ -46,12 +43,9 @@ public class RoketTakeOff : MonoBehaviour
         // ロケットと対象物の距離を保管
         journeyLength = Vector3.Distance(this.transform.position, storagePos);
 
+        directorIndex.SetObjectTargetCamera(this.transform.parent.gameObject);
 
-        // メインカメラを親から取得
-        ParentmainCamera = GameObject.Find("ParentMainCamera");
-        targetfollow = ParentmainCamera.transform.Find("Main Camera").GetComponent<TargetFollow>();
-
-        sinVecX = this.transform.position.x;
+         sinVecX = this.transform.position.x;
     }
 
     // Update is called once per frame
@@ -75,16 +69,17 @@ public class RoketTakeOff : MonoBehaviour
         // 1秒待つ  
         yield return new WaitForSeconds(3.0f);
         stopFlag = true;
-        // カメラの追従対象を変える
-        targetfollow.SetTarget(this.gameObject);
 
         // 0.1秒待つ  
         yield return new WaitForSeconds(0.1f);
 
         // 距離感の速度
         float distCovered = (Time.time - startTime) * speed;
+
+        Vector3 bpos = new Vector3(sinVecX, this.transform.position.y, this.transform.position.z); 
+
         // 飛ばす(補間移動)
-        this.transform.position = Vector3.Lerp(this.transform.position, storagePos, distCovered);
+        this.transform.parent.position = Vector3.Lerp(bpos, storagePos, distCovered);
 
         if (stopFlag1 == false)
         {

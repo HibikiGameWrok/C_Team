@@ -138,7 +138,10 @@ public partial class PlayerDirector : MonoBehaviour
         m_ascensionTime = 180.0f;
         m_fadeOutFlag = false;
         m_fadeOutTimeRate = MyCalculator.Division(90.0f, m_ascensionTime);
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲーム共通ディレクターに自らが狙われると名乗り出る
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex.SetObjectTargetCamera(m_playerCenter);
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -163,10 +166,7 @@ public partial class PlayerDirector : MonoBehaviour
             // プレイヤーのパーツイメージを変える
             //*|***|***|***|***|***|***|***|***|***|***|***|
             PlayerImageUpdate();
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            // ゲーム共通ディレクターに自らが狙われると名乗り出る
-            //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_directorIndex.SetObjectTargetCamera(m_playerCenter);
+
         }
         else
         {
