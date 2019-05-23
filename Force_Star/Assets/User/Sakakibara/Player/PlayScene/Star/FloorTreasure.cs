@@ -31,12 +31,11 @@ public class FloorTreasure : MonoBehaviour
     // 持っている財宝長
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    EreaTreasure m_ereaTreasure;
+    public AreaTreasure m_ereaTreasure;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 財宝崩
     //*|***|***|***|***|***|***|***|***|***|***|***|
     bool m_appStar;
-    bool m_appStarEx;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たったフラグ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -79,14 +78,9 @@ public class FloorTreasure : MonoBehaviour
         m_directorIndex = PlaySceneDirectorIndex.GetInstance();
         m_playerIndex = PlayerDirectorIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 持っている財宝
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_ereaTreasure = null;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_appStar = false;
-        m_appStarEx = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たったフラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -207,13 +201,6 @@ public class FloorTreasure : MonoBehaviour
         m_bodyHit = false;
         m_headHit = false;
         m_legHit = false;
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 最後の床
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        bool armFlag = false;
-        bool bodyFlag = false;
-        bool headFlag = false;
-        bool legFlag = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たったフラグEX記憶
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -349,10 +336,16 @@ public class FloorTreasure : MonoBehaviour
         if (hitObject.tag == WarehousePlayer.GetTag_PlayerHitLegParts())
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            // 当たり判定起動
+            // 地に足のついた
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_legHit = true;
-            m_legHitFlag = true;
+            if (m_playerIndex.GetGroundFlag())
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 当たり判定起動
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_legHit = true;
+                m_legHitFlag = true;
+            }
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤーの頭に当たったか？

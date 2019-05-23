@@ -80,6 +80,7 @@ public class PlaySceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Camera mainCamera = m_directorIndexRocket.GetPointerMainCamera();
         TargetFollow mainCameraTarget = m_directorIndexRocket.GetPointerTargetCamera();
+        ShakeCamera mainCameraShake = m_directorIndexRocket.GetPointerShakeCamera();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 権限にて、星の運営者をもらうぞ！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -105,6 +106,7 @@ public class PlaySceneDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex.SetPointerMainCamera(mainCamera);
         m_directorIndex.SetPointerTargetCamera(mainCameraTarget);
+        m_directorIndex.SetPointerShakeCamera(mainCameraShake);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ポインターの星の運営者を登録する
         //*|***|***|***|***|***|***|***|***|***|***|***|

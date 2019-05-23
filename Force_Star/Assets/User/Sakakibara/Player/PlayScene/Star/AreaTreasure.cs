@@ -20,7 +20,7 @@ using RenderImageData = GameDataPublic.RenderImageData;
 using PartsData = GameDataPublic.PartsData;
 
 
-public class EreaTreasure : MonoBehaviour
+public class AreaTreasure : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲーム共通ディレクター
