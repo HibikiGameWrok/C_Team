@@ -148,7 +148,7 @@ public class WaterWallMove : MonoBehaviour
                 // this.transform.parent.GetComponent<WaterWall>().SetHitflag(true);
                 if (HitEffect != null)
                 {
-                    m_playIndex.ApplyStarDiffusion(this.transform.position, 20);
+                    m_playIndex.ApplyStarDiffusion(this.transform.position, this.transform.parent.GetComponent<WaterWall>().MaxStar());
                     Vector3 pos = new Vector3(this.transform.position.x, this.transform.position.y - this.GetComponent<Renderer>().bounds.size.y / 2, this.transform.position.z);
                     ParticleSystem par = Instantiate(HitEffect, pos, Quaternion.identity) as ParticleSystem;
                     par.Play();
