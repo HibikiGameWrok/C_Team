@@ -36,7 +36,6 @@ public class TransitionScene : MonoBehaviour
             if (ResultFade.GetFadeInFlag() != true)
             {
                 ResultFade.SetFadeFlag(false);
-                isChangeFlag = true;
             }
         }
         else
@@ -45,11 +44,12 @@ public class TransitionScene : MonoBehaviour
             if (ResultFade.GetFadeInFlag() != true)
             {
                 ResultFade.SetFadeFlag(false);
-                isChangeFlag = true;
             }
         }
 
-        if (isChangeFlag == true && ResultFade.GetFadeOutFlag() == false)
+
+
+        if (ResultFade.GetCompFlag() == true)
         {
             //タイトルシーンに戻る
             SceneManager.LoadScene("TitleScene");

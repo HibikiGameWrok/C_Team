@@ -23,7 +23,6 @@ public class ResultFade : MonoBehaviour
     bool overFlag = false;
 
 
-
     void Start()
     {
         clearFlag = gameClear.GetStageFlag();
@@ -80,6 +79,11 @@ public class ResultFade : MonoBehaviour
         if (alfa >= 1)
         {             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
+            compFlag = true;
+        }
+        else
+        {
+            compFlag = false;
         }
     }
 
