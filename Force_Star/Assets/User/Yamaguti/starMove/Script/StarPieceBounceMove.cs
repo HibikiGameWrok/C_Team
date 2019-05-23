@@ -499,6 +499,10 @@ public class StarPieceBounceMove : MonoBehaviour
                 }
             }
         }
+        if (other.gameObject.tag == "B")
+        {
+            Destroy(this.gameObject);
+        }
 
     }
     public void SetCirHitCheckFlag()
