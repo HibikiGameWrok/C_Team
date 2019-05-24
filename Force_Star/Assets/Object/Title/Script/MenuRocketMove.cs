@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class MenuRocketMove : MonoBehaviour
 {
-    //速さ
+    // 横の動き
     [SerializeField]
-    float vel = 1.0f;
+    float vel = -0.02f;
+
+    // 墜落
+    [SerializeField]
+    float fallvel = -0.05f;
 
     //隕石と当たり判定のフラグ
     [SerializeField]
@@ -33,7 +37,6 @@ public class MenuRocketMove : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         sound01 = audioSources[0];
         sound02 = audioSources[1];
-
 
         pos = new Vector2(this.transform.position.x,this.transform.position.y);
     }
@@ -80,7 +83,7 @@ public class MenuRocketMove : MonoBehaviour
     {
         m_MySliderValue += -0.005f;
 
-        pos += new Vector2(vel,vel);
+        pos += new Vector2(fallvel, fallvel);
 
         //位置の移動
         transform.position = new Vector3(pos.x, pos.y, transform.position.z);
