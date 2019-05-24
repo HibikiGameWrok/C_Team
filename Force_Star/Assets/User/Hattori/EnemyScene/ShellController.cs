@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+
 
 public class ShellController : MonoBehaviour
 {
@@ -147,16 +152,24 @@ public class ShellController : MonoBehaviour
             if ((col.gameObject.tag == "AttackBoal"))
             {
                 Vector2 pos = this.transform.position;
-                Vector2 playerPos = m_playerIndex.GetPlayerPosition();
+                Vector2 posPlayer = m_playerIndex.GetPlayerPosition();
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                // ☆を生成
+                // 星が出る
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.CreateOneStar(pos, playerPos, 20);
+                m_playIndex.CreateOneStar(pos, posPlayer, 20);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 画面揺れ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.WowEnemy();
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 音
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.PlaySoundEffect(SoundID.DAMAGE_02);
 
                 rigid2D.gravityScale = gravityForce;
 
                 //プレイヤーの向きを取得する
-                float downVel = playerPos.x - this.transform.position.x;
+                float downVel = posPlayer.x - this.transform.position.x;
 
                 //プレイヤーの向きに飛ばすから反転する
                 downVel *= -1;

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// プレイヤー倉庫言い換え
+// 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
-using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
+using SoundID = SEManager.SoundID;
+
 
 public class Enemy1Move : MonoBehaviour
 {
@@ -129,7 +130,14 @@ public class Enemy1Move : MonoBehaviour
             // 星が出る
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_playIndex.CreateOneStar(pos, posPlayer, 20);
-            //starCreate.CreateOneStar(pos, 10);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 画面揺れ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.WowEnemy();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 音
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.PlaySoundEffect(SoundID.DAMAGE_02);
 
             rigid2D.gravityScale = gravityForce;
 

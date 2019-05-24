@@ -315,11 +315,11 @@ public class PlaySceneDirectorIndex
         {
             if (playerPos.x < pos.x)
             {
-                ApplyStarBounceRightSide(pos, 90.0f, 0.2f, maxStar);
+                ApplyStarBounceRightSide(pos, 90.0f, 0.2f, 0.01f, maxStar);
             }
             else
             {
-                ApplyStarBounceLeftSide(pos, 90.0f, 0.2f, maxStar);
+                ApplyStarBounceLeftSide(pos, 90.0f, 0.2f, 0.01f, maxStar);
             }
         }
         else
@@ -419,8 +419,8 @@ public class PlaySceneDirectorIndex
         // 画面揺れ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float duration = 3.0f;
-        float magnitudeMax = 0.10f;
-        float magnitudeMin = 0.05f;
+        float magnitudeMax = 0.30f;
+        float magnitudeMin = 0.15f;
         m_mainCameraArts.WidthShake(duration, magnitudeMax, magnitudeMin);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

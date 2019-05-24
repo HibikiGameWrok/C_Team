@@ -23,7 +23,7 @@ public class ChildStar : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星のレイヤーに変更
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        gameObject.layer = 12;
+        gameObject.layer = 19;
 
         m_hitFloorFlagFlame = false;
         m_hitFloorFlag = false;
