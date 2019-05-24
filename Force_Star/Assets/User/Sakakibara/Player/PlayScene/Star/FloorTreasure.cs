@@ -109,6 +109,15 @@ public class FloorTreasure : MonoBehaviour
         // 情報！
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerIndex.SetPointerLastPanel(this);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 情報！
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_armHitT = false;
+        m_legHit = false;
+        m_bodyHit = m_armHitT;
+        m_headHit = m_legHit;
+        m_legHit = m_bodyHit;
+        m_armHitT = m_headHit;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 定期更新データ
@@ -395,8 +404,8 @@ public class FloorTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝出現
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        Vector3 point = m_playerIndex.GetPlayerPosition();
-        float scale = m_playerIndex.GetScale();
+        //Vector3 point = m_playerIndex.GetPlayerPosition();
+        //float scale = m_playerIndex.GetScale();
         Vector3 pointLeft = m_playerIndex.GetPlayerLegLeftPositon();
         Vector3 pointRight = m_playerIndex.GetPlayerLegRightPositon();
         //*|***|***|***|***|***|***|***|***|***|***|***|

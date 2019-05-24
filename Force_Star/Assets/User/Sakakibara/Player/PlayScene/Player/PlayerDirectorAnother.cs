@@ -27,11 +27,11 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 基本のUI
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private DebugPlayerUI m_dataUI;
+    private PlayerUI m_dataUI;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 回復のUI
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private DebugPlayerRecoveryUI m_dataRecoveryUI;
+    private PlayerRecoveryUI m_dataRecoveryUI;
     private float m_progressParsent;
     private float m_progressParsentAnimate;
     private float m_progressParsentAnimateTime;
@@ -156,11 +156,11 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 基本のUI
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_dataUI = m_dataUIObject.AddComponent<DebugPlayerUI>();
+        m_dataUI = m_dataUIObject.AddComponent<PlayerUI>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 回復のUI
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_dataRecoveryUI = m_dataUIObject.AddComponent<DebugPlayerRecoveryUI>();
+        m_dataRecoveryUI = m_dataUIObject.AddComponent<PlayerRecoveryUI>();
         m_progressParsent = 0.0f;
         m_dataRecoveryUIAwake = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|

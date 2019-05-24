@@ -22,7 +22,7 @@ using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
 
-public class DebugPlayerRecoveryUI : DebugCanvas
+public class PlayerRecoveryUI : GameCanvas
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー倉庫

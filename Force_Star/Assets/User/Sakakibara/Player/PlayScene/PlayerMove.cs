@@ -22,10 +22,10 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 足データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    private DebugPlayerParts m_partsLeg2D;
+    private PlayerParts m_partsLeg2D;
     private GameObject m_rigidOnlyLeg;
 
-    private DebugPlayerParts m_partsLegFalse2D;
+    private PlayerParts m_partsLegFalse2D;
     private GameObject m_rigidOnlyFalseLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃ボールデータ
@@ -253,11 +253,11 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_rigidOnlyLeg = new GameObject("rigidLeg");
         m_rigidOnlyLeg.transform.parent = gameObject.transform;
-        this.m_partsLeg2D = m_rigidOnlyLeg.AddComponent<DebugPlayerParts>();
+        this.m_partsLeg2D = m_rigidOnlyLeg.AddComponent<PlayerParts>();
 
         m_rigidOnlyFalseLeg = new GameObject("rigidLeg");
         m_rigidOnlyFalseLeg.transform.parent = gameObject.transform;
-        this.m_partsLegFalse2D = m_rigidOnlyFalseLeg.AddComponent<DebugPlayerParts>();
+        this.m_partsLegFalse2D = m_rigidOnlyFalseLeg.AddComponent<PlayerParts>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たりの判定
         //*|***|***|***|***|***|***|***|***|***|***|***|

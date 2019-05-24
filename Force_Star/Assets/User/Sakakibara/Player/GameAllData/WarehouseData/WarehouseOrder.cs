@@ -151,7 +151,6 @@ namespace WarehouseData
         {
             string SimpleFile;
             string MyFile;
-            string SubFile;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // UITexture2Dのデータ
             //*|***|***|***|***|***|***|***|***|***|***|***|

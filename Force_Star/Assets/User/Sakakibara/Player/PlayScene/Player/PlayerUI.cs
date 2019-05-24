@@ -28,7 +28,7 @@ using PartsID = PlayStaticData.PartsID;
 
 
 
-public class DebugPlayerUI : DebugCanvas
+public class PlayerUI : GameCanvas
 {
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -231,7 +231,7 @@ public class DebugPlayerUI : DebugCanvas
     private static int GetDepth(DepthAttach data)
     {
         int dataNum = (int)data;
-        dataNum += DebugPlayerRecoveryUI.DepthMax;
+        dataNum += PlayerRecoveryUI.DepthMax;
         return dataNum;
     }
 

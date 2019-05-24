@@ -16,7 +16,7 @@ using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common
 using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
 
 
-public abstract class DebugCanvas : MonoBehaviour
+public abstract class GameCanvas : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 私有地のキャンバス

@@ -13793,9 +13793,9 @@ MonoBehaviour:
   m_haveTreasure: 1000
   m_outTreasure: 4
   m_outTreasureAttenuation: 0.05
-  m_hitWall: 12
-  m_hitHead: 12
-  m_hitLeg: 12
+  m_hitWall: 19
+  m_hitHead: 19
+  m_hitLeg: 19
 --- !u!1 &502407094
 GameObject:
   m_ObjectHideFlags: 0
@@ -24301,9 +24301,9 @@ MonoBehaviour:
   m_haveTreasure: 1000
   m_outTreasure: 4
   m_outTreasureAttenuation: 0.05
-  m_hitWall: 18
-  m_hitHead: 15
-  m_hitLeg: 15
+  m_hitWall: 19
+  m_hitHead: 16
+  m_hitLeg: 16
 --- !u!1 &915751992
 GameObject:
   m_ObjectHideFlags: 0
@@ -40373,9 +40373,9 @@ MonoBehaviour:
   m_haveTreasure: 1000
   m_outTreasure: 4
   m_outTreasureAttenuation: 0.05
-  m_hitWall: 18
-  m_hitHead: 14
-  m_hitLeg: 14
+  m_hitWall: 19
+  m_hitHead: 15
+  m_hitLeg: 15
 --- !u!4 &1187371736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7135893302561866417, guid: ca849bbb98911a34bab743b3c5e687d8,
@@ -41214,9 +41214,9 @@ MonoBehaviour:
   m_haveTreasure: 1000
   m_outTreasure: 4
   m_outTreasureAttenuation: 0.05
-  m_hitWall: 18
-  m_hitHead: 14
-  m_hitLeg: 14
+  m_hitWall: 19
+  m_hitHead: 15
+  m_hitLeg: 15
 --- !u!1001 &1283436271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58661,9 +58661,9 @@ MonoBehaviour:
   m_haveTreasure: 1000
   m_outTreasure: 4
   m_outTreasureAttenuation: 0.05
-  m_hitWall: 18
-  m_hitHead: 15
-  m_hitLeg: 15
+  m_hitWall: 19
+  m_hitHead: 16
+  m_hitLeg: 16
 --- !u!1001 &1607322977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58835,9 +58835,9 @@ MonoBehaviour:
   m_haveTreasure: 1000
   m_outTreasure: 4
   m_outTreasureAttenuation: 0.05
-  m_hitWall: 18
-  m_hitHead: 15
-  m_hitLeg: 15
+  m_hitWall: 19
+  m_hitHead: 16
+  m_hitLeg: 16
 --- !u!1001 &1635639265
 PrefabInstance:
   m_ObjectHideFlags: 0

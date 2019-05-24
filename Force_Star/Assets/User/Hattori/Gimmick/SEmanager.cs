@@ -51,6 +51,10 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         DELIVERYSTAR,
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツ取得取得SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        GETPARTS_01,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 着地SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
         FOOTSTEP_01,
@@ -105,19 +109,6 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         MAXNUM
     }
-    [SerializeField]
-    SoundID m_soundId;
-    ////敵を倒した時のSE
-    //public AudioClip m_sound_Enemy;
-
-    ////砂ブロックを破壊した時のSE
-    //public AudioClip m_sound_SandBlock;
-
-    ////星を取った時のSE
-    //public AudioClip m_sound_Star;
-
-    [SerializeField]
-    bool soundFlag = false;
 
     AudioSource m_audiosource;
 
@@ -146,7 +137,7 @@ public class SEManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_soundId = SoundID.NONE;
+
     }
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -194,6 +185,10 @@ public class SEManager : MonoBehaviour
         // ☆が納品しきった時SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_sounds[(int)SoundID.DELIVERYSTAR] = Resources.Load<AudioClip>(filepass + "DeliveryStar_SE");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ☆が納品しきった時SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_sounds[(int)SoundID.GETPARTS_01] = Resources.Load<AudioClip>(filepass + "GetParts01");
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 着地SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -297,6 +292,5 @@ public class SEManager : MonoBehaviour
     public void PlaySoundEffect(SoundID id)
     {
         m_audiosource.PlayOneShot(GetGameSE(id));
-        soundFlag = true;
     }
 }

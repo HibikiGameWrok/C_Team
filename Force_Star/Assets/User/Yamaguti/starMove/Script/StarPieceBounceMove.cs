@@ -29,20 +29,11 @@ public class StarPieceBounceMove : MonoBehaviour
 
     bool flag = false;      // 当たった時のフラグ
 
-    public float jumpForce = 0.2f;            // ジャンプ力   
-    public float startJF;                     // 初期のジャンプ力保存用
     private int maxStar = 1;
     private float chengSize = 0.0f;
 
     // 時間・点滅情報----------
-    private float timeElapsed = 0.0f;     // タイムカウント用
-    private int flashInterval = 5;      // 点滅間隔
-    private int flashTime = 3;          // 点滅時間
-    private int startFlashJumpCount = 3;// 点滅を開始する回数
-    int time = 0;                  // 点滅消滅の時間計測用変数
-    int JumpCount;                 // 現在のジャンプ回数
     private float grv = 0.005f;                  // 重力
-    private float jumpAddF;
     float starSize;
     //-------------------------
 
@@ -438,7 +429,7 @@ public class StarPieceBounceMove : MonoBehaviour
             }
             if (m_hitUp && m_hitDown && !m_countFlag)
             {
-                jumpForce = 0.0f;
+                m_movePower.y = 0.0f;
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 左右
@@ -714,7 +705,6 @@ public class StarPieceBounceMove : MonoBehaviour
     {
         if (size >= 1.0f && size < 1.5f)
         {
-            jumpAddF = 0.0f;
             maxStar = 1;
             grv = 0.001f;
         }
@@ -726,7 +716,6 @@ public class StarPieceBounceMove : MonoBehaviour
         //}
         else if (size >= 1.5f && size <= 2.0f)
         {
-            jumpAddF = 0.0f;
             maxStar = 3;
             grv = 0.001f;
         }
@@ -757,7 +746,6 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他設定
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        jumpAddF = 0.0f;
         grv = 0.001f;
         chengSize = MyCalculator.Division(starSize, 6.0f);
     }

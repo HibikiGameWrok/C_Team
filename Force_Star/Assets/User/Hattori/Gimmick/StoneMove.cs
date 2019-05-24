@@ -99,7 +99,7 @@ public class StoneMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 音
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_playIndex.PlaySoundEffect(SEManager.SoundID.ENEMYBLOCKING_01);
+            m_playIndex.PlaySoundEffect(SEManager.SoundID.SAND_BLOCK);
 
 
             //跡形もなく消えてゆけ

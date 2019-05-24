@@ -35,6 +35,10 @@ public class PlayRocketParts : MonoBehaviour
     PartsID m_partsId;
     bool m_getFlag;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirectorIndex m_playerIndex;
@@ -52,6 +56,10 @@ public class PlayRocketParts : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー共通ディレクター
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -108,6 +116,14 @@ public class PlayRocketParts : MonoBehaviour
         Rect rect;
         rect = MyCalculator.RectSizeReverse_Y((int)m_partsId, 3, 1);
         m_partsSprite.SetRect(rect);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 消す
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_getFlag)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり設定移動
@@ -186,8 +202,15 @@ public class PlayRocketParts : MonoBehaviour
             if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
                 m_getFlag = true;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 音
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.PlaySoundEffect(SEManager.SoundID.GETPARTS_01);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // ゲット！
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 m_playerIndex.GetParts(m_partsId);
-                Destroy(this.gameObject);
+                m_partsSprite.SetAlpha(0);
             }
         }
 

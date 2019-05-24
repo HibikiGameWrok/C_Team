@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugPlayerParts : MonoBehaviour
+public class PlayerParts : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パーツデータ
