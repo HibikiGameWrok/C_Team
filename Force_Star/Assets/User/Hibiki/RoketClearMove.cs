@@ -50,7 +50,7 @@ public class RoketClearMove : MonoBehaviour
     {
         playercont.Update();
         // ☆が目標量を達成して尚且つパーツが全て取得できているならば
-        if (playerIndex.GetHaveStarParsent() >= 1 && playerIndex.GetHaveAllPartsFlag())
+        if (playerIndex.GetHaveStarParsent() >= 1 /*&& playerIndex.GetHaveAllPartsFlag()*/)
         {
             if (oneFlag == false)
             {
@@ -87,6 +87,11 @@ public class RoketClearMove : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool GetdelUIFlag()
+    {
+        return delUIFlag;
     }
 
     // コルーチン  
@@ -144,8 +149,5 @@ public class RoketClearMove : MonoBehaviour
         Debug.Log("画面暗転");
     }
 
-    public bool GetdelUIFlag()
-    {
-        return delUIFlag;
-    }
+
 }
