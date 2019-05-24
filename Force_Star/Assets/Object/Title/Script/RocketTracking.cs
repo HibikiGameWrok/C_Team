@@ -134,4 +134,9 @@ public class RocketTracking : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public bool GetMoveFlag()
+    {
+        return moveFlag;
+    }
 }
