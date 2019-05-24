@@ -348,4 +348,43 @@ public class PlayerDirectorIndex
         }
         return data;
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 連続制限時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetLastPanel_TimeWall()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float data = 0.0f;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetTimeWall();
+        }
+        return data;
+    }
+    public float GetLastPanel_TimeHead()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float data = 0.0f;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetTimeHead();
+        }
+        return data;
+    }
+    public float GetLastPanel_TimeLeg()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤーの最後の床
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float data = 0.0f;
+        if (m_playerLastPanel)
+        {
+            data = m_playerLastPanel.GetTimeLeg();
+        }
+        return data;
+    }
 }

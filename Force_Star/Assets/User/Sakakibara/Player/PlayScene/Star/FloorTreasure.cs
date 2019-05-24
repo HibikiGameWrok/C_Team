@@ -65,6 +65,13 @@ public class FloorTreasure : MonoBehaviour
     private float m_timeMax;
     private float m_timeLevel;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 連続制限時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_timeWall;
+    private float m_timeHead;
+    private float m_timeLeg;
+    private float m_timeDos;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
@@ -105,6 +112,13 @@ public class FloorTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_timeMax = 75.0f;
         m_timeLevel = 50.0f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 連続制限時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_timeWall = 0.0f;
+        m_timeHead = 0.0f;
+        m_timeLeg = 0.0f;
+        m_timeDos = 30.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 情報！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -179,30 +193,39 @@ public class FloorTreasure : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (m_legHitT)
             {
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // 踏み鳴らされる地
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                StompingGround();
+                if (GetTimeLegBool())
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 踏み鳴らされる地
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    StompingGround();
+                }
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーの頭に当たったか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (m_headHitT)
             {
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // このリンゴを頭に乗せてくれ。
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                HeadThrust();
+                if (GetTimeHeadBool())
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // このリンゴを頭に乗せてくれ。
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    HeadThrust();
+                }
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // プレイヤーの体と腕に当たったか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (m_armHit && m_bodyHitT)
             {
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                // 壁に突入する
-                //*|***|***|***|***|***|***|***|***|***|***|***|
-                DiveInto();
+                if (GetTimeWallBool())
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 壁に突入する
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    DiveInto();
+                }
             }
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -232,6 +255,12 @@ public class FloorTreasure : MonoBehaviour
             m_headHitFlag = m_playerIndex.GetLastPanel_Head();
             m_legHitFlag = m_playerIndex.GetLastPanel_Leg();
             m_armHitPoint = Vector3.zero;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 連続制限時間
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_timeWall = m_playerIndex.GetLastPanel_TimeWall();
+            m_timeHead = m_playerIndex.GetLastPanel_TimeHead();
+            m_timeLeg = m_playerIndex.GetLastPanel_TimeLeg();
         }
         else
         {
@@ -243,6 +272,12 @@ public class FloorTreasure : MonoBehaviour
             m_headHitFlag = false;
             m_legHitFlag = false;
             m_armHitPoint = Vector3.zero;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 連続制限時間
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_timeWall -= 1.0f;
+            m_timeHead -= 1.0f;
+            m_timeLeg -= 1.0f;
         }
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -713,7 +748,54 @@ public class FloorTreasure : MonoBehaviour
         }
         return flag;
     }
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 連続制限時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public float GetTimeWall()
+    {
+        return m_timeWall;
+    }
+    public float GetTimeHead()
+    {
+        return m_timeHead;
+    }
+    public float GetTimeLeg()
+    {
+        return m_timeLeg;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 連続制限時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool GetTimeWallBool()
+    {
+        bool flag = false;
+        if (m_timeWall < 0)
+        {
+            flag = true;
+            m_timeWall = m_timeDos;
+        }
+        return flag;
+    }
+    private bool GetTimeHeadBool()
+    {
+        bool flag = false;
+        if (m_timeHead < 0)
+        {
+            flag = true;
+            m_timeHead = m_timeDos;
+        }
+        return flag;
+    }
+    private bool GetTimeLegBool()
+    {
+        bool flag = false;
+        if (m_timeLeg < 0)
+        {
+            flag = true;
+            m_timeLeg = m_timeDos;
+        }
+        return flag;
+    }
 }
 
 
