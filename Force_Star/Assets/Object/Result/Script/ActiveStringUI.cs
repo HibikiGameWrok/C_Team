@@ -27,7 +27,7 @@ public class ActiveStringUI : MonoBehaviour
         panel = GameObject.Find("Panel");
         resulteFade = panel.GetComponent<ResultFade>();
 
-        if (resulteFade.GetActiveFlag() == true)
+        if (resultManager.GetClearFlag() == true)
         {
             clearOrOver = 1;
             Rocket = GameObject.Find("Rocket");
@@ -58,7 +58,8 @@ public class ActiveStringUI : MonoBehaviour
                     clearOrOver = 0;
                 }
             }
-            else if(clearOrOver == 2)
+            else 
+            if(clearOrOver == 2)
             {
                 GameObject GameOver = (GameObject)Resources.Load("GameOverString");
                 Instantiate(GameOver, new Vector3(this.transform.position.x, this.transform.position.y + 3, this.transform.position.z), Quaternion.identity);
