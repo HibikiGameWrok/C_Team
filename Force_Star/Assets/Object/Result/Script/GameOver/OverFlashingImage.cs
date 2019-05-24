@@ -40,16 +40,16 @@ public class OverFlashingImage : MonoBehaviour
 
         next = (int)time % 2;
 
-        if (next == 0)
-        {
+        //if (next == 0)
+        //{
 
-            overImage.SetActive(true);
-        }
-        else
-        {
+        //    //overImage.SetActive(true);
+        //}
+        //else
+        //{
 
-            overImage.SetActive(false);
-        }
+        //    overImage.SetActive(false);
+        //}
     }
 
     public bool GetStageFlag()

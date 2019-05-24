@@ -22,6 +22,7 @@ public class ResultFade : MonoBehaviour
     bool clearFlag = false;
     bool overFlag = false;
 
+    bool activeFlag = false;
 
     void Start()
     {
@@ -67,17 +68,19 @@ public class ResultFade : MonoBehaviour
         if (alfa <= 0)
         {                    //c)完全に透明になったら処理を抜ける
             isFadeIn = false;
-            fadeImage.enabled = false;    //d)パネルの表示をオフにする
+            //fadeImage.enabled = false;    //d)パネルの表示をオフにする
+            activeFlag = true;
         }
     }
 
     void StartFadeOut()
     {
-        fadeImage.enabled = true;  // a)パネルの表示をオンにする
+        //fadeImage.enabled = true;  // a)パネルの表示をオンにする
         alfa += fadeSpeed;         // b)不透明度を徐々にあげる
         SetAlpha();               // c)変更した透明度をパネルに反映する
         if (alfa >= 1)
-        {             // d)完全に不透明になったら処理を抜ける
+        {            
+            // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
             compFlag = true;
         }
@@ -97,10 +100,14 @@ public class ResultFade : MonoBehaviour
         return alfa;
     }
 
-
     public bool GetCompFlag()
     {
         return compFlag;
+    }
+
+    public bool GetActiveFlag()
+    {
+        return activeFlag;
     }
 
     public bool GetFadeOutFlag()

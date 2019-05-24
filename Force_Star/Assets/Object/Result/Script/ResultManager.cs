@@ -47,4 +47,9 @@ public class ResultManager : MonoBehaviour
             OverManeger.SetActive(true);
         }
     }
+
+    public bool GetClearFlag()
+    {
+        return gameFlag;
+    }
 }
