@@ -17,7 +17,11 @@ public class ShellController : MonoBehaviour
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirectorIndex m_playerIndex;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_timeMax;
+    private float m_timeLevel;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃当たり判定データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -91,7 +95,11 @@ public class ShellController : MonoBehaviour
         // プレイヤー共通ディレクター
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerIndex = PlayerDirectorIndex.GetInstance();
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_timeMax = 150.0f;
+        m_timeLevel = 100.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃当たり判定データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -147,16 +155,16 @@ public class ShellController : MonoBehaviour
     //}
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (playerApproachFlag == true)
+        if ((col.gameObject.tag == "AttackBoal"))
         {
-            if ((col.gameObject.tag == "AttackBoal"))
+            if (playerApproachFlag == true)
             {
                 Vector2 pos = this.transform.position;
                 Vector2 posPlayer = m_playerIndex.GetPlayerPosition();
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 星が出る
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.CreateOneStar(pos, posPlayer, 20);
+                m_playIndex.CreateOneStarTime(pos, posPlayer, 20, m_timeMax, m_timeLevel);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 画面揺れ
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -164,7 +172,7 @@ public class ShellController : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 音
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.PlaySoundEffect(SoundID.DAMAGE_02);
+                m_playIndex.PlaySoundEffectWowEnemy();
 
                 rigid2D.gravityScale = gravityForce;
 
@@ -185,6 +193,17 @@ public class ShellController : MonoBehaviour
 
                 //当たり判定をoffにする
                 m_partsAttack.SetStopHit();
+            }
+            else
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 画面揺れ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.WowEnemy();
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 音(攻撃は無効です)
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playIndex.PlaySoundEffect(SoundID.ENEMYBLOCKING_01);
             }
         }
     }

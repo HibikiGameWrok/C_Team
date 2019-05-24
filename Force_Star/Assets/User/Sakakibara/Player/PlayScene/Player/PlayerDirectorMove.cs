@@ -9,6 +9,15 @@ using UnityEngine;
 using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 using PlayerDataNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number;
 using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音言い換え
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using PartsID = PlayStaticData.PartsID;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+
 
 public partial class PlayerDirector : MonoBehaviour
 {
@@ -42,6 +51,7 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_animePunch = false;
     private bool m_punchTrigger = false;
     private bool m_punchFlag = false;
+    private bool m_punchFlagSE = false;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パーツの状態
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -121,6 +131,7 @@ public partial class PlayerDirector : MonoBehaviour
         m_animePunch = false;
         m_punchTrigger = false;
         m_punchFlag = false;
+        m_punchFlagSE = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 昇天データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -480,16 +491,44 @@ public partial class PlayerDirector : MonoBehaviour
             m_brakeTime = 0.0f;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // パンチは9割進むと***
+        // パンチは9割進むと終了可能
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (m_animePunch)
         {
             float time = state.normalizedTime;
-            if(time > 0.9f)
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ブーン
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (time > 0.25f)
             {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // アニメーション中音出す一回
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                if (!m_punchFlagSE)
+                {
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 音
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_directorIndex.PlaySoundEffect(SoundID.PUNCHSWING);
+                }
+                m_punchFlagSE = true;
+            }
+
+            if (time > 0.9f)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 終了可能
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 m_punchFlag = false;
                 m_punchTrigger = false;
             }
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // アニメーション終了
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_punchFlagSE = false;
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

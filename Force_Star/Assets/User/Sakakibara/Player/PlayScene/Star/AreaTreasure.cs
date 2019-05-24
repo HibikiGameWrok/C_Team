@@ -7,18 +7,9 @@ using UnityEngine;
 using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// 番号データ共通
+// 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
-using WarehouseObject = WarehouseData.WarehouseObject;
-using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
-using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
-//*|***|***|***|***|***|***|***|***|***|***|***|
-// 画像データ言い換え
-//*|***|***|***|***|***|***|***|***|***|***|***|
-using TexImageData = GameDataPublic.TexImageData;
-using RenderImageData = GameDataPublic.RenderImageData;
-using PartsData = GameDataPublic.PartsData;
-
+using SoundID = SEManager.SoundID;
 
 public class AreaTreasure : MonoBehaviour
 {
@@ -38,6 +29,15 @@ public class AreaTreasure : MonoBehaviour
     float m_outTreasure = 4.0f;
     [SerializeField]
     float m_outTreasureAttenuation = 0.05f;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 持っているSE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    SoundID m_hitWall;
+    [SerializeField]
+    SoundID m_hitHead;
+    [SerializeField]
+    SoundID m_hitLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -79,6 +79,22 @@ public class AreaTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         return starNum;
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // SEの番号
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public SoundID GetWallSE()
+    {
+       return m_hitWall;
+    }
+    public SoundID GetHeadSE()
+    {
+        return m_hitHead;
+    }
+    public SoundID GetFloorSE()
+    {
+        return m_hitLeg;
+    }
+
 }
 
 

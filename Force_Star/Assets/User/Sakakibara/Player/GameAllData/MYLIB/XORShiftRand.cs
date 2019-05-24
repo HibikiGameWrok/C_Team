@@ -51,7 +51,7 @@ public static class XORShiftRand
     //!
     //! @return int 乱数値
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    static int GetSeedDivRand(int num)
+    public static int GetSeedDivRand(int num)
     {
         uint rand = GetSeedRand();
         int randI = (int)rand;

@@ -17,7 +17,11 @@ public class Enemy2Move : MonoBehaviour
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirectorIndex m_playerIndex;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_timeMax;
+    private float m_timeLevel;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃当たり判定データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -81,7 +85,11 @@ public class Enemy2Move : MonoBehaviour
         // プレイヤー共通ディレクター
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerIndex = PlayerDirectorIndex.GetInstance();
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_timeMax = 150.0f;
+        m_timeLevel = 100.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃当たり判定データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -149,7 +157,7 @@ public class Enemy2Move : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_playIndex.CreateOneStar(pos, posPlayer, 20);
+            m_playIndex.CreateOneStarTime(pos, posPlayer, 20, m_timeMax, m_timeLevel);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 画面揺れ
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -157,7 +165,7 @@ public class Enemy2Move : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 音
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_playIndex.PlaySoundEffect(SoundID.DAMAGE_02);
+            m_playIndex.PlaySoundEffectWowEnemy();
 
             //好きな大きさの重力を指定する
             rigid2D.gravityScale = gravityForce;

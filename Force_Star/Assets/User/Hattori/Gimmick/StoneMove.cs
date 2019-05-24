@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class StoneMove : MonoBehaviour
 {
-    public GameObject starDirec;
-
-    private StarDirector starCreate;
-
-
-    ////*|***|***|***|***|***|***|***|***|***|***|***|
-    //// 攻撃当たり判定データ
-    ////*|***|***|***|***|***|***|***|***|***|***|***|
-    //private Vector2 m_partsAttackPos;
-    //private Vector2 m_partsAttackSize;
-    //private EnemyAttackPartsBox m_partsAttack;
-    //private GameObject m_partsAttackObject;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlayerDirectorIndex m_playerIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_timeMax;
+    private float m_timeLevel;
 
     Rigidbody2D rigid2D;
 
@@ -25,6 +26,20 @@ public class StoneMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイヤー共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerIndex = PlayerDirectorIndex.GetInstance();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_timeMax = 150.0f;
+        m_timeLevel = 100.0f;
+
         ////*|***|***|***|***|***|***|***|***|***|***|***|
         //// 攻撃当たり判定データ
         ////*|***|***|***|***|***|***|***|***|***|***|***|
@@ -36,16 +51,12 @@ public class StoneMove : MonoBehaviour
         ////*|***|***|***|***|***|***|***|***|***|***|***|
         //this.m_partsAttack = m_partsAttackObject.AddComponent<EnemyAttackPartsBox>();
 
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
-
-        starCreate = starDirec.GetComponent<StarDirector>();
-
 
         ////*|***|***|***|***|***|***|***|***|***|***|***|
         //// 攻撃当たり判定の発生
@@ -75,11 +86,21 @@ public class StoneMove : MonoBehaviour
 
         if ((col.gameObject.tag == "AttackBoal"))
         {
-
             Vector2 pos = this.transform.position;
+            Vector2 posPlayer = m_playerIndex.GetPlayerPosition();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星が出る
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.CreateOneStarTime(pos, posPlayer, 20, m_timeMax, m_timeLevel);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 画面揺れ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.WowEnemy();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 音
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playIndex.PlaySoundEffect(SEManager.SoundID.ENEMYBLOCKING_01);
 
-            // 
-            starCreate.CreateOneStar(pos, 10);
 
             //跡形もなく消えてゆけ
             Destroy(this.gameObject);

@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
-// パーツ言い換え
+// パー言い換え
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using PartsID = PlayStaticData.PartsID;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+
 
 public partial class PlayerDirector : MonoBehaviour
 {
@@ -214,12 +219,20 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 時間経過
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_dataBace.CatchTimers(-1);
-        float time = m_dataBace.GetTimeParsent();
-
-        if (Input.GetKey(KeyCode.L))
+        float airDamage = -1;
+        if (m_headStrong)
         {
-            m_dataBace.CatchStars(10);
+            airDamage = MyCalculator.Division(airDamage, 10.0f);
+        }
+        m_dataBace.CatchTimers(airDamage);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 残り時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float time = m_dataBace.GetTimeParsent();
+        
+        if (Input.GetKeyDown(KeyCode.L))
+        { 
+            m_directorIndex.ApplyStarBounce(GetPlayerPositon(), 90.0f, 30.0f, 0.2f, 0.01f, 100.0f, 100.0f, 10);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ中
@@ -544,7 +557,10 @@ public partial class PlayerDirector : MonoBehaviour
                     if (starsNum >= starsFee)
                     {
                         //SE再生
-                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
+                        m_directorIndex.PlaySoundEffect(SoundID.RECOVERY);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 星消費
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -609,7 +625,10 @@ public partial class PlayerDirector : MonoBehaviour
                     if (starsNum >= starsFee)
                     {
                         //SE再生
-                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
+                        m_directorIndex.PlaySoundEffect(SoundID.RECOVERY);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 星消費
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -674,7 +693,10 @@ public partial class PlayerDirector : MonoBehaviour
                     if (starsNum >= starsFee)
                     {
                         //SE再生
-                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
+                        m_directorIndex.PlaySoundEffect(SoundID.RECOVERY);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 星消費
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -740,7 +762,10 @@ public partial class PlayerDirector : MonoBehaviour
                     if (starsNum >= starsFee)
                     {
                         //SE再生
-                        m_directorIndex.PlaySoundEffect(SEManager.SoundID.RECOVERY);
+                        m_directorIndex.PlaySoundEffect(SoundID.RECOVERY);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // 星消費
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_dataBace.CatchStars(starsFee * -1);
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         // 強化か否か
@@ -790,6 +815,7 @@ public partial class PlayerDirector : MonoBehaviour
 
         PlayerDamageReservation data;
         bool damageFlag = false;
+        float damage = 0.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ダメージ報告腕
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -797,11 +823,20 @@ public partial class PlayerDirector : MonoBehaviour
         {
             data = m_armDamage[index];
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージ計算
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            damage = data.damage;
+            damage = MyCalculator.Division(damage, 2.0f);
+            if (m_armStrong)
+            {
+                damage = MyCalculator.Division(damage, 5.0f);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 無敵を貫通するか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (data.IgnoreInvincibility)
             {
-                m_dataBace.DamageArmDurable(data.damage);
+                m_dataBace.DamageArmDurable(damage);
             }
             else
             {
@@ -814,7 +849,7 @@ public partial class PlayerDirector : MonoBehaviour
                     // カウントする
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
-                    m_dataBace.DamageArmDurable(data.damage);
+                    m_dataBace.DamageArmDurable(damage);
                 }
             }
         }
@@ -825,11 +860,19 @@ public partial class PlayerDirector : MonoBehaviour
         {
             data = m_bodyDamage[index];
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージ計算
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            damage = data.damage;
+            if (m_bodyStrong)
+            {
+                damage = MyCalculator.Division(damage, 2.0f);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 無敵を貫通するか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (data.IgnoreInvincibility)
             {
-                m_dataBace.DamageBodyDurable(data.damage);
+                m_dataBace.DamageBodyDurable(damage);
             }
             else
             {
@@ -842,7 +885,7 @@ public partial class PlayerDirector : MonoBehaviour
                     // カウントする
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
-                    m_dataBace.DamageBodyDurable(data.damage);
+                    m_dataBace.DamageBodyDurable(damage);
                 }
             }
         }
@@ -853,11 +896,19 @@ public partial class PlayerDirector : MonoBehaviour
         {
             data = m_headDamage[index];
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージ計算
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            damage = data.damage;
+            if (m_headStrong)
+            {
+                damage = MyCalculator.Division(damage, 2.0f);
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 無敵を貫通するか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (data.IgnoreInvincibility)
             {
-                m_dataBace.DamageHeadDurable(data.damage);
+                m_dataBace.DamageHeadDurable(damage);
             }
             else
             {
@@ -870,7 +921,7 @@ public partial class PlayerDirector : MonoBehaviour
                     // カウントする
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
-                    m_dataBace.DamageHeadDurable(data.damage);
+                    m_dataBace.DamageHeadDurable(damage);
                 }
             }
         }
@@ -880,6 +931,15 @@ public partial class PlayerDirector : MonoBehaviour
         for (int index = 0; index < m_legDamage.Count; index++)
         {
             data = m_legDamage[index];
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージ計算
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            damage = data.damage;
+            damage = MyCalculator.Division(damage, 2.0f);
+            if (m_legStrong)
+            {
+                damage = MyCalculator.Division(damage, 2.0f);
+            }
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 無敵を貫通するか？
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -898,6 +958,8 @@ public partial class PlayerDirector : MonoBehaviour
                     // カウントする
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     damageFlag = true;
+
+
                     m_dataBace.DamageLegDurable(data.damage);
                 }
             }
@@ -928,7 +990,7 @@ public partial class PlayerDirector : MonoBehaviour
             m_damageTrigger = true;
 
 
-            m_directorIndex.PlaySoundEffect(SEManager.SoundID.DAMAGE_01);
+            m_directorIndex.PlaySoundEffect(SoundID.DAMAGE_01);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 画面揺れ
             //*|***|***|***|***|***|***|***|***|***|***|***|

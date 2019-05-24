@@ -192,7 +192,6 @@ public class StarDirector : MonoBehaviour
         {
             m_playIndex.ApplyStarBounce(pos, maxStar);
         }
-      
     }
 
     public void CreateOneStar(Vector2 pos, int maxStar, bool center = false)

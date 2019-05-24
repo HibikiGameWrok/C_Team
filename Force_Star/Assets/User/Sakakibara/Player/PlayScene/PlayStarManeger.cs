@@ -236,12 +236,14 @@ public class PlayStarManeger : MonoBehaviour
             starBounceMove.SetVec(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
             starBounceMove.SetPosition(pos);
             starBounceMove.SetSpeed(0.01f, 0.01f);
+            starBounceMove.SetTime(300.0f, 200.0f);
+            starBounceMove.SetTimeCount(15);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 角度の方向に発射
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void CreateStarBouncePisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, int starNum)
+    public void CreateStarBouncePisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int starNum)
     {
         GameObject newStarObj = null;
         float angle = 0;
@@ -295,6 +297,8 @@ public class PlayStarManeger : MonoBehaviour
             starBounceMove.SetVec(vec.x, vec.y);
             starBounceMove.SetPosition(pos);
             starBounceMove.SetSpeed(0.01f, 0.01f);
+            starBounceMove.SetTime(timeMax, timeLevel);
+            starBounceMove.SetTimeCount(15);
         }
     }
 }

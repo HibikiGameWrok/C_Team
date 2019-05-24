@@ -8,6 +8,8 @@ public class StarSearch : MonoBehaviour
     private GameObject m_roket = null;
     StartRoket m_startRokets;
     bool m_createPlayr;
+
+    CircleCollider2D col;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -19,6 +21,7 @@ public class StarSearch : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerIndex = PlayerDirectorIndex.GetInstance();
         m_startRokets = m_roket.GetComponent<StartRoket>();
+        col = gameObject.GetComponent<CircleCollider2D>();
     }
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,14 @@ public class StarSearch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(m_createPlayr)
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            col.radius = 100;
+        }
+
+
+        if (m_createPlayr)
         {
 
             this.transform.position = m_playerIndex.GetPlayerPosition();

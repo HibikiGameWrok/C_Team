@@ -250,40 +250,87 @@ public class PlaySceneDirectorIndex
     {
         m_starManeger.CreateStarBouncePisce(position, num);
     }
+    public void ApplyStarBounce(Vector3 position, float angle, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int num)
+    {
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);
+    }
+    public void ApplyStarBounce(Vector3 position, float angle, float angleSwing, float speedMax, float timeMax, float timeLevel, int num)
+    {
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, timeMax, timeLevel, num);
+    }
     public void ApplyStarBounce(Vector3 position, float angle, float angleSwing, float speedMax, float speedMin, int num)
     {
-        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, num);
+        float timeMax = 300.0f;
+        float timeLevel = 200.0f;
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);
     }
     public void ApplyStarBounce(Vector3 position, float angle, float angleSwing, float speedMax, int num)
     {
-        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, num);
+        float timeMax = 300.0f;
+        float timeLevel = 200.0f;
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, timeMax, timeLevel, num);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 左右にぶちまける
+    // 左にぶちまける
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    public void ApplyStarBounceLeftSide(Vector3 position, float angleSwing, float speedMax, int num)
+    public void ApplyStarBounceLeftSide(Vector3 position, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int num)
     {
         Vector2 vec = new Vector2(-1, 0);
         float angle = ChangeData.Vector2ToAngleDeg(vec);
-        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, num);
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);
+    }
+    public void ApplyStarBounceLeftSide(Vector3 position, float angleSwing, float speedMax, float timeMax, float timeLevel, int num)
+    {
+        Vector2 vec = new Vector2(-1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, timeMax, timeLevel, num);
     }
     public void ApplyStarBounceLeftSide(Vector3 position, float angleSwing, float speedMax, float speedMin, int num)
     {
         Vector2 vec = new Vector2(-1, 0);
         float angle = ChangeData.Vector2ToAngleDeg(vec);
-        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, num);
+        float timeMax = 300.0f;
+        float timeLevel = 200.0f;
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);
     }
-    public void ApplyStarBounceRightSide(Vector3 position, float angleSwing, float speedMax, int num)
+    public void ApplyStarBounceLeftSide(Vector3 position, float angleSwing, float speedMax, int num)
+    {
+        Vector2 vec = new Vector2(-1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        float timeMax = 300.0f;
+        float timeLevel = 200.0f;
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, timeMax, timeLevel, num);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 右にぶちまける
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void ApplyStarBounceRightSide(Vector3 position, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int num)
     {
         Vector2 vec = new Vector2(1, 0);
         float angle = ChangeData.Vector2ToAngleDeg(vec);
-        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, num);
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);
+    }
+    public void ApplyStarBounceRightSide(Vector3 position, float angleSwing, float speedMax, float timeMax, float timeLevel, int num)
+    {
+        Vector2 vec = new Vector2(1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, timeMax, timeLevel, num);
     }
     public void ApplyStarBounceRightSide(Vector3 position, float angleSwing, float speedMax, float speedMin, int num)
     {
         Vector2 vec = new Vector2(1, 0);
         float angle = ChangeData.Vector2ToAngleDeg(vec);
-        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, num);
+        float timeMax = 300.0f;
+        float timeLevel = 200.0f;
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);
+    }
+    public void ApplyStarBounceRightSide(Vector3 position, float angleSwing, float speedMax, int num)
+    {
+        Vector2 vec = new Vector2(1, 0);
+        float angle = ChangeData.Vector2ToAngleDeg(vec);
+        float timeMax = 300.0f;
+        float timeLevel = 200.0f;
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, 0, timeMax, timeLevel, num);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星を個別で作るようの関数
@@ -328,11 +375,63 @@ public class PlaySceneDirectorIndex
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間あり
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void CreateOneStarTime(Vector2 objectPos, Vector2 playerPos, int maxStar, bool flag, float jump, float timeMax, float timeLevel, bool center = false)
+    {
+        if (!center)
+        {
+            if (playerPos.x < objectPos.x)
+            {
+                ApplyStarBounceRightSide(objectPos, 90.0f, 0.2f, timeMax, timeLevel, maxStar);
+            }
+            else
+            {
+                ApplyStarBounceLeftSide(objectPos, 90.0f, 0.2f, timeMax, timeLevel, maxStar);
+            }
+        }
+        else
+        {
+            ApplyStarBounce(objectPos, maxStar);
+        }
+    }
+    public void CreateOneStarTime(Vector2 pos, Vector2 playerPos, int maxStar, float timeMax, float timeLevel, bool center = false)
+    {
+
+        if (!center)
+        {
+            if (playerPos.x < pos.x)
+            {
+                ApplyStarBounceRightSide(pos, 90.0f, 0.2f, 0.01f, timeMax, timeLevel, maxStar);
+            }
+            else
+            {
+                ApplyStarBounceLeftSide(pos, 90.0f, 0.2f, 0.01f, timeMax, timeLevel, maxStar);
+            }
+        }
+        else
+        {
+            ApplyStarBounce(pos, maxStar);
+        }
+    }
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // サウンドON!SE.GO!
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void PlaySoundEffect(SoundID id)
     {
         m_seManeger.PlaySoundEffect(id);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // サウンドON!敵の爆発.GO!
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void PlaySoundEffectWowEnemy()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 画面揺れ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_seManeger.PlaySoundEffect(SoundID.DAMAGE_02);
+        m_seManeger.PlaySoundEffect(SoundID.HYUN_01);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲームクリア！
@@ -411,7 +510,7 @@ public class PlaySceneDirectorIndex
         m_mainCameraArts.WidthShake(duration, magnitudeMax, magnitudeMin);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 爆発は画面まで揺れる！
+    // 敵の爆発は画面まで揺れる！
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void WowEnemy()
     {

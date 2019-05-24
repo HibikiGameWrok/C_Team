@@ -454,7 +454,7 @@ public class PlayerDataBace
     {
         m_airTimer += 1;
     }
-    public void CatchTimers(int addCount)
+    public void CatchTimers(float addCount)
     {
         m_airTimer += addCount;
     }

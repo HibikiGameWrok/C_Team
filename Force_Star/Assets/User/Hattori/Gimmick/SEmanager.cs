@@ -39,6 +39,14 @@ public class SEManager : MonoBehaviour
         DAMAGE_01,
         DAMAGE_02,
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 吹き飛び
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        HYUN_01,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃をガード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        ENEMYBLOCKING_01,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // ☆が納品しきった時SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
         DELIVERYSTAR,
@@ -174,6 +182,14 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_sounds[(int)SoundID.DAMAGE_01] = Resources.Load<AudioClip>(filepass + "Damage_SE_01");
         m_sounds[(int)SoundID.DAMAGE_02] = Resources.Load<AudioClip>(filepass + "Damage_SE_02");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 吹き飛び
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_sounds[(int)SoundID.HYUN_01] = Resources.Load<AudioClip>(filepass + "hyun");
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 攻撃をガード
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_sounds[(int)SoundID.ENEMYBLOCKING_01] = Resources.Load<AudioClip>(filepass + "EnemyBlocking");
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ☆が納品しきった時SE
         //*|***|***|***|***|***|***|***|***|***|***|***|

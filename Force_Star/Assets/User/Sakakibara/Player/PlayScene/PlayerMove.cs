@@ -578,7 +578,7 @@ public class PlayerMove : MonoBehaviour
         // 当たり判定頭
         //*|***|***|***|***|***|***|***|***|***|***|***|
         pos = new Vector2(0.0f, 0.0f);
-        size = new Vector2(1.0f, 1.0f);
+        size = new Vector2(0.8f, 0.8f);
         m_hitFlagBodyParts.SetPointSize(pos, size);
 
         m_catchBodyParts.SetPointSize(pos, size);

@@ -60,6 +60,11 @@ public class FloorTreasure : MonoBehaviour
     private bool m_headHitR;
     private bool m_legHitR;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_timeMax;
+    private float m_timeLevel;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
@@ -95,6 +100,11 @@ public class FloorTreasure : MonoBehaviour
         m_bodyHitT = false;
         m_headHitT = false;
         m_legHitT = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時間
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_timeMax = 75.0f;
+        m_timeLevel = 50.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 情報！
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -424,7 +434,7 @@ public class FloorTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_directorIndex.PlaySoundEffect(SoundID.FOOTSTEP_01);
+        m_directorIndex.PlaySoundEffect(GetFloorSE());
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -437,8 +447,8 @@ public class FloorTreasure : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る * starNum
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, 0.3f, 0.1f, starNum);
-            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, 0.3f, 0.1f, starNum);
+            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -474,6 +484,10 @@ public class FloorTreasure : MonoBehaviour
         float magnitudeMin = 0.05f;
         m_directorIndex.LetsHeightShake(duration, magnitudeMax, magnitudeMin);
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // SE
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_directorIndex.PlaySoundEffect(GetHeadSE());
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
         int starNum = AppStarNum();
@@ -481,12 +495,12 @@ public class FloorTreasure : MonoBehaviour
         // 財宝あらわる
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (starNum > 0)
-        {          
+        {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る * starNum
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, 0.3f, 0.1f, starNum);
-            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, 0.3f, 0.1f, starNum);
+            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -554,7 +568,7 @@ public class FloorTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_directorIndex.PlaySoundEffect(SoundID.FOOTSTEP_01);
+        m_directorIndex.PlaySoundEffect(GetWallSE());
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -567,8 +581,10 @@ public class FloorTreasure : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る * starNum
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_directorIndex.ApplyStarBounce(pointUp, upAngle, swing, 0.3f, 0.1f, starNum);
-            m_directorIndex.ApplyStarBounce(pointDown, downAngle, swing, 0.3f, 0.1f, starNum);
+            float m_timeMax = 300.0f;
+            float m_timeLevel = 200.0f;
+            m_directorIndex.ApplyStarBounce(pointUp, upAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointDown, downAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -591,6 +607,63 @@ public class FloorTreasure : MonoBehaviour
         // 財宝崩
         //*|***|***|***|***|***|***|***|***|***|***|***|
         return starNum;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // SEの番号
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    SoundID GetWallSE()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        SoundID soundID = SoundID.HITWALL;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_ereaTreasure)
+        {
+            soundID = m_ereaTreasure.GetWallSE();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return soundID;
+    }
+    SoundID GetHeadSE()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        SoundID soundID = SoundID.FOOTSTEP_01;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_ereaTreasure)
+        {
+            soundID = m_ereaTreasure.GetHeadSE();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return soundID;
+    }
+    SoundID GetFloorSE()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        SoundID soundID = SoundID.FOOTSTEP_01;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_ereaTreasure)
+        {
+            soundID = m_ereaTreasure.GetFloorSE();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        return soundID;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たり判定
