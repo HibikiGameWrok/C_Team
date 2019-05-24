@@ -19,13 +19,15 @@ public class RoketClearMove : MonoBehaviour
     private GameObject player = null;
 
 
-    PlayerController playercont;
+    private PlayerController playercont;
 
-    PlayerDirectorIndex playerIndex;
+    private PlayerDirectorIndex playerIndex;
 
-    PlaySceneDirectorIndex playDrectorIndex;
+    private PlaySceneDirectorIndex playDrectorIndex;
 
+    private bool oneFlag = false;
 
+    private bool delUIFlag = false;
 
     void Awake()
     {
@@ -46,7 +48,17 @@ public class RoketClearMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playercont.Update(); 
+        playercont.Update();
+        // ☆が目標量を達成して尚且つパーツが全て取得できているならば
+        if (playerIndex.GetHaveStarParsent() >= 1 && playerIndex.GetHaveAllPartsFlag())
+        {
+            if (oneFlag == false)
+            {
+                GameObject okUI = (GameObject)Resources.Load("paneru");
+                Instantiate(okUI, new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z), Quaternion.identity);
+                oneFlag = true;
+            }
+        }
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -68,7 +80,7 @@ public class RoketClearMove : MonoBehaviour
                         cooltime = true;
                         // フェードアウト
                         StartFade.SetFadeOutFlag(true);
-
+                        delUIFlag = true;
                         // コルーチンを実行  
                         StartCoroutine("ClearMove");
                     }
@@ -130,5 +142,10 @@ public class RoketClearMove : MonoBehaviour
         StartFade.SetFadeOutFlag(true);
 
         Debug.Log("画面暗転");
+    }
+
+    public bool GetdelUIFlag()
+    {
+        return delUIFlag;
     }
 }
