@@ -422,6 +422,11 @@ public class PlaySceneDirectorIndex
     {
         m_seManeger.PlaySoundEffect(id);
     }
+    public void PlaySoundEffect(SoundID id, float volume)
+    {
+        m_seManeger.PlaySoundVolume(volume);
+        m_seManeger.PlaySoundEffect(id);
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // サウンドON!敵の爆発.GO!
     //*|***|***|***|***|***|***|***|***|***|***|***|

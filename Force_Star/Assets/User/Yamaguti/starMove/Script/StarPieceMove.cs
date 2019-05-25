@@ -39,6 +39,10 @@ public class StarPieceMove : MonoBehaviour
     bool flag = false;      // 当たった時のフラグ
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirectorIndex m_playerIndex;
@@ -47,10 +51,11 @@ public class StarPieceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     GameObjectSprite m_starSprite;
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // 広がる時間
+    // 無敵時間
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    private int count = 20;
+    private int m_count = 60;
+    bool m_ariveFlag;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 広がり中
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -76,6 +81,10 @@ public class StarPieceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー共通ディレクター
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -109,7 +118,6 @@ public class StarPieceMove : MonoBehaviour
             tex.pibot = new Vector2(0.5f, 0.5f);
             m_starSprite.SetImageUpdate(tex);
         }
-
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星のレイヤーに変更
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -137,6 +145,24 @@ public class StarPieceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 眠る
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (!m_ariveFlag)
+        {
+            DeathBoom();
+            return;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲーム終了している？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_playIndex.GetClearAnimation();
+        bool deathAnime = m_playIndex.GetGameOverAnimation();
+        if (clearAnime || deathAnime)
+        {
+            DeathFlag();
+            return;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 眠る
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         if (!this.isActiveAndEnabled)
         {
             return;
@@ -149,8 +175,8 @@ public class StarPieceMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 拡散時間
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            count--;
-            if(count <= 0)
+            m_count--;
+            if(m_count <= 0)
             {
                 m_diffusion = true;
                 SetPlayHit();
@@ -277,11 +303,34 @@ public class StarPieceMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (WarehousePlayer.BoolTagIsPlayer(other.gameObject.tag))
             {
-                flag = true;
-                PlayerDirectorIndex.GetInstance().GetStar(1);
-                Destroy(this.gameObject);
+                CatchStar();
             }
         }
-      
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 獲得！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void CatchStar()
+    {
+        flag = true;
+        PlayerDirectorIndex.GetInstance().GetStar(1);
+        DeathFlag();
+        m_starSprite.SetAlpha(0);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自爆！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void DeathFlag()
+    {
+        flag = true;
+        m_ariveFlag = false;
+        m_starSprite.SetAlpha(0);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 自爆！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void DeathBoom()
+    {
+        Destroy(transform.gameObject);
     }
 }

@@ -293,4 +293,9 @@ public class SEManager : MonoBehaviour
     {
         m_audiosource.PlayOneShot(GetGameSE(id));
     }
+
+    public void PlaySoundVolume(float value)
+    {
+        m_audiosource.volume = value;
+    }
 }

@@ -15,7 +15,7 @@ using WarehouseOrder = WarehouseData.WarehouseOrder;
 using Object_Order_Number = WarehouseData.WarehouseOrder.Object_Order_Number;
 
 
-public class PlaySceneDirector : MonoBehaviour
+public partial class PlaySceneDirector : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ロケットのディレクター
@@ -113,6 +113,11 @@ public class PlaySceneDirector : MonoBehaviour
         // SEの運営者を登録する
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex.SetPointerSEManeger(m_seManager);
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // フラグ管理
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        AwakeFlagKeeper();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パーツ出現！
@@ -227,7 +232,13 @@ public class PlaySceneDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float air = m_playerIndex.GetAirParsent();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // フラグ管理
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateFlagKeeper();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // クリアとゲームオーバーフラグ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         bool clearAnime = m_directorIndex.GetClearAnimation();
         bool clearFlag = m_directorIndex.GetClearFlag();
 
