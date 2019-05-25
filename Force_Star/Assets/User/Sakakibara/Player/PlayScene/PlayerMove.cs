@@ -28,6 +28,17 @@ public class PlayerMove : MonoBehaviour
     private PlayerParts m_partsLegFalse2D;
     private GameObject m_rigidOnlyFalseLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 左右データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private PlayerParts m_partsLeft2D;
+    private GameObject m_rigidOnlyLeft;
+    private bool m_hitFlagLeft;
+
+    private PlayerParts m_partsRight2D;
+    private GameObject m_rigidOnlyRight;
+    private bool m_hitFlagRight;
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 攻撃ボールデータ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private GameObject m_attackBoalObject;
@@ -212,7 +223,10 @@ public class PlayerMove : MonoBehaviour
     // 外からの力
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private Vector2 m_addForceOut;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 向き
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private bool m_rightFlag;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
@@ -259,6 +273,18 @@ public class PlayerMove : MonoBehaviour
         m_rigidOnlyFalseLeg.transform.parent = gameObject.transform;
         this.m_partsLegFalse2D = m_rigidOnlyFalseLeg.AddComponent<PlayerParts>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 左右データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rigidOnlyLeft = new GameObject("rigidLeft");
+        m_rigidOnlyLeft.transform.parent = gameObject.transform;
+        this.m_partsLeft2D = m_rigidOnlyLeft.AddComponent<PlayerParts>();
+        m_hitFlagLeft = false;
+
+        m_rigidOnlyRight = new GameObject("rigidRight");
+        m_rigidOnlyRight.transform.parent = gameObject.transform;
+        this.m_partsRight2D = m_rigidOnlyRight.AddComponent<PlayerParts>();
+        m_hitFlagRight = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たりの判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakeAttackParts();
@@ -285,6 +311,10 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_arive = true;
         m_death = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 向き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_rightFlag = true;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 大きさ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -531,6 +561,16 @@ public class PlayerMove : MonoBehaviour
         sizeLeg = new Vector2(0.8f, 0.4f);
         pointLeg = new Vector2(0.0f, 0.0f);
         m_partsLegFalse2D.SetPointSize(pointLeg, sizeLeg);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 左右データ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        sizeLeg = new Vector2(0.4f, 0.8f);
+        pointLeg = new Vector2(0.3f, 0.0f);
+        m_partsLeft2D.SetPointSize(pointLeg, sizeLeg);
+
+        sizeLeg = new Vector2(0.4f, 0.8f);
+        pointLeg = new Vector2(-0.3f, 0.0f);
+        m_partsRight2D.SetPointSize(pointLeg, sizeLeg);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー大きさ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -933,6 +973,17 @@ public class PlayerMove : MonoBehaviour
 
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 壁と制限される
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_hitFlagLeft && m_movePowerX < 0)
+        {
+            m_movePowerX = 0;
+        }
+        if (m_hitFlagRight && m_movePowerX > 0)
+        {
+            m_movePowerX = 0;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 前方に進んでいないと制限される
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (m_reverseArrow || !m_addPower)
@@ -1094,6 +1145,60 @@ public class PlayerMove : MonoBehaviour
         {
             m_groundFlagFlame = false;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たりの判定左右
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_rightFlag)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 当たりの判定左
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_partsLeft2D.GetHitFlag())
+            {
+                m_hitFlagLeft = true;
+            }
+            else
+            {
+                m_hitFlagLeft = false;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 当たりの判定右
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_partsRight2D.GetHitFlag())
+            {
+                m_hitFlagRight = true;
+            }
+            else
+            {
+                m_hitFlagRight = false;
+            }
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 当たりの判定左
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_partsRight2D.GetHitFlag())
+            {
+                m_hitFlagLeft = true;
+            }
+            else
+            {
+                m_hitFlagLeft = false;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 当たりの判定右
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_partsLeft2D.GetHitFlag())
+            {
+                m_hitFlagRight = true;
+            }
+            else
+            {
+                m_hitFlagRight = false;
+            }
+        }
+
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たりの判定腕
@@ -1380,6 +1485,21 @@ public class PlayerMove : MonoBehaviour
     public float GetScale()
     {
         return m_scale;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイヤー方向取得
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetRightFlag(bool flag)
+    {
+        m_rightFlag = flag;
+        if (m_rightFlag)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
     ////*|***|***|***|***|***|***|***|***|***|***|***|
     //// 当たり判定取得

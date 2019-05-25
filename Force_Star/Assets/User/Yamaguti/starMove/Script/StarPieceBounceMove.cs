@@ -38,6 +38,10 @@ public class StarPieceBounceMove : MonoBehaviour
     //-------------------------
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // プレイシーン共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    PlaySceneDirectorIndex m_playIndex;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー共通ディレクター
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirectorIndex m_playerIndex;
@@ -120,6 +124,10 @@ public class StarPieceBounceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void Awake()
     {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // プレイシーン共通ディレクター
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playIndex = PlaySceneDirectorIndex.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤー共通ディレクター
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -325,6 +333,16 @@ public class StarPieceBounceMove : MonoBehaviour
         if (!m_ariveFlag)
         {
             DeathBoom();
+            return;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲーム終了している？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_playIndex.GetClearAnimation();
+        bool deathAnime = m_playIndex.GetGameOverAnimation();
+        if (clearAnime || deathAnime)
+        {
+            DeathFlag();
             return;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -766,7 +784,7 @@ public class StarPieceBounceMove : MonoBehaviour
     {
         flag = true;
         m_ariveFlag = false;
-        //m_starSprite.SetAlpha(0);
+        m_starSprite.SetAlpha(0);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自爆！

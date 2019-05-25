@@ -429,7 +429,14 @@ public partial class PlayerDirector : MonoBehaviour
         {
             if (m_pushRecoveryKey)
             {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // ボタン押し始め
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 m_dataRecoveryUIAwake = true;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // SE再生
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_directorIndex.PlaySoundEffect(SoundID.OPENMENU_04);
             }
         }
         else
@@ -454,8 +461,15 @@ public partial class PlayerDirector : MonoBehaviour
                     m_progressParsent = goal;
                     if (!m_pushRecoveryKey)
                     {
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // ボタン押し終わり
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_dataRecoveryUIAwake = false;
                         m_progressParsent = 0.0f;
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // SE再生
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_directorIndex.PlaySoundEffect(SoundID.CLOSEMENU_01);
                     }
                 }
             }

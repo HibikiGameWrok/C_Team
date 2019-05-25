@@ -52,6 +52,7 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_punchTrigger = false;
     private bool m_punchFlag = false;
     private bool m_punchFlagSE = false;
+    private bool m_punchHit = false;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パーツの状態
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -132,6 +133,7 @@ public partial class PlayerDirector : MonoBehaviour
         m_punchTrigger = false;
         m_punchFlag = false;
         m_punchFlagSE = false;
+        m_punchHit = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 昇天データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -512,6 +514,7 @@ public partial class PlayerDirector : MonoBehaviour
                     m_directorIndex.PlaySoundEffect(SoundID.PUNCHSWING);
                 }
                 m_punchFlagSE = true;
+                m_punchHit = true;
             }
 
             if (time > 0.9f)
@@ -521,6 +524,7 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 m_punchFlag = false;
                 m_punchTrigger = false;
+                m_punchHit = false;
             }
         }
         else
@@ -529,6 +533,7 @@ public partial class PlayerDirector : MonoBehaviour
             // アニメーション終了
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_punchFlagSE = false;
+            m_punchHit = false;
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -550,14 +555,10 @@ public partial class PlayerDirector : MonoBehaviour
         {
             if (!m_animeBackBrake && !m_animeFlontBrake && !m_animePunch)
             {
-                if (rightPower)
-                {
-                    m_playerCenter.transform.rotation = Quaternion.Euler(0, 180, 0);
-                }
-                else
-                {
-                    m_playerCenter.transform.rotation = Quaternion.Euler(0, 0, 0);
-                }
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 右の方向か？
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playerMove.SetRightFlag(rightPower);
             }
         }
         m_nextMirror = rightPower;
@@ -696,7 +697,7 @@ public partial class PlayerDirector : MonoBehaviour
         // 攻撃中判定を反映
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
-            m_playerMove.SetAttackFlag(m_punchFlag);
+            m_playerMove.SetAttackFlag(m_punchHit);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
