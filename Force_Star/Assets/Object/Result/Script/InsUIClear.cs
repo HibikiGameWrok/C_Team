@@ -28,14 +28,13 @@ public class InsUIClear : MonoBehaviour
     {
         if(resultRocket.GetMoveEndFlag() == true)
         {
-            StartCoroutine("InsUI");
+            InsUI();
         }
     }
 
 
-    private IEnumerator InsUI()
+    private void InsUI()
     {
-        yield return new WaitForSeconds(1.0f);
         if (stop != true)
         {
             GameObject okUI = (GameObject)Resources.Load("GameClearString");
