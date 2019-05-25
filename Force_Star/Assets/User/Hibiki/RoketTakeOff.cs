@@ -28,7 +28,10 @@ public class RoketTakeOff : MonoBehaviour
     bool stopFlag = false;
     bool stopFlag1 = false;
 
-    float sinVecX = 0.0f; 
+    float sinVecX = 0.0f;
+
+    // コルーチンを終了したと分かるフラグ
+    private bool endCoruFlag = false;
 
     void Awake()
     {
@@ -53,7 +56,6 @@ public class RoketTakeOff : MonoBehaviour
     {
         // コルーチンを実行  
         StartCoroutine("TakeOff");
-
     }
 
     private IEnumerator TakeOff()
@@ -67,7 +69,7 @@ public class RoketTakeOff : MonoBehaviour
             this.transform.position = new Vector3(Mathf.Sin(30.0f * Mathf.PI * 1f * Time.time) + sinVecX, this.transform.position.y, this.transform.position.z);
         }
         // 1秒待つ  
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
         stopFlag = true;
 
         // 0.1秒待つ  
@@ -90,10 +92,16 @@ public class RoketTakeOff : MonoBehaviour
             stopFlag1 = true;
         }
         
-
         yield return new WaitForSeconds(3.0f);
 
-        directorIndex.SetClearFlag();
+        // コルーチン終了しました
+        endCoruFlag = true;
+    }
+
+    // コルーチンが終わったと知らせる関数
+    public bool GetEndCoruFlag()
+    {
+        return endCoruFlag;
     }
 }
 
