@@ -30,7 +30,6 @@ public partial class PlayerDirector : MonoBehaviour
     PlayerControllerData m_controllerData;
     [SerializeField]
     public int m_animeNum = 0;
-    private bool m_nextMirror = false;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // アニメーション用取得フラグ
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -62,10 +61,6 @@ public partial class PlayerDirector : MonoBehaviour
         DAMAGED,
         STRONG,
     }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    // ボディデータ
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    private Rigidbody2D m_player2D;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 昇天
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -106,12 +101,6 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_playerMove = m_playerCenter.AddComponent<PlayerMove>();
         m_playerMove.LinkController(m_controllerData);
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ボディデータ
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_player2D = m_playerCenter.GetComponent<Rigidbody2D>();
-        //m_player2D.constraints = RigidbodyConstraints2D.FreezeRotation;
-        m_nextMirror = false;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // アニメーション用取得フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -166,6 +155,19 @@ public partial class PlayerDirector : MonoBehaviour
         // 操作更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_controller.Update();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲームクリアしている？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_directorIndex.GetClearAnimation();
+        if (clearAnime)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // プレイヤーを消す
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_playerMove.SetArive(false);
+            UpdateWhite();
+            return;
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // プレイヤーの状態確認
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -561,7 +563,6 @@ public partial class PlayerDirector : MonoBehaviour
                 m_playerMove.SetRightFlag(rightPower);
             }
         }
-        m_nextMirror = rightPower;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 操作更新
@@ -603,7 +604,6 @@ public partial class PlayerDirector : MonoBehaviour
                 power.x = power.x * -1;
             }
             m_playerMove.AddForsePower(power);
-            //m_player2D.AddForce(power);
             m_damageTrigger = false;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -843,7 +843,6 @@ public partial class PlayerDirector : MonoBehaviour
                 power.x = power.x * -1;
             }
             m_playerMove.AddForsePower(power);
-            //m_player2D.AddForce(power);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

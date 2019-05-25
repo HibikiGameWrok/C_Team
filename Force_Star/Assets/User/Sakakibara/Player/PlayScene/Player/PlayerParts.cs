@@ -11,7 +11,6 @@ public class PlayerParts : MonoBehaviour
     private BoxCollider2D m_box2D;
     private bool m_hitFlag;
     private bool m_hitFlagFlame;
-    private string m_hitTag;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -84,7 +83,6 @@ public class PlayerParts : MonoBehaviour
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
         {
-            m_hitTag = col.gameObject.tag;
             m_hitFlag = true;
         }
     }
@@ -93,7 +91,6 @@ public class PlayerParts : MonoBehaviour
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
         {
-            m_hitTag = col.gameObject.tag;
             m_hitFlag = true;
         }
     }
@@ -102,7 +99,7 @@ public class PlayerParts : MonoBehaviour
         //地面に接していたらgroundFlagをtrueにする
         if (col.gameObject.tag == "Floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Shell")
         {
-            m_hitTag = col.gameObject.tag;
+
         }
     }
 }
