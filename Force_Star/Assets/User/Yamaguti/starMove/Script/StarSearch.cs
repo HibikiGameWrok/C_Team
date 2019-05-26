@@ -22,6 +22,7 @@ public class StarSearch : MonoBehaviour
         m_playerIndex = PlayerDirectorIndex.GetInstance();
         m_startRokets = m_roket.GetComponent<StartRoket>();
         col = gameObject.GetComponent<CircleCollider2D>();
+        col.radius = 2;
     }
     // Start is called before the first frame update
     void Start()
