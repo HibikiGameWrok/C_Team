@@ -502,6 +502,16 @@ public partial class PlayerDirector : MonoBehaviour
             m_progressParsentAnimate = 0;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲーム終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_directorIndex.GetClearAnimation();
+        bool deathAnime = m_directorIndex.GetGameOverAnimation();
+        if (clearAnime || deathAnime)
+        {
+            m_progressParsent = 0.0f;
+            m_progressParsentAnimate = 0.0f;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 進行度を記録
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_dataRecoveryUI.SetProgressParsent(m_progressParsent);

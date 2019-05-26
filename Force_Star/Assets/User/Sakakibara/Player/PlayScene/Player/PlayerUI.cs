@@ -181,6 +181,11 @@ public class PlayerUI : GameCanvas
     [SerializeField]
     private float m_alarmStrong;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 終了
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private float m_gameEnd;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 使用する深度
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private enum DepthAttach
@@ -296,6 +301,13 @@ public class PlayerUI : GameCanvas
     public void SetAlarmStrong(float number)
     {
         m_alarmStrong = number;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 終了
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetGameEnd(float number)
+    {
+        m_gameEnd = number;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 起動したとき
