@@ -33,7 +33,7 @@ public class RoketClearMove : MonoBehaviour
     private RoketTakeOff roketTakeOff;
 
     private bool oneFlag = false;
-    //private bool delUIFlag = false;
+    private bool delUIFlag = false;
     private bool endFlag = false;
 
     void Awake()
@@ -73,19 +73,18 @@ public class RoketClearMove : MonoBehaviour
         }
 
 
-            // ディレクターが消す様にしてくれる //
-            // ☆が目標量を達成して尚且つパーツが全て取得できているならば
-            //if (playerIndex.GetHaveStarParsent() >= 1 && playerIndex.GetHaveAllPartsFlag())
-            //{
-            //    if (oneFlag == false)
-            //    {
-            //        GameObject okUI = (GameObject)Resources.Load("paneru");
-            //        Instantiate(okUI, new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z), Quaternion.identity);
-            //        // 一回だけ生成させるようにする。
-            //        oneFlag = true;
-            //    }
-            //}
+        // ディレクターが消す様にしてくれる //
+        // ☆が目標量を達成して尚且つパーツが全て取得できているならば
+        if (playerIndex.GetHaveStarParsent() >= 1 && playerIndex.GetHaveAllPartsFlag())
+        {
+            if (oneFlag == false)
+            {
+                GameObject okUI = (GameObject)Resources.Load("paneru");
+                Instantiate(okUI, new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z), Quaternion.identity);
+                oneFlag = true;
+            }
         }
+    }
 
     void OnTriggerStay2D(Collider2D col)
     {
@@ -107,8 +106,6 @@ public class RoketClearMove : MonoBehaviour
                         // フェードアウト
                         StartFade.SetFadeOutFlag(true);
 
-                        //delUIFlag = true;
-
                         // コルーチンを実行  
                         StartCoroutine("ClearMove");
                     }
@@ -117,10 +114,10 @@ public class RoketClearMove : MonoBehaviour
         }
     }
 
-    //public bool GetdelUIFlag()
-    //{
-    //    return delUIFlag;
-    //}
+    public bool GetdelUIFlag()
+    {
+        return delUIFlag;
+    }
 
     // コルーチン ]
     // 1回だけ呼ばれる為毎フレーム更新されない様になっている 
@@ -140,8 +137,8 @@ public class RoketClearMove : MonoBehaviour
 
         // ディレクターが消してくれる // 
         // プレイヤーを消す
-        //player.SetActive(false);
-        //player = null;
+        player.SetActive(false);
+        player = null;
 
         // フェードイン
         StartFade.SetFadeInFlag(true);
