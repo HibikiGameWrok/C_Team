@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OverFlashingImage : MonoBehaviour
 {
-    public GameObject overImage;
+    //public GameObject overImage;
 
     [SerializeField]
     float time = 0.0f;
