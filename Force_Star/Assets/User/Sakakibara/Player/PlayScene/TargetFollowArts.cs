@@ -7,19 +7,6 @@ public partial class CameraArts : MonoBehaviour
     [SerializeField]
     private GameObject target = null; // 追従する目標
 
-    [SerializeField]
-    private GameObject point = null; // 超える目標
-
-    [SerializeField]
-    private float MinimumLimit = 0.0f;  // 最低の範囲
-
-    [SerializeField]
-    private float HighLimit = 0.0f;  // 最高の範囲
-
-    [SerializeField]
-    private float count = 0.05f;  // 最高の範囲
-
-
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 中心点
     //*|***|***|***|***|***|***|***|***|***|***|***|

@@ -66,7 +66,7 @@ public class RoketClearMove : MonoBehaviour
 
             // コルーチンが終わったら
             if (endFlag == true)
-            {
+            {                
                 // クリアしたと設定する
                 playDrectorIndex.SetClearFlag();
             }
@@ -105,6 +105,9 @@ public class RoketClearMove : MonoBehaviour
                         cooltime = true;
                         // フェードアウト
                         StartFade.SetFadeOutFlag(true);
+
+                        // クリアしたと設定する
+                        playDrectorIndex.SetClearAnimation();
 
                         // コルーチンを実行  
                         StartCoroutine("ClearMove");

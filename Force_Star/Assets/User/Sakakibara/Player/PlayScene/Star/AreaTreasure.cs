@@ -33,11 +33,11 @@ public class AreaTreasure : MonoBehaviour
     // 持っているSE
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
-    SoundID m_hitWall;
+    public SoundID m_hitWall;
     [SerializeField]
-    SoundID m_hitHead;
+    public SoundID m_hitHead;
     [SerializeField]
-    SoundID m_hitLeg;
+    public SoundID m_hitLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|

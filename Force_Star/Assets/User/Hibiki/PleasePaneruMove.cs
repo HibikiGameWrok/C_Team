@@ -7,11 +7,15 @@ public class PleasePaneruMove : MonoBehaviour
     // プレイヤーのデータ倉庫
     private PlayerDirectorIndex playerIndex;
 
+    // プレイシーンのデータ倉庫
+    private PlaySceneDirectorIndex playDrectorIndex;
+
     // コンポーネント
     private SpriteRenderer spraite;
 
     private void Awake()
     {
+        playDrectorIndex = PlaySceneDirectorIndex.GetInstance();
         playerIndex = PlayerDirectorIndex.GetInstance();
         spraite = GetComponent<SpriteRenderer>();
     }
@@ -29,6 +33,14 @@ public class PleasePaneruMove : MonoBehaviour
             spraite.color = new Color(1.0f,1.0f,1.0f,1.0f);
         }
         else
+        {
+            spraite.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = playDrectorIndex.GetClearAnimation();
+        if (clearAnime)
         {
             spraite.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         }

@@ -353,7 +353,7 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_jumpPowerMax = 2.0f;
         m_jumpPowerMax_S = 2.0f;
-        m_jumpPowerMaxUnder = 1.0f;
+        m_jumpPowerMaxUnder = 0.75f;
         m_movePowerMax = 0.70f;
         m_movePowerMax_S = 1.20f;
         //*|***|***|***|***|***|***|***|***|***|***|***|

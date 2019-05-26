@@ -32,7 +32,7 @@ public class ShellController : MonoBehaviour
 
     private bool checkAttack;
 
-    Collider2D collider;
+    Collider2D m_collider;
 
     SpriteRenderer shellSprite;
     [SerializeField]
@@ -117,7 +117,7 @@ public class ShellController : MonoBehaviour
     {
         //rigid2Dを使う
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
-        this.collider = gameObject.GetComponent<Collider2D>();
+        this.m_collider = gameObject.GetComponent<Collider2D>();
         xScale = this.transform.localScale.x;
         //shellRenderer = GetComponent<Renderer>();
         shellSprite = gameObject.GetComponent<SpriteRenderer>();
@@ -186,7 +186,7 @@ public class ShellController : MonoBehaviour
                 this.rigid2D.AddForce(transform.up * this.upForce + transform.right * downVel * blowoutRate);
 
                 //当たり判定をoffにする
-                collider.enabled = false;
+                m_collider.enabled = false;
 
                 //「死にました」とフラグで伝える
                 deathFlag = true;

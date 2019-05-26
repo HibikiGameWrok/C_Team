@@ -85,6 +85,10 @@ public partial class PlayerDirector : MonoBehaviour
     [SerializeField]
     private bool m_legStrong;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 終了
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_gameEnd;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 回復の入力データ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private float m_recoveryAngle;
@@ -149,6 +153,10 @@ public partial class PlayerDirector : MonoBehaviour
         m_bodyStrong = false;
         m_headStrong = false;
         m_legStrong = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_gameEnd = 1.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベースUI
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -363,6 +371,19 @@ public partial class PlayerDirector : MonoBehaviour
         {
             m_dataUI.SetAlarmStrong(1.0f);
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_directorIndex.GetClearAnimation();
+        if (clearAnime)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 終了
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_gameEnd -= Time.deltaTime;
+            m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
+        }
+        m_dataUI.SetGameEnd(m_gameEnd);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報

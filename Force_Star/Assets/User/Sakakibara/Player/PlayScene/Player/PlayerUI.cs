@@ -61,13 +61,9 @@ public class PlayerUI : GameCanvas
     //private List<GameObjectUI> m_airRate;
     //private List<ImageUIData> m_airRateUI;
 
-    private GameObjectUI m_airGaugeMain;
-    private GameObjectUI m_airGaugeFrame;
-    private GameObjectUI m_airGaugeShadow;
-
-    private ImageUIData m_airGaugeMainUI;
-    private ImageUIData m_airGaugeFrameUI;
-    private ImageUIData m_airGaugeShadowUI;
+    private OriginUIGroup m_airGaugeMain;
+    private OriginUIGroup m_airGaugeFrame;
+    private OriginUIGroup m_airGaugeShadow;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲージのサイズと場所
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -84,13 +80,9 @@ public class PlayerUI : GameCanvas
     private OriginUIGroup m_starRateParsent;
 
 
-    private GameObjectUI m_starGaugeMain;
-    private GameObjectUI m_starGaugeFrame;
-    private GameObjectUI m_starGaugeShadow;
-
-    private ImageUIData m_starGaugeMainUI;
-    private ImageUIData m_starGaugeFrameUI;
-    private ImageUIData m_starGaugeShadowUI;
+    private OriginUIGroup m_starGaugeMain;
+    private OriginUIGroup m_starGaugeFrame;
+    private OriginUIGroup m_starGaugeShadow;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲージのサイズと場所
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -355,6 +347,10 @@ public class PlayerUI : GameCanvas
         // パワーアップ起動
         //*|***|***|***|***|***|***|***|***|***|***|***|
         AwakePowerUp();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_gameEnd = 1.0f;
     }
 
 
@@ -368,6 +364,12 @@ public class PlayerUI : GameCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         TexImageData tex = null;
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 酸素ゲージ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_airGaugeFrame = new OriginUIGroup();
+        m_airGaugeMain = new OriginUIGroup();
+        m_airGaugeShadow = new OriginUIGroup();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージフレーム
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
@@ -379,13 +381,13 @@ public class PlayerUI : GameCanvas
             tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.AIR_GAUGE_FRAME);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
-            m_airGaugeFrame = CreateMenber(tex, "AirGaugeFrame");
+            m_airGaugeFrame.gameObjectUI = CreateMenber(tex, "AirGaugeFrame");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_airGaugeFrame.SetDepth(GetDepth(DepthAttach.AIRGAUGE_FRAME));
+            m_airGaugeFrame.gameObjectUI.SetDepth(GetDepth(DepthAttach.AIRGAUGE_FRAME));
 
-            m_airGaugeFrame.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_airGaugeFrame.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ
@@ -399,14 +401,14 @@ public class PlayerUI : GameCanvas
             tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.AIR_GAUGE_MAIN);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
-            m_airGaugeMain = CreateMenber(tex, "AirGaugeMain");
+            m_airGaugeMain.gameObjectUI = CreateMenber(tex, "AirGaugeMain");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_airGaugeMain.SetPibot(new Vector2(0.5f, 0.0f));
-            m_airGaugeMain.SetDepth(GetDepth(DepthAttach.AIRGAUGE_MAIN));
+            m_airGaugeMain.gameObjectUI.SetPibot(new Vector2(0.5f, 0.0f));
+            m_airGaugeMain.gameObjectUI.SetDepth(GetDepth(DepthAttach.AIRGAUGE_MAIN));
 
-            m_airGaugeMain.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_airGaugeMain.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ影
@@ -420,14 +422,14 @@ public class PlayerUI : GameCanvas
             tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.AIR_GAUGE_SHADOW);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
-            m_airGaugeShadow = CreateMenber(tex, "AirGaugeShadow");
+            m_airGaugeShadow.gameObjectUI = CreateMenber(tex, "AirGaugeShadow");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_airGaugeShadow.SetPibot(new Vector2(0.5f, 0.0f));
-            m_airGaugeShadow.SetDepth(GetDepth(DepthAttach.AIRGAUGE_SHADOW));
+            m_airGaugeShadow.gameObjectUI.SetPibot(new Vector2(0.5f, 0.0f));
+            m_airGaugeShadow.gameObjectUI.SetDepth(GetDepth(DepthAttach.AIRGAUGE_SHADOW));
 
-            m_airGaugeShadow.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_airGaugeShadow.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         m_airGaugeSize = new Vector2();
         m_airGaugeMaxSize = new Vector2();
@@ -449,6 +451,9 @@ public class PlayerUI : GameCanvas
         m_starRateDigit = 3;
         m_starRate = new List<OriginUIGroup>();
         m_starRateParsent = new OriginUIGroup();
+        m_starGaugeFrame = new OriginUIGroup();
+        m_starGaugeMain = new OriginUIGroup();
+        m_starGaugeShadow = new OriginUIGroup();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージパーセント
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -512,13 +517,13 @@ public class PlayerUI : GameCanvas
             tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.STAR_GAUGE_FRAME);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1024, 1024);
-            m_starGaugeFrame = CreateMenber(tex, "StarGaugeFrame");
+            m_starGaugeFrame.gameObjectUI = CreateMenber(tex, "StarGaugeFrame");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starGaugeFrame.SetDepth(GetDepth(DepthAttach.STARGAUGE_FRAME));
+            m_starGaugeFrame.gameObjectUI.SetDepth(GetDepth(DepthAttach.STARGAUGE_FRAME));
 
-            m_starGaugeFrame.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_starGaugeFrame.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ
@@ -532,14 +537,14 @@ public class PlayerUI : GameCanvas
             tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.STAR_GAUGE_MAIN);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
-            m_starGaugeMain = CreateMenber(tex, "StarGaugeMain");
+            m_starGaugeMain.gameObjectUI = CreateMenber(tex, "StarGaugeMain");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starGaugeMain.SetPibot(new Vector2(0.5f, 0.0f));
-            m_starGaugeMain.SetDepth(GetDepth(DepthAttach.STARGAUGE_MAIN));
+            m_starGaugeMain.gameObjectUI.SetPibot(new Vector2(0.5f, 0.0f));
+            m_starGaugeMain.gameObjectUI.SetDepth(GetDepth(DepthAttach.STARGAUGE_MAIN));
 
-            m_starGaugeMain.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_starGaugeMain.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ影
@@ -553,14 +558,14 @@ public class PlayerUI : GameCanvas
             tex.image = m_warehousePlayer.GetAnotherTexture2D(PlayerAnotherImageNum.STAR_GAUGE_SHADOW);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             tex.size = new Vector2(1, 1);
-            m_starGaugeShadow = CreateMenber(tex, "StarGaugeShadow");
+            m_starGaugeShadow.gameObjectUI = CreateMenber(tex, "StarGaugeShadow");
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // イメージの情報
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starGaugeShadow.SetPibot(new Vector2(0.5f, 0.0f));
-            m_starGaugeShadow.SetDepth(GetDepth(DepthAttach.STARGAUGE_SHADOW));
+            m_starGaugeShadow.gameObjectUI.SetPibot(new Vector2(0.5f, 0.0f));
+            m_starGaugeShadow.gameObjectUI.SetDepth(GetDepth(DepthAttach.STARGAUGE_SHADOW));
 
-            m_starGaugeShadow.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+            m_starGaugeShadow.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
         m_starGaugeSize = new Vector2();
         m_starGaugeMaxSize = new Vector2();
@@ -1051,14 +1056,14 @@ public class PlayerUI : GameCanvas
         // 酸素ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
-            m_airGaugeMainUI = new ImageUIData();
-            m_airGaugeMainUI.Init();
+            m_airGaugeMain.imageUIData = new ImageUIData();
+            m_airGaugeMain.imageUIData.Init();
 
-            m_airGaugeFrameUI = new ImageUIData();
-            m_airGaugeFrameUI.Init();
+            m_airGaugeFrame.imageUIData = new ImageUIData();
+            m_airGaugeFrame.imageUIData.Init();
 
-            m_airGaugeShadowUI = new ImageUIData();
-            m_airGaugeShadowUI.Init();
+            m_airGaugeShadow.imageUIData = new ImageUIData();
+            m_airGaugeShadow.imageUIData.Init();
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1088,14 +1093,14 @@ public class PlayerUI : GameCanvas
         // 星ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
-            m_starGaugeMainUI = new ImageUIData();
-            m_starGaugeMainUI.Init();
+            m_starGaugeMain.imageUIData = new ImageUIData();
+            m_starGaugeMain.imageUIData.Init();
 
-            m_starGaugeFrameUI = new ImageUIData();
-            m_starGaugeFrameUI.Init();
+            m_starGaugeFrame.imageUIData = new ImageUIData();
+            m_starGaugeFrame.imageUIData.Init();
 
-            m_starGaugeShadowUI = new ImageUIData();
-            m_starGaugeShadowUI.Init();
+            m_starGaugeShadow.imageUIData = new ImageUIData();
+            m_starGaugeShadow.imageUIData.Init();
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1227,6 +1232,10 @@ public class PlayerUI : GameCanvas
     protected override void UpdateWork()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 終了
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateAirData();
@@ -1264,6 +1273,7 @@ public class PlayerUI : GameCanvas
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         //Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        float alphaParsent = 1.0f * m_gameEnd;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1333,18 +1343,22 @@ public class PlayerUI : GameCanvas
             posReverseY = MyCalculator.EachTimes(posScleen, new Vector2(1.0f, -1.0f));
             pos = posReverseY;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_airGaugeFrame.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_airGaugeFrameUI.imagePos = new Vector2(pos.x, pos.y);
-            m_airGaugeFrameUI.imageScale = new Vector2(scale.x, scale.y);
+            m_airGaugeFrame.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_airGaugeFrame.imageUIData.imageScale = new Vector2(scale.x, scale.y);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 場所を継承
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        pointX = m_airGaugeFrameUI.imagePos.x;
-        pointY = m_airGaugeFrameUI.imagePos.y;
-        sizeX = m_airGaugeFrameUI.imageScale.x;
-        sizeY = m_airGaugeFrameUI.imageScale.y;
+        pointX = m_airGaugeFrame.imageUIData.imagePos.x;
+        pointY = m_airGaugeFrame.imageUIData.imagePos.y;
+        sizeX = m_airGaugeFrame.imageUIData.imageScale.x;
+        sizeY = m_airGaugeFrame.imageUIData.imageScale.y;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ゲージの大きさ測定
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1379,15 +1393,23 @@ public class PlayerUI : GameCanvas
         m_airGaugePos.x = centerX;
         m_airGaugePos.y = centerY;
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 透明度
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_airGaugeMain.gameObjectUI.SetAlpha(alphaParsent);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_airGaugeMainUI.imagePos = m_airGaugePos;
-        m_airGaugeMainUI.imageScale = m_airGaugeSize;     
+        m_airGaugeMain.imageUIData.imagePos = m_airGaugePos;
+        m_airGaugeMain.imageUIData.imageScale = m_airGaugeSize;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 透明度
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_airGaugeShadow.gameObjectUI.SetAlpha(alphaParsent);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ影
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_airGaugeShadowUI.imagePos = m_airGaugePos;
-        m_airGaugeShadowUI.imageScale = m_airGaugeMaxSize;
+        m_airGaugeShadow.imageUIData.imagePos = m_airGaugePos;
+        m_airGaugeShadow.imageUIData.imageScale = m_airGaugeMaxSize;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 星ゲージ更新
@@ -1398,6 +1420,7 @@ public class PlayerUI : GameCanvas
         // 画像データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         Rect imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+        float alphaParsent = 1.0f * m_gameEnd;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1424,7 +1447,7 @@ public class PlayerUI : GameCanvas
         float parsentPoint = MyCalculator.Leap(STAR_HIGH, STAR_LOW, parsentStar);
         imageRect = MyCalculator.RectSizeReverse_Y(0, 1, 1);
         imageRect.yMax = parsentPoint;
-        m_starGaugeMain.SetRect(imageRect);
+        m_starGaugeMain.gameObjectUI.SetRect(imageRect);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 調整用データ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1498,20 +1521,24 @@ public class PlayerUI : GameCanvas
             posReverseY = MyCalculator.EachTimes(posScleen, new Vector2(1.0f, -1.0f));
             pos = posReverseY;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_starGaugeFrame.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_starGaugeFrameUI.imagePos = new Vector2(pos.x, pos.y);
-            m_starGaugeFrameUI.imageScale = new Vector2(scale.x, scale.y);
+            m_starGaugeFrame.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_starGaugeFrame.imageUIData.imageScale = new Vector2(scale.x, scale.y);
         }
 
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 場所を継承
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        pointX = m_starGaugeFrameUI.imagePos.x;
-        pointY = m_starGaugeFrameUI.imagePos.y;
-        sizeX = m_starGaugeFrameUI.imageScale.x;
-        sizeY = m_starGaugeFrameUI.imageScale.y;
+        pointX = m_starGaugeFrame.imageUIData.imagePos.x;
+        pointY = m_starGaugeFrame.imageUIData.imagePos.y;
+        sizeX = m_starGaugeFrame.imageUIData.imageScale.x;
+        sizeY = m_starGaugeFrame.imageUIData.imageScale.y;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ゲージの大きさ測定
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1552,8 +1579,8 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            pos = m_starGaugeFrameUI.imagePos;
-            scale = m_starGaugeFrameUI.imageScale;
+            pos = m_starGaugeFrame.imageUIData.imagePos;
+            scale = m_starGaugeFrame.imageUIData.imageScale;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 計算用初期化、データ確保
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1584,6 +1611,10 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_starRate[index].gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_starRate[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
@@ -1599,21 +1630,33 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_starRateParsent.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_starRateParsent.imageUIData.imagePos = new Vector2(pos.x, pos.y);
             m_starRateParsent.imageUIData.imageScale = new Vector2(scale.x, scale.y);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 透明度
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starGaugeMain.gameObjectUI.SetAlpha(alphaParsent);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_starGaugeMainUI.imagePos = m_starGaugePos;
-        m_starGaugeMainUI.imageScale = m_starGaugeSize;
+        m_starGaugeMain.imageUIData.imagePos = m_starGaugePos;
+        m_starGaugeMain.imageUIData.imageScale = m_starGaugeSize;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 透明度
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starGaugeShadow.gameObjectUI.SetAlpha(alphaParsent);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ影
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_starGaugeShadowUI.imagePos = m_starGaugePos;
-        m_starGaugeShadowUI.imageScale = m_starGaugeMaxSize;
+        m_starGaugeShadow.imageUIData.imagePos = m_starGaugePos;
+        m_starGaugeShadow.imageUIData.imageScale = m_starGaugeMaxSize;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 所持数星量更新
@@ -1703,6 +1746,11 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_haveStarKO.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_haveStarKO.imageUIData.imagePos = new Vector2(pos.x, pos.y);
@@ -1718,6 +1766,11 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_haveStarStar.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_haveStarStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
@@ -1732,6 +1785,11 @@ public class PlayerUI : GameCanvas
             pos.x = posSave.x + (persent_AssistS.x * indexPoint);
             pos.y = posSave.y;
             scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_haveStarCross.gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1751,6 +1809,11 @@ public class PlayerUI : GameCanvas
             pos.x = posSave.x + (persent_AssistS.x * indexPoint);
             pos.y = posSave.y;
             scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_haveStar[index].gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1846,6 +1909,11 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_needStarKO.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_needStarKO.imageUIData.imagePos = new Vector2(pos.x, pos.y);
@@ -1861,6 +1929,11 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_needStarStar.gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_needStarStar.imageUIData.imagePos = new Vector2(pos.x, pos.y);
@@ -1875,6 +1948,11 @@ public class PlayerUI : GameCanvas
             pos.x = posSave.x + (persent_AssistS.x * indexPoint);
             pos.y = posSave.y;
             scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_needStarCross.gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1894,6 +1972,11 @@ public class PlayerUI : GameCanvas
             pos.x = persent_AssistP.x + (persent_AssistS.x * indexPoint);
             pos.y = persent_AssistP.y;
             scale = persent_AssistS;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_needStar[index].gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1994,6 +2077,11 @@ public class PlayerUI : GameCanvas
             pos.y = posSave.y;
             scale = scaleSave;
             //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = 1.0f * m_gameEnd;
+            m_partsCollection[index].gameObjectUI.SetAlpha(alphaParsent);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             // 桁挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_partsCollection[index].imageUIData.imagePos = new Vector2(pos.x, pos.y);
@@ -2088,7 +2176,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            float alphaParsent = alarmParsent;
+            float alphaParsent = alarmParsent * m_gameEnd;
             m_alarm.gameObjectUI.SetAlpha(alphaParsent);
         }
     }
@@ -2196,7 +2284,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            float alphaParsent = armStrongFlag;
+            float alphaParsent = armStrongFlag * m_gameEnd;
             m_armPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
             m_armPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2223,7 +2311,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            float alphaParsent = bodyStrongFlag;
+            float alphaParsent = bodyStrongFlag * m_gameEnd;
             m_bodyPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
             m_bodyPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2250,7 +2338,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            float alphaParsent = headStrongFlag;
+            float alphaParsent = headStrongFlag * m_gameEnd;
             m_headPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
             m_headPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2277,7 +2365,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 透明度
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            float alphaParsent = legStrongFlag;
+            float alphaParsent = legStrongFlag * m_gameEnd;
             m_legPowerUp.m_icon.gameObjectUI.SetAlpha(alphaParsent);
             m_legPowerUp.m_time.gameObjectUI.SetAlpha(alphaParsent);
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2339,7 +2427,7 @@ public class PlayerUI : GameCanvas
         // 酸素ゲージフレーム
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
-            AssetSet(ref m_airGaugeFrame, m_screenSize, m_airGaugeFrameUI, true);
+            AssetSet(ref m_airGaugeFrame, m_screenSize, true);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ
@@ -2348,7 +2436,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            AssetSet(ref m_airGaugeMain, m_screenSize, m_airGaugeMainUI, true);
+            AssetSet(ref m_airGaugeMain, m_screenSize, true);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ影
@@ -2357,7 +2445,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            AssetSet(ref m_airGaugeShadow, m_screenSize, m_airGaugeShadowUI, true);
+            AssetSet(ref m_airGaugeShadow, m_screenSize, true);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2387,7 +2475,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            AssetSet(ref m_starGaugeFrame, m_screenSize, m_starGaugeFrameUI, true);
+            AssetSet(ref m_starGaugeFrame, m_screenSize, true);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ
@@ -2396,7 +2484,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            AssetSet(ref m_starGaugeMain, m_screenSize, m_starGaugeMainUI, true);
+            AssetSet(ref m_starGaugeMain, m_screenSize, true);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星ゲージ影
@@ -2405,7 +2493,7 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 挿入
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            AssetSet(ref m_starGaugeShadow, m_screenSize, m_starGaugeShadowUI, true);
+            AssetSet(ref m_starGaugeShadow, m_screenSize, true);
         }
     }
 
