@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ImageDisplaySwitching : MonoBehaviour
 {
-    public ResultRocketMove rocket;
+    private GameObject roket;
+    private ResultRocketMove resultRocketMove;
 
     //画像表示用
     [SerializeField]
@@ -13,7 +14,7 @@ public class ImageDisplaySwitching : MonoBehaviour
     //シーン切り替え用
     bool stageFlag = false;
 
-    public GameObject clsarImage;
+    //public GameObject clsarImage;
 
     // コントロールを管理しているクラス
     PlayerController playercont;
@@ -22,22 +23,24 @@ public class ImageDisplaySwitching : MonoBehaviour
     void Start()
     {
         playercont = new PlayerController();
-        displayFlag = rocket.GetMoveEndFlag();
+        roket = GameObject.Find("Rocket");
+        resultRocketMove = roket.GetComponent<ResultRocketMove>();
+        Debug.Log(roket.name);
     }
 
     // Update is called once per frame
     void Update()
     {
         playercont.Update();
-        displayFlag = rocket.GetMoveEndFlag();
-
+        displayFlag = resultRocketMove.GetMoveEndFlag();
+        Debug.Log(displayFlag);
         if (displayFlag == true)
         {
             //画像の表示
-            clsarImage.SetActive(true);
+            //clsarImage.SetActive(true);
 
             //スペースキーが押されたとき
-            if ((playercont.ChackStartTrigger()) || (Input.GetKeyDown(KeyCode.Space)))
+            if ((playercont.ChackJump()) || (Input.GetKeyDown(KeyCode.Space)))
             {
                 stageFlag = true;
             }
@@ -45,7 +48,7 @@ public class ImageDisplaySwitching : MonoBehaviour
         else
         {
             //画像の非表示
-            clsarImage.SetActive(false);
+            //clsarImage.SetActive(false);
         }
     }
 
