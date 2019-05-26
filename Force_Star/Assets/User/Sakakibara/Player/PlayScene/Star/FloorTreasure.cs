@@ -64,6 +64,8 @@ public class FloorTreasure : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private float m_timeMax;
     private float m_timeLevel;
+    private float m_speedMax;
+    private float m_speedMin;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 連続制限時間
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -112,6 +114,8 @@ public class FloorTreasure : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_timeMax = 75.0f;
         m_timeLevel = 50.0f;
+        m_speedMax = 0.3f;
+        m_speedMin = 0.1f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 連続制限時間
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -491,8 +495,8 @@ public class FloorTreasure : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る * starNum
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
-            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, m_speedMax, m_speedMin, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, m_speedMax, m_speedMin, m_timeMax, m_timeLevel, starNum);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -543,8 +547,8 @@ public class FloorTreasure : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る * starNum
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
-            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointLeft, leftAngle, swing, m_speedMax, m_speedMin, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointRight, rightAngle, swing, m_speedMax, m_speedMin, m_timeMax, m_timeLevel, starNum);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -625,10 +629,8 @@ public class FloorTreasure : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星が出る * starNum
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            float m_timeMax = 300.0f;
-            float m_timeLevel = 200.0f;
-            m_directorIndex.ApplyStarBounce(pointUp, upAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
-            m_directorIndex.ApplyStarBounce(pointDown, downAngle, swing, 0.3f, 0.1f, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointUp, upAngle, swing, m_speedMax, m_speedMin, m_timeMax, m_timeLevel, starNum);
+            m_directorIndex.ApplyStarBounce(pointDown, downAngle, swing, m_speedMax, m_speedMin, m_timeMax, m_timeLevel, starNum);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

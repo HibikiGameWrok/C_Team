@@ -439,25 +439,6 @@ public class PlaySceneDirectorIndex
         m_seManeger.PlaySoundEffect(SoundID.HYUN_01);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
-    // ゲームクリア！
-    //*|***|***|***|***|***|***|***|***|***|***|***|
-    bool m_platinumAngel;
-    bool m_gameClearFlag;
-    public void ClearReset()
-    {
-        m_platinumAngel = false;
-        m_gameClearFlag = false;
-    }
-    public void SetClearAnimation()
-    {
-        m_platinumAngel = true;
-    }
-    public void SetClearFlag()
-    {
-        m_platinumAngel = true;
-        m_gameClearFlag = true;
-    }
-    //*|***|***|***|***|***|***|***|***|***|***|***|
     // どっかーん
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public void LetsShake()
@@ -526,6 +507,25 @@ public class PlaySceneDirectorIndex
         float magnitudeMax = 0.30f;
         float magnitudeMin = 0.15f;
         m_mainCameraArts.WidthShake(duration, magnitudeMax, magnitudeMin);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ゲームクリア！
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    bool m_platinumAngel;
+    bool m_gameClearFlag;
+    public void ClearReset()
+    {
+        m_platinumAngel = false;
+        m_gameClearFlag = false;
+    }
+    public void SetClearAnimation()
+    {
+        m_platinumAngel = true;
+    }
+    public void SetClearFlag()
+    {
+        m_platinumAngel = true;
+        m_gameClearFlag = true;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // ゲームクリア！取得
