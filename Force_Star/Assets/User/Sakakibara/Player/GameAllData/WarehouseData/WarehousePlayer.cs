@@ -80,6 +80,12 @@ namespace WarehouseData
                 LEFTLEG_STRONG,
                 RIGHTLEG_STRONG,
                 //*|***|***|***|***|***|***|***|***|***|***|***|
+                // プレイヤーその他のデータ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                PLAYERBOAL_HUSHIGI,
+                PLAYERBOAL_YEAH,
+                BODYBOTTOM_DEAD,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 総数
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 NUM,
@@ -262,6 +268,13 @@ namespace WarehouseData
                         m_playerTex2D[(int)PlayerData_Number.ATTACKBOAL_STRONG] = Resources.Load<Texture2D>(MyFile + "AttackBoalStrong");
                         m_playerTex2D[(int)PlayerData_Number.LEFTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "LeftLegStrong");
                         m_playerTex2D[(int)PlayerData_Number.RIGHTLEG_STRONG] = Resources.Load<Texture2D>(MyFile + "RightLegStrong");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // プレイヤーその他のデータ
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_HUSHIGI] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_Fushigi");
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_YEAH] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_Yeah");
+                        m_playerTex2D[(int)PlayerData_Number.BODYBOTTOM_DEAD] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_Yeah");
+
                     }
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // プレイヤーその他
