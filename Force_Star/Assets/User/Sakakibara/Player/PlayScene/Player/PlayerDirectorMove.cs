@@ -184,7 +184,7 @@ public partial class PlayerDirector : MonoBehaviour
         m_fallAnimeAfter = Animator.StringToHash("Base Layer.Basis.イントロ後");
 
 
-        m_startPoint = new Vector3(0, 0, 0);
+        m_startPoint = new Vector3(0, -1.4f, 0);
         m_fall = new Fall();
         m_fall.awake = true;
         m_fall.start = false;
