@@ -1020,7 +1020,7 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (data.IgnoreInvincibility)
             {
-                m_dataBace.DamageLegDurable(data.damage);
+                m_dataBace.DamageLegDurable(damage);
             }
             else
             {
@@ -1035,7 +1035,7 @@ public partial class PlayerDirector : MonoBehaviour
                     damageFlag = true;
 
 
-                    m_dataBace.DamageLegDurable(data.damage);
+                    m_dataBace.DamageLegDurable(damage);
                 }
             }
         }

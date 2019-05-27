@@ -108,6 +108,10 @@ namespace WarehouseData
             // 大爆発のデータ
             //*|***|***|***|***|***|***|***|***|***|***|***|
             EXPROSION,
+            EXPROSION_RED,
+            EXPROSION_BLUE,
+            EXPROSION_GREEN,
+            EXPROSION_YELLOW,
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // パーツのデータ
             //*|***|***|***|***|***|***|***|***|***|***|***|

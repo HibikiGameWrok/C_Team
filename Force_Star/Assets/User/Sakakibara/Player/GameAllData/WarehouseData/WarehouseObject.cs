@@ -189,6 +189,10 @@ namespace WarehouseData
                     // 大爆発のデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.EXPROSION] = Resources.Load<Texture2D>(MyFile + "Exprosion");
+                    m_texture2DApp[(int)AppImageNum.EXPROSION_RED] = Resources.Load<Texture2D>(MyFile + "ExprosionRed");
+                    m_texture2DApp[(int)AppImageNum.EXPROSION_BLUE] = Resources.Load<Texture2D>(MyFile + "ExprosionBlue");
+                    m_texture2DApp[(int)AppImageNum.EXPROSION_GREEN] = Resources.Load<Texture2D>(MyFile + "ExprosionGreen");
+                    m_texture2DApp[(int)AppImageNum.EXPROSION_YELLOW] = Resources.Load<Texture2D>(MyFile + "ExprosionYellow");
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // ロケットパーツのデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
