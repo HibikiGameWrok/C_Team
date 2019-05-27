@@ -88,6 +88,7 @@ namespace WarehouseData
                 // プレイヤー死のデータ
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 PLAYERBOAL_DEAD,
+                PLAYERBOAL_ODOROKI,
                 BODYTOP_DEAD,
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 総数
@@ -281,6 +282,7 @@ namespace WarehouseData
                         // プレイヤー死のデータ
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_DEAD] = Resources.Load<Texture2D>(MyFile + "PlayerBoalDead");
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_ODOROKI] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_odoroki");
                         m_playerTex2D[(int)PlayerData_Number.BODYTOP_DEAD] = Resources.Load<Texture2D>(MyFile + "PlayerTopDie");
 
                     }

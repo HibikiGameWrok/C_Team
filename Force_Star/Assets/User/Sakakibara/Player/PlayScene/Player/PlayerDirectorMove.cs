@@ -1059,28 +1059,28 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 腕パーツ耐久チェック
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_dataBace.GetArmDurable() == 0.0f)
+        if (m_dataBace.GetArmDurable() == 0.0f && !m_ascension.end)
         {
             UpdateWhiteArm();
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 体パーツ耐久チェック
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_dataBace.GetBodyDurable() == 0.0f)
+        if (m_dataBace.GetBodyDurable() == 0.0f && !m_ascension.end)
         {
             UpdateWhiteBody();
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 頭パーツ耐久チェック
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_dataBace.GetHeadDurable() == 0.0f)
+        if (m_dataBace.GetHeadDurable() == 0.0f && !m_ascension.end)
         {
             UpdateWhiteHead();
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 脚パーツ耐久チェック
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_dataBace.GetLegDurable() == 0.0f)
+        if (m_dataBace.GetLegDurable() == 0.0f && !m_ascension.end)
         {
             UpdateWhiteLeg();
         }

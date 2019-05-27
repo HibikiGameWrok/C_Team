@@ -789,12 +789,22 @@ public partial class PlayerDirector : MonoBehaviour
     private void UpdateWhiteBody()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 名前を取得
+        //*|***|***|***|***|***|***|***|***|***|***|***|    
+        for (int partsNum = 0; partsNum < m_listData.listData.Count; partsNum++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // まるで透明みたいだ。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_listAnime[partsNum].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // まるで壊れているみたいだ。
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 体
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BODYTOP_DEAD;
-        m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BODYBOTTOM;
+        m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.PLAYERBOAL_ODOROKI;
     }
     private void UpdateWhiteHead()
     {
