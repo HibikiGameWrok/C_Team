@@ -69,11 +69,23 @@ public partial class PlayerDirector : MonoBehaviour
         STRONG,
     }
     GameObject m_damageExprosionObject;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 危険ライン
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     float m_damageLine;
+    float m_damageFireLine;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 危険ラインを超えるもの
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     bool m_damageArm;
     bool m_damageBody;
     bool m_damageHead;
     bool m_damageLeg;
+
+    bool m_damageFireArm;
+    bool m_damageFireBody;
+    bool m_damageFireHead;
+    bool m_damageFireLeg;
     ExprosionColor m_exprosionArm;
     ExprosionColor m_exprosionBody;
     ExprosionColor m_exprosionHead;
@@ -153,10 +165,19 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_damageExprosionObject = new GameObject("ExprosionObject");
         m_damageLine = 0.5f;
+        m_damageFireLine = 0.25f;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 危険ラインを超えるもの
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         m_damageArm = false;
         m_damageBody = false;
         m_damageHead = false;
         m_damageLeg = false;
+        m_damageFireArm = false;
+        m_damageFireBody = false;
+        m_damageFireHead = false;
+        m_damageFireLeg = false;
+
         m_exprosionArm = m_damageExprosionObject.AddComponent<ExprosionColor>();
         m_exprosionBody = m_damageExprosionObject.AddComponent<ExprosionColor>();
         m_exprosionHead = m_damageExprosionObject.AddComponent<ExprosionColor>();
@@ -312,6 +333,10 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_playerMove.SetArive(false);
             UpdateWhite();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 全てとおさらば。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            ClearAllFlags();
             return;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -377,14 +402,33 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (!m_damageArm)
             {
-                m_exprosionArm.SetBomb(AppImageNum.EXPROSION_RED, 18.0f);
+                m_exprosionArm.SetBomb(AppImageNum.EXPROSION_RED, 6.0f);
             }
             m_damageArm = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 火が出る危険域
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (hp < m_damageFireLine)
+            {
+                if(!m_damageFireArm)
+                {
+                    m_exprosionArm.SetFire(AppImageNum.EXPROSION_RED, 6.0f);
+                }
+                m_damageFireArm = true;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_exprosionArm.SetPoint(GetPlayerPositon());
         }
         else
         {
             m_damageArm = false;
+            m_damageFireArm = false;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_exprosionArm.SetActive(false);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
@@ -450,14 +494,33 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (!m_damageBody)
             {
-                m_exprosionBody.SetBomb(AppImageNum.EXPROSION_YELLOW, 18.0f);
+                m_exprosionBody.SetBomb(AppImageNum.EXPROSION_YELLOW, 6.0f);
             }
             m_damageBody = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 火が出る危険域
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (hp < m_damageFireLine)
+            {
+                if (!m_damageFireBody)
+                {
+                    m_exprosionBody.SetFire(AppImageNum.EXPROSION_YELLOW, 6.0f);
+                }
+                m_damageFireBody = true;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_exprosionBody.SetPoint(GetPlayerPositon());
         }
         else
         {
             m_damageBody = false;
+            m_damageFireBody = false;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_exprosionBody.SetActive(false);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
@@ -499,14 +562,33 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (!m_damageHead)
             {
-                m_exprosionHead.SetBomb(AppImageNum.EXPROSION_BLUE, 18.0f);
+                m_exprosionHead.SetBomb(AppImageNum.EXPROSION_BLUE, 6.0f);
             }
             m_damageHead = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 火が出る危険域
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (hp < m_damageFireLine)
+            {
+                if (!m_damageFireHead)
+                {
+                    m_exprosionHead.SetFire(AppImageNum.EXPROSION_BLUE, 6.0f);
+                }
+                m_damageFireHead = true;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_exprosionHead.SetPoint(GetPlayerPositon());
         }
         else
         {
             m_damageHead = false;
+            m_damageFireHead = false;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_exprosionHead.SetActive(false);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
@@ -545,14 +627,33 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             if (!m_damageLeg)
             {
-                m_exprosionLeg.SetBomb(AppImageNum.EXPROSION_GREEN, 18.0f);
+                m_exprosionLeg.SetBomb(AppImageNum.EXPROSION_GREEN, 6.0f);
             }
             m_damageLeg = true;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 火が出る危険域
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (hp < m_damageFireLine)
+            {
+                if (!m_damageFireLeg)
+                {
+                    m_exprosionLeg.SetFire(AppImageNum.EXPROSION_GREEN, 6.0f);
+                }
+                m_damageFireLeg = true;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
             m_exprosionLeg.SetPoint(GetPlayerPositon());
         }
         else
         {
             m_damageLeg = false;
+            m_damageFireLeg = false;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 爆発位置
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_exprosionLeg.SetActive(false);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
@@ -865,6 +966,17 @@ public partial class PlayerDirector : MonoBehaviour
             m_controllerData.EditJump(false);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲームクリアしている？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_directorIndex.GetClearAnimation();
+        if (clearAnime)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ゲームクリア後は操作不可
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_controllerData.ResetCommond();
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 爆発後
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (m_ascension.end)
@@ -939,6 +1051,10 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_ascension.time = m_ascension.time + 1;
 
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 全てとおさらば。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        ClearAllFlags();
 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 腕パーツ耐久チェック

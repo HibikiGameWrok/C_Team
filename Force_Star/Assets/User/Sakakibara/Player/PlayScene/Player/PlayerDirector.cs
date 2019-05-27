@@ -820,6 +820,23 @@ public partial class PlayerDirector : MonoBehaviour
         m_listAnime[(int)PlayerData_Number_List.RLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
         m_listAnime[(int)PlayerData_Number_List.LLEGJOINT].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 全てとおさらば。
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void ClearAllFlags()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発とおさらば。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_exprosionArm.SetActive(false);
+        m_exprosionBody.SetActive(false);
+        m_exprosionHead.SetActive(false);
+        m_exprosionLeg.SetActive(false);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発とおさらば。
+        //*|***|***|***|***|***|***|***|***|***|***|***|
 
+
+    }
 
 }

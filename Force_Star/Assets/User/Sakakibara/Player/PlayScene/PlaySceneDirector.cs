@@ -422,7 +422,9 @@ public partial class PlaySceneDirector : MonoBehaviour
             m_rocketData[index].m_rocketPartsPosition = getIndexPoint;
         }
     }
-    
+
+
+
     void OnApplicationQuit()
     {
         PlaySceneDirectorIndex.Remove();

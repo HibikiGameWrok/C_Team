@@ -52,6 +52,8 @@ public class ExprosionColor : MonoBehaviour
     private bool m_fireFlag = false;
     private Vector3 m_pointBomb;
     private Vector3 m_pointBombDif;
+    private Vector3 m_constMoveDif;
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 爆発
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -107,6 +109,8 @@ public class ExprosionColor : MonoBehaviour
         m_timeExplosion = 0;
         m_awakeFlag = false;
         m_pointBomb = Vector3.zero;
+        m_pointBombDif = Vector3.zero;
+        m_constMoveDif = new Vector3(0, 1, 0);
     }
     void Start()
     {
@@ -132,6 +136,12 @@ public class ExprosionColor : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         RandomDifPoint();
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 単発爆発設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int depth = WarehouseData.WarehouseOrder.GetInstance().GetOrderToLayerSprite(WarehouseData.WarehouseOrder.Object_Order_Number.PLAYER_FLONT_GIMMICK);
+        m_explosionColor.SetDepth(depth);
+        m_explosionColor.SetSize(new Vector2(5.0f, 5.0f));
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 爆発イメージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_explosionColor.SetTexture(m_warehouseObject.GetTexture2DApp(m_imageNum));
@@ -139,6 +149,31 @@ public class ExprosionColor : MonoBehaviour
         // 音：ドーン
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex.PlaySoundEffect(SEManager.SoundID.PLAYERFIRE_SE);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 目覚めているか
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetFire(AppImageNum exprosionNum, float timeMax)
+    {
+        m_timeExplosion = 0;
+        m_timeMax = timeMax;
+        m_imageNum = exprosionNum;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 単発爆発する
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_awakeFlag = true;
+        m_bombFlag = false;
+        m_fireFlag = true;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 単発爆発設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int depth = WarehouseData.WarehouseOrder.GetInstance().GetOrderToLayerSprite(WarehouseData.WarehouseOrder.Object_Order_Number.GIMMICK_P1);
+        m_explosionColor.SetDepth(depth);
+        m_explosionColor.SetSize(new Vector2(2.0f, 2.0f));
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 爆発イメージ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_explosionColor.SetTexture(m_warehouseObject.GetTexture2DApp(m_imageNum));
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 場所
@@ -151,6 +186,16 @@ public class ExprosionColor : MonoBehaviour
         m_pointBomb = exprosionPoint;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 起動
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void SetActive(bool flag)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 場所
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_awakeFlag = flag;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // ランダム変更
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void RandomDifPoint()
@@ -161,7 +206,7 @@ public class ExprosionColor : MonoBehaviour
         float angle = XORShiftRand.GetSeedDivRand(360);
         float speed = MyCalculator.Division((float)XORShiftRand.GetSeedDivRand(100), 100.0f);
         Vector2 dif = ChangeData.AngleDegToVector2(angle) * speed;
-        m_pointBombDif = ChangeData.GetVector3(dif);
+        m_pointBombDif = ChangeData.GetVector3(dif) + m_constMoveDif;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 更新
@@ -265,7 +310,11 @@ public class ExprosionColor : MonoBehaviour
             }
             else
             {
-                m_awakeFlag = false;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 今再び
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_timeExplosion = 0;
+                RandomDifPoint();
             }
         }
     }
