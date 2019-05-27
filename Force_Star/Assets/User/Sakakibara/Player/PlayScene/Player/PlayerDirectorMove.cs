@@ -14,6 +14,13 @@ using PlayerData_Number_List = WarehouseData.PlayerData.WarehousePlayer.PlayerDa
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using PartsID = PlayStaticData.PartsID;
 //*|***|***|***|***|***|***|***|***|***|***|***|
+// 番号データ共通
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using WarehouseObject = WarehouseData.WarehouseObject;
+using CommonImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_Common;
+using AppImageNum = WarehouseData.WarehouseStaticData.Object2D_Numbers_App;
+using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
+//*|***|***|***|***|***|***|***|***|***|***|***|
 // 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using SoundID = SEManager.SoundID;
@@ -61,6 +68,16 @@ public partial class PlayerDirector : MonoBehaviour
         DAMAGED,
         STRONG,
     }
+    GameObject m_damageExprosionObject;
+    float m_damageLine;
+    bool m_damageArm;
+    bool m_damageBody;
+    bool m_damageHead;
+    bool m_damageLeg;
+    ExprosionColor m_exprosionArm;
+    ExprosionColor m_exprosionBody;
+    ExprosionColor m_exprosionHead;
+    ExprosionColor m_exprosionLeg;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 昇天
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -131,6 +148,19 @@ public partial class PlayerDirector : MonoBehaviour
         m_brakeTime = 0.0f;
         m_hashBackBrakeT = false;
         m_hashFlontBrakeT = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_damageExprosionObject = new GameObject("ExprosionObject");
+        m_damageLine = 0.5f;
+        m_damageArm = false;
+        m_damageBody = false;
+        m_damageHead = false;
+        m_damageLeg = false;
+        m_exprosionArm = m_damageExprosionObject.AddComponent<ExprosionColor>();
+        m_exprosionBody = m_damageExprosionObject.AddComponent<ExprosionColor>();
+        m_exprosionHead = m_damageExprosionObject.AddComponent<ExprosionColor>();
+        m_exprosionLeg = m_damageExprosionObject.AddComponent<ExprosionColor>();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ブレーキ中
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -338,6 +368,25 @@ public partial class PlayerDirector : MonoBehaviour
         strong = m_dataBace.GetArmStrong();
         state = GetPartsState(strong, hp);
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (hp < m_damageLine)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // パーツの状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!m_damageArm)
+            {
+                m_exprosionArm.SetBomb(AppImageNum.EXPROSION_RED, 18.0f);
+            }
+            m_damageArm = true;
+            m_exprosionArm.SetPoint(GetPlayerPositon());
+        }
+        else
+        {
+            m_damageArm = false;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
         //*|***|***|***|***|***|***|***|***|***|***|***|
         switch (state)
@@ -392,6 +441,25 @@ public partial class PlayerDirector : MonoBehaviour
         strong = m_dataBace.GetBodyStrong();
         state = GetPartsState(strong, hp);
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (hp < m_damageLine)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // パーツの状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!m_damageBody)
+            {
+                m_exprosionBody.SetBomb(AppImageNum.EXPROSION_YELLOW, 18.0f);
+            }
+            m_damageBody = true;
+            m_exprosionBody.SetPoint(GetPlayerPositon());
+        }
+        else
+        {
+            m_damageBody = false;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
         //*|***|***|***|***|***|***|***|***|***|***|***|
         switch (state)
@@ -422,6 +490,25 @@ public partial class PlayerDirector : MonoBehaviour
         strong = m_dataBace.GetHeadStrong();
         state = GetPartsState(strong, hp);
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (hp < m_damageLine)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // パーツの状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!m_damageHead)
+            {
+                m_exprosionHead.SetBomb(AppImageNum.EXPROSION_BLUE, 18.0f);
+            }
+            m_damageHead = true;
+            m_exprosionHead.SetPoint(GetPlayerPositon());
+        }
+        else
+        {
+            m_damageHead = false;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
         //*|***|***|***|***|***|***|***|***|***|***|***|
         switch (state)
@@ -448,6 +535,25 @@ public partial class PlayerDirector : MonoBehaviour
         hp = m_dataBace.GetLegDurableParsent();
         strong = m_dataBace.GetLegStrong();
         state = GetPartsState(strong, hp);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // パーツの状態
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (hp < m_damageLine)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // パーツの状態
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (!m_damageLeg)
+            {
+                m_exprosionLeg.SetBomb(AppImageNum.EXPROSION_GREEN, 18.0f);
+            }
+            m_damageLeg = true;
+            m_exprosionLeg.SetPoint(GetPlayerPositon());
+        }
+        else
+        {
+            m_damageLeg = false;
+        }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 分岐
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -502,13 +608,12 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private PartsState GetPartsState(bool strong, float hp)
     {
-        float damageLine = 0.5f;
         PartsState state;
         if (strong)
         {
             state = PartsState.STRONG;
         }
-        else if (hp < damageLine)
+        else if (hp < m_damageLine)
         {
             state = PartsState.DAMAGED;
         }
