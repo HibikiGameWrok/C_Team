@@ -60,6 +60,7 @@ namespace WarehouseData
             GIMMICK_P1,
             GIMMICK_P2,
             GIMMICK_P3,
+            PLAYER_FLONT_GIMMICK,
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 床
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -172,7 +173,7 @@ namespace WarehouseData
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // 星
                     //*|***|***|***|***|***|***|***|***|***|***|***|
-                    m_orderToLayerSprite[(int)Object_Order_Number.STAR] = 50;
+                    m_orderToLayerSprite[(int)Object_Order_Number.STAR] = 60;
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // ギミック
                     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -180,6 +181,7 @@ namespace WarehouseData
                     m_orderToLayerSprite[(int)Object_Order_Number.GIMMICK_P1] = 21;
                     m_orderToLayerSprite[(int)Object_Order_Number.GIMMICK_P2] = 22;
                     m_orderToLayerSprite[(int)Object_Order_Number.GIMMICK_P3] = 23;
+                    m_orderToLayerSprite[(int)Object_Order_Number.PLAYER_FLONT_GIMMICK] = 50;
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // 床
                     //*|***|***|***|***|***|***|***|***|***|***|***|
