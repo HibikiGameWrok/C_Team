@@ -33,7 +33,7 @@ public class StarPieceBounceMove : MonoBehaviour
     private float chengSize = 0.0f;
 
     // 時間・点滅情報----------
-    private float grv = 0.005f;                  // 重力
+    private float grv = 0.05f;                  // 重力
     float starSize;
     //-------------------------
 
@@ -108,6 +108,7 @@ public class StarPieceBounceMove : MonoBehaviour
     bool m_jumpFlag;
     bool m_wallFlag;
     float m_fallPower;
+    float m_movePowerP;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 移動力
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -245,6 +246,7 @@ public class StarPieceBounceMove : MonoBehaviour
         m_jumpFlag = false;
         m_wallFlag = false;
         m_fallPower = 0.0f;
+        m_movePowerP = 0.0f;
         m_ariveFlag = true;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星のレイヤーに変更
@@ -353,6 +355,12 @@ public class StarPieceBounceMove : MonoBehaviour
             SetStopHit();
             return;
         }
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 動きの一連の処理
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void WorkUpdate()
+    {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // サークルが当たったら？
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -509,13 +517,20 @@ public class StarPieceBounceMove : MonoBehaviour
                 {
                     m_movePower.y = m_movePower.y - grv;
 
-                    m_fallPower = Mathf.Abs(m_movePower.y);
+                    if(m_movePower.y < -0.5f)
+                    {
+                        m_movePower.y = -0.5f;
+                    }
+                    m_fallPower = Mathf.Abs(m_movePower.x * 3);
                 }
                 else
                 {
                     m_fallPower += grv;
                 }
             }
+            float p = 0.99f;
+            m_movePower = MyCalculator.EachTimes(m_movePower, new Vector2(p, p));
+
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 跳ねる移動
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -683,6 +698,16 @@ public class StarPieceBounceMove : MonoBehaviour
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 定期更新データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void FixedUpdate()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 動きの一連の処理
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        WorkUpdate();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // GameObjectSprite情報獲得
     // 取扱注意
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -764,7 +789,7 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // その他設定
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        grv = 0.001f;
+        grv = 0.05f;
         chengSize = MyCalculator.Division(starSize, 6.0f);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
