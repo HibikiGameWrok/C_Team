@@ -78,10 +78,13 @@ public class WaterWall : MonoBehaviour
         }
         else　　　　　　　　　// 追加分ならこっち
         {
-            // 対応した要素のオブジェクトを消して消した要素を詰める
             int i = sMyList.IndexOf(Wobject);
-            Destroy(sMyList[i]);
-            sMyList.RemoveAt(i);
+            if (i > -1)
+            {
+                // 対応した要素のオブジェクトを消して消した要素を詰める
+                Destroy(sMyList[i]);
+                sMyList.RemoveAt(i);
+            }
         }
 
     }
@@ -98,19 +101,23 @@ public class WaterWall : MonoBehaviour
             // 追加分が存在したら消す
             if (sMyList.Count > 0)
             {
-                for (int i = 0; i < sMyList.Count; i++)
+                if(sMyList[0]!=null)
                 {
-                    //Debug.Log(sMyList.Count);
-                    //Debug.Log(i);
-                    Destroy(sMyList[i]);
-                    //Debug.Log(i);
+                    for (int i = 0; i < sMyList.Count; i++)
+                    {
+                        //Debug.Log(sMyList.Count);
+                        //Debug.Log(i);
+                        Destroy(sMyList[i]);
+                        //Debug.Log(i);
+                    }
+                    // 詰める
+                    for (int i = 0; i < sMyList.Count; i++)
+                    {
+                        //Debug.Log(i);
+                        sMyList.RemoveAt(i);
+                    }
                 }
-                // 詰める
-                for (int i = 0; i < sMyList.Count; i++)
-                {
-                    //Debug.Log(i);
-                    sMyList.RemoveAt(i);
-                }
+              
                 //   sMyList.RemoveAll(sMyList => sMyList == sMyList);
                 //sMyList.RemoveAt(sMyList.Count);
             }
@@ -119,13 +126,18 @@ public class WaterWall : MonoBehaviour
         }
         else　　　　　　　// 追加分ならこっち
         {
-            // 当たったオブジェクトから下の滝は消す
-            for (int i = 0; i < sMyList.IndexOf(Wobject) + 1; i++)
+            int n = sMyList.IndexOf(Wobject);
+            if (n>-1)
             {
-                Destroy(sMyList[i]);
+                // 当たったオブジェクトから下の滝は消す
+                for (int i = 0; i < sMyList.IndexOf(Wobject) + 1; i++)
+                {
+                    Destroy(sMyList[i]);
+                }
+                // 消したところから詰める
+                sMyList.RemoveAll(sMyList => sMyList == Wobject);
             }
-            // 消したところから詰める
-            sMyList.RemoveAll(sMyList => sMyList == Wobject);
+          
         }
         // 滝がプレイヤーに当たって敵が割れたのでtrueを入れておく
         HitPW = true;
