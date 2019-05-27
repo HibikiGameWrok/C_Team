@@ -250,6 +250,10 @@ public class PlaySceneDirectorIndex
     {
         m_starManeger.CreateStarBouncePisce(position, num);
     }
+    public void ApplyStarBounce(Vector3 position, float angle, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int num, int count)
+    {
+        m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num, count);
+    }
     public void ApplyStarBounce(Vector3 position, float angle, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int num)
     {
         m_starManeger.CreateStarBouncePisce(position, angle, angleSwing, speedMax, speedMin, timeMax, timeLevel, num);

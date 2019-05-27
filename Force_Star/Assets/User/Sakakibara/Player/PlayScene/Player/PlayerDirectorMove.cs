@@ -83,6 +83,30 @@ public partial class PlayerDirector : MonoBehaviour
     private bool m_fadeOutFlag;
     private GameObject m_ascensionObject;
     private DeathExplosion m_ascensionEffect;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 離脱
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [Serializable]
+    struct Fall
+    {
+        public bool awake;
+        public bool start;
+        public float height;
+        public bool end;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 離脱データ
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    [SerializeField]
+    private Fall m_fall;
+    private Vector3 m_startPoint;
+    private float m_heightMax;
+    private float m_heightTime;
+    private float m_bounseTime;
+    private float m_bounseMax;
+    private int m_fallAnimeBefore;
+    private int m_fallAnimeAfter;
+
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -145,6 +169,98 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_directorIndex.SetObjectTargetCamera(m_playerCenter);
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 落下するプレイヤー
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void FallPlayerStart()
+    {
+
+        m_heightMax = 120.0f;
+        m_heightTime = 120.0f;
+        m_bounseTime = 3.0f;
+        m_bounseMax = 3.0f;
+
+        m_fallAnimeBefore = Animator.StringToHash("Base Layer.Basis.イントロ前");
+        m_fallAnimeAfter = Animator.StringToHash("Base Layer.Basis.イントロ後");
+
+
+        m_startPoint = new Vector3(0, 0, 0);
+        m_fall = new Fall();
+        m_fall.awake = true;
+        m_fall.start = false;
+        m_fall.height = m_heightMax;
+        m_fall.end = false;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ぽ四ぽ四プレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerMove.SetArive(false);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // アニメ実行
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_myAnime.SetBool("FallAnime", true);
+    }
+
+
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 落下するプレイヤー
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void FallUpdatePlayer()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 落下
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Vector3 truePoint = m_startPoint;
+        truePoint.y = m_startPoint.y + m_fall.height;
+
+        m_fall.height -= MyCalculator.Division(m_heightMax, m_heightTime);
+        if(m_fall.height <= 0)
+        {
+            m_fall.height = 0;
+
+            truePoint.y = m_startPoint.y + m_fall.height;
+
+            if (!m_fall.start)
+            {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // 星の出現
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_directorIndex.ApplyStarBounce(truePoint, 180.0f, 90.0f, 0.45f, 0.2f, 3000.0f, 1500.0f, 10, 100);
+                m_directorIndex.ApplyStarBounce(truePoint, 0.0f, 90.0f, 0.45f, 0.2f, 3000.0f, 1500.0f, 10, 100);
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // アニメ実行
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_myAnime.SetBool("FallAnime", false);
+
+                m_bounseTime = m_bounseMax;
+            }
+
+            m_fall.start = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 落下
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_playerCenter.transform.position = truePoint;
+        if (m_fall.start && !m_fall.end)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ぽ四ぽ四タイム
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_bounseTime -= Time.deltaTime;
+            if (m_bounseTime <= 0)
+            {
+                m_bounseTime = 0;
+                m_fall.end = true;
+                m_fall.awake = false;
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // ぽ四ぽ四プレイヤー
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_playerMove.SetArive(true);
+            }
+        }
+
+
+    }
+
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報

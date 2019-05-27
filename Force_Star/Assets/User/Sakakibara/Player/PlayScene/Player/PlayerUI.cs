@@ -132,6 +132,10 @@ public class PlayerUI : GameCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private OriginUIGroup m_alarm;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ムービー
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private OriginUIGroup m_movie;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 酸素ゲージ
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
@@ -177,11 +181,13 @@ public class PlayerUI : GameCanvas
     //*|***|***|***|***|***|***|***|***|***|***|***|
     [SerializeField]
     private float m_gameEnd;
+    [SerializeField]
+    private float m_gameMovie;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 使用する深度
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private enum DepthAttach
-    {
+    { 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 警報
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -213,6 +219,10 @@ public class PlayerUI : GameCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         PLAYER_STATE_TIME,
         PLAYER_STATE,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ムービー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        MOVIE,
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 数量
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -301,6 +311,10 @@ public class PlayerUI : GameCanvas
     {
         m_gameEnd = number;
     }
+    public void SetGameMovie(float number)
+    {
+        m_gameMovie = number;
+    }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 起動したとき
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -351,6 +365,7 @@ public class PlayerUI : GameCanvas
         // 終了
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_gameEnd = 1.0f;
+        m_gameMovie = 0.0f;
     }
 
 
@@ -837,7 +852,7 @@ public class PlayerUI : GameCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // TexImageData
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        TexImageData tex = null;
+        TexImageData tex = null; 
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 警報
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -864,6 +879,33 @@ public class PlayerUI : GameCanvas
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_alarm.gameObjectUI.SetDepth(GetDepth(DepthAttach.ALARM));
             m_alarm.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ムービー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_movie = new OriginUIGroup();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ムービー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージ作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            tex = new TexImageData();
+            tex.Reset();
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.MOVIEFRAME);
+            tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
+            tex.size = new Vector2(1, 1);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            OriginUIGroup digitData = new OriginUIGroup();
+            m_movie.gameObjectUI = CreateMenber(tex, "Movie");
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // イメージの情報
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_movie.gameObjectUI.SetDepth(GetDepth(DepthAttach.MOVIE));
+            m_movie.gameObjectUI.gameObject.transform.SetParent(m_canvasObject.gameObject.transform);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1187,6 +1229,16 @@ public class PlayerUI : GameCanvas
             m_alarm.imageUIData = new ImageUIData();
             m_alarm.imageUIData.Init();
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ムービー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_movie.imageUIData = new ImageUIData();
+            m_movie.imageUIData.Init();
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ起動
@@ -1235,6 +1287,7 @@ public class PlayerUI : GameCanvas
         // 終了
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
+        m_gameMovie = ChangeData.Among(m_gameMovie, 0.0f, 1.0f);    
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 酸素ゲージ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -2179,6 +2232,26 @@ public class PlayerUI : GameCanvas
             float alphaParsent = alarmParsent * m_gameEnd;
             m_alarm.gameObjectUI.SetAlpha(alphaParsent);
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ムービー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 計算用初期化、データ確保
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            pos = posSave;
+            scale = scaleSave;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 桁挿入
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_movie.imageUIData.imagePos = new Vector2(pos.x, pos.y);
+            m_movie.imageUIData.imageScale = new Vector2(scale.x, scale.y);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 透明度
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            float alphaParsent = m_gameMovie;
+            m_movie.gameObjectUI.SetAlpha(alphaParsent);
+        }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // パワーアップ更新
@@ -2575,6 +2648,12 @@ public class PlayerUI : GameCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         {
             AssetSet(ref m_alarm, m_screenSize, true);
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ムービー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        {
+            AssetSet(ref m_movie, m_screenSize, true);
         }
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|

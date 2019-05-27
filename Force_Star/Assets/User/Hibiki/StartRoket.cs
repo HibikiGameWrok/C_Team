@@ -255,7 +255,7 @@ public class StartRoket : MonoBehaviour
                 //// プレイヤープレハブをGameObject型で取得
                 GameObject Player = (GameObject)Resources.Load("PlayerDirector");
                 // プレイヤープレハブを元に生成
-                Instantiate(Player, this.transform.position, Quaternion.identity);
+                Instantiate(Player, Vector3.zero, Quaternion.identity);
                 starSearch.CheckFlag();
 
                 // 壊れたロケットプレハブをGameObject型で取得

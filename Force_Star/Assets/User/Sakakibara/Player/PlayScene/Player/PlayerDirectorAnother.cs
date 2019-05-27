@@ -127,7 +127,10 @@ public partial class PlayerDirector : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     private bool m_danger;
     private float m_dangerTime;
-
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // ムービー
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private float m_movieStrong;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -157,6 +160,7 @@ public partial class PlayerDirector : MonoBehaviour
         // 終了
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_gameEnd = 1.0f;
+        m_movieStrong = 0.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベースUI
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -382,9 +386,32 @@ public partial class PlayerDirector : MonoBehaviour
             // 終了
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_gameEnd -= Time.deltaTime;
-            m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
+            m_movieStrong += Time.deltaTime;
         }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 開始
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (m_fall.awake)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 開始
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_gameEnd = 0;
+            m_movieStrong = 1;
+
+            if (m_fall.start)
+            {
+                float parsent = MyCalculator.Division(m_bounseTime, m_bounseMax);
+                float parsentMove = MyCalculator.InversionOfProportion(parsent);
+                parsentMove = ChangeData.Among(parsentMove * 5.0f - 4.0f, 0.0f, 1.0f);
+                m_movieStrong = MyCalculator.InversionOfProportion(parsentMove);
+                m_gameEnd = parsentMove;
+            }
+        }
+        m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
+        m_movieStrong = ChangeData.Among(m_movieStrong, 0.0f, 1.0f);
         m_dataUI.SetGameEnd(m_gameEnd);
+        m_dataUI.SetGameMovie(m_movieStrong);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
