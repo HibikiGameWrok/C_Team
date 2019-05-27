@@ -84,7 +84,11 @@ namespace WarehouseData
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 PLAYERBOAL_HUSHIGI,
                 PLAYERBOAL_YEAH,
-                BODYBOTTOM_DEAD,
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // プレイヤー死のデータ
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                PLAYERBOAL_DEAD,
+                BODYTOP_DEAD,
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 総数
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -273,7 +277,11 @@ namespace WarehouseData
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_HUSHIGI] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_Fushigi");
                         m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_YEAH] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_Yeah");
-                        m_playerTex2D[(int)PlayerData_Number.BODYBOTTOM_DEAD] = Resources.Load<Texture2D>(MyFile + "PlayerBoal_Yeah");
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // プレイヤー死のデータ
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_playerTex2D[(int)PlayerData_Number.PLAYERBOAL_DEAD] = Resources.Load<Texture2D>(MyFile + "PlayerBoalDead");
+                        m_playerTex2D[(int)PlayerData_Number.BODYTOP_DEAD] = Resources.Load<Texture2D>(MyFile + "PlayerTopDie");
 
                     }
                     //*|***|***|***|***|***|***|***|***|***|***|***|

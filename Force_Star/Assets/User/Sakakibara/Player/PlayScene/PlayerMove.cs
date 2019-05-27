@@ -556,8 +556,8 @@ public class PlayerMove : MonoBehaviour
     }
     void Start()
     {
-        Vector2 sizeLeg = new Vector2(0.8f, 0.2f);
-        Vector2 pointLeg = new Vector2(0.0f, -0.5f);
+        Vector2 sizeLeg = new Vector2(0.8f, 0.5f);
+        Vector2 pointLeg = new Vector2(0.0f, -0.3f);
         m_partsLeg2D.SetPointSize(pointLeg, sizeLeg);
 
         sizeLeg = new Vector2(0.8f, 0.4f);

@@ -24,6 +24,7 @@ public class PlayerParts : MonoBehaviour
         this.m_rigid2D = gameObject.AddComponent<Rigidbody2D>();
         this.m_box2D = gameObject.AddComponent<BoxCollider2D>();
         this.m_rigid2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        this.m_rigid2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         this.m_rigid2D.isKinematic = true;
         this.m_box2D.isTrigger = true;
     }

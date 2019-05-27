@@ -136,7 +136,7 @@ public class ShellController : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃威力
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_partsAttack.SetAttackData(10.0f, false);
+        m_partsAttack.SetAttackData(300.0f, false);
     }
 
     //void OnCollisionEnter2D(Collision2D col)

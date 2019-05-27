@@ -789,21 +789,21 @@ public partial class PlayerDirector : MonoBehaviour
     private void UpdateWhiteBody()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // まるで透明みたいだ。
+        // まるで壊れているみたいだ。
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 体
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
-        m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.BODYTOP].spriteData.m_dataNum = (int)PlayerDataNum.BODYTOP_DEAD;
+        m_listAnime[(int)PlayerData_Number_List.BODYBOTTOM].spriteData.m_dataNum = (int)PlayerDataNum.BODYBOTTOM;
     }
     private void UpdateWhiteHead()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // まるで透明みたいだ。
+        // まるで息絶えているみたいだ。
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 頭
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.BLANK;
+        m_listAnime[(int)PlayerData_Number_List.PLAYERHEAD].spriteData.m_dataNum = (int)PlayerDataNum.PLAYERBOAL_DEAD;
     }
     private void UpdateWhiteLeg()
     {
