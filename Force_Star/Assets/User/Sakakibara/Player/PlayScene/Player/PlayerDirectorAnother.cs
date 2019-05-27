@@ -247,6 +247,8 @@ public partial class PlayerDirector : MonoBehaviour
             m_directorIndex.ApplyStarBounce(GetPlayerPositon(), 90.0f, 30.0f, 0.2f, 0.01f, 100.0f, 100.0f, 10);
             m_playerCenter.transform.position = new Vector3(700, 80, 0);
         }
+
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ中
         //*|***|***|***|***|***|***|***|***|***|***|***|
