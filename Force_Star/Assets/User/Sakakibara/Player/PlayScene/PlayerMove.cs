@@ -219,6 +219,7 @@ public class PlayerMove : MonoBehaviour
     private float m_jumpPowerMaxUnder;
     private float m_movePowerMax;
     private float m_movePowerMax_S;
+    private float m_movePowerDeath;
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 外からの力
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -344,18 +345,19 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動力マリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_movePower = 0.025f;
+        m_movePower = 0.005f;
         m_movePowerTime = 20.0f;
-        m_movePower_S = 0.05f;
+        m_movePower_S = 0.01f;
         m_movePowerTime_S = 30.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動力限界マリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_jumpPowerMax = 2.0f;
         m_jumpPowerMax_S = 2.0f;
-        m_jumpPowerMaxUnder = 0.75f;
-        m_movePowerMax = 0.70f;
-        m_movePowerMax_S = 1.20f;
+        m_jumpPowerMaxUnder = 0.30f;
+        m_movePowerMax = 0.30f;
+        m_movePowerMax_S = 0.70f;
+        m_movePowerDeath = 0.0001f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 強化フラグ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -659,6 +661,16 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生死判定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateArive();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 動きの一連の処理
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void WorkUpdate()
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // すでにアップデートされているものとする
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_addForce = Vector2.zero;
@@ -727,20 +739,16 @@ public class PlayerMove : MonoBehaviour
         // 起動：抵抗＆重力
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateResistance();
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 外からの力
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateForseOut();
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たりの判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
         UpdateAttackParts();
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 生死判定
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        UpdateArive();
-
-
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 当たりの判定
@@ -823,7 +831,7 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動ベクトルが小さいと認知しない
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (absVelX < 0.01f)
+        if (absVelX < m_movePowerDeath)
         {
             m_movePowerX = 0;
         }
@@ -991,7 +999,7 @@ public class PlayerMove : MonoBehaviour
             resistance = 0.75f;
             m_movePowerX *= resistance;
             absVelX = Mathf.Abs(m_movePowerX);
-            if (absVelX < 0.01f)
+            if (absVelX < m_movePowerDeath)
             {
                 m_movePowerX = 0;
                 if (m_addPower)
@@ -1065,6 +1073,12 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_rigid_Vec.x = m_movePowerX;
         m_rigid_Vec.y = m_movePowerY;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 内からの力
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void UpdateForse()
+    {
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 移動結果
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1088,7 +1102,7 @@ public class PlayerMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             addPowerOutX = m_addForceOut.x * resistance;
             absVelX = Mathf.Abs(addPowerOutX);
-            if (absVelX < 0.01f)
+            if (absVelX < m_movePowerDeath)
             {
                 addPowerOutX = 0;
             }
@@ -1098,7 +1112,7 @@ public class PlayerMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             addPowerOutY = m_addForceOut.y * resistance;
             absVelY = Mathf.Abs(addPowerOutY);
-            if (absVelY < 0.01f)
+            if (absVelY < m_movePowerDeath)
             {
                 addPowerOutY = 0;
             }
@@ -1124,6 +1138,15 @@ public class PlayerMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void FixedUpdate()
     {
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 動きの一連の処理
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        WorkUpdate();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 内からの力
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        UpdateForse();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 当たり判定
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1560,7 +1583,7 @@ public class PlayerMove : MonoBehaviour
 //    //*|***|***|***|***|***|***|***|***|***|***|***|
 //    // 移動ベクトルが小さいと認知しない
 //    //*|***|***|***|***|***|***|***|***|***|***|***|
-//    if (absVelX < 0.01f)
+//    if (absVelX < m_movePowerDeath)
 //    {
 //        m_movePowerX = 0;
 //    }
@@ -1618,7 +1641,7 @@ public class PlayerMove : MonoBehaviour
 //        resistance = 0.98f;
 //        m_movePowerX *= resistance;
 //        absVelX = Mathf.Abs(m_movePowerX);
-//        if (absVelX < 0.01f)
+//        if (absVelX < m_movePowerDeath)
 //        {
 //            m_movePowerX = 0;
 //            if (m_addPower)
