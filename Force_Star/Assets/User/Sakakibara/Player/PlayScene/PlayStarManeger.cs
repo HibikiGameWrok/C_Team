@@ -301,4 +301,65 @@ public class PlayStarManeger : MonoBehaviour
             starBounceMove.SetTimeCount(15);
         }
     }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 角度の方向に発射
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void CreateStarBouncePisce(Vector3 pos, float angleCenter, float angleSwing, float speedMax, float speedMin, float timeMax, float timeLevel, int starNum, int starCount)
+    {
+        GameObject newStarObj = null;
+        float angle = 0;
+        float angleMax = 0;
+        float angleMin = 0;
+        float speed = 0;
+        Vector2 vec;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトの動き
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        StarPieceBounceMove starBounceMove = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星オブジェクトのレイヤー
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        Common_GameObjectSprite_Order starBounceOrder = null;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 生成機関
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int count = 0; count < starNum; count++)
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 生成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newStarObj = Instantiate(m_starObjOriginBounce) as GameObject;
+            newStarObj.SetActive(true);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトの動き
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceMove = newStarObj.AddComponent<StarPieceBounceMove>();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 星オブジェクトのレイヤー
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceOrder = newStarObj.AddComponent<Common_GameObjectSprite_Order>();
+            starBounceOrder.SetBoth(starBounceMove.GetSpriteData(), Object_Order_Number.STAR);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ランダム作成
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            angleMax = angleCenter + (angleSwing / 2.0f);
+            angleMin = angleCenter - (angleSwing / 2.0f);
+            angle = Random.Range(angleMin, angleMax);
+            speed = Random.Range(speedMin, speedMax);
+            vec = ChangeData.AngleDegToVector2(angle);
+            vec *= speed;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ここにしまう
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            newStarObj.transform.parent = transform;
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 飛んでいく角度をランダムに決める
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            starBounceMove.SetVec(vec.x, vec.y);
+            starBounceMove.SetPosition(pos);
+            starBounceMove.SetSpeed(0.01f, 0.01f);
+            starBounceMove.SetTime(timeMax, timeLevel);
+            starBounceMove.SetTimeCount(starCount);
+        }
+    }
 }

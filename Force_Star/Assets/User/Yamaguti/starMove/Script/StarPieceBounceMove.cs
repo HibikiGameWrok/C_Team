@@ -530,6 +530,10 @@ public class StarPieceBounceMove : MonoBehaviour
             }
             float p = 0.99f;
             m_movePower = MyCalculator.EachTimes(m_movePower, new Vector2(p, p));
+            if (m_movePower.magnitude * 100 < 1.0f)
+            {
+                m_movePower = Vector2.zero;
+            }
 
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 跳ねる移動

@@ -198,6 +198,10 @@ namespace WarehouseData
                     // 警報のデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.ALARMRED] = Resources.Load<Texture2D>(MyFile + "AlarmRed");
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    // 映像のデータ
+                    //*|***|***|***|***|***|***|***|***|***|***|***|
+                    m_texture2DApp[(int)AppImageNum.MOVIEFRAME] = Resources.Load<Texture2D>(MyFile + "MovieFrame");
                 }
             }
 
