@@ -220,7 +220,7 @@ public class ShellController : MonoBehaviour
 
 
             //貝の向かう方向を決める
-            Vector2 direction = new Vector2(playerPos.x - transform.position.x, transform.position.y);
+            Vector2 direction = new Vector2(playerPos.x - transform.position.x, 0.0f);
 
             //貝とプレイヤーの距離
             float length = this.transform.position.x - playerPos.x;
@@ -230,7 +230,7 @@ public class ShellController : MonoBehaviour
             {
                 //Debug.Log("嚙みついてやる");
                 playerApproachFlag = true;
-                GetComponent<Rigidbody2D>().velocity = (direction * speed);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x * speed, 0.0f);
                 shellSprite.sprite = action_Image;
             }
             //プレイヤーが貝の射程範囲外なら攻撃しない
