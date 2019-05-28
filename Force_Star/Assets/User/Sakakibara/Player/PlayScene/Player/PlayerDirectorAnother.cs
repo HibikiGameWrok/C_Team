@@ -495,7 +495,7 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // SE再生
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_directorIndex.PlaySoundEffect(SoundID.OPENMENU_04);
+                m_directorIndex.PlaySoundEffect(SoundID.OPENMENU_04, AudioID.STOP_P2);
             }
         }
         else
@@ -529,6 +529,10 @@ public partial class PlayerDirector : MonoBehaviour
                         // SE再生
                         //*|***|***|***|***|***|***|***|***|***|***|***|
                         m_directorIndex.PlaySoundEffect(SoundID.CLOSEMENU_01);
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        // SE再生
+                        //*|***|***|***|***|***|***|***|***|***|***|***|
+                        m_directorIndex.StopSoundEffect(AudioID.STOP_P2);
                     }
                 }
             }
