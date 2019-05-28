@@ -756,30 +756,37 @@ public class PlayerMove : MonoBehaviour
     void UpdateAttackParts()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃中フラグ
+        // 生きているなら
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_attackingFlag)
+        if (m_arive)
         {
-            m_partsAttack2D.SetPlayHit();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 攻撃中フラグ
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_attackingFlag)
+            {
+                m_partsAttack2D.SetPlayHit();
+            }
+            else
+            {
+                m_partsAttack2D.SetStopHit();
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 腕パワーアップ中なら
+            // 腕ダメージなし。
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_armStrong && m_attackingFlag)
+            {
+                m_hitFlagArmParts_L.SetStopHit();
+                m_hitFlagArmParts_R.SetStopHit();
+            }
+            else
+            {
+                m_hitFlagArmParts_L.SetPlayHit();
+                m_hitFlagArmParts_R.SetPlayHit();
+            }
         }
-        else
-        {
-            m_partsAttack2D.SetStopHit();
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 腕パワーアップ中なら
-        // 腕ダメージなし。
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_armStrong && m_attackingFlag)
-        {
-            m_hitFlagArmParts_L.SetStopHit();
-            m_hitFlagArmParts_R.SetStopHit();
-        }
-        else
-        {
-            m_hitFlagArmParts_L.SetPlayHit();
-            m_hitFlagArmParts_R.SetPlayHit();
-        }
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 攻撃ボールデータ
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -1360,6 +1367,7 @@ public class PlayerMove : MonoBehaviour
         m_hitFlagHeadParts.SetStopHit();
         m_hitFlagLegParts_L.SetStopHit();
         m_hitFlagLegParts_R.SetStopHit();
+        m_partsAttack2D.SetStopHit();
 
         m_catchArmParts_L.SetStopHit();
         m_catchArmParts_R.SetStopHit();

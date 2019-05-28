@@ -227,6 +227,10 @@ public partial class PlayerDirector : MonoBehaviour
     void UpdatePlayerUI()
     {
         //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ゲームクリアしている？
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        bool clearAnime = m_directorIndex.GetClearAnimation();
+        //*|***|***|***|***|***|***|***|***|***|***|***|
         // データベースを更新
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 時間経過
@@ -244,8 +248,12 @@ public partial class PlayerDirector : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            m_directorIndex.ApplyStarBounce(GetPlayerPositon(), 90.0f, 30.0f, 0.2f, 0.01f, 100.0f, 100.0f, 10);
-            m_playerCenter.transform.position = new Vector3(700, 80, 0);
+            //m_directorIndex.ApplyStarBounce(GetPlayerPositon(), 90.0f, 30.0f, 0.2f, 0.01f, 100.0f, 100.0f, 10);
+            m_playerCenter.transform.position = new Vector3(475.9254f, 0, 0);
+            m_dataBace.CatchPartID(0);
+            m_dataBace.CatchPartID(1);
+            m_dataBace.CatchPartID(2);
+            m_dataBace.CatchStars(2000);
         }
 
 
@@ -316,7 +324,7 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 死んだあとのお話。
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (!m_ascension.start)
+        if (!m_ascension.start && !clearAnime)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 星更新
@@ -381,7 +389,6 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 終了
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        bool clearAnime = m_directorIndex.GetClearAnimation();
         if (clearAnime)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
