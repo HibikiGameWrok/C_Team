@@ -64,6 +64,7 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         HITSTAR_01,
         HITSTAR_02,
+        HITSTAR_03,
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 壁に当たった時SE
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -253,6 +254,7 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_sounds[(int)SoundID.HITSTAR_01] = Resources.Load<AudioClip>(filepass + "HitStar_SE_01");
         m_sounds[(int)SoundID.HITSTAR_02] = Resources.Load<AudioClip>(filepass + "HitStar_SE_02");
+        m_sounds[(int)SoundID.HITSTAR_03] = Resources.Load<AudioClip>(filepass + "HitStar_SE_02");
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 壁に当たった時SE
         //*|***|***|***|***|***|***|***|***|***|***|***|

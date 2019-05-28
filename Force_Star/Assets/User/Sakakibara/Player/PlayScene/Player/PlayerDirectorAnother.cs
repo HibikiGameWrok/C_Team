@@ -1121,7 +1121,8 @@ public partial class PlayerDirector : MonoBehaviour
     // 星更新
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void UpdateGetStar()
-    { 
+    {
+        bool getStarFlag = false;
         PlayerGetStarReservation data;
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 獲得報告
@@ -1133,6 +1134,15 @@ public partial class PlayerDirector : MonoBehaviour
             // カウントする
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_dataBace.CatchStars(data.starNum);
+
+            getStarFlag = true;
+        }
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 星の音
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        if (getStarFlag)
+        {
+            m_directorIndex.PlaySoundEffect(SoundID.HITSTAR_02, AudioID.VOLUME_P2);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星更新
