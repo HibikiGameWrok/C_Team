@@ -33,6 +33,9 @@ public class RoketTakeOff : MonoBehaviour
     // コルーチンを終了したと分かるフラグ
     private bool endCoruFlag = false;
 
+    //SE
+    private AudioSource sound01;
+
     void Awake()
     {
         directorIndex = PlaySceneDirectorIndex.GetInstance();
@@ -49,6 +52,9 @@ public class RoketTakeOff : MonoBehaviour
         directorIndex.SetObjectTargetCamera(this.transform.parent.gameObject);
 
          sinVecX = this.transform.position.x;
+
+                //SE再生データ
+        sound01 = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -70,6 +76,13 @@ public class RoketTakeOff : MonoBehaviour
         }
         // 1秒待つ  
         yield return new WaitForSeconds(2.0f);
+
+        if (stopFlag == false)
+        {
+            //SEの再生
+            sound01.PlayOneShot(sound01.clip);
+        }
+
         stopFlag = true;
 
         // 0.1秒待つ  
