@@ -10,6 +10,7 @@ using WarehousePlayer = WarehouseData.PlayerData.WarehousePlayer;
 // 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
 
 public class AreaTreasure : MonoBehaviour
 {

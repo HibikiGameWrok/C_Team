@@ -110,7 +110,47 @@ public class SEManager : MonoBehaviour
         MAXNUM
     }
 
-    AudioSource m_audiosource;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // オーディオたちの集会
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    AudioSource[] m_audioRoom;
+
+    public enum AudioID
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 共通
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        COMMON,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // ストップ使用
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        STOP_P1,
+        STOP_P2,
+        STOP_P3,
+        STOP_P4,
+        STOP_P5,
+        STOP_P6,
+        STOP_P7,
+        STOP_P8,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 音量変化
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        VOLUME_P1,
+        VOLUME_P2,
+        VOLUME_P3,
+        VOLUME_P4,
+        VOLUME_P5,
+        VOLUME_P6,
+        VOLUME_P7,
+        VOLUME_P8,
+        VOLUME_P9,
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 総数
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        MAXNUM
+    }
+
+
 
     void Awake()
     {
@@ -126,12 +166,26 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // オーディオON!
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_audiosource = gameObject.GetComponent<AudioSource>();
-        if (m_audiosource == null)
+        m_audioRoom = new AudioSource[(int)AudioID.MAXNUM];
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // オーディオの設定ループ
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        for (int index = 0; index < m_audioRoom.Length; index++)
         {
-            m_audiosource = gameObject.AddComponent<AudioSource>();
+            m_audioRoom[index] = gameObject.AddComponent<AudioSource>();
         }
-
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 音量設定
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_audioRoom[(int)AudioID.VOLUME_P1].volume = 0.1f;
+        m_audioRoom[(int)AudioID.VOLUME_P2].volume = 0.2f;
+        m_audioRoom[(int)AudioID.VOLUME_P3].volume = 0.3f;
+        m_audioRoom[(int)AudioID.VOLUME_P4].volume = 0.4f;
+        m_audioRoom[(int)AudioID.VOLUME_P5].volume = 0.5f;
+        m_audioRoom[(int)AudioID.VOLUME_P6].volume = 0.6f;
+        m_audioRoom[(int)AudioID.VOLUME_P7].volume = 0.7f;
+        m_audioRoom[(int)AudioID.VOLUME_P8].volume = 0.8f;
+        m_audioRoom[(int)AudioID.VOLUME_P9].volume = 0.9f;
     }
 
     // Start is called before the first frame update
@@ -246,56 +300,44 @@ public class SEManager : MonoBehaviour
         int type = ChangeData.AmongLess((int)textureNum, 0, (int)SoundID.MAXNUM);
         return m_sounds[type];
     }
-
-    // Update is called once per frame
-    void Update()
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //  共通でSE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void PlaySoundEffect(SoundID soundId)
     {
-        //switch (m_soundId)
-        //{
-        //    case SoundID.ENEMY:
-        //        m_audiosource.PlayOneShot(GetGameSE(m_soundId));
-        //        break;
-        //    case SoundID.SAND_BLOCK:
-        //        m_audiosource.PlayOneShot(m_sound_SandBlock);
-        //        break;
-        //    case SoundID.STAR:
-        //        m_audiosource.PlayOneShot(m_sound_Star);
-        //        break;
-        //}
-
-
-
-        //if (m_soundId != SoundID.NONE)
-        //    m_soundId = SoundID.NONE;
-
-        //if (Input.GetKeyDown(KeyCode.Z))
-        //{
-        //    m_soundId = SoundID.ENEMY;
-
-        //}
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    m_soundId = SoundID.SAND_BLOCK;
-        //}
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    m_soundId = SoundID.STAR;
-        //}
-
-        //if (soundFlag)
-        //{
-        //    m_audiosource.PlayOneShot(GetGameSE(m_soundId));
-        //    soundFlag = false;
-        //}
+        int commonNum = (int)AudioID.COMMON;
+        m_audioRoom[commonNum].PlayOneShot(GetGameSE(soundId));
     }
-
-    public void PlaySoundEffect(SoundID id)
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //  指定ルームでSE
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void PlaySoundEffect(SoundID soundId, AudioID audioId)
     {
-        m_audiosource.PlayOneShot(GetGameSE(id));
+        int roomNum = (int)audioId;
+        m_audioRoom[roomNum].PlayOneShot(GetGameSE(soundId));
     }
-
-    public void PlaySoundVolume(float value)
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //  指定ルームを停止
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void StopSoundEffect(AudioID audioId)
     {
-        m_audiosource.volume = value;
+        int roomNum = (int)audioId;
+        m_audioRoom[roomNum].Stop();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //  指定ルームを一時停止
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void PauseSoundEffect(AudioID audioId)
+    {
+        int roomNum = (int)audioId;
+        m_audioRoom[roomNum].Pause();
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    //  指定ルームを再開
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void UnPauseSoundEffect(AudioID audioId)
+    {
+        int roomNum = (int)audioId;
+        m_audioRoom[roomNum].UnPause();
     }
 }

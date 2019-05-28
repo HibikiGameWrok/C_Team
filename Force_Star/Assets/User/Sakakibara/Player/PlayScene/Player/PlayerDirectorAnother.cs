@@ -11,6 +11,7 @@ using PartsID = PlayStaticData.PartsID;
 // 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
 
 
 public partial class PlayerDirector : MonoBehaviour

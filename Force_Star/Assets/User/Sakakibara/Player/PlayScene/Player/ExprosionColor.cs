@@ -24,6 +24,13 @@ using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
+
+
 
 public class ExprosionColor : MonoBehaviour
 {
@@ -148,7 +155,7 @@ public class ExprosionColor : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 音：ドーン
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_directorIndex.PlaySoundEffect(SEManager.SoundID.PLAYERFIRE_SE);
+        m_directorIndex.PlaySoundEffect(SoundID.PLAYERFIRE_SE);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 目覚めているか

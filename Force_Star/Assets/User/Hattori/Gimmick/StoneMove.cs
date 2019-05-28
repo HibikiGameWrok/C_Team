@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
+
 public class StoneMove : MonoBehaviour
 {
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -99,7 +105,7 @@ public class StoneMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 音
             //*|***|***|***|***|***|***|***|***|***|***|***|
-            m_playIndex.PlaySoundEffect(SEManager.SoundID.SAND_BLOCK);
+            m_playIndex.PlaySoundEffect(SoundID.SAND_BLOCK);
 
 
             //跡形もなく消えてゆけ

@@ -22,6 +22,11 @@ using PartsData = GameDataPublic.PartsData;
 // パーツ言い換え
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using PartsID = PlayStaticData.PartsID;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
 
 //*|***|***|***|***|***|***|***|***|***|***|***|
 // パーツロケット
@@ -205,7 +210,7 @@ public class PlayRocketParts : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 音
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_playIndex.PlaySoundEffect(SEManager.SoundID.GETPARTS_01);
+                m_playIndex.PlaySoundEffect(SoundID.GETPARTS_01);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // ゲット！
                 //*|***|***|***|***|***|***|***|***|***|***|***|
