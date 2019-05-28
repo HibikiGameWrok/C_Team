@@ -30,7 +30,7 @@ public class PlaySound : MonoBehaviour
         playercont.Update();
 
         //スペースキーが押されたら音声ファイル再生
-        if ((playercont.ChackAttack()) || (Input.GetKeyDown(KeyCode.Space)))
+        if ( playercont.ChackStart() || playercont.ChackAttack() || Input.GetKeyDown(KeyCode.Space))
         {
             //SEがなっていないとき
             if (seFlag == false)
