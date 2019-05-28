@@ -6,6 +6,7 @@ using UnityEngine;
 // 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
 
 public class PlaySceneDirectorIndex
 {
@@ -426,10 +427,30 @@ public class PlaySceneDirectorIndex
     {
         m_seManeger.PlaySoundEffect(id);
     }
-    public void PlaySoundEffect(SoundID id, float volume)
+    public void PlaySoundEffect(SoundID soundId, AudioID audioId)
     {
-        m_seManeger.PlaySoundVolume(volume);
-        m_seManeger.PlaySoundEffect(id);
+        m_seManeger.PlaySoundEffect(soundId, audioId);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // サウンドSTOP!
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void StopSoundEffect(AudioID audioId)
+    {
+        m_seManeger.StopSoundEffect(audioId);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // サウンドPAUSE!
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void PauseSoundEffect(AudioID audioId)
+    {
+        m_seManeger.PauseSoundEffect(audioId);
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // サウンドUNPAUSE!
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public void UnPauseSoundEffect(AudioID audioId)
+    {
+        m_seManeger.UnPauseSoundEffect(audioId);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // サウンドON!敵の爆発.GO!

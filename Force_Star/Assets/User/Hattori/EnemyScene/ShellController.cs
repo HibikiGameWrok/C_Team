@@ -5,7 +5,7 @@ using UnityEngine;
 // 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using SoundID = SEManager.SoundID;
-
+using AudioID = SEManager.AudioID;
 
 public class ShellController : MonoBehaviour
 {

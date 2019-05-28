@@ -25,6 +25,11 @@ using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 
 using PlayerAnotherImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Another_Number_List;
 using PlayerImageNum = WarehouseData.PlayerData.WarehousePlayer.PlayerData_Number_List;
+//*|***|***|***|***|***|***|***|***|***|***|***|
+// 音楽
+//*|***|***|***|***|***|***|***|***|***|***|***|
+using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
 
 public class DeathExplosion : MonoBehaviour
 {
@@ -233,7 +238,7 @@ public class DeathExplosion : MonoBehaviour
                 float parsent = MyCalculator.Division(m_timeExplosion, m_timeMax);
                 if (m_timeExplosion % 3 == 0 && parsent < 0.75f)
                 {
-                    m_directorIndex.PlaySoundEffect(SEManager.SoundID.PLAYERFIRE_SE);
+                    m_directorIndex.PlaySoundEffect(SoundID.PLAYERFIRE_SE);
                 }
             }
             //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -252,8 +257,8 @@ public class DeathExplosion : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 音：ドーン
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                m_directorIndex.PlaySoundEffect(SEManager.SoundID.PLAYERBOMB_SE_01);
-                m_directorIndex.PlaySoundEffect(SEManager.SoundID.PLAYERBOMB_SE_02);
+                m_directorIndex.PlaySoundEffect(SoundID.PLAYERBOMB_SE_01);
+                m_directorIndex.PlaySoundEffect(SoundID.PLAYERBOMB_SE_02);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // X
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -278,7 +283,7 @@ public class DeathExplosion : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 if (timeEx % 3 == 0)
                 {
-                    m_directorIndex.PlaySoundEffect(SEManager.SoundID.PLAYERFIRE_SE);
+                    m_directorIndex.PlaySoundEffect(SoundID.PLAYERFIRE_SE);
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // 余波
                     //*|***|***|***|***|***|***|***|***|***|***|***|

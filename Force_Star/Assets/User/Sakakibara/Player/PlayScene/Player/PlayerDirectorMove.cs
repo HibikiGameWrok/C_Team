@@ -24,6 +24,7 @@ using Symbol_ENUM = WarehouseData.WarehouseStaticData.Symbol_ENUM;
 // 音楽
 //*|***|***|***|***|***|***|***|***|***|***|***|
 using SoundID = SEManager.SoundID;
+using AudioID = SEManager.AudioID;
 
 
 public partial class PlayerDirector : MonoBehaviour
@@ -272,6 +273,10 @@ public partial class PlayerDirector : MonoBehaviour
 
             if (!m_fall.start)
             {
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                // SE
+                //*|***|***|***|***|***|***|***|***|***|***|***|
+                m_directorIndex.PlaySoundEffect(SoundID.FOOTSTEP_01);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 星の出現
                 //*|***|***|***|***|***|***|***|***|***|***|***|
