@@ -226,7 +226,7 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_maxDurable = 2000.0f;
         m_maxStrong = 1000.0f;
-        m_maxAir = 9500.0f;
+        m_maxAir = 24000.0f;
         m_maxStarMokuhyou = 3000;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
