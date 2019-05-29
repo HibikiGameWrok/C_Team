@@ -338,8 +338,8 @@ public class PlayerMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // ジャンプ力マリオ
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_jumpPower = 0.3f;
-        m_jumpPowerTime = 15.0f;
+        m_jumpPower = 0.35f;
+        m_jumpPowerTime = 20.0f;
         m_jumpPower_S = 0.6f;
         m_jumpPowerTime_S = 30.0f;
         //*|***|***|***|***|***|***|***|***|***|***|***|
