@@ -167,6 +167,7 @@ namespace WarehouseData
                     // 星イメージ
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     m_texture2DApp[(int)AppImageNum.STARIMAGE] = Resources.Load<Texture2D>(MyFile + "StarImage");
+                    m_texture2DApp[(int)AppImageNum.STARIMAGE_EFFECT] = Resources.Load<Texture2D>(MyFile + "HitStarEffect");
                     //*|***|***|***|***|***|***|***|***|***|***|***|
                     // N数字のデータ
                     //*|***|***|***|***|***|***|***|***|***|***|***|

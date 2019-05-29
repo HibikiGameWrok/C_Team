@@ -46,6 +46,10 @@ public class StarPieceBounceMove : MonoBehaviour
     //*|***|***|***|***|***|***|***|***|***|***|***|
     PlayerDirectorIndex m_playerIndex;
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 画像共通ディレクター
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    WarehouseObject m_warehouseObject;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 画像
     //*|***|***|***|***|***|***|***|***|***|***|***|
     GameObjectSprite m_starSprite;
@@ -119,6 +123,12 @@ public class StarPieceBounceMove : MonoBehaviour
     float m_ariveTimer = 0;
     float m_ariveTimerLevel = 0;
     float m_ariveTimerMax = 0;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 時間エフェクト
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    float m_effectTimer = 0;
+    float m_effectMax = 0;
+    bool m_effectFlag;
 
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
@@ -136,7 +146,7 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // Objectの倉庫
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        WarehouseObject warehouseObject = WarehouseObject.GetInstance();
+        m_warehouseObject = WarehouseObject.GetInstance();
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 画像
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -152,7 +162,7 @@ public class StarPieceBounceMove : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             TexImageData tex = new TexImageData();
             tex.Reset();
-            tex.image = warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE);
+            tex.image = m_warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE);
             tex.rextParsent = MyCalculator.RectSizeReverse_Y(0, 1, 1);
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 大きさ
@@ -266,6 +276,15 @@ public class StarPieceBounceMove : MonoBehaviour
         m_countFlag = false;
 
         starCirHitCheckFlag = false;
+
+
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 時間エフェクト
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_effectTimer = 0;
+        m_effectMax = 10;
+        m_effectFlag = false;
+
     }
 
     void Start()
@@ -334,7 +353,17 @@ public class StarPieceBounceMove : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (!m_ariveFlag)
         {
-            DeathBoom();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // エフェクトをする
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            EffectStar();
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // エフェクト終了
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_effectTimer >= m_effectMax)
+            {
+                DeathBoom();
+            }
             return;
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -807,6 +836,24 @@ public class StarPieceBounceMove : MonoBehaviour
         m_starSprite.SetAlpha(0);
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 星の消滅エフェクト
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    void EffectStar()
+    {
+        m_effectTimer += 1.0f;
+        int starAnimeNum = 4;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // アニメ切り替え番号
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        float parsent = MyCalculator.Division(m_effectTimer, m_effectMax);
+        int parsentInt = ChangeData.FloatToIntFloorParsent(parsent, starAnimeNum);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // アニメ切り替え
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starSprite.SetRect(MyCalculator.RectSizeReverse_Y(parsentInt, starAnimeNum, 1));
+        m_starSprite.SetTexture(m_warehouseObject.GetTexture2DApp(AppImageNum.STARIMAGE_EFFECT));
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自爆！
     //*|***|***|***|***|***|***|***|***|***|***|***|
     void DeathFlag()
@@ -814,6 +861,13 @@ public class StarPieceBounceMove : MonoBehaviour
         flag = true;
         m_ariveFlag = false;
         m_starSprite.SetAlpha(0);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 当たるのを止める
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_upChildStar.SetStopHit();
+        m_downChildStar.SetStopHit();
+        m_leftChildStar.SetStopHit();
+        m_rightChildStar.SetStopHit();
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // 自爆！

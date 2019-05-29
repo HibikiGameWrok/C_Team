@@ -937,6 +937,33 @@ public static class ChangeData
         return numberR;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
+    // オーバーフロー防止しつつInt化
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    public static int FloatToIntFloor(float number, int loopNum)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データをIntにする
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberInt = Mathf.FloorToInt(number);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // loopNum以下に修正
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberLoopOver = AntiOverflow(numberInt, loopNum);
+        return numberLoopOver;
+    }
+    public static int FloatToIntFloorParsent(float number, int loopNum)
+    {
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // データをIntにする
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberInt = Mathf.FloorToInt(number * loopNum);
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // loopNum以下に修正
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        int numberLoopOver = AntiOverflow(numberInt, loopNum);
+        return numberLoopOver;
+    }
+    //*|***|***|***|***|***|***|***|***|***|***|***|
     // 円周率獲得
     //*|***|***|***|***|***|***|***|***|***|***|***|
     public static float GetPI()
