@@ -48,7 +48,7 @@ public class LampController : MonoBehaviour
     {
         if (col.gameObject.tag == "AttackBoal")
         {
-            if (lightFlag == false)
+            if (!fire.gameObject.activeInHierarchy)
             {
                 //SEの再生
                 sound01.PlayOneShot(sound01.clip);
@@ -63,10 +63,8 @@ public class LampController : MonoBehaviour
                 // 星が出る *10
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 m_playIndex.ApplyStarBounce(new Vector2(posX1, posY + 8.0f), 10);
-
                 //StarDirector starCreate;
                 // starCreate.CreateOneStar(new Vector2(posX1, posY + 8.0f), 5, false,0.5f);
-
                 lightFlag = true;
             }
         }
