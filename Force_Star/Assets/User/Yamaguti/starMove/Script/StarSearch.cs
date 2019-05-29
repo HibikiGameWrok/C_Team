@@ -33,16 +33,8 @@ public class StarSearch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            col.radius = 100;
-        }
-
-
         if (m_createPlayr)
         {
-
             this.transform.position = m_playerIndex.GetPlayerPosition();
         }
         

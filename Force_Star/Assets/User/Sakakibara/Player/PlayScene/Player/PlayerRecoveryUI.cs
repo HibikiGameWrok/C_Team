@@ -883,7 +883,7 @@ public class PlayerRecoveryUI : GameCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 値
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_feeNumberDigit = 2;
+        m_feeNumberDigit = 3;
         m_armFeeNumber = new List<OriginUIGroup>();
         m_bodyFeeNumber = new List<OriginUIGroup>();
         m_headFeeNumber = new List<OriginUIGroup>();
@@ -1980,14 +1980,16 @@ public class PlayerRecoveryUI : GameCanvas
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ集計
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        m_armRecoveryFee = ChangeData.Among(m_armRecoveryFee, 0, 99);
-        m_bodyRecoveryFee = ChangeData.Among(m_bodyRecoveryFee, 0, 99);
-        m_headRecoveryFee = ChangeData.Among(m_headRecoveryFee, 0, 99);
-        m_legRecoveryFee = ChangeData.Among(m_legRecoveryFee, 0, 99);
-        m_armStrongFee = ChangeData.Among(m_armStrongFee, 0, 99);
-        m_bodyStrongFee = ChangeData.Among(m_bodyStrongFee, 0, 99);
-        m_headStrongFee = ChangeData.Among(m_headStrongFee, 0, 99);
-        m_legStrongFee = ChangeData.Among(m_legStrongFee, 0, 99);
+        int numberMax = MyCalculator.Multiplication(10, m_feeNumberDigit) - 1;
+
+        m_armRecoveryFee = ChangeData.Among(m_armRecoveryFee, 0, numberMax);
+        m_bodyRecoveryFee = ChangeData.Among(m_bodyRecoveryFee, 0, numberMax);
+        m_headRecoveryFee = ChangeData.Among(m_headRecoveryFee, 0, numberMax);
+        m_legRecoveryFee = ChangeData.Among(m_legRecoveryFee, 0, numberMax);
+        m_armStrongFee = ChangeData.Among(m_armStrongFee, 0, numberMax);
+        m_bodyStrongFee = ChangeData.Among(m_bodyStrongFee, 0, numberMax);
+        m_headStrongFee = ChangeData.Among(m_headStrongFee, 0, numberMax);
+        m_legStrongFee = ChangeData.Among(m_legStrongFee, 0, numberMax);
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 現れる数値
         //*|***|***|***|***|***|***|***|***|***|***|***|
