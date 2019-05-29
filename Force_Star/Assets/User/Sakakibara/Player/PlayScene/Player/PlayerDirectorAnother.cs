@@ -101,6 +101,13 @@ public partial class PlayerDirector : MonoBehaviour
     private float m_maxStrong;
     private float m_maxAir;
     private int m_maxStarMokuhyou;
+
+    [SerializeField]
+    private int m_starsFeeBasisDamage = 100;
+    [SerializeField]
+    private int m_starsFeeBasisStrong = 100;
+
+
     enum TriggerAngle
     {
         UP,
@@ -220,7 +227,7 @@ public partial class PlayerDirector : MonoBehaviour
         m_maxDurable = 2000.0f;
         m_maxStrong = 1000.0f;
         m_maxAir = 9500.0f;
-        m_maxStarMokuhyou = 2000;
+        m_maxStarMokuhyou = 5000;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -246,18 +253,6 @@ public partial class PlayerDirector : MonoBehaviour
         // 残り時間
         //*|***|***|***|***|***|***|***|***|***|***|***|
         float time = m_dataBace.GetTimeParsent();
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            //m_directorIndex.ApplyStarBounce(GetPlayerPositon(), 90.0f, 30.0f, 0.2f, 0.01f, 100.0f, 100.0f, 10);
-            m_playerCenter.transform.position = new Vector3(475.9254f, 0, 0);
-            m_dataBace.CatchPartID(0);
-            m_dataBace.CatchPartID(1);
-            m_dataBace.CatchPartID(2);
-            m_dataBace.CatchStars(2000);
-        }
-
-
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // パワーアップ中
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -601,8 +596,7 @@ public partial class PlayerDirector : MonoBehaviour
             int starsFee = 0;
             int starsFeeR = 0;
             int starsFeeS = 0;
-            int starsFeeBasisDamage = 10;
-            int starsFeeBasisStrong = 10;
+            
             bool strongCommond = false;
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // 回復。
@@ -615,8 +609,8 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 料金設定
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                starsFeeS = starsFeeBasisStrong;
-                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeS = m_starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * m_starsFeeBasisDamage;
                 starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // モード設定
@@ -684,8 +678,8 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 料金設定
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                starsFeeS = starsFeeBasisStrong;
-                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeS = m_starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * m_starsFeeBasisDamage;
                 starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // モード設定
@@ -752,8 +746,8 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 料金設定
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                starsFeeS = starsFeeBasisStrong;
-                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeS = m_starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * m_starsFeeBasisDamage;
                 starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // モード設定
@@ -820,8 +814,8 @@ public partial class PlayerDirector : MonoBehaviour
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // 料金設定
                 //*|***|***|***|***|***|***|***|***|***|***|***|
-                starsFeeS = starsFeeBasisStrong;
-                starsFeeFloat = partsDamageParsent * starsFeeBasisDamage;
+                starsFeeS = m_starsFeeBasisStrong;
+                starsFeeFloat = partsDamageParsent * m_starsFeeBasisDamage;
                 starsFeeR = (int)Mathf.Ceil(starsFeeFloat);
                 //*|***|***|***|***|***|***|***|***|***|***|***|
                 // モード設定
