@@ -36,7 +36,7 @@ public class BgmChange : MonoBehaviour
     {
         bgmFlag = playSound.GetSeFlag();
 
-        if (bgmFlag == true /*|| SceneManager.GetActiveScene().name == "PlayScene"*/)
+        if (bgmFlag == true)
         {
             if (BGMNormalManager.GetComponent<AudioSource>().isPlaying)
             {

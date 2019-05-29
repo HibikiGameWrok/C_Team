@@ -65,7 +65,6 @@ public class SelectFade : MonoBehaviour
 
     void StartFadeOut()
     {
-
         fadeImage.enabled = true;  // a)パネルの表示をオンにする
         alfa += fadeSpeed;         // b)不透明度を徐々にあげる
         SetAlpha();               // c)変更した透明度をパネルに反映する
@@ -73,8 +72,8 @@ public class SelectFade : MonoBehaviour
         {            
             // d)完全に不透明になったら処理を抜ける
             isFadeOut = false;
-            //シーン遷移
-            SceneManager.LoadScene("PlayScene");
+            ////シーン遷移
+            //SceneManager.LoadScene("PlayScene");
         }
     }
 

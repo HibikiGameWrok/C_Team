@@ -11,20 +11,16 @@ public class PlaySound : MonoBehaviour
     // コントロールを管理しているクラス
     PlayerController playercont;
 
-    // オブジェクト取得変数
-    GameObject Panel;
+
     // スクリプト取得変数
     ResultFade ResultFade;
 
     void Start()
     {
-        //// Sceneを遷移してもオブジェクトが消えないようにする
-        //DontDestroyOnLoad(this);
         playercont = new PlayerController();
+       
         //AudioSourceコンポーネントを取得し、変数に格納
         sound01 = GetComponent<AudioSource>();
-        Panel = GameObject.Find("Panel");
-        ResultFade = Panel.GetComponent<ResultFade>();
         seFlag = false;
     }
 
@@ -42,11 +38,8 @@ public class PlaySound : MonoBehaviour
                 seFlag = true;
             }
         }
-        //else 
-        //{
-        //    seFlag = false;
-        //}
     }
+
     public bool GetSeFlag()
     {
         return seFlag;

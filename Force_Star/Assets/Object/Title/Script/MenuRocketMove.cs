@@ -16,6 +16,7 @@ public class MenuRocketMove : MonoBehaviour
     [SerializeField]
     bool moveFlag = false;
 
+
     //位置
     Vector2 pos = new Vector2(0.0f,0.0f);
 
@@ -30,6 +31,9 @@ public class MenuRocketMove : MonoBehaviour
     //音の大きさ
     float m_MySliderValue = 1.0f;
 
+    private GameObject FadePanel;
+    private StartFade startFade;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +41,9 @@ public class MenuRocketMove : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         sound01 = audioSources[0];
         sound02 = audioSources[1];
+
+        FadePanel = GameObject.Find("Panel");
+        startFade = FadePanel.GetComponent<StartFade>();
 
         pos = new Vector2(this.transform.position.x,this.transform.position.y);
     }
@@ -92,9 +99,14 @@ public class MenuRocketMove : MonoBehaviour
         //回転する
         this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 45.0f);
 
+        if(size <= 0.5f)
+        {
+            startFade.SetFadeOutFlag(true);
+        }
         //大きさを徐々に小さく
         size += -0.003f;
         gameObject.transform.localScale = new Vector3(size, size, transform.localScale.z);
+
     }
 
 
