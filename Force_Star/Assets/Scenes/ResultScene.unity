@@ -141,7 +141,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c8dba48f2149ad446a4383466b796b94, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0
   m_Pitch: 1
   Loop: 1
@@ -869,7 +869,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af257abe363b5e244adffabc801c4d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overImage: {fileID: 0}
   time: 0
   next: 0
 --- !u!1 &606554468
@@ -1297,7 +1296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb15384d2b3107429e5413deb1439a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocket: {fileID: 1726241422}
   displayFlag: 0
 --- !u!212 &1338141095
 SpriteRenderer:
@@ -1647,7 +1645,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6ef5dcc4122c2aa429bb9ecaf65f5928, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
