@@ -101,11 +101,11 @@ public partial class PlayerDirector : MonoBehaviour
     private float m_maxStrong;
     private float m_maxAir;
     private int m_maxStarMokuhyou;
-
-    [SerializeField]
-    private int m_starsFeeBasisDamage = 100;
-    [SerializeField]
-    private int m_starsFeeBasisStrong = 100;
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    // 回復による消費量
+    //*|***|***|***|***|***|***|***|***|***|***|***|
+    private int m_starsFeeBasisDamage = 50;
+    private int m_starsFeeBasisStrong = 50;
 
 
     enum TriggerAngle
@@ -228,6 +228,11 @@ public partial class PlayerDirector : MonoBehaviour
         m_maxStrong = 1000.0f;
         m_maxAir = 24000.0f;
         m_maxStarMokuhyou = 3000;
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        // 回復による消費量
+        //*|***|***|***|***|***|***|***|***|***|***|***|
+        m_starsFeeBasisDamage = 50;
+        m_starsFeeBasisStrong = 50;
     }
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // プレイヤー情報
@@ -412,6 +417,13 @@ public partial class PlayerDirector : MonoBehaviour
                 m_movieStrong = MyCalculator.InversionOfProportion(parsentMove);
                 m_gameEnd = parsentMove;
             }
+        }
+        else
+        {
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ゲームスタート中
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            m_movieStrong = 0.0f;
         }
         m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
         m_movieStrong = ChangeData.Among(m_movieStrong, 0.0f, 1.0f);
@@ -1136,7 +1148,7 @@ public partial class PlayerDirector : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         if (getStarFlag)
         {
-            m_directorIndex.PlaySoundEffect(SoundID.HITSTAR_02, AudioID.VOLUME_P2);
+            m_directorIndex.PlaySoundEffect(SoundID.HITSTAR_03, AudioID.VOLUME_P5);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 星更新

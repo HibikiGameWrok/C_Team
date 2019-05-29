@@ -256,7 +256,7 @@ public class SEManager : MonoBehaviour
         //*|***|***|***|***|***|***|***|***|***|***|***|
         m_sounds[(int)SoundID.HITSTAR_01] = Resources.Load<AudioClip>(filepass + "HitStar_SE_01");
         m_sounds[(int)SoundID.HITSTAR_02] = Resources.Load<AudioClip>(filepass + "HitStar_SE_02");
-        m_sounds[(int)SoundID.HITSTAR_03] = Resources.Load<AudioClip>(filepass + "HitStar_SE_03");
+        m_sounds[(int)SoundID.HITSTAR_03] = Resources.Load<AudioClip>(filepass + "HitStar_SE_06");
         m_sounds[(int)SoundID.HITSTAR_04] = Resources.Load<AudioClip>(filepass + "HitStar_SE_04");
         m_sounds[(int)SoundID.HITSTAR_05] = Resources.Load<AudioClip>(filepass + "HitStar_SE_05");
         //*|***|***|***|***|***|***|***|***|***|***|***|
