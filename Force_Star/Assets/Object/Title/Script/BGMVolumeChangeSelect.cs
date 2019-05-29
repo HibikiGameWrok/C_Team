@@ -20,7 +20,7 @@ public class BGMVolumeChangeSelect : MonoBehaviour
         //GameObjectからAudioSourceを取得
         m_MyAudioSource = GetComponent<AudioSource>();
         //起動時にAudioSourceに接続されているAudioClipを再生する
-        m_MyAudioSource.Play();
+        //m_MyAudioSource.Play();
     }
 
     // Update is called once per frame

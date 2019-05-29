@@ -18,6 +18,12 @@ public class BgmChange : MonoBehaviour
     //BGMの切り替えるflag
     bool bgmFlag = false;
 
+    void Awake()
+    {
+        // Sceneを遷移してもオブジェクトが消えないようにする
+        DontDestroyOnLoad(this);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,24 +34,24 @@ public class BgmChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bgmFlag = playSound.seFlag;
-        
-        if (bgmFlag == true || SceneManager.GetActiveScene().name == "PlayScene")
+        bgmFlag = playSound.GetSeFlag();
 
+        if (bgmFlag == true /*|| SceneManager.GetActiveScene().name == "PlayScene"*/)
         {
-            //選択する後
-            BGMHappeningManeger.SetActive(true);
-            BGMNormalManager.SetActive(false);
-
-            // Sceneを遷移してもオブジェクトが消えないようにする
-            DontDestroyOnLoad(this);
+            if (BGMNormalManager.GetComponent<AudioSource>().isPlaying)
+            {
+                BGMNormalManager.GetComponent<AudioSource>().Stop();
+                //選択する後
+                BGMHappeningManeger.SetActive(true);
+                BGMNormalManager.SetActive(false);
+                BGMHappeningManeger.GetComponent<AudioSource>().Play();
+            }
         }
-        else if(bgmFlag == false)
+        else if (bgmFlag == false)
         {
-            //選択する前
-            BGMHappeningManeger.SetActive(false);
-            BGMNormalManager.SetActive(true);
+                //選択する前
+                BGMHappeningManeger.SetActive(false);
+                BGMNormalManager.SetActive(true);
         }
-
     }
 }
