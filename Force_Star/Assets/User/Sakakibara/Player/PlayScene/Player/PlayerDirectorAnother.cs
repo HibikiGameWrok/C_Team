@@ -418,12 +418,13 @@ public partial class PlayerDirector : MonoBehaviour
                 m_gameEnd = parsentMove;
             }
         }
-        else
+        if (!m_fall.awake && !clearAnime)
         {
             //*|***|***|***|***|***|***|***|***|***|***|***|
             // ゲームスタート中
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_movieStrong = 0.0f;
+            m_gameEnd = 1.0f;
         }
         m_gameEnd = ChangeData.Among(m_gameEnd, 0.0f, 1.0f);
         m_movieStrong = ChangeData.Among(m_movieStrong, 0.0f, 1.0f);
