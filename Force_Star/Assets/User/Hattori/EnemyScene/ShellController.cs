@@ -82,6 +82,8 @@ public class ShellController : MonoBehaviour
     //消すためのフラグ
     private bool deathFlag = false;
 
+    Animator _animator;
+
     //*|***|***|***|***|***|***|***|***|***|***|***|
     // これが出来たときに
     //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -115,6 +117,8 @@ public class ShellController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _animator = GetComponent<Animator>();
+
         //rigid2Dを使う
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
         this.m_collider = gameObject.GetComponent<Collider2D>();
@@ -159,6 +163,8 @@ public class ShellController : MonoBehaviour
         {
             if (playerApproachFlag == true)
             {
+                _animator.SetBool("death", true);
+
                 Vector2 pos = this.transform.position;
                 Vector2 posPlayer = m_playerIndex.GetPlayerPosition();
                 //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -229,6 +235,7 @@ public class ShellController : MonoBehaviour
             if (-range <= length && length <= range)
             {
                 //Debug.Log("嚙みついてやる");
+                _animator.SetBool("Move", true);
                 playerApproachFlag = true;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x * speed, 0.0f);
                 shellSprite.sprite = action_Image;
@@ -236,6 +243,7 @@ public class ShellController : MonoBehaviour
             //プレイヤーが貝の射程範囲外なら攻撃しない
             else
             {
+                _animator.SetBool("Move", false);
                 playerApproachFlag = false;
                 shellSprite.sprite = wait_Image;
             }
