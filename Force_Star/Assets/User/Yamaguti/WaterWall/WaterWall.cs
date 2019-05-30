@@ -25,6 +25,9 @@ public class WaterWall : MonoBehaviour
     Vector3 StartPosition;                                      // 滝の最初生成位置
 
     int m_maxMyStar;
+
+    public AudioClip sound1;
+    AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +50,8 @@ public class WaterWall : MonoBehaviour
         myList.Reverse();
         count = 0.0f;
         m_maxMyStar = 5;// 星の最大値
+                        //Componentを取得
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -90,6 +95,7 @@ public class WaterWall : MonoBehaviour
     }
     public void WaterListAt(GameObject Wobject)
     {
+        audioSource.PlayOneShot(sound1, 0.5f);
         // オブジェクトが通常時のリストに入っているか確認(要素無しで-1が帰ってくる)
         if (myList.IndexOf(Wobject) > -1)
         {
