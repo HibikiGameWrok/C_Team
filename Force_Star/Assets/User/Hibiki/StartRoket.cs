@@ -80,6 +80,7 @@ public class StartRoket : MonoBehaviour
     StarSearch starSearch;
     ///////////////////////////////////////
 
+    private GameObject skipUI;
 
     // コントロールを管理しているクラス
     PlayerController playercont;
@@ -131,6 +132,10 @@ public class StartRoket : MonoBehaviour
         // オブジェクトの取得
         Panel = GameObject.Find("Panel");
         StartFade = Panel.GetComponent<StartFade>();
+
+        // スキップUI
+        skipUI = GameObject.Find("skipUI");
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // データ登録
         //*|***|***|***|***|***|***|***|***|***|***|***|
@@ -274,9 +279,12 @@ public class StartRoket : MonoBehaviour
             {
                 Enemys.gameObject.SetActive(true);
             }
+
             // BGMを切り替える
             BGM.gameObject.SetActive(true);
 
+            Debug.Log(skipUI.name);
+            Destroy(skipUI.gameObject);
 
             // フェードインをする
             StartFade.SetFadeInFlag(true);
