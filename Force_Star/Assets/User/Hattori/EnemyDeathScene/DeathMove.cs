@@ -43,9 +43,13 @@ public class DeathMove : MonoBehaviour
     //爆発エフェクトの☆の大きさ最大値
     float delFxSMax;
 
+    Animator _animator;
+
     // Start is called before the first frame update
     void Start()
     {
+        _animator = GetComponent<Animator>();
+
         //rigid2Dを使う
         this.rigid2D = gameObject.GetComponent<Rigidbody2D>();
         //colliderをoffにするため
@@ -85,6 +89,8 @@ public class DeathMove : MonoBehaviour
     {
         if (col.gameObject.tag == "AttackBoal")
         {
+            _animator.SetBool("death", true);
+
             //プレイヤーの向きを取得する
             float downVel = player.transform.position.x - this.transform.position.x;
 
