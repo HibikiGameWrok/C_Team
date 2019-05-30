@@ -990,45 +990,53 @@ public partial class PlayerDirector : MonoBehaviour
             //*|***|***|***|***|***|***|***|***|***|***|***|
             m_punchFlag = false;
         }
+
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 攻撃中判定
+        // 死んでいないなら
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        bool noMoveFlag = true;
-        if (m_controllerData.ChackStickMove())
+        if (!m_ascension.start)
         {
-            m_myAnime.SetInteger("MoveEnum", 1);
-            noMoveFlag = false;
-        }
-        if (m_punchFlag)
-        {
-            m_myAnime.SetInteger("MoveEnum", 2);
-            noMoveFlag = false;
-        }
-        if (m_controllerData.ChackJump())
-        {
-            m_myAnime.SetInteger("MoveEnum", 3);
-            noMoveFlag = false;
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // ダメージを受けているなら
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_nowDamage)
-        {
-            m_myAnime.SetInteger("MoveEnum", 5);
-            noMoveFlag = false;
-        }
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        // 何もしてないなら
-        //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (noMoveFlag)
-        {
-            m_myAnime.SetInteger("MoveEnum", 0);
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 攻撃中判定
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            bool noMoveFlag = true;
+            if (m_controllerData.ChackStickMove())
+            {
+                m_myAnime.SetInteger("MoveEnum", 1);
+                noMoveFlag = false;
+            }
+            if (m_punchFlag)
+            {
+                m_myAnime.SetInteger("MoveEnum", 2);
+                noMoveFlag = false;
+            }
+            if (m_controllerData.ChackJump())
+            {
+                m_myAnime.SetInteger("MoveEnum", 3);
+                noMoveFlag = false;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // ダメージを受けているなら
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (m_nowDamage)
+            {
+                m_myAnime.SetInteger("MoveEnum", 5);
+                noMoveFlag = false;
+            }
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            // 何もしてないなら
+            //*|***|***|***|***|***|***|***|***|***|***|***|
+            if (noMoveFlag)
+            {
+                m_myAnime.SetInteger("MoveEnum", 0);
+            }
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
         // 死んでいるなら
         //*|***|***|***|***|***|***|***|***|***|***|***|
-        if (m_ascension.start)
+        else 
         {
+            m_myAnime.SetBool("Arive", false);
             m_myAnime.SetInteger("MoveEnum", 5);
         }
         //*|***|***|***|***|***|***|***|***|***|***|***|
