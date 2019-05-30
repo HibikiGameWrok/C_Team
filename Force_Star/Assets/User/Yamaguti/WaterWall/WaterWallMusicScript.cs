@@ -28,7 +28,8 @@ public class WaterWallMusicScript : MonoBehaviour
         if(audioSource.isPlaying)
         {
             float leave = this.transform.position.x - m_playerIndex.GetPlayerPosition().x;
-            float Volume = MyCalculator.Division(leave, 100.0f);
+            float leaveAbs = Mathf.Abs(leave);
+            float Volume = MyCalculator.Division(leaveAbs, 55.0f);
             Volume = ChangeData.Among(Volume, 0.0f, 1.0f);
             Volume = MyCalculator.InversionOfProportion(Volume);
             audioSource.volume = Volume;
